@@ -1,7 +1,3 @@
-*WARNING* This document is out of date and will be updated by Devilen
-as soon as possible.
-
-
 
 ,.-;:;-.,,.-;:;-.,,.-;:;-.,,.-;:;-.,,.-;:;-.,,.-;:;-.,,.-;:;-.,,.-;:;-.,
 
@@ -102,7 +98,7 @@ as soon as possible.
 |  peoples wishes. If you experience any problems during installation or 
 |  usage please visit the Homepage of MiningBuddy at 
 | 
-|                         http://miningbuddy.net
+|                         http://miningbuddy.thedarth.com
 |                   
 |  and feel free to use the forums!
 `-------------------------------------------------------------------------------
@@ -198,19 +194,18 @@ as soon as possible.
 | 3. Make sure there is a web-server writable ./images/cache/{hostname}
 |    directory. It's used to store dynamically generated images.
 |   
-| 4. Create the databases schemas. Database structures are in the 
-|    /doc/sql/mysql-tables.txt file, for me copy&paste into mysql worked
-|    just fine.
-|    
-|    $ mysql -u {username} -p {database name} < mysql-tables.txt
+| 4. Create the databases schemas. Open your webbrowser and point to your 
+|	 MiningBuddy installation.  If you installed it in the root of the 
+|    subdomain mining.example.org head to http://mining.example.org.  You 
+|	 will be prompted to create you database tables.  Once the tables are 
+|	 created click continue to start MiningBuddy for the first time.
 |   
 | 5. Create an admin account. 
-|    Open your webbrowser and point to your MiningBuddy installation.
-|    If you installed it in the root of the subdomain mining.example.org
-|    head to http://mining.example.org. You should see the login page
-|    of your new MiningBuddy installation. Click "request account" and
-|    fill the form out. The very first account created will recive full
-|    admin privileges and will be activated right away.
+|    You should see the Create initial Superadmin account page of your new 
+| 	 MiningBuddy installation. You can create this account one of two ways.  
+|	 Enter an Eve Online Character Name, this should be exactly as it appears 
+|	 in game.  Next enter a valid email address for this account.  You will 
+|	 then recieve an email with the account password.  
 |   
 | 6. Head to your webserver with your browser and try the MiningBuddy.
 | 
@@ -222,5 +217,5 @@ as soon as possible.
 
 I hope you will enjoy MiningBuddy as much as I enjoyed coding it for you.
 
-Cheers,
-Christian "Tha'Vena" Reiss.
+Fly Safe!
+Jeffrey Arnold
