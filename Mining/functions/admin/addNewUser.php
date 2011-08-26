@@ -39,6 +39,7 @@ function addNewUser() {
 	// globals
 	global $DB;
 	global $MySelf;
+	global $MB_EMAIL;
 
 	// Sanitize the input.
 	$USERNAME = $MySelf->getUsername;
@@ -98,13 +99,11 @@ function addNewUser() {
 		$mail = str_replace('{{SITE}}', "http://$_SERVER[HTTP_HOST]/", $mail);
 		$mail = str_replace('{{CORP}}', "$SITENAME", $mail);
 		$mail = str_replace('{{CREATOR}}', "$USERNAME", $mail);
-			$to = $NEW_EMAIL;
-			$DOMAIN = $_SERVER[HTTP_HOST];
-			$subject = "Welcome to MiningBuddy";
-			$from = "MiningBuddy@" . $DOMAIN;
-			$headers = "From:" . $from;
-			mail($to,$subject,$mail,$headers);
-		//		mail($NEW_EMAIL, "Welcome to MiningBuddy", $mail);
+		$to = $NEW_EMAIL;
+		$DOMAIN = $_SERVER[HTTP_HOST];
+		$subject = "Welcome to MiningBuddy";
+		$headers = "From:" . $MB_EMAIL;
+		mail($to,$subject,$mail,$headers);
 		makeNotice("User added and confirmation email sent.", "notice", "Account created", "index.php?action=editusers");
 	}
 

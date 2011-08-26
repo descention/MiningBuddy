@@ -37,6 +37,7 @@ function mailUser($mail, $subject) {
 
 	// We need the Database to gather all the eMails.
 	global $DB;
+	global $MB_EMAIL;
 
 	// We need something to mail around!
 	if ((empty ($mail)) || (empty ($subject))) {
@@ -54,12 +55,8 @@ function mailUser($mail, $subject) {
 		$to = $recipient[email];
 		$DOMAIN = $_SERVER[HTTP_HOST];
 		$from = "MiningBuddy@" . $DOMAIN;
-		$headers = "From:" . $from;
+		$headers = "From:" . $MB_EMAIL;
 		mail($to,$subject,$copy,$headers);
-		
-//		$emailfrom = MiningBuddy . "@" . $DOMAIN;
-//		$headers = "From:" . $emailfrom;
-//		mail($recipient[email], $subject, $copy, $headers);
 	}
 	}
 

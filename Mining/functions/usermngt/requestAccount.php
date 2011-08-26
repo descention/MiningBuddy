@@ -40,6 +40,7 @@ function requestAccount() {
 	global $DB;
 	global $MySelf;
 	global $TIMEMARK;
+	global $MB_EMAIL;
 
 	// Generate random Password
 	$PASSWORD = base64_encode(rand(111111111111, 999999999999));
@@ -97,7 +98,8 @@ function requestAccount() {
 			// Success! New superuser created, send a confirmation email.
 			$email = "Superuser information: Username " . stripcslashes($NEW_USER) . ", Password $PASSWORD - change this as soon as possible!";
 			global $VERSION;
-			mail("$NEW_EMAIL", "Superuser login information (" . $VERSION . ")", $email);
+			$headers = "From:" . $MB_EMAIL;
+			mail("$NEW_EMAIL", "Superuser login information (" . $VERSION . ")", $email, $headers);
 			unset ($email);
 
 			// Inform the user.
@@ -151,10 +153,8 @@ function requestAccount() {
 			$EMAIL = str_replace("{{CORP}}", "$SITENAME", $EMAIL);
 			$to = $NEW_EMAIL;
 			$DOMAIN = $_SERVER[HTTP_HOST];
-			$from = "MiningBuddy@" . $DOMAIN;
-			$headers = "From:" . $from;
+			$headers = "From:" . $MB_EMAIL;
 			mail($to,$VERSION,$EMAIL,$headers);
-//			mail($NEW_EMAIL, $VERSION, $EMAIL);
 			makeNotice("A confirmation email has been sent to your supplied email address.<br>Please follow the instructions therein.", "notice", "Account created");
 		}
 	}

@@ -34,6 +34,7 @@
 function validate() {
 
 	global $MySelf;
+	global $MB_EMAIL;
 
 	// Are we already validated?
 	if ($MySelf->getEmailvalid()) {
@@ -73,8 +74,7 @@ function validate() {
 		$EMAIL = str_replace("{{CORP}}", "$SITENAME", $EMAIL);
 		$to = $email[0];
 		$DOMAIN = $_SERVER[HTTP_HOST];
-		$from = "MiningBuddy@" . $DOMAIN;
-		$headers = "From:" . $from;
+		$headers = "From:" . $MB_EMAIL;
 		mail($to,$VERSION,$EMAIL,$headers);
 		makeNotice("A confirmation email has been sent to your supplied email address.<br>Please follow the instructions therein.", "notice", "Account created");
 

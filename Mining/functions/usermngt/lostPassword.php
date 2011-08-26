@@ -36,6 +36,7 @@ function lostPassword($user = "", $reason = "lost") {
 	global $DB;
 	global $VERSION;
 	global $SITENAME;
+	global $MB_EMAIL;
 
 	if (empty ($user)) {
 		// Has the user entered both username and email in the form?
@@ -92,8 +93,7 @@ function lostPassword($user = "", $reason = "lost") {
 
 	// mail it.
 		$DOMAIN = $_SERVER[HTTP_HOST];
-		$from = "MiningBuddy@" . $DOMAIN;
-		$headers = "From:" . $from;
+		$headers = "From:" . $MB_EMAIL;
 	if ("$to" == "") {
 		makeNotice("Internal Error: No valid email found in lostPassword!", "error");
 	} else {

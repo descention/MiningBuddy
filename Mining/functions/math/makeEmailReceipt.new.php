@@ -37,6 +37,7 @@ function makeEmailReceipt($runid, $array) {
 	global $DB;
 	global $DBORE;
 	global $ORENAMES;
+	global $MB_EMAIL;
 //Edit Starts Here	
 	global $DBSHIP;
 	global $SHIPNAMES;
@@ -189,14 +190,12 @@ function makeEmailReceipt($runid, $array) {
 		$userInfo = $userInfo->fetchRow();
 				
 		if ($userInfo[email] && $userInfo[optIn]) {
-				$to = $userInfo[email];
-		$subject = "MiningBuddy Payout";
-		$message = $email;
-		$DOMAIN = $_SERVER[HTTP_HOST];
-		$from = "MiningBuddy@" . $DOMAIN;
-		$headers = "From:" . $from;
-		mail($to,$subject,$message,$headers);
-//			mail($userInfo[email], "MiningBuddy Payout", $temp);
+			$to = $userInfo[email];
+			$subject = "MiningBuddy Payout";
+			$message = $email;
+			$DOMAIN = $_SERVER[HTTP_HOST];
+			$headers = "From:" . $MB_EMAIL;
+			mail($to,$subject,$message,$headers);
 		}
 	}
 }

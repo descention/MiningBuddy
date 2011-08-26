@@ -92,8 +92,19 @@ $TIDY_ENABLE = false;
 $IGB_VISUAL = false;
 
 /*
- * Step 5: Enable MiningBuddy
+ * Step 5: System Email
  * 
+ * MB_EMAIL: This will be the email address that any notification email from
+ *           MiningBuddy will come from.  
+ *			 Default setting is MiningBuddy@yourdomain to change this 
+ *           replace MiningBuddy@ with the email address you choose and remove
+ *           . $DOMAIN to make the line look like this.
+ *			 example: $MB_EMAIL = "you@yourdomain";
+ */
+$MB_EMAIL = "MiningBuddy@thedarth.com";
+
+/*
+ * Step 6: Enable MiningBuddy * 
  * Uncomment this line to enable MiningBuddy by removing the "//" in
  * front of the line.
  */

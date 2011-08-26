@@ -199,17 +199,14 @@ function makeEmailReceipt($runid, $array) {
 		// Mail, if opt-in.		
 		$userInfo = $DB->query("SELECT username, id, optIn, email FROM users WHERE id='".$atendee[userid]."' AND deleted='0'");
 		$userInfo = $userInfo->fetchRow();
-		$emailfrom = "MiningBuddy@" . $DOMAIN;
 		
 		if ($userInfo[email] && $userInfo[optIn]) {
-		$to = $userInfo[email];
-		$subject = "MiningBuddy Payout";
-		$message = $email;
-		$DOMAIN = $_SERVER[HTTP_HOST];
-		$from = "MiningBuddy@" . $DOMAIN;
-		$headers = "From:" . $from;
+			$to = $userInfo[email];
+			$subject = "MiningBuddy Payout";
+			$message = $email;
+			$DOMAIN = $_SERVER[HTTP_HOST];
+			$headers = "From:" . $MB_EMAIL;
 		mail($to,$subject,$message,$headers);
-	//		mail($userInfo[email], "MiningBuddy Payout", $email);
 		}
 	}
 }
