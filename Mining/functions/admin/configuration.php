@@ -175,7 +175,28 @@ function configuration() {
 	}
 	$table->addCol("<select name=\"advancedOptions\">" . $pdm . "</select>");
 	unset ($pdm);
-
+// Continue Work Here
+	$table->addRow();
+	$table->addCol("Use Market for Ore Default Values:", $config);
+	$table->addCol("Use Market Checkbox");
+	
+	//Temp to simulate a checked Box in above option
+	$useMarket = true;
+	
+	if ($useMarket) {
+		$table->addRow();
+		$table->addCol("Market Region to use:", $config);
+		$table->addCol("Region Dropdown box");		
+		
+		$table->addRow();
+		$table->addCol("Order type to use:", $config);
+		$table->addCol("Order Type Dropdown box");
+		
+		$table->addRow();
+		$table->addCol("Price Criteria to use:", $config);
+		$table->addCol("Criteria Dropdown box");
+	}
+		
 	// End of table.
 	$table->addRow("#060622");
 	$table->addCol("All new settings require a relogin to take effect.", array (
