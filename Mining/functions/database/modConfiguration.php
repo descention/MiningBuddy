@@ -111,7 +111,29 @@ function modConfiguration() {
 		numericCheck($_POST[api_keys], 0, 30);
 		setConfig("api_keys_valid", "$_POST[api_keys]");
 	}
-
+	
+	// Use Market Values Setting
+	if ($_POST[useMarket]) {
+		setConfig("useMarket", "1");
+	} else {
+		setConfig("useMarket", "0");
+	}
+	
+	// Market Region Value Setting
+	if (!empty ($_POST[useRegion])) {
+		setConfig("useRegion", "$_POST[useRegion]");
+	}
+	
+	// Order Type to use Setting
+	if (!is_null($_POST[orderType])) {
+		setConfig("orderType", "$_POST[orderType]");
+	}
+	
+	// Price Criteria Setting
+	if (!empty ($_POST[priceCriteria])) {
+		setConfig("priceCriteria", "$_POST[priceCriteria]");
+	}
+	
 	// All done here!
 	makeNotice("New site settings have been saved in database. Please note that you need to relogin to changes to take effect.", "notice", "Update OK", "index.php?action=configuration", "OK");
 

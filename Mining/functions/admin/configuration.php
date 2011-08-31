@@ -63,7 +63,7 @@ function configuration() {
 	// SiteName.
 	$table->addRow();
 	$table->addCol("Sitename:", $config);
-	$table->addCol("<input type=\"text\" name=\"sitename\" value=\"" . getConfig("sitename", true) . "\">");
+	$table->addCol("<input type=\"text\" name=\"sitename\" size=\"70\" value=\"" . getConfig("sitename", true) . "\">");
 
 	// Session Lifetime
 	$table->addRow();
@@ -175,26 +175,99 @@ function configuration() {
 	}
 	$table->addCol("<select name=\"advancedOptions\">" . $pdm . "</select>");
 	unset ($pdm);
-// Continue Work Here
+
+	// Use Market Values when loading Manage Ore Values
+	
 	$table->addRow();
 	$table->addCol("Use Market for Ore Default Values:", $config);
-	$table->addCol("Use Market Checkbox");
 	
-	//Temp to simulate a checked Box in above option
-	$useMarket = true;
-	
-	if ($useMarket) {
+	$useMarket = getConfig("useMarket", true);
+	if ($useMarket == 1) {
+		$table->addCol("<input name=\"useMarket\" value=\"true\" type=\"checkbox\" checked=\"checked\">");
+	}else{
+		$table->addCol("<input name=\"useMarket\" value=\"true\" type=\"checkbox\">");	
+	}
+
+	if ($useMarket == 1) {
+		
+		// Select Region to get prices from
+		
+		$regionDS = $DB->query("SELECT * FROM `eve_Regions` ORDER BY regionName ASC");
+		$regionCount = $regionDS->numRows();
+		
+		$useRegion = getConfig("useRegion", true);
+				
+		if ($regionCount >= 1) {
+			// We have at least 1 region.
+			while ($region = $regionDS->fetchRow()) {
+				if ($region[regionID] == $useRegion) {
+					// The current region is selected.
+					$region_pdm .= "<option SELECTED value=\"$region[regionID]\">$region[regionName]</option>";
+				} else {
+					// The others of course, are not.
+					$region_pdm .= "<option value=\"$region[regionID]\">$region[regionName]</option>";
+				}
+			}
+			$regionColumn = "<select name=\"useRegion\">" . $region_pdm . "</select>";
+		} else {
+			// No regions are in tables.
+			$regionColumn = "There are no regions. Region table is empty!";
+		}
+
 		$table->addRow();
 		$table->addCol("Market Region to use:", $config);
-		$table->addCol("Region Dropdown box");		
+		$table->addCol($regionColumn);
+				
+		// Select order type to use
 		
 		$table->addRow();
 		$table->addCol("Order type to use:", $config);
-		$table->addCol("Order Type Dropdown box");
+		
+		$orderType = getConfig("orderType", true);
+		if ($orderType == 0) {
+			$pdm .= "<option selected value=\"0\">Buy</option>";
+		} else {
+			$pdm .= "<option value=\"0\">Buy</option>";
+		}
+
+		if ($orderType == 1) {
+			$pdm .= "<option selected value=\"1\">Sell</option>";
+		} else {
+			$pdm .= "<option value=\"1\">Sell</option>";
+		}
+
+		// Add the pull down menu to the form.
+		$table->addCol("<select name=\"orderType\">" . $pdm . "</select>");
+		unset ($pdm);
+				
+		// Select Price Criteria 
 		
 		$table->addRow();
 		$table->addCol("Price Criteria to use:", $config);
-		$table->addCol("Criteria Dropdown box");
+		
+		$priceCriteria = getConfig("priceCriteria", true);
+		if ($priceCriteria == 0) {
+			$pdm .= "<option selected value=\"0\">Min</option>";
+		} else {
+			$pdm .= "<option value=\"0\">Min</option>";
+		}
+		
+		if ($priceCriteria == 1) {
+			$pdm .= "<option selected value=\"1\">Max</option>";
+		} else {
+			$pdm .= "<option value=\"1\">Max</option>";
+		}
+
+		if ($priceCriteria == 2) {
+			$pdm .= "<option selected value=\"2\">Median</option>";
+		} else {
+			$pdm .= "<option value=\"2\">Median</option>";
+		}
+
+		// Add the pull down menu to the form.
+		$table->addCol("<select name=\"priceCriteria\">" . $pdm . "</select>");
+		unset ($pdm);
+		
 	}
 		
 	// End of table.
