@@ -236,10 +236,10 @@ function makePreferences() {
 	}
 
 	$api_table->addRow();
-	$api_table->addCol("User ID:");
+	$api_table->addCol("API ID:");
 	$api_table->addCol($s1);
 	$api_table->addRow();
-	$api_table->addCol("API Key:");
+	$api_table->addCol("Verification Code:");
 	$api_table->addCol($s2);
 
 	// Add the API link to eve online.
@@ -248,7 +248,7 @@ function makePreferences() {
 	if ($doApiLink && (!$IGB || ($IGB && $IGB_VISUAL))) {
 		$api_table->addRow();
 		$api_table->addCol("Get your API key here:");
-		$api_table->addCol("<a href=\"http://myeve.eve-online.com/api/default.asp\">http://myeve.eve-online.com/api/default.asp</a>");
+		$api_table->addCol("<a href=\"http://support.eveonline.com/api/default.asp\">http://support.eveonline.com/api/default.asp</a>");
 	}
 
 	if ($api_key) {

@@ -176,12 +176,12 @@ class api {
 		}
 
 		// URL
-		$url = "http://api.eve-online.com/account/Characters.xml.aspx";
+		$url = "http://api.eveonline.com/account/Characters.xml.aspx";
 
 		// Post Data
 		$auth = array (
-			'userID' => $this->api_id,
-			'apiKey' => $this->api_key
+			'keyID' => $this->api_id,
+			'vCode' => $this->api_key
 		);
 
 		// Set up CURL
