@@ -44,6 +44,11 @@ $VERSION = "MiningBuddy " . $VERSION_COMP;
 
 $DSN = "$mysql_protocol://$mysql_username:$mysql_password@$mysql_hostname/$mysql_dbname";
 
+// Market Arrays
+
+$OTYPENAME = array ( "buy", "sell");
+$PRICECRITERIA = array ( "min", "max", "median" );
+
 // Ore Arrays
 
 $ORENAMES = array (
@@ -106,20 +111,20 @@ $ORENAMES = array (
 	"Melted Nanoribbons",
 	"Modified Fluid Router",
 	"Neurovisual Input Matrix",
-	"Powdered C540 Graphite",
+	"Powdered C-540 Graphite",
 	"Resonance Calibration Matrix",
 	"Thermoelectric Catalysts",
 	
 		// Wormhole Gas
-	"Fullerite C28",
-	"Fullerite C32",	
-	"Fullerite C50",
-	"Fullerite C60",
-	"Fullerite C70",
-	"Fullerite C72",
-	"Fullerite C84",
-	"Fullerite C320",
-	"Fullerite C540",
+	"Fullerite-C28",
+	"Fullerite-C32",	
+	"Fullerite-C50",
+	"Fullerite-C60",
+	"Fullerite-C70",
+	"Fullerite-C72",
+	"Fullerite-C84",
+	"Fullerite-C320",
+	"Fullerite-C540",
 	
 		// Sleeper Loot (Blue-Tag)
 	"Neural Network Analyzer",
@@ -131,6 +136,7 @@ $ORENAMES = array (
 
 foreach ($ORENAMES as $ore) {
 	$dbfriendly = str_replace(" ", "", ucwords($ore));
+	$dbfriendly = str_replace("-", "", ucwords($dbfriendly));
 	if (!empty ($ORENAME_STR)) {
 		$ORENAME_STR .= ", " . $dbfriendly;
 	} else {
