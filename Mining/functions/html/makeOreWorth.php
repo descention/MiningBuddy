@@ -32,17 +32,86 @@
  */
 
 // Prints the change form to edit the ore values.
+function objectsIntoArray($arrObjData, $arrSkipIndices = array())
+{
+    $arrData = array();
+
+    // if input is object, convert into array
+    if (is_object($arrObjData)) {
+        $arrObjData = get_object_vars($arrObjData);
+    }
+
+    if (is_array($arrObjData)) {
+        foreach ($arrObjData as $index => $value) {
+            if (is_object($value) || is_array($value)) {
+                $value = objectsIntoArray($value, $arrSkipIndices); // recursive call
+            }
+            if (in_array($index, $arrSkipIndices)) {
+                continue;
+            }
+            $arrData[$index] = $value;
+        }
+    }
+    return $arrData;
+}
+
+function getMarketPrice($id, $type, $criteria) {
+	
+	$regionlimit = getConfig("useRegion");
+	$xmlUrl = "http://api.eve-central.com/api/marketstat?typeid=" . $id . "&regionlimit=" . $regionlimit; 
+	// XML feed file/URL
+	$xmlStr = file_get_contents($xmlUrl);
+	$xmlObj = simplexml_load_string($xmlStr);
+	$arrXml = objectsIntoArray($xmlObj);
+
+	return $arrXml["marketstat"]["type"][$type][$criteria];	
+}
+
+function getPriceCache($currentOre) {
+	global $DB;
+	
+	$sql = "SELECT * FROM itemList WHERE itemName = '" . $currentOre . "' LIMIT 1";
+	$priceCacheDB = $DB->query($sql);
+	$priceCacheRow = $priceCacheDB->fetchRow();
+	
+	return $priceCacheRow["value"];
+}
+
 function makeOreWorth() {
 	// Get the globals.
 	global $TIMEMARK;
 	global $ORENAMES;
 	global $DBORE;
 	global $DB;
+	global $OTYPENAME;
+	global $PRICECRITERIA;
 
-	// load the values.
-	$orevaluesDS = $DB->query("select * from orevalues order by id DESC limit 1");
-	$orevalues = $orevaluesDS->fetchRow();
-
+	// Where do I get Ore Values?
+	
+	$Market = getConfig("useMarket");
+	
+	IF($Market == 1) {
+		// Update prices from Eve-Central and store.
+		
+		$CURRENTTIME = date(U) - (getConfig("timeOffset") * 60 * 60);
+		$itemListDB = $DB->query("SELECT * FROM `itemList` ORDER BY `itemName` DESC");
+		$orderType = $OTYPENAME[getConfig("orderType")];
+		$priceCrit = $PRICECRITERIA[getConfig("priceCriteria")];
+				
+		for($i = 0; $i <= $itemListDB->numRows(); $i++) {
+			$itemInfo = $itemListDB->fetchRow();
+			$quoteAge = $CURRENTTIME - $itemInfo['updateTime'];
+			if($quoteAge >= 3600) {
+				$currentPrice = getMarketPrice($itemInfo['itemID'], $orderType, $priceCrit);
+				$DB->query("UPDATE itemList SET `updateTime` = $CURRENTTIME, `value` = $currentPrice WHERE `itemID` = " . $itemInfo['itemID']);
+			}
+		}
+	} else {
+		// load the values.
+		$orevaluesDS = $DB->query("select * from orevalues order by id DESC limit 1");
+		$orevalues = $orevaluesDS->fetchRow();
+	};
+	
 	// Create the table.
 	$table = new table(8, true);
 	$table->addHeader(">> Manage ore values", array (
@@ -93,8 +162,12 @@ function makeOreWorth() {
 		} else {
 			$table->addCol("<input name=\"" . $DBORE[$ORE] . "Enabled\" value=\"true\" type=\"checkbox\">");
 		}
-		$table->addCol("<input type=\"text\" name=\"$DBORE[$ORE]\"" . "size=\"6\" value=\"" . $orevalues[$DBORE[$ORE] . Worth] . "\">");
-
+		IF($Market == 1) {
+			$thisPrice = getPriceCache($ORE);
+			$table->addCol("<input type=\"text\" style=\"text-align: right\" name=\"$DBORE[$ORE]\"" . "size=\"10\" value=\"" . $thisPrice . "\">");
+		} else {
+			$table->addCol("<input type=\"text\" style=\"text-align: right\" name=\"$DBORE[$ORE]\"" . "size=\"10\" value=\"" . $orevalues[$DBORE[$ORE] . Worth] . "\">");
+		}
 		// Ore columns for RIGHT side.
 		$ORE = $ORENAMES[$i + $tableLength +1];
 		
@@ -111,7 +184,12 @@ function makeOreWorth() {
 			} else {
 				$table->addCol("<input name=\"" . $DBORE[$ORE] . "Enabled\" value=\"true\" type=\"checkbox\">");
 			}
-			$table->addCol("<input type=\"text\" name=\"$DBORE[$ORE]\"" . "size=\"6\" value=\"" . $orevalues[$DBORE[$ORE] . Worth] . "\">");
+		IF($Market == 1) {
+			$thisPrice = getPriceCache($ORE);
+			$table->addCol("<input type=\"text\" style=\"text-align: right\" name=\"$DBORE[$ORE]\"" . "size=\"10\" value=\"" . $thisPrice . "\">");
+		} else {
+			$table->addCol("<input type=\"text\" style=\"text-align: right\" name=\"$DBORE[$ORE]\"" . "size=\"10\" value=\"" . $orevalues[$DBORE[$ORE] . Worth] . "\">");
+		}
 		} else {
 			$table->addCol("");
 			$table->addCol("");
