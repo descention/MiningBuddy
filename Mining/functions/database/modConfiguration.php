@@ -36,6 +36,9 @@ function modConfiguration() {
 	// The usual suspects.
 	global $DB;
 	global $MySelf;
+	
+	// Use this to trac if something has change in Market Settings
+	$marketSettingChanged = false;
 
 	// Are we allowed to be here?
 	if (!$MySelf->isAdmin()) {
@@ -114,26 +117,45 @@ function modConfiguration() {
 	
 	// Use Market Values Setting
 	if ($_POST[useMarket]) {
+		if (getConfig("useMarket") != 1) {
+			$marketSettingChanged = true;
+		}
 		setConfig("useMarket", "1");
 	} else {
+		if (getConfig("useMarket") != 0) {
+			$marketSettingChanged = true;
+		}
 		setConfig("useMarket", "0");
 	}
 	
 	// Market Region Value Setting
 	if (!empty ($_POST[useRegion])) {
+		if (getConfig("useRegion") != $_POST[useRegion]) {
+			$marketSettingChanged = true;
+		}
 		setConfig("useRegion", "$_POST[useRegion]");
 	}
 	
 	// Order Type to use Setting
 	if (!is_null($_POST[orderType])) {
+		if (getConfig("orderType") != $_POST[orderType]) {
+			$marketSettingChanged = true;
+		}
 		setConfig("orderType", "$_POST[orderType]");
 	}
 	
 	// Price Criteria Setting
 	if (!empty ($_POST[priceCriteria])) {
+		if (getConfig("priceCriteria") != $_POST[priceCriteria]) {
+			$marketSettingChanged = true;
+		}
 		setConfig("priceCriteria", "$_POST[priceCriteria]");
 	}
-	
+
+	if ($marketSettingChanged) {
+		$DB->query("UPDATE `itemList` SET `updateTime` = 0");
+	}
+
 	// All done here!
 	makeNotice("New site settings have been saved in database. Please note that you need to relogin to changes to take effect.", "notice", "Update OK", "index.php?action=configuration", "OK");
 
