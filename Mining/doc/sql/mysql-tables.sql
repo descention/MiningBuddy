@@ -1,16 +1,23 @@
 -- phpMyAdmin SQL Dump
--- version 2.11.5.2
+-- version 3.4.3.2
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: May 01, 2008 at 03:04 PM
--- Server version: 5.0.54
--- PHP Version: 5.2.6RC4-pl0-gentoo
+-- Generation Time: Sep 06, 2011 at 10:06 PM
+-- Server version: 5.1.56
+-- PHP Version: 5.2.9
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
 
 --
--- Database: `clean`
+-- Database: `arnoldj_mbblank`
 --
 
 -- --------------------------------------------------------
@@ -19,24 +26,18 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 -- Table structure for table `api_keys`
 --
 
-DROP TABLE IF EXISTS `api_keys`;
 CREATE TABLE IF NOT EXISTS `api_keys` (
   `userid` int(6) NOT NULL,
   `time` int(13) NOT NULL,
   `apiID` int(16) NOT NULL,
   `apiKey` varchar(200) NOT NULL,
-  `api_valid` smallint(1) NOT NULL default '0',
-  `charid` int(20) default NULL,
-  PRIMARY KEY  (`userid`),
+  `api_valid` smallint(1) NOT NULL DEFAULT '0',
+  `charid` int(20) DEFAULT NULL,
+  PRIMARY KEY (`userid`),
   KEY `apiID` (`apiID`),
   KEY `apiKey` (`apiKey`),
   KEY `charid` (`charid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `api_keys`
---
-
 
 -- --------------------------------------------------------
 
@@ -44,22 +45,16 @@ CREATE TABLE IF NOT EXISTS `api_keys` (
 -- Table structure for table `auth`
 --
 
-DROP TABLE IF EXISTS `auth`;
 CREATE TABLE IF NOT EXISTS `auth` (
   `authkey` varchar(33) NOT NULL,
   `user` int(5) NOT NULL,
   `issued` int(11) NOT NULL,
   `ip` varchar(16) NOT NULL,
-  `disabled` int(1) NOT NULL default '0',
+  `disabled` int(1) NOT NULL DEFAULT '0',
   `agent` varchar(100) NOT NULL,
-  PRIMARY KEY  (`authkey`),
+  PRIMARY KEY (`authkey`),
   KEY `user` (`user`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `auth`
---
-
 
 -- --------------------------------------------------------
 
@@ -67,24 +62,18 @@ CREATE TABLE IF NOT EXISTS `auth` (
 -- Table structure for table `cans`
 --
 
-DROP TABLE IF EXISTS `cans`;
 CREATE TABLE IF NOT EXISTS `cans` (
-  `id` int(5) NOT NULL auto_increment,
+  `id` int(5) NOT NULL AUTO_INCREMENT,
   `pilot` int(5) NOT NULL,
   `name` varchar(100) NOT NULL,
   `location` varchar(100) NOT NULL,
   `droptime` int(15) NOT NULL,
-  `isFull` int(1) NOT NULL default '0',
-  `miningrun` int(5) default '-1',
-  PRIMARY KEY  (`id`),
+  `isFull` int(1) NOT NULL DEFAULT '0',
+  `miningrun` int(5) DEFAULT '-1',
+  PRIMARY KEY (`id`),
   KEY `pilot` (`pilot`),
   KEY `location` (`location`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
---
--- Dumping data for table `cans`
---
-
 
 -- --------------------------------------------------------
 
@@ -92,11 +81,10 @@ CREATE TABLE IF NOT EXISTS `cans` (
 -- Table structure for table `config`
 --
 
-DROP TABLE IF EXISTS `config`;
 CREATE TABLE IF NOT EXISTS `config` (
   `name` varchar(100) NOT NULL,
-  `value` varchar(300) default NULL,
-  PRIMARY KEY  (`name`)
+  `value` varchar(300) DEFAULT NULL,
+  PRIMARY KEY (`name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
@@ -104,7 +92,7 @@ CREATE TABLE IF NOT EXISTS `config` (
 --
 
 INSERT INTO `config` (`name`, `value`) VALUES
-('version', '13'),
+('version', '23'),
 ('ArkonorEnabled', '1'),
 ('BistotEnabled', '1'),
 ('CrokiteEnabled', '1'),
@@ -173,7 +161,73 @@ INSERT INTO `config` (`name`, `value`) VALUES
 ('canLifeTime', '120'),
 ('TTL', '120'),
 ('divisions', 'false'),
-('trustSetting', '0');
+('trustSetting', '0'),
+('CondensedAlloyEnabled', '0'),
+('CrystalCompoundEnabled', '0'),
+('PreciousAlloyEnabled', '0'),
+('SheenCompoundEnabled', '0'),
+('GleamingAlloyEnabled', '0'),
+('LucentCompoundEnabled', '0'),
+('DarkCompoundEnabled', '0'),
+('MotleyCompoundEnabled', '0'),
+('LusteringAlloyEnabled', '0'),
+('GlossyCompoundEnabled', '0'),
+('PlushhCompoundEnabled', '0'),
+('OpulentCompoundEnabled', '0'),
+('CartesianTemporalCoordinatorEnabled', '0'),
+('CentralSystemControllerEnabled', '0'),
+('DefensiveControlNodeEnabled', '0'),
+('ElectromechanicalHullSheetingEnabled', '0'),
+('EmergentCombatAnalyzerEnabled', '0'),
+('EmergentCombatIntelligenceEnabled', '0'),
+('FusedNanomechanicalEnginesEnabled', '0'),
+('HeuristicSelfassemblersEnabled', '0'),
+('JumpDriveControlNexusEnabled', '0'),
+('MeltedNanoribbonsEnabled', '0'),
+('ModifiedFluidRouterEnabled', '0'),
+('NeurovisualInputMatrixEnabled', '0'),
+('PowderedC540GraphiteEnabled', '0'),
+('ResonanceCalibrationMatrixEnabled', '0'),
+('ThermoelectricCatalystsEnabled', '0'),
+('FulleriteC50Enabled', '0'),
+('FulleriteC60Enabled', '0'),
+('FulleriteC70Enabled', '0'),
+('FulleriteC72Enabled', '0'),
+('FulleriteC84Enabled', '0'),
+('FulleriteC28Enabled', '0'),
+('FulleriteC32Enabled', '0'),
+('FulleriteC320Enabled', '0'),
+('FulleriteC540Enabled', '0'),
+('NeuralNetworkAnalyzerEnabled', '0'),
+('SleeperDataLibraryEnabled', '0'),
+('AncientCoordinatesDatabaseEnabled', '0'),
+('SleeperDroneAINexusEnabled', '0'),
+('AssaultShipEnabled', '0'),
+('BattlecruiserEnabled', '0'),
+('BattleshipEnabled', '0'),
+('CarrierEnabled', '0'),
+('CommandShipEnabled', '0'),
+('CovertOpsEnabled', '0'),
+('CruiserEnabled', '0'),
+('DestroyerEnabled', '0'),
+('DreadnoughtEnabled', '0'),
+('ExhumerEnabled', '0'),
+('FreighterEnabled', '0'),
+('FrigateEnabled', '0'),
+('HeavyAssaultShipEnabled', '0'),
+('IndustrialEnabled', '0'),
+('InterceptorEnabled', '0'),
+('InterdictorEnabled', '0'),
+('LogisticsShipEnabled', '0'),
+('MiningBargeEnabled', '0'),
+('ReconShipEnabled', '0'),
+('ShuttleEnabled', '0'),
+('TransportShipEnabled', '0'),
+('CapitalIndustrialShipEnabled', '0'),
+('useMarket', '1'),
+('useRegion', '10000002'),
+('orderType', '0'),
+('priceCriteria', '2');
 
 -- --------------------------------------------------------
 
@@ -181,29 +235,23 @@ INSERT INTO `config` (`name`, `value`) VALUES
 -- Table structure for table `events`
 --
 
-DROP TABLE IF EXISTS `events`;
 CREATE TABLE IF NOT EXISTS `events` (
-  `id` int(5) NOT NULL auto_increment,
+  `id` int(5) NOT NULL AUTO_INCREMENT,
   `sdesc` varchar(300) NOT NULL,
   `officer` varchar(30) NOT NULL,
   `system` varchar(30) NOT NULL,
   `security` varchar(3) NOT NULL,
-  `type` varchar(30) NOT NULL default '1',
+  `type` varchar(30) NOT NULL DEFAULT '1',
   `starttime` varchar(30) NOT NULL,
   `duration` varchar(30) NOT NULL,
-  `difficulty` int(1) NOT NULL default '1',
-  `payment` varchar(100) NOT NULL default '0',
-  `collateral` int(10) NOT NULL default '0',
-  `notes` varchar(1000) default NULL,
-  `ships` varchar(2000) default NULL,
-  `signups` varchar(2000) default NULL,
-  PRIMARY KEY  (`id`)
+  `difficulty` int(1) NOT NULL DEFAULT '1',
+  `payment` varchar(100) NOT NULL DEFAULT '0',
+  `collateral` bigint(255) NOT NULL DEFAULT '0',
+  `notes` varchar(1000) DEFAULT NULL,
+  `ships` varchar(2000) DEFAULT NULL,
+  `signups` varchar(2000) DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
---
--- Dumping data for table `events`
---
-
 
 -- --------------------------------------------------------
 
@@ -211,12 +259,11 @@ CREATE TABLE IF NOT EXISTS `events` (
 -- Table structure for table `eve_Constellations`
 --
 
-DROP TABLE IF EXISTS `eve_Constellations`;
 CREATE TABLE IF NOT EXISTS `eve_Constellations` (
-  `regionID` int(11) default NULL,
-  `constellationID` int(11) NOT NULL default '0',
-  `constellationName` char(100) default NULL,
-  PRIMARY KEY  (`constellationID`),
+  `regionID` int(11) DEFAULT NULL,
+  `constellationID` int(11) NOT NULL DEFAULT '0',
+  `constellationName` char(100) DEFAULT NULL,
+  PRIMARY KEY (`constellationID`),
   KEY `regionID` (`regionID`),
   KEY `constellationName` (`constellationName`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
@@ -1013,11 +1060,10 @@ INSERT INTO `eve_Constellations` (`regionID`, `constellationID`, `constellationN
 -- Table structure for table `eve_Regions`
 --
 
-DROP TABLE IF EXISTS `eve_Regions`;
 CREATE TABLE IF NOT EXISTS `eve_Regions` (
-  `regionID` int(11) NOT NULL default '0',
-  `regionName` char(100) default NULL,
-  PRIMARY KEY  (`regionID`),
+  `regionID` int(11) NOT NULL DEFAULT '0',
+  `regionName` char(100) DEFAULT NULL,
+  PRIMARY KEY (`regionID`),
   KEY `regionName` (`regionName`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -1099,14 +1145,13 @@ INSERT INTO `eve_Regions` (`regionID`, `regionName`) VALUES
 -- Table structure for table `eve_SolarSystems`
 --
 
-DROP TABLE IF EXISTS `eve_SolarSystems`;
 CREATE TABLE IF NOT EXISTS `eve_SolarSystems` (
-  `regionID` int(11) default NULL,
-  `constellationID` int(11) default NULL,
-  `solarSystemID` int(11) NOT NULL default '0',
-  `solarSystemName` char(100) default NULL,
-  `security` double default NULL,
-  PRIMARY KEY  (`solarSystemID`),
+  `regionID` int(11) DEFAULT NULL,
+  `constellationID` int(11) DEFAULT NULL,
+  `solarSystemID` int(11) NOT NULL DEFAULT '0',
+  `solarSystemName` char(100) DEFAULT NULL,
+  `security` double DEFAULT NULL,
+  PRIMARY KEY (`solarSystemID`),
   KEY `regionID` (`regionID`),
   KEY `constellationID` (`constellationID`),
   KEY `solarSystemName` (`solarSystemName`)
@@ -6512,22 +6557,16 @@ INSERT INTO `eve_SolarSystems` (`regionID`, `constellationID`, `solarSystemID`, 
 -- Table structure for table `failed_logins`
 --
 
-DROP TABLE IF EXISTS `failed_logins`;
 CREATE TABLE IF NOT EXISTS `failed_logins` (
-  `incident` int(6) NOT NULL auto_increment,
+  `incident` int(6) NOT NULL AUTO_INCREMENT,
   `time` int(13) NOT NULL,
   `ip` varchar(16) NOT NULL,
   `username` varchar(30) NOT NULL,
-  `username_valid` smallint(1) NOT NULL default '0',
+  `username_valid` smallint(1) NOT NULL DEFAULT '0',
   `agent` varchar(100) NOT NULL,
-  PRIMARY KEY  (`incident`),
+  PRIMARY KEY (`incident`),
   KEY `username` (`username`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
---
--- Dumping data for table `failed_logins`
---
-
 
 -- --------------------------------------------------------
 
@@ -6535,83 +6574,117 @@ CREATE TABLE IF NOT EXISTS `failed_logins` (
 -- Table structure for table `hauled`
 --
 
-DROP TABLE IF EXISTS `hauled`;
 CREATE TABLE IF NOT EXISTS `hauled` (
-  `id` int(10) NOT NULL auto_increment,
+  `id` int(10) NOT NULL AUTO_INCREMENT,
   `miningrun` int(5) NOT NULL,
   `hauler` int(5) NOT NULL,
   `time` int(15) NOT NULL,
   `location` varchar(80) NOT NULL,
-  `Arkonor` int(5) NOT NULL default '0',
-  `CrimsonArkonor` int(5) NOT NULL default '0',
-  `PrimeArkonor` int(5) NOT NULL default '0',
-  `Bistot` int(5) NOT NULL default '0',
-  `MonoclinicBistot` int(5) NOT NULL default '0',
-  `TriclinicBistot` int(5) NOT NULL default '0',
-  `Crokite` int(5) NOT NULL default '0',
-  `CrystallineCrokite` int(5) NOT NULL default '0',
-  `SharpCrokite` int(5) NOT NULL default '0',
-  `DarkOchre` int(5) NOT NULL default '0',
-  `ObsidianOchre` int(5) NOT NULL default '0',
-  `OnyxOchre` int(5) NOT NULL default '0',
-  `Gneiss` int(5) NOT NULL default '0',
-  `IridescentGneiss` int(5) NOT NULL default '0',
-  `PrismaticGneiss` int(5) NOT NULL default '0',
-  `Hedbergite` int(5) NOT NULL default '0',
-  `GlazedHedbergite` int(5) NOT NULL default '0',
-  `VitricHedbergite` int(5) NOT NULL default '0',
-  `Hemorphite` int(5) NOT NULL default '0',
-  `VividHemorphite` int(5) NOT NULL default '0',
-  `RadiantHemorphite` int(5) NOT NULL default '0',
-  `Jaspet` int(5) NOT NULL default '0',
-  `PureJaspet` int(5) NOT NULL default '0',
-  `PristineJaspet` int(5) NOT NULL default '0',
-  `Kernite` int(5) NOT NULL default '0',
-  `FieryKernite` int(5) NOT NULL default '0',
-  `LuminousKernite` int(5) NOT NULL default '0',
-  `Mercoxit` int(5) NOT NULL default '0',
-  `MagmaMercoxit` int(5) NOT NULL default '0',
-  `VitreousMercoxit` int(5) NOT NULL default '0',
-  `BrightSpodumain` int(5) NOT NULL default '0',
-  `GleamingSpodumain` int(5) NOT NULL default '0',
-  `Spodumain` int(5) NOT NULL default '0',
-  `Plagioclase` int(5) NOT NULL default '0',
-  `AzurePlagioclase` int(5) NOT NULL default '0',
-  `RichPlagioclase` int(5) NOT NULL default '0',
-  `Omber` int(5) NOT NULL default '0',
-  `SilveryOmber` int(5) NOT NULL default '0',
-  `GoldenOmber` int(5) NOT NULL default '0',
-  `Pyroxeres` int(5) NOT NULL default '0',
-  `SolidPyroxeres` int(5) NOT NULL default '0',
-  `ViscousPyroxeres` int(5) NOT NULL default '0',
-  `Scordite` int(5) NOT NULL default '0',
-  `CondensedScordite` int(5) NOT NULL default '0',
-  `MassiveScordite` int(5) NOT NULL default '0',
-  `Veldspar` int(5) NOT NULL default '0',
-  `ConcentratedVeldspar` int(5) NOT NULL default '0',
-  `DenseVeldspar` int(5) NOT NULL default '0',
-  `BlueIce` int(5) NOT NULL default '0',
-  `ClearIcicle` int(5) NOT NULL default '0',
-  `DarkGlitter` int(5) NOT NULL default '0',
-  `EnrichedClearIcicle` int(5) NOT NULL default '0',
-  `Gelidus` int(5) NOT NULL default '0',
-  `GlacialMass` int(5) NOT NULL default '0',
-  `GlareCrust` int(5) NOT NULL default '0',
-  `Krystallos` int(5) NOT NULL default '0',
-  `PristineWhiteGlaze` int(5) NOT NULL default '0',
-  `SmoothGlacialMass` int(5) NOT NULL default '0',
-  `ThickBlueIce` int(5) NOT NULL default '0',
-  `WhiteGlaze` int(5) NOT NULL default '0',
-  PRIMARY KEY  (`id`),
+  `Arkonor` bigint(255) NOT NULL DEFAULT '0',
+  `CrimsonArkonor` bigint(255) NOT NULL DEFAULT '0',
+  `PrimeArkonor` bigint(255) NOT NULL DEFAULT '0',
+  `Bistot` bigint(255) NOT NULL DEFAULT '0',
+  `MonoclinicBistot` bigint(255) NOT NULL DEFAULT '0',
+  `TriclinicBistot` bigint(255) NOT NULL DEFAULT '0',
+  `Crokite` bigint(255) NOT NULL DEFAULT '0',
+  `CrystallineCrokite` bigint(255) NOT NULL DEFAULT '0',
+  `SharpCrokite` bigint(255) NOT NULL DEFAULT '0',
+  `DarkOchre` bigint(255) NOT NULL DEFAULT '0',
+  `ObsidianOchre` bigint(255) NOT NULL DEFAULT '0',
+  `OnyxOchre` bigint(255) NOT NULL DEFAULT '0',
+  `Gneiss` bigint(255) NOT NULL DEFAULT '0',
+  `IridescentGneiss` bigint(255) NOT NULL DEFAULT '0',
+  `PrismaticGneiss` bigint(255) NOT NULL DEFAULT '0',
+  `Hedbergite` bigint(255) NOT NULL DEFAULT '0',
+  `GlazedHedbergite` bigint(255) NOT NULL DEFAULT '0',
+  `VitricHedbergite` bigint(255) NOT NULL DEFAULT '0',
+  `Hemorphite` bigint(255) NOT NULL DEFAULT '0',
+  `VividHemorphite` bigint(255) NOT NULL DEFAULT '0',
+  `RadiantHemorphite` bigint(255) NOT NULL DEFAULT '0',
+  `Jaspet` bigint(255) NOT NULL DEFAULT '0',
+  `PureJaspet` bigint(255) NOT NULL DEFAULT '0',
+  `PristineJaspet` bigint(255) NOT NULL DEFAULT '0',
+  `Kernite` bigint(255) NOT NULL DEFAULT '0',
+  `FieryKernite` bigint(255) NOT NULL DEFAULT '0',
+  `LuminousKernite` bigint(255) NOT NULL DEFAULT '0',
+  `Mercoxit` bigint(255) NOT NULL DEFAULT '0',
+  `MagmaMercoxit` bigint(255) NOT NULL DEFAULT '0',
+  `VitreousMercoxit` bigint(255) NOT NULL DEFAULT '0',
+  `BrightSpodumain` bigint(255) NOT NULL DEFAULT '0',
+  `GleamingSpodumain` bigint(255) NOT NULL DEFAULT '0',
+  `Spodumain` bigint(255) NOT NULL DEFAULT '0',
+  `Plagioclase` bigint(255) NOT NULL DEFAULT '0',
+  `AzurePlagioclase` bigint(255) NOT NULL DEFAULT '0',
+  `RichPlagioclase` bigint(255) NOT NULL DEFAULT '0',
+  `Omber` bigint(255) NOT NULL DEFAULT '0',
+  `SilveryOmber` bigint(255) NOT NULL DEFAULT '0',
+  `GoldenOmber` bigint(255) NOT NULL DEFAULT '0',
+  `Pyroxeres` bigint(255) NOT NULL DEFAULT '0',
+  `SolidPyroxeres` bigint(255) NOT NULL DEFAULT '0',
+  `ViscousPyroxeres` bigint(255) NOT NULL DEFAULT '0',
+  `Scordite` bigint(255) NOT NULL DEFAULT '0',
+  `CondensedScordite` bigint(255) NOT NULL DEFAULT '0',
+  `MassiveScordite` bigint(255) NOT NULL DEFAULT '0',
+  `Veldspar` bigint(255) NOT NULL DEFAULT '0',
+  `ConcentratedVeldspar` bigint(255) NOT NULL DEFAULT '0',
+  `DenseVeldspar` bigint(255) NOT NULL DEFAULT '0',
+  `BlueIce` bigint(255) NOT NULL DEFAULT '0',
+  `ClearIcicle` bigint(255) NOT NULL DEFAULT '0',
+  `DarkGlitter` bigint(255) NOT NULL DEFAULT '0',
+  `EnrichedClearIcicle` bigint(255) NOT NULL DEFAULT '0',
+  `Gelidus` bigint(255) NOT NULL DEFAULT '0',
+  `GlacialMass` bigint(255) NOT NULL DEFAULT '0',
+  `GlareCrust` bigint(255) NOT NULL DEFAULT '0',
+  `Krystallos` bigint(255) NOT NULL DEFAULT '0',
+  `PristineWhiteGlaze` bigint(255) NOT NULL DEFAULT '0',
+  `SmoothGlacialMass` bigint(255) NOT NULL DEFAULT '0',
+  `ThickBlueIce` bigint(255) NOT NULL DEFAULT '0',
+  `WhiteGlaze` bigint(255) NOT NULL DEFAULT '0',
+  `CondensedAlloy` bigint(255) NOT NULL DEFAULT '0',
+  `CrystalCompound` bigint(255) NOT NULL DEFAULT '0',
+  `PreciousAlloy` bigint(255) NOT NULL DEFAULT '0',
+  `SheenCompound` bigint(255) NOT NULL DEFAULT '0',
+  `GleamingAlloy` bigint(255) NOT NULL DEFAULT '0',
+  `LucentCompound` bigint(255) NOT NULL DEFAULT '0',
+  `DarkCompound` bigint(255) NOT NULL DEFAULT '0',
+  `MotleyCompound` bigint(255) NOT NULL DEFAULT '0',
+  `LusteringAlloy` bigint(255) NOT NULL DEFAULT '0',
+  `GlossyCompound` bigint(255) NOT NULL DEFAULT '0',
+  `PlushCompound` bigint(255) NOT NULL DEFAULT '0',
+  `OpulentCompound` bigint(255) NOT NULL DEFAULT '0',
+  `CartesianTemporalCoordinator` bigint(255) NOT NULL DEFAULT '0',
+  `CentralSystemController` bigint(255) NOT NULL DEFAULT '0',
+  `DefensiveControlNode` bigint(255) NOT NULL DEFAULT '0',
+  `ElectromechanicalHullSheeting` bigint(255) NOT NULL DEFAULT '0',
+  `EmergentCombatAnalyzer` bigint(255) NOT NULL DEFAULT '0',
+  `EmergentCombatIntelligence` bigint(255) NOT NULL DEFAULT '0',
+  `FusedNanomechanicalEngines` bigint(255) NOT NULL DEFAULT '0',
+  `HeuristicSelfassemblers` bigint(255) NOT NULL DEFAULT '0',
+  `JumpDriveControlNexus` bigint(255) NOT NULL DEFAULT '0',
+  `MeltedNanoribbons` bigint(255) NOT NULL DEFAULT '0',
+  `ModifiedFluidRouter` bigint(255) NOT NULL DEFAULT '0',
+  `NeurovisualInputMatrix` bigint(255) NOT NULL DEFAULT '0',
+  `PowderedC540Graphite` bigint(255) NOT NULL DEFAULT '0',
+  `ResonanceCalibrationMatrix` bigint(255) NOT NULL DEFAULT '0',
+  `ThermoelectricCatalysts` bigint(255) NOT NULL DEFAULT '0',
+  `FulleriteC28` bigint(255) NOT NULL DEFAULT '0',
+  `FulleriteC32` bigint(255) NOT NULL DEFAULT '0',
+  `FulleriteC50` bigint(255) NOT NULL DEFAULT '0',
+  `FulleriteC60` bigint(255) NOT NULL DEFAULT '0',
+  `FulleriteC70` bigint(255) NOT NULL DEFAULT '0',
+  `FulleriteC72` bigint(255) NOT NULL DEFAULT '0',
+  `FulleriteC84` bigint(255) NOT NULL DEFAULT '0',
+  `FulleriteC320` bigint(255) NOT NULL DEFAULT '0',
+  `FulleriteC540` bigint(255) NOT NULL DEFAULT '0',
+  `NeuralNetworkAnalyzer` bigint(255) NOT NULL DEFAULT '0',
+  `SleeperDataLibrary` bigint(255) NOT NULL DEFAULT '0',
+  `AncientCoordinatesDatabase` bigint(255) NOT NULL DEFAULT '0',
+  `SleeperDroneAINexus` bigint(255) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
   KEY `miningrun` (`miningrun`),
   KEY `hauler` (`hauler`),
   KEY `location` (`location`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
---
--- Dumping data for table `hauled`
---
-
 
 -- --------------------------------------------------------
 
@@ -6619,7 +6692,6 @@ CREATE TABLE IF NOT EXISTS `hauled` (
 -- Table structure for table `images`
 --
 
-DROP TABLE IF EXISTS `images`;
 CREATE TABLE IF NOT EXISTS `images` (
   `id` bigint(20) NOT NULL,
   `text` varchar(200) NOT NULL,
@@ -6628,14 +6700,128 @@ CREATE TABLE IF NOT EXISTS `images` (
   `bgColor` varchar(9) NOT NULL,
   `width` int(5) NOT NULL,
   `height` int(5) NOT NULL,
-  PRIMARY KEY  (`id`),
+  PRIMARY KEY (`id`),
   KEY `text` (`text`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
+
 --
--- Dumping data for table `images`
+-- Table structure for table `itemList`
 --
 
+CREATE TABLE IF NOT EXISTS `itemList` (
+  `updateTime` varchar(10) DEFAULT NULL,
+  `itemName` varchar(31) DEFAULT NULL,
+  `itemID` varchar(10) DEFAULT NULL,
+  `value` decimal(16,2) DEFAULT '0.00'
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `itemList`
+--
+
+INSERT INTO `itemList` (`updateTime`, `itemName`, `itemID`, `value`) VALUES
+('1315077942', 'Arkonor', '22', 1.00),
+('1315077942', 'Crimson Arkonor', '17425', 1.00),
+('1315077942', 'Prime Arkonor', '17426', 1.00),
+('1315077942', 'Bistot', '1223', 1.00),
+('1315077942', 'Triclinic Bistot', '17428', 1.00),
+('1315077942', 'Monoclinic Bistot', '17429', 1.00),
+('1315077942', 'Crokite', '1225', 1.00),
+('1315077942', 'Sharp Crokite', '17432', 1.00),
+('1315077942', 'Crystalline Crokite', '17433', 1.00),
+('1315077942', 'Dark Ochre', '1232', 1.00),
+('1315077942', 'Onyx Ochre', '17436', 1.00),
+('1315077942', 'Obsidian Ochre', '17437', 1.00),
+('1315077942', 'Gneiss', '1229', 1.00),
+('1315077942', 'Iridescent Gneiss', '17865', 1.00),
+('1315077942', 'Prismatic Gneiss', '17866', 1.00),
+('1315077942', 'Hedbergite', '21', 1.00),
+('1315077942', 'Glazed Hedbergite', '17441', 1.00),
+('1315077942', 'Vitric Hedbergite', '17440', 1.00),
+('1315077942', 'Hemorphite', '1231', 1.00),
+('1315077942', 'Vivid Hemorphite', '17444', 1.00),
+('1315077942', 'Radiant Hemorphite', '17445', 1.00),
+('1315077942', 'Jaspet', '1226', 1.00),
+('1315077942', 'Pure Jaspet', '17448', 1.00),
+('1315077942', 'Pristine Jaspet', '17449', 1.00),
+('1315077942', 'Kernite', '20', 1.00),
+('1315077942', 'Luminous Kernite', '17452', 1.00),
+('1315077942', 'Fiery Kernite', '17453', 1.00),
+('1315077942', 'Mercoxit', '11396', 1.00),
+('1315077942', 'Magma Mercoxit', '17869', 1.00),
+('1315077942', 'Vitreous Mercoxit', '17870', 1.00),
+('1315077942', 'Omber', '1227', 1.00),
+('1315077942', 'Silvery Omber', '17867', 1.00),
+('1315077942', 'Golden Omber', '17868', 1.00),
+('1315077942', 'Spodumain', '19', 1.00),
+('1315077942', 'Bright Spodumain', '17466', 1.00),
+('1315077942', 'Gleaming Spodumain', '17467', 1.00),
+('1315077942', 'Plagioclase', '18', 1.00),
+('1315077942', 'Azure Plagioclase', '17455', 1.00),
+('1315077942', 'Rich Plagioclase', '17456', 1.00),
+('1315077942', 'Pyroxeres', '1224', 1.00),
+('1315077942', 'Solid Pyroxeres', '17459', 1.00),
+('1315077942', 'Viscous Pyroxeres', '17460', 1.00),
+('1315077942', 'Scordite', '1228', 1.00),
+('1315077942', 'Condensed Scordite', '17463', 1.00),
+('1315077942', 'Massive Scordite', '17464', 1.00),
+('1315077942', 'Veldspar', '1230', 1.00),
+('1315077942', 'Concentrated Veldspar', '17470', 1.00),
+('1315077942', 'Dense Veldspar', '17471', 1.00),
+('1315077942', 'Blue Ice', '16264', 1.00),
+('1315077942', 'Clear Icicle', '16262', 1.00),
+('1315077942', 'Dark Glitter', '16267', 1.00),
+('1315077942', 'Enriched Clear Icicle', '17978', 1.00),
+('1315077942', 'Gelidus', '16268', 1.00),
+('1315077942', 'Glacial Mass', '16263', 1.00),
+('1315077942', 'Glare Crust', '16266', 1.00),
+('1315077942', 'Krystallos', '16269', 1.00),
+('1315077942', 'Pristine White Glaze', '17976', 1.00),
+('1315077942', 'Smooth Glacial Mass', '17977', 1.00),
+('1315077942', 'Thick Blue Ice', '17975', 1.00),
+('1315077942', 'White Glaze', '16265', 1.00),
+('1315077942', 'Condensed Alloy', '11739', 1.00),
+('1315077942', 'Crystal Compound', '11741', 1.00),
+('1315077942', 'Precious Alloy', '11737', 1.00),
+('1315077942', 'Sheen Compound', '11732', 1.00),
+('1315077942', 'Gleaming Alloy', '11740', 1.00),
+('1315077942', 'Lucent Compound', '11738', 1.00),
+('1315077942', 'Dark Compound', '11735', 1.00),
+('1315077942', 'Motley Compound', '11733', 1.00),
+('1315077942', 'Lustering Alloy', '11736', 1.00),
+('1315077942', 'Glossy Compound', '11724', 1.00),
+('1315077942', 'Plush Compound', '11725', 1.00),
+('1315077942', 'Opulent Compound', '11734', 1.00),
+('1315077942', 'Cartesian Temporal Coordinator', '30024', 1.00),
+('1315077942', 'Central System Controller', '30270', 1.00),
+('1315077942', 'Defensive Control Node', '30269', 1.00),
+('1315077942', 'Electromechanical Hull Sheeting', '30254', 1.00),
+('1315077942', 'Emergent Combat Analyzer', '30248', 1.00),
+('1315077942', 'Emergent Combat Intelligence', '30271', 1.00),
+('1315077942', 'Fused Nanomechanical Engines', '30018', 1.00),
+('1315077942', 'Heuristic Selfassemblers', '30022', 1.00),
+('1315077942', 'Jump Drive Control Nexus', '30268', 1.00),
+('1315077942', 'Melted Nanoribbons', '30259', 1.00),
+('1315077942', 'Modified Fluid Router', '30021', 1.00),
+('1315077942', 'Neurovisual Input Matrix', '30251', 1.00),
+('1315077942', 'Powdered C-540 Graphite', '30019', 1.00),
+('1315077942', 'Resonance Calibration Matrix', '30258', 1.00),
+('1315077942', 'Thermoelectric Catalysts', '30252', 1.00),
+('1315077942', 'Fullerite-C28', '30375', 1.00),
+('1315077942', 'Fullerite-C32', '30376', 1.00),
+('1315077942', 'Fullerite-C50', '30370', 1.00),
+('1315077942', 'Fullerite-C60', '30371', 1.00),
+('1315077942', 'Fullerite-C70', '30372', 1.00),
+('1315077942', 'Fullerite-C72', '30373', 1.00),
+('1315077942', 'Fullerite-C84', '30374', 1.00),
+('1315077942', 'Fullerite-C320', '30377', 1.00),
+('1315077942', 'Fullerite-C540', '30378', 1.00),
+('1315077942', 'Neural Network Analyzer', '30744', 1.00),
+('1315077942', 'Sleeper Data Library', '30745', 1.00),
+('1315077942', 'Ancient Coordinates Database', '30746', 1.00),
+('1315077942', 'Sleeper Drone AI Nexus', '30747', 1.00);
 
 -- --------------------------------------------------------
 
@@ -6643,1129 +6829,28 @@ CREATE TABLE IF NOT EXISTS `images` (
 -- Table structure for table `joinups`
 --
 
-DROP TABLE IF EXISTS `joinups`;
 CREATE TABLE IF NOT EXISTS `joinups` (
-  `id` int(10) NOT NULL auto_increment,
+  `id` int(10) NOT NULL AUTO_INCREMENT,
   `userid` int(5) NOT NULL,
   `run` int(5) NOT NULL,
   `shiptype` int(2) NOT NULL,
   `joined` int(15) NOT NULL,
-  `parted` int(15) default NULL,
-  `status` int(1) default '0',
-  `remover` int(5) default NULL,
-  `charity` tinyint(1) NOT NULL default '0',
-  PRIMARY KEY  (`id`),
+  `parted` int(15) DEFAULT NULL,
+  `status` int(1) DEFAULT '0',
+  `remover` int(5) DEFAULT NULL,
+  `charity` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
   KEY `userid` (`userid`),
   KEY `run` (`run`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- Dumping data for table `joinups`
---
-
-
 -- --------------------------------------------------------
 
 --
--- Table structure for table `onlinetime`
+-- Table structure for table `m3values`
 --
 
-DROP TABLE IF EXISTS `onlinetime`;
-CREATE TABLE IF NOT EXISTS `onlinetime` (
-  `userid` int(10) NOT NULL,
-  `h00` int(1) NOT NULL default '0',
-  `h01` int(1) NOT NULL default '0',
-  `h02` int(1) NOT NULL default '0',
-  `h03` int(1) NOT NULL default '0',
-  `h04` int(1) NOT NULL default '0',
-  `h05` int(1) NOT NULL default '0',
-  `h06` int(1) NOT NULL default '0',
-  `h07` int(1) NOT NULL default '0',
-  `h08` int(1) NOT NULL default '0',
-  `h09` int(1) NOT NULL default '0',
-  `h10` int(1) NOT NULL default '0',
-  `h11` int(1) NOT NULL default '0',
-  `h12` int(1) NOT NULL default '0',
-  `h13` int(1) NOT NULL default '0',
-  `h14` int(1) NOT NULL default '0',
-  `h15` int(1) NOT NULL default '0',
-  `h16` int(1) NOT NULL default '0',
-  `h17` int(1) NOT NULL default '0',
-  `h18` int(1) NOT NULL default '0',
-  `h19` int(1) NOT NULL default '0',
-  `h20` int(1) NOT NULL default '0',
-  `h21` int(1) NOT NULL default '0',
-  `h22` int(1) NOT NULL default '0',
-  `h23` int(1) NOT NULL default '0',
-  PRIMARY KEY  (`userid`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `onlinetime`
---
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `orevalues`
---
-
-DROP TABLE IF EXISTS `orevalues`;
-CREATE TABLE IF NOT EXISTS `orevalues` (
-  `id` int(5) NOT NULL auto_increment,
-  `modifier` int(5) NOT NULL,
-  `time` int(15) NOT NULL,
-  `ArkonorWorth` decimal(10,2) NOT NULL default '0.00',
-  `CrimsonArkonorWorth` decimal(10,2) NOT NULL default '0.00',
-  `PrimeArkonorWorth` decimal(10,2) NOT NULL default '0.00',
-  `BistotWorth` decimal(10,2) NOT NULL default '0.00',
-  `MonoclinicBistotWorth` decimal(10,2) NOT NULL default '0.00',
-  `TriclinicBistotWorth` decimal(10,2) NOT NULL default '0.00',
-  `CrokiteWorth` decimal(10,2) NOT NULL default '0.00',
-  `CrystallineCrokiteWorth` decimal(10,2) NOT NULL default '0.00',
-  `SharpCrokiteWorth` decimal(10,2) NOT NULL default '0.00',
-  `DarkOchreWorth` decimal(10,2) NOT NULL default '0.00',
-  `ObsidianOchreWorth` decimal(10,2) NOT NULL default '0.00',
-  `OnyxOchreWorth` decimal(10,2) NOT NULL default '0.00',
-  `GneissWorth` decimal(10,2) NOT NULL default '0.00',
-  `IridescentGneissWorth` decimal(10,2) NOT NULL default '0.00',
-  `PrismaticGneissWorth` decimal(10,2) NOT NULL default '0.00',
-  `HedbergiteWorth` decimal(10,2) NOT NULL default '0.00',
-  `GlazedHedbergiteWorth` decimal(10,2) NOT NULL default '0.00',
-  `VitricHedbergiteWorth` decimal(10,2) NOT NULL default '0.00',
-  `HemorphiteWorth` decimal(10,2) NOT NULL default '0.00',
-  `VividHemorphiteWorth` decimal(10,2) NOT NULL default '0.00',
-  `RadiantHemorphiteWorth` decimal(10,2) NOT NULL default '0.00',
-  `JaspetWorth` decimal(10,2) NOT NULL default '0.00',
-  `PureJaspetWorth` decimal(10,2) NOT NULL default '0.00',
-  `PristineJaspetWorth` decimal(10,2) NOT NULL default '0.00',
-  `KerniteWorth` decimal(10,2) NOT NULL default '0.00',
-  `FieryKerniteWorth` decimal(10,2) NOT NULL default '0.00',
-  `LuminousKerniteWorth` decimal(10,2) NOT NULL default '0.00',
-  `MercoxitWorth` decimal(10,2) NOT NULL default '0.00',
-  `MagmaMercoxitWorth` decimal(10,2) NOT NULL default '0.00',
-  `VitreousMercoxitWorth` decimal(10,2) NOT NULL default '0.00',
-  `BrightSpodumainWorth` decimal(10,2) NOT NULL default '0.00',
-  `GleamingSpodumainWorth` decimal(10,2) NOT NULL default '0.00',
-  `SpodumainWorth` decimal(10,2) NOT NULL default '0.00',
-  `OmberWorth` decimal(10,2) NOT NULL default '0.00',
-  `SilveryOmberWorth` decimal(10,2) NOT NULL default '0.00',
-  `GoldenOmberWorth` decimal(10,2) NOT NULL default '0.00',
-  `PlagioclaseWorth` decimal(10,2) NOT NULL default '0.00',
-  `AzurePlagioclaseWorth` decimal(10,2) NOT NULL default '0.00',
-  `RichPlagioclaseWorth` decimal(10,2) NOT NULL default '0.00',
-  `PyroxeresWorth` decimal(10,2) NOT NULL default '0.00',
-  `SolidPyroxeresWorth` decimal(10,2) NOT NULL default '0.00',
-  `ViscousPyroxeresWorth` decimal(10,2) NOT NULL default '0.00',
-  `ScorditeWorth` decimal(10,2) NOT NULL default '0.00',
-  `CondensedScorditeWorth` decimal(10,2) NOT NULL default '0.00',
-  `MassiveScorditeWorth` decimal(10,2) NOT NULL default '0.00',
-  `VeldsparWorth` decimal(10,2) NOT NULL default '0.00',
-  `ConcentratedVeldsparWorth` decimal(10,2) NOT NULL default '0.00',
-  `DenseVeldsparWorth` decimal(10,2) NOT NULL default '0.00',
-  `BlueIceWorth` decimal(10,2) NOT NULL default '0.00',
-  `ClearIcicleWorth` decimal(10,2) NOT NULL default '0.00',
-  `DarkGlitterWorth` decimal(10,2) NOT NULL default '0.00',
-  `EnrichedClearIcicleWorth` decimal(10,2) NOT NULL default '0.00',
-  `GelidusWorth` decimal(10,2) NOT NULL default '0.00',
-  `GlacialMassWorth` decimal(10,2) NOT NULL default '0.00',
-  `GlareCrustWorth` decimal(10,2) NOT NULL default '0.00',
-  `KrystallosWorth` decimal(10,2) NOT NULL default '0.00',
-  `PristineWhiteGlazeWorth` decimal(10,2) NOT NULL default '0.00',
-  `SmoothGlacialMassWorth` decimal(10,2) NOT NULL default '0.00',
-  `ThickBlueIceWorth` decimal(10,2) NOT NULL default '0.00',
-  `WhiteGlazeWorth` decimal(10,2) NOT NULL default '0.00',
-  PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
-
---
--- Dumping data for table `orevalues`
---
-
-INSERT INTO `orevalues` (`id`, `modifier`, `time`, `ArkonorWorth`, `CrimsonArkonorWorth`, `PrimeArkonorWorth`, `BistotWorth`, `MonoclinicBistotWorth`, `TriclinicBistotWorth`, `CrokiteWorth`, `CrystallineCrokiteWorth`, `SharpCrokiteWorth`, `DarkOchreWorth`, `ObsidianOchreWorth`, `OnyxOchreWorth`, `GneissWorth`, `IridescentGneissWorth`, `PrismaticGneissWorth`, `HedbergiteWorth`, `GlazedHedbergiteWorth`, `VitricHedbergiteWorth`, `HemorphiteWorth`, `VividHemorphiteWorth`, `RadiantHemorphiteWorth`, `JaspetWorth`, `PureJaspetWorth`, `PristineJaspetWorth`, `KerniteWorth`, `FieryKerniteWorth`, `LuminousKerniteWorth`, `MercoxitWorth`, `MagmaMercoxitWorth`, `VitreousMercoxitWorth`, `BrightSpodumainWorth`, `GleamingSpodumainWorth`, `SpodumainWorth`, `OmberWorth`, `SilveryOmberWorth`, `GoldenOmberWorth`, `PlagioclaseWorth`, `AzurePlagioclaseWorth`, `RichPlagioclaseWorth`, `PyroxeresWorth`, `SolidPyroxeresWorth`, `ViscousPyroxeresWorth`, `ScorditeWorth`, `CondensedScorditeWorth`, `MassiveScorditeWorth`, `VeldsparWorth`, `ConcentratedVeldsparWorth`, `DenseVeldsparWorth`, `BlueIceWorth`, `ClearIcicleWorth`, `DarkGlitterWorth`, `EnrichedClearIcicleWorth`, `GelidusWorth`, `GlacialMassWorth`, `GlareCrustWorth`, `KrystallosWorth`, `PristineWhiteGlazeWorth`, `SmoothGlacialMassWorth`, `ThickBlueIceWorth`, `WhiteGlazeWorth`) VALUES
-(1, -1, 0, '1.00', '1.00', '1.00', '1.00', '1.00', '1.00', '1.00', '1.00', '1.00', '1.00', '1.00', '1.00', '1.00', '1.00', '1.00', '1.00', '1.00', '1.00', '1.00', '1.00', '1.00', '1.00', '1.00', '1.00', '1.00', '1.00', '1.00', '1.00', '1.00', '1.00', '1.00', '1.00', '1.00', '1.00', '1.00', '1.00', '1.00', '1.00', '1.00', '1.00', '1.00', '1.00', '1.00', '1.00', '1.00', '1.00', '1.00', '1.00', '1.00', '1.00', '1.00', '1.00', '1.00', '1.00', '1.00', '1.00', '1.00', '1.00', '1.00', '1.00');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `payoutRequests`
---
-
-DROP TABLE IF EXISTS `payoutRequests`;
-CREATE TABLE IF NOT EXISTS `payoutRequests` (
-  `request` int(6) NOT NULL auto_increment,
-  `time` int(12) NOT NULL,
-  `applicant` int(5) NOT NULL,
-  `amount` int(12) NOT NULL,
-  `payoutTime` int(12) default NULL,
-  `banker` int(5) default NULL,
-  PRIMARY KEY  (`request`),
-  KEY `applicant` (`applicant`),
-  KEY `banker` (`banker`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
---
--- Dumping data for table `payoutRequests`
---
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `profiles`
---
-
-DROP TABLE IF EXISTS `profiles`;
-CREATE TABLE IF NOT EXISTS `profiles` (
-  `userid` int(5) NOT NULL,
-  `emailVisible` tinyint(1) NOT NULL default '0',
-  `isMiner` tinyint(1) NOT NULL default '0',
-  `isHauler` tinyint(1) NOT NULL default '0',
-  `isFighter` tinyint(1) NOT NULL default '0',
-  `about` blob,
-  PRIMARY KEY  (`userid`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `profiles`
---
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `ranks`
---
-
-DROP TABLE IF EXISTS `ranks`;
-CREATE TABLE IF NOT EXISTS `ranks` (
-  `rankid` int(3) NOT NULL auto_increment,
-  `name` varchar(30) NOT NULL,
-  `rankOrder` varchar(3) default NULL,
-  UNIQUE KEY `rankid` (`rankid`),
-  KEY `name` (`name`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
---
--- Dumping data for table `ranks`
---
-INSERT INTO `ranks` (`rankid`, `name`, `rankOrder`) VALUES (1, 'CEO', '1');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `runs`
---
-
-DROP TABLE IF EXISTS `runs`;
-CREATE TABLE IF NOT EXISTS `runs` (
-  `id` int(5) NOT NULL auto_increment,
-  `location` varchar(50) NOT NULL,
-  `starttime` int(15) NOT NULL,
-  `endtime` int(15) default NULL,
-  `supervisor` int(5) NOT NULL,
-  `corpkeeps` int(3) NOT NULL default '100',
-  `isOfficial` tinyint(1) NOT NULL default '0',
-  `isLocked` tinyint(1) NOT NULL default '0',
-  `oreGlue` int(4) NOT NULL default '0',
-  `Arkonor` int(6) NOT NULL default '0',
-  `tmec` float NOT NULL default '0',
-  `CrimsonArkonor` int(6) NOT NULL default '0',
-  `PrimeArkonor` int(6) NOT NULL default '0',
-  `Bistot` int(6) NOT NULL default '0',
-  `MonoclinicBistot` int(6) NOT NULL default '0',
-  `TriclinicBistot` int(6) NOT NULL default '0',
-  `Crokite` int(6) NOT NULL default '0',
-  `CrystallineCrokite` int(6) NOT NULL default '0',
-  `SharpCrokite` int(6) NOT NULL default '0',
-  `DarkOchre` int(6) NOT NULL default '0',
-  `ObsidianOchre` int(6) NOT NULL default '0',
-  `OnyxOchre` int(6) NOT NULL default '0',
-  `Gneiss` int(6) NOT NULL default '0',
-  `IridescentGneiss` int(6) NOT NULL default '0',
-  `PrismaticGneiss` int(6) NOT NULL default '0',
-  `Omber` int(6) NOT NULL default '0',
-  `SilveryOmber` int(6) NOT NULL default '0',
-  `GoldenOmber` int(6) NOT NULL default '0',
-  `Hedbergite` int(6) NOT NULL default '0',
-  `GlazedHedbergite` int(6) NOT NULL default '0',
-  `VitricHedbergite` int(6) NOT NULL default '0',
-  `Hemorphite` int(6) NOT NULL default '0',
-  `VividHemorphite` int(6) NOT NULL default '0',
-  `RadiantHemorphite` int(6) NOT NULL default '0',
-  `Jaspet` int(6) NOT NULL default '0',
-  `PureJaspet` int(6) NOT NULL default '0',
-  `PristineJaspet` int(6) NOT NULL default '0',
-  `Kernite` int(6) NOT NULL default '0',
-  `FieryKernite` int(6) NOT NULL default '0',
-  `LuminousKernite` int(6) NOT NULL default '0',
-  `Mercoxit` int(6) NOT NULL default '0',
-  `MagmaMercoxit` int(6) NOT NULL default '0',
-  `VitreousMercoxit` int(6) NOT NULL default '0',
-  `BrightSpodumain` int(6) NOT NULL default '0',
-  `GleamingSpodumain` int(6) NOT NULL default '0',
-  `Spodumain` int(6) NOT NULL default '0',
-  `Plagioclase` int(6) NOT NULL default '0',
-  `AzurePlagioclase` int(6) NOT NULL default '0',
-  `RichPlagioclase` int(6) NOT NULL default '0',
-  `Pyroxeres` int(6) NOT NULL default '0',
-  `SolidPyroxeres` int(6) NOT NULL default '0',
-  `ViscousPyroxeres` int(6) NOT NULL default '0',
-  `Scordite` int(6) NOT NULL default '0',
-  `CondensedScordite` int(6) NOT NULL default '0',
-  `MassiveScordite` int(6) NOT NULL default '0',
-  `Veldspar` int(6) NOT NULL default '0',
-  `ConcentratedVeldspar` int(6) NOT NULL default '0',
-  `DenseVeldspar` int(6) NOT NULL default '0',
-  `BlueIce` int(6) NOT NULL default '0',
-  `ClearIcicle` int(6) NOT NULL default '0',
-  `DarkGlitter` int(6) NOT NULL default '0',
-  `EnrichedClearIcicle` int(6) NOT NULL default '0',
-  `Gelidus` int(6) NOT NULL default '0',
-  `GlacialMass` int(6) NOT NULL default '0',
-  `GlareCrust` int(6) NOT NULL default '0',
-  `Krystallos` int(6) NOT NULL default '0',
-  `PristineWhiteGlaze` int(6) NOT NULL default '0',
-  `SmoothGlacialMass` int(6) NOT NULL default '0',
-  `ThickBlueIce` int(6) NOT NULL default '0',
-  `WhiteGlaze` int(6) NOT NULL default '0',
-  `ArkonorWanted` int(6) NOT NULL default '0',
-  `CrimsonArkonorWanted` int(6) NOT NULL default '0',
-  `PrimeArkonorWanted` int(6) NOT NULL default '0',
-  `BistotWanted` int(6) NOT NULL default '0',
-  `MonoclinicBistotWanted` int(6) NOT NULL default '0',
-  `TriclinicBistotWanted` int(6) NOT NULL default '0',
-  `CrokiteWanted` int(6) NOT NULL default '0',
-  `CrystallineCrokiteWanted` int(6) NOT NULL default '0',
-  `SharpCrokiteWanted` int(6) NOT NULL default '0',
-  `DarkOchreWanted` int(6) NOT NULL default '0',
-  `ObsidianOchreWanted` int(6) NOT NULL default '0',
-  `OnyxOchreWanted` int(6) NOT NULL default '0',
-  `GneissWanted` int(6) NOT NULL default '0',
-  `IridescentGneissWanted` int(6) NOT NULL default '0',
-  `PrismaticGneissWanted` int(6) NOT NULL default '0',
-  `HedbergiteWanted` int(6) NOT NULL default '0',
-  `GlazedHedbergiteWanted` int(6) NOT NULL default '0',
-  `VitricHedbergiteWanted` int(6) NOT NULL default '0',
-  `HemorphiteWanted` int(6) NOT NULL default '0',
-  `VividHemorphiteWanted` int(6) NOT NULL default '0',
-  `RadiantHemorphiteWanted` int(6) NOT NULL default '0',
-  `JaspetWanted` int(6) NOT NULL default '0',
-  `PureJaspetWanted` int(6) NOT NULL default '0',
-  `PristineJaspetWanted` int(6) NOT NULL default '0',
-  `KerniteWanted` int(6) NOT NULL default '0',
-  `FieryKerniteWanted` int(6) NOT NULL default '0',
-  `LuminousKerniteWanted` int(6) NOT NULL default '0',
-  `MercoxitWanted` int(6) NOT NULL default '0',
-  `MagmaMercoxitWanted` int(6) NOT NULL default '0',
-  `VitreousMercoxitWanted` int(6) NOT NULL default '0',
-  `BrightSpodumainWanted` int(6) NOT NULL default '0',
-  `GleamingSpodumainWanted` int(6) NOT NULL default '0',
-  `SpodumainWanted` int(6) NOT NULL default '0',
-  `PlagioclaseWanted` int(6) NOT NULL default '0',
-  `AzurePlagioclaseWanted` int(6) NOT NULL default '0',
-  `RichPlagioclaseWanted` int(6) NOT NULL default '0',
-  `PyroxeresWanted` int(6) NOT NULL default '0',
-  `OmberWanted` int(6) NOT NULL default '0',
-  `SilveryOmberWanted` int(6) NOT NULL default '0',
-  `GoldenOmberWanted` int(6) NOT NULL default '0',
-  `SolidPyroxeresWanted` int(6) NOT NULL default '0',
-  `ViscousPyroxeresWanted` int(6) NOT NULL default '0',
-  `ScorditeWanted` int(6) NOT NULL default '0',
-  `CondensedScorditeWanted` int(6) NOT NULL default '0',
-  `MassiveScorditeWanted` int(6) NOT NULL default '0',
-  `VeldsparWanted` int(6) NOT NULL default '0',
-  `ConcentratedVeldsparWanted` int(6) NOT NULL default '0',
-  `DenseVeldsparWanted` int(6) NOT NULL default '0',
-  `BlueIceWanted` int(6) NOT NULL default '0',
-  `ClearIcicleWanted` int(6) NOT NULL default '0',
-  `DarkGlitterWanted` int(6) NOT NULL default '0',
-  `EnrichedClearIcicleWanted` int(6) NOT NULL default '0',
-  `GelidusWanted` int(6) NOT NULL default '0',
-  `GlacialMassWanted` int(6) NOT NULL default '0',
-  `GlareCrustWanted` int(6) NOT NULL default '0',
-  `KrystallosWanted` int(6) NOT NULL default '0',
-  `PristineWhiteGlazeWanted` int(6) NOT NULL default '0',
-  `SmoothGlacialMassWanted` int(6) NOT NULL default '0',
-  `ThickBlueIceWanted` int(6) NOT NULL default '0',
-  `WhiteGlazeWanted` int(6) NOT NULL default '0',
-  PRIMARY KEY  (`id`),
-  KEY `location` (`location`,`supervisor`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
---
--- Dumping data for table `runs`
---
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `templates`
---
-
-DROP TABLE IF EXISTS `templates`;
-CREATE TABLE IF NOT EXISTS `templates` (
-  `id` int(10) NOT NULL auto_increment,
-  `identifier` varchar(20) NOT NULL,
-  `type` varchar(20) NOT NULL,
-  `descr` varchar(80) default NULL,
-  `template` blob,
-  PRIMARY KEY  (`id`),
-  KEY `identifier` (`identifier`),
-  KEY `type` (`type`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
-
---
--- Dumping data for table `templates`
---
-
-INSERT INTO `templates` (`id`, `identifier`, `type`, `descr`, `template`) VALUES
-(1, 'activation', 'email', 'Account activation email', 'Hello {{USERNAME}} !\n\nYour CEO has just confirmed your account, and we are more than\nhappy to present you your password.\n\nPlease use the password: {{NEWPASS}}\n\nPlease log in to you earliest convenience and change that\npassword to something easier to renember. Or write this one\ndown.\n\n{{VERSION}} of {{SITENAME}}.\n\nSee you in the asteroid fields soon,\n\n{{SITENAME}}.'),
-(2, 'lostpass', 'email', 'Lost password email', 'Hello {{USERNAME}} !\n\nSomeone from {{IP}} -possibly you- has recently visited the\n{{VERSION}} of {{SITENAME}}.\n\nHowever, you or he/she was not able to log in and has\nrequested a new password, which we are happy to supply to you:\n\n{{NEWPASS}}\n\nPlease log in to you earliest convenience and change that\npassword to something easier to renember. Or write this one\ndown.\n\nSee you in the asteroid fields soon,\n\n{{SITENAME}}.'),
-(3, 'newevent', 'email', 'New event accounced email', 'Greetings {{USER}}!\n{{FLAGOFFICER}} has just announced a new Event!\n\nRenember: If you want to come, please login with your\n          account and join this event. This helps the\n          officers in charge to know how many are\n          coming.\n\n-- 8< -- -- 8< -- -- 8< -- -- 8< -- -- 8< -- -- 8< -- \n\nEVENT INFORMATION\n\nMission ID          {{ID}}\nMission Type        {{TYPE}}\nDescription         {{SDESCR}}\nExecuting Officer   {{FLAGOFFICER}}\nSystem              {{SYSTEM}}\nSecurity            {{SECURITY}}\nStarttime           {{STARTTIME}}\nEstimated Duration  {{DURATION}}\nDifficulty          {{RISK}}\nPayment             {{PAYMENT}}\nCollateral          {{COLLATERAL}}\n\nAdditional Notes:\n{{NOTES}}\n\n-- 8< -- -- 8< -- -- 8< -- -- 8< -- -- 8< -- -- 8< -- \n\nYou recived this eMail because you are subscribed to\nthe eMail announcement system of MiningBuddy, \nbelonging to {{SITENAME}}.\nIf you do not wish to recive any more eMails from\nthis site, please go to the following site, login\nand opt-out (preferences page).\n\n{{URL}}\n\n-- 8< -- -- 8< -- -- 8< -- -- 8< -- -- 8< -- -- 8< -- \npowered by {{VERSION}}.'),
-(4, 'accountactivated', 'email', 'Account activated email', 'Hello {{USERNAME}} !\n\nYour friendly corporation, {{CORP}},\nhas just created an account for you for the MiningBuddy\nat {{SITE}}.\n\nYour login name: {{USERNAME}}\nYour Password  : {{PASSWORD}}\n\nPlease log in to you earliest convenience and change that\npassword to something easier to renember. Or write this one\ndown.\n\nSee you in the asteroid fields soon,\n\n{{CREATOR}}\n{{CORP}}.'),
-(5, 'accountrequest', 'email', 'Account activation email', 'Hello there, pilot!\n\nSomeone from the IP {{IP}}, possibly you, requested an\naccount for the MiningBuddy deployment located at\n\n{{URL}}\n\nThe request was made on {{DATE}}.\n\nIf you requested it, you need to activate your account\nby clicking on this link:\n\n{{ACTIVATE}}\n\nIf the request was made in error, or not by you, do\nnot worry. If you do not do anything your email adress\nwill be blacklisted in our system and not be used again.\n\nThank you,\nkind regards,\nThe CEO of {{CORP}}.'),
-(6, 'receipt', 'email', 'Summary of mining op', '{{DIVIDERTOP}}\n\nHello {{USERNAME}},\n\nThank you for attending mining operation #{{ID}}. Below is a lineup\nof your operations achievement:\n\nOres Mined:\n----------------------------------------------------------------------\n{{ORESMINED}}\n----------------------------------------------------------------------\n                                        TOTAL VALUE: {{VALUE}}\n                                   YOUR GROSS VALUE: {{GROSSSHARE}}\n                                         CORP TAXES: {{CORPTAXES}}\n                                          NET VALUE: {{NETVALUE}}\n                                     YOUR NET SHARE: {{NETSHARE}}\n\n\nThe amonunt of {{NETSHARE}} has been credited to your account,\nbelow is a short summary of your recent transactions:\n\n----------------------------------------------------------------------\n{{ACCOUNT}}\n----------------------------------------------------------------------\n{{ACCOUNTBALANCE}}\n\nThank you again for taking part in this mining operation. We hope to\nsee you in future runs as well!\n\n{{SITENAME}}\n{{URL}}\n\n{{DIVIDERBOT}}'),
-(7, 'motd', 'announce', 'Announcement after login', '');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `transactions`
---
-
-DROP TABLE IF EXISTS `transactions`;
-CREATE TABLE IF NOT EXISTS `transactions` (
-  `id` int(10) NOT NULL auto_increment,
-  `time` int(12) NOT NULL,
-  `owner` int(5) NOT NULL,
-  `banker` int(5) NOT NULL,
-  `type` int(2) NOT NULL default '0',
-  `amount` int(15) NOT NULL default '0',
-  `reason` varchar(200) NOT NULL default 'cash deposit',
-  PRIMARY KEY  (`id`),
-  KEY `owner` (`owner`,`banker`,`type`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
---
--- Dumping data for table `transactions`
---
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `users`
---
-
-DROP TABLE IF EXISTS `users`;
-CREATE TABLE IF NOT EXISTS `users` (
-  `id` int(5) NOT NULL auto_increment,
-  `username` varchar(30) NOT NULL,
-  `password` varchar(50) NOT NULL,
-  `email` varchar(80) default 'System',
-  `addedby` int(5) NOT NULL default '0',
-  `lastlogin` int(20) default '0',
-  `confirmed` int(1) NOT NULL default '0',
-  `emailvalid` int(1) NOT NULL default '0',
-  `emailcode` bigint(30) default NULL,
-  `optIn` int(1) NOT NULL default '1',
-  `deleted` int(1) NOT NULL default '0',
-  `canLogin` tinyint(1) NOT NULL default '1',
-  `canJoinRun` tinyint(1) NOT NULL default '1',
-  `canCreateRun` tinyint(1) NOT NULL default '0',
-  `canCloseRun` tinyint(1) NOT NULL default '0',
-  `canDeleteRun` tinyint(1) NOT NULL default '0',
-  `canAddHaul` tinyint(1) NOT NULL default '1',
-  `canChangePwd` tinyint(1) NOT NULL default '1',
-  `canChangeEmail` tinyint(1) NOT NULL default '1',
-  `canChangeOre` tinyint(1) NOT NULL default '0',
-  `canAddUser` tinyint(1) NOT NULL default '0',
-  `canSeeUsers` tinyint(1) NOT NULL default '0',
-  `canDeleteUser` tinyint(1) NOT NULL default '0',
-  `canEditRank` tinyint(1) NOT NULL default '0',
-  `canManageUser` tinyint(1) NOT NULL default '0',
-  `canEditEvents` tinyint(1) NOT NULL default '0',
-  `canDeleteEvents` tinyint(1) NOT NULL default '0',
-  `canSeeEvents` tinyint(1) NOT NULL default '1',
-  `isOfficial` tinyint(1) NOT NULL default '0',
-  `isAccountant` tinyint(1) NOT NULL default '0',
-  `preferences` blob,
-  `isAdmin` tinyint(1) NOT NULL default '0',
-  `rank` int(3) default NULL,
-  PRIMARY KEY  (`id`),
-  KEY `username` (`username`,`password`,`email`,`confirmed`,`emailvalid`,`optIn`,`deleted`,`canLogin`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
---
--- Dumping data for table `users`
---
-
---
--- Updates to Version 19 for new installs
---
-
-INSERT INTO `config` (`name`, `value`) VALUES ('CondensedAlloyEnabled', '0'), 
-('CrystalCompoundEnabled', '0'), ('PreciousAlloyEnabled', '0'), ('SheenCompoundEnabled', '0'), 
-('GleamingAlloyEnabled', '0'), ('LucentCompoundEnabled', '0'), ('DarkCompoundEnabled', '0'), 
-('MotleyCompoundEnabled', '0'), ('LusteringAlloyEnabled', '0'), ('GlossyCompoundEnabled', '0'), 
-('PlushhCompoundEnabled', '0'), ('OpulentCompoundEnabled', '0'), 
-('CartesianTemporalCoordinatorEnabled', '0'), ('CentralSystemControllerEnabled', '0'), 
-('DefensiveControlNodeEnabled', '0'), ('ElectromechanicalHullSheetingEnabled', '0'), 
-('EmergentCombatAnalyzerEnabled', '0'), ('EmergentCombatIntelligenceEnabled', '0'), 
-('FusedNanomechanicalEnginesEnabled', '0'), ('HeuristicSelfassemblersEnabled', '0'), 
-('JumpDriveControlNexusEnabled', '0'), ('MeltedNanoribbonsEnabled', '0'), 
-('ModifiedFluidRouterEnabled', '0'), ('NeurovisualInputMatrixEnabled', '0'), 
-('PowderedC540GraphiteEnabled', '0'), ('ResonanceCalibrationMatrixEnabled', '0'), 
-('ThermoelectricCatalystsEnabled', '0'), ('FulleriteC50Enabled', '0'), 
-('FulleriteC60Enabled', '0'), ('FulleriteC70Enabled', '0'), ('FulleriteC72Enabled', '0'), 
-('FulleriteC84Enabled', '0'), ('FulleriteC28Enabled', '0'), ('FulleriteC32Enabled', '0'), 
-('FulleriteC320Enabled', '0'), ('FilleriteC540Enabled', '0');
-
-ALTER TABLE  `orevalues` ADD  `CondensedAlloyWorth` DECIMAL( 10, 2 ) NOT NULL DEFAULT  '0.00';
-ALTER TABLE  `orevalues` ADD  `CrystalCompoundWorth` DECIMAL( 10, 2 ) NOT NULL DEFAULT  '0.00';
-ALTER TABLE  `orevalues` ADD  `PreciousAlloyWorth` DECIMAL( 10, 2 ) NOT NULL DEFAULT  '0.00';
-ALTER TABLE  `orevalues` ADD  `SheenCompoundWorth` DECIMAL( 10, 2 ) NOT NULL DEFAULT  '0.00';
-ALTER TABLE  `orevalues` ADD  `GleamingAlloyWorth` DECIMAL( 10, 2 ) NOT NULL DEFAULT  '0.00';
-ALTER TABLE  `orevalues` ADD  `LucentCompoundWorth` DECIMAL( 10, 2 ) NOT NULL DEFAULT  '0.00';
-ALTER TABLE  `orevalues` ADD  `DarkCompoundWorth` DECIMAL( 10, 2 ) NOT NULL DEFAULT  '0.00';
-ALTER TABLE  `orevalues` ADD  `MotleyCompoundWorth` DECIMAL( 10, 2 ) NOT NULL DEFAULT  '0.00';
-ALTER TABLE  `orevalues` ADD  `LusteringAlloyWorth` DECIMAL( 10, 2 ) NOT NULL DEFAULT  '0.00';
-ALTER TABLE  `orevalues` ADD  `GlossyCompoundWorth` DECIMAL( 10, 2 ) NOT NULL DEFAULT  '0.00';
-ALTER TABLE  `orevalues` ADD  `PlushCompoundWorth` DECIMAL( 10, 2 ) NOT NULL DEFAULT  '0.00';
-ALTER TABLE  `orevalues` ADD  `OpulentCompoundWorth` DECIMAL( 10, 2 ) NOT NULL DEFAULT  '0.00';
-ALTER TABLE  `orevalues` ADD  `CartesianTemporalCoordinatorWorth` DECIMAL( 10, 2 ) NOT NULL DEFAULT  '0.00';
-ALTER TABLE  `orevalues` ADD  `CentralSystemControllerWorth` DECIMAL( 10, 2 ) NOT NULL DEFAULT  '0.00';
-ALTER TABLE  `orevalues` ADD  `DefensiveControlNodeWorth` DECIMAL( 10, 2 ) NOT NULL DEFAULT  '0.00';
-ALTER TABLE  `orevalues` ADD  `ElectromechanicalHullSheetingWorth` DECIMAL( 10, 2 ) NOT NULL DEFAULT  '0.00';
-ALTER TABLE  `orevalues` ADD  `EmergentCombatAnalyzerWorth` DECIMAL( 10, 2 ) NOT NULL DEFAULT  '0.00';
-ALTER TABLE  `orevalues` ADD  `EmergentCombatIntelligenceWorth` DECIMAL( 10, 2 ) NOT NULL DEFAULT  '0.00';
-ALTER TABLE  `orevalues` ADD  `FusedNanomechanicalEnginesWorth` DECIMAL( 10, 2 ) NOT NULL DEFAULT  '0.00';
-ALTER TABLE  `orevalues` ADD  `HeuristicSelfassemblersWorth` DECIMAL( 10, 2 ) NOT NULL DEFAULT  '0.00';
-ALTER TABLE  `orevalues` ADD  `JumpDriveControlNexusWorth` DECIMAL( 10, 2 ) NOT NULL DEFAULT  '0.00';
-ALTER TABLE  `orevalues` ADD  `MeltedNanoribbonsWorth` DECIMAL( 10, 2 ) NOT NULL DEFAULT  '0.00';
-ALTER TABLE  `orevalues` ADD  `ModifiedFluidRouterWorth` DECIMAL( 10, 2 ) NOT NULL DEFAULT  '0.00';
-ALTER TABLE  `orevalues` ADD  `NeurovisualInputMatrixWorth` DECIMAL( 10, 2 ) NOT NULL DEFAULT  '0.00';
-ALTER TABLE  `orevalues` ADD  `PowderedC540GraphiteWorth` DECIMAL( 10, 2 ) NOT NULL DEFAULT  '0.00';
-ALTER TABLE  `orevalues` ADD  `ResonanceCalibrationMatrixWorth` DECIMAL( 10, 2 ) NOT NULL DEFAULT  '0.00';
-ALTER TABLE  `orevalues` ADD  `ThermoelectricCatalystsWorth` DECIMAL( 10, 2 ) NOT NULL DEFAULT  '0.00';
-ALTER TABLE  `orevalues` ADD  `FulleriteC28Worth` DECIMAL( 10, 2 ) NOT NULL DEFAULT  '0.00';
-ALTER TABLE  `orevalues` ADD  `FulleriteC32Worth` DECIMAL( 10, 2 ) NOT NULL DEFAULT  '0.00';
-ALTER TABLE  `orevalues` ADD  `FulleriteC50Worth` DECIMAL( 10, 2 ) NOT NULL DEFAULT  '0.00';
-ALTER TABLE  `orevalues` ADD  `FulleriteC60Worth` DECIMAL( 10, 2 ) NOT NULL DEFAULT  '0.00';
-ALTER TABLE  `orevalues` ADD  `FulleriteC70Worth` DECIMAL( 10, 2 ) NOT NULL DEFAULT  '0.00';
-ALTER TABLE  `orevalues` ADD  `FulleriteC72Worth` DECIMAL( 10, 2 ) NOT NULL DEFAULT  '0.00';
-ALTER TABLE  `orevalues` ADD  `FulleriteC84Worth` DECIMAL( 10, 2 ) NOT NULL DEFAULT  '0.00';
-ALTER TABLE  `orevalues` ADD  `FulleriteC320Worth` DECIMAL( 10, 2 ) NOT NULL DEFAULT  '0.00';
-ALTER TABLE  `orevalues` ADD  `FulleriteC540Worth` DECIMAL( 10, 2 ) NOT NULL DEFAULT  '0.00';
-
-ALTER TABLE  `hauled` ADD  `CondensedAlloy` INT(5) NOT NULL DEFAULT '0';
-ALTER TABLE  `hauled` ADD  `CrystalCompound` INT(5) NOT NULL DEFAULT '0';
-ALTER TABLE  `hauled` ADD  `PreciousAlloy` INT(5) NOT NULL DEFAULT '0';
-ALTER TABLE  `hauled` ADD  `SheenCompound` INT(5) NOT NULL DEFAULT '0';
-ALTER TABLE  `hauled` ADD  `GleamingAlloy` INT(5) NOT NULL DEFAULT '0';
-ALTER TABLE  `hauled` ADD  `LucentCompound` INT(5) NOT NULL DEFAULT '0';
-ALTER TABLE  `hauled` ADD  `DarkCompound` INT(5) NOT NULL DEFAULT '0';
-ALTER TABLE  `hauled` ADD  `MotleyCompound` INT(5) NOT NULL DEFAULT '0';
-ALTER TABLE  `hauled` ADD  `LusteringAlloy` INT(5) NOT NULL DEFAULT '0';
-ALTER TABLE  `hauled` ADD  `GlossyCompound` INT(5) NOT NULL DEFAULT '0';
-ALTER TABLE  `hauled` ADD  `PlushCompound` INT(5) NOT NULL DEFAULT '0';
-ALTER TABLE  `hauled` ADD  `OpulentCompound` INT(5) NOT NULL DEFAULT '0';
-ALTER TABLE  `hauled` ADD  `CartesianTemporalCoordinator` INT(5) NOT NULL DEFAULT '0';
-ALTER TABLE  `hauled` ADD  `CentralSystemController` INT(5) NOT NULL DEFAULT '0';
-ALTER TABLE  `hauled` ADD  `DefensiveControlNode` INT(5) NOT NULL DEFAULT '0';
-ALTER TABLE  `hauled` ADD  `ElectromechanicalHullSheeting` INT(5) NOT NULL DEFAULT '0';
-ALTER TABLE  `hauled` ADD  `EmergentCombatAnalyzer` INT(5) NOT NULL DEFAULT '0';
-ALTER TABLE  `hauled` ADD  `EmergentCombatIntelligence` INT(5) NOT NULL DEFAULT '0';
-ALTER TABLE  `hauled` ADD  `FusedNanomechanicalEngines` INT(5) NOT NULL DEFAULT '0';
-ALTER TABLE  `hauled` ADD  `HeuristicSelfassemblers` INT(5) NOT NULL DEFAULT '0';
-ALTER TABLE  `hauled` ADD  `JumpDriveControlNexus` INT(5) NOT NULL DEFAULT '0';
-ALTER TABLE  `hauled` ADD  `MeltedNanoribbons` INT(5) NOT NULL DEFAULT '0';
-ALTER TABLE  `hauled` ADD  `ModifiedFluidRouter` INT(5) NOT NULL DEFAULT '0';
-ALTER TABLE  `hauled` ADD  `NeurovisualInputMatrix` INT(5) NOT NULL DEFAULT '0';
-ALTER TABLE  `hauled` ADD  `PowderedC540Graphite` INT(5) NOT NULL DEFAULT '0';
-ALTER TABLE  `hauled` ADD  `ResonanceCalibrationMatrix` INT(5) NOT NULL DEFAULT '0';
-ALTER TABLE  `hauled` ADD  `ThermoelectricCatalysts` INT(5) NOT NULL DEFAULT '0';
-ALTER TABLE  `hauled` ADD  `FulleriteC28` INT(5) NOT NULL DEFAULT '0';
-ALTER TABLE  `hauled` ADD  `FulleriteC32` INT(5) NOT NULL DEFAULT '0';
-ALTER TABLE  `hauled` ADD  `FulleriteC50` INT(5) NOT NULL DEFAULT '0';
-ALTER TABLE  `hauled` ADD  `FulleriteC60` INT(5) NOT NULL DEFAULT '0';
-ALTER TABLE  `hauled` ADD  `FulleriteC70` INT(5) NOT NULL DEFAULT '0';
-ALTER TABLE  `hauled` ADD  `FulleriteC72` INT(5) NOT NULL DEFAULT '0';
-ALTER TABLE  `hauled` ADD  `FulleriteC84` INT(5) NOT NULL DEFAULT '0';
-ALTER TABLE  `hauled` ADD  `FulleriteC320` INT(5) NOT NULL DEFAULT '0';
-ALTER TABLE  `hauled` ADD  `FulleriteC540` INT(5) NOT NULL DEFAULT '0';
-
-ALTER TABLE  `runs` ADD  `CondensedAlloy` INT(6) NOT NULL DEFAULT '0';
-ALTER TABLE  `runs` ADD  `CrystalCompound` INT(6) NOT NULL DEFAULT '0';
-ALTER TABLE  `runs` ADD  `PreciousAlloy` INT(6) NOT NULL DEFAULT '0';
-ALTER TABLE  `runs` ADD  `SheenCompound` INT(6) NOT NULL DEFAULT '0';
-ALTER TABLE  `runs` ADD  `GleamingAlloy` INT(6) NOT NULL DEFAULT '0';
-ALTER TABLE  `runs` ADD  `LucentCompound` INT(6) NOT NULL DEFAULT '0';
-ALTER TABLE  `runs` ADD  `DarkCompound` INT(6) NOT NULL DEFAULT '0';
-ALTER TABLE  `runs` ADD  `MotleyCompound` INT(6) NOT NULL DEFAULT '0';
-ALTER TABLE  `runs` ADD  `LusteringAlloy` INT(6) NOT NULL DEFAULT '0';
-ALTER TABLE  `runs` ADD  `GlossyCompound` INT(6) NOT NULL DEFAULT '0';
-ALTER TABLE  `runs` ADD  `PlushCompound` INT(6) NOT NULL DEFAULT '0';
-ALTER TABLE  `runs` ADD  `OpulentCompound` INT(6) NOT NULL DEFAULT '0';
-ALTER TABLE  `runs` ADD  `CartesianTemporalCoordinator` INT(6) NOT NULL DEFAULT '0';
-ALTER TABLE  `runs` ADD  `CentralSystemController` INT(6) NOT NULL DEFAULT '0';
-ALTER TABLE  `runs` ADD  `DefensiveControlNode` INT(6) NOT NULL DEFAULT '0';
-ALTER TABLE  `runs` ADD  `ElectromechanicalHullSheeting` INT(6) NOT NULL DEFAULT '0';
-ALTER TABLE  `runs` ADD  `EmergentCombatAnalyzer` INT(6) NOT NULL DEFAULT '0';
-ALTER TABLE  `runs` ADD  `EmergentCombatIntelligence` INT(6) NOT NULL DEFAULT '0';
-ALTER TABLE  `runs` ADD  `FusedNanomechanicalEngines` INT(6) NOT NULL DEFAULT '0';
-ALTER TABLE  `runs` ADD  `HeuristicSelfassemblers` INT(6) NOT NULL DEFAULT '0';
-ALTER TABLE  `runs` ADD  `JumpDriveControlNexus` INT(6) NOT NULL DEFAULT '0';
-ALTER TABLE  `runs` ADD  `MeltedNanoribbons` INT(6) NOT NULL DEFAULT '0';
-ALTER TABLE  `runs` ADD  `ModifiedFluidRouter` INT(6) NOT NULL DEFAULT '0';
-ALTER TABLE  `runs` ADD  `NeurovisualInputMatrix` INT(6) NOT NULL DEFAULT '0';
-ALTER TABLE  `runs` ADD  `PowderedC540Graphite` INT(6) NOT NULL DEFAULT '0';
-ALTER TABLE  `runs` ADD  `ResonanceCalibrationMatrix` INT(6) NOT NULL DEFAULT '0';
-ALTER TABLE  `runs` ADD  `ThermoelectricCatalysts` INT(6) NOT NULL DEFAULT '0';
-ALTER TABLE  `runs` ADD  `FulleriteC28` INT(6) NOT NULL DEFAULT '0';
-ALTER TABLE  `runs` ADD  `FulleriteC32` INT(6) NOT NULL DEFAULT '0';
-ALTER TABLE  `runs` ADD  `FulleriteC50` INT(6) NOT NULL DEFAULT '0';
-ALTER TABLE  `runs` ADD  `FulleriteC60` INT(6) NOT NULL DEFAULT '0';
-ALTER TABLE  `runs` ADD  `FulleriteC70` INT(6) NOT NULL DEFAULT '0';
-ALTER TABLE  `runs` ADD  `FulleriteC72` INT(6) NOT NULL DEFAULT '0';
-ALTER TABLE  `runs` ADD  `FulleriteC84` INT(6) NOT NULL DEFAULT '0';
-ALTER TABLE  `runs` ADD  `FulleriteC320` INT(6) NOT NULL DEFAULT '0';
-ALTER TABLE  `runs` ADD  `FulleriteC540` INT(6) NOT NULL DEFAULT '0';
-
-ALTER TABLE  `runs` ADD  `CondensedAlloyWanted` INT(6) NOT NULL DEFAULT '0';
-ALTER TABLE  `runs` ADD  `CrystalCompoundWanted` INT(6) NOT NULL DEFAULT '0';
-ALTER TABLE  `runs` ADD  `PreciousAlloyWanted` INT(6) NOT NULL DEFAULT '0';
-ALTER TABLE  `runs` ADD  `SheenCompoundWanted` INT(6) NOT NULL DEFAULT '0';
-ALTER TABLE  `runs` ADD  `GleamingAlloyWanted` INT(6) NOT NULL DEFAULT '0';
-ALTER TABLE  `runs` ADD  `LucentCompoundWanted` INT(6) NOT NULL DEFAULT '0';
-ALTER TABLE  `runs` ADD  `DarkCompoundWanted` INT(6) NOT NULL DEFAULT '0';
-ALTER TABLE  `runs` ADD  `MotleyCompoundWanted` INT(6) NOT NULL DEFAULT '0';
-ALTER TABLE  `runs` ADD  `LusteringAlloyWanted` INT(6) NOT NULL DEFAULT '0';
-ALTER TABLE  `runs` ADD  `GlossyCompoundWanted` INT(6) NOT NULL DEFAULT '0';
-ALTER TABLE  `runs` ADD  `PlushCompoundWanted` INT(6) NOT NULL DEFAULT '0';
-ALTER TABLE  `runs` ADD  `OpulentCompoundWanted` INT(6) NOT NULL DEFAULT '0';
-ALTER TABLE  `runs` ADD  `CartesianTemporalCoordinatorWanted` INT(6) NOT NULL DEFAULT '0';
-ALTER TABLE  `runs` ADD  `CentralSystemControllerWanted` INT(6) NOT NULL DEFAULT '0';
-ALTER TABLE  `runs` ADD  `DefensiveControlNodeWanted` INT(6) NOT NULL DEFAULT '0';
-ALTER TABLE  `runs` ADD  `ElectromechanicalHullSheetingWanted` INT(6) NOT NULL DEFAULT '0';
-ALTER TABLE  `runs` ADD  `EmergentCombatAnalyzerWanted` INT(6) NOT NULL DEFAULT '0';
-ALTER TABLE  `runs` ADD  `EmergentCombatIntelligenceWanted` INT(6) NOT NULL DEFAULT '0';
-ALTER TABLE  `runs` ADD  `FusedNanomechanicalEnginesWanted` INT(6) NOT NULL DEFAULT '0';
-ALTER TABLE  `runs` ADD  `HeuristicSelfassemblersWanted` INT(6) NOT NULL DEFAULT '0';
-ALTER TABLE  `runs` ADD  `JumpDriveControlNexusWanted` INT(6) NOT NULL DEFAULT '0';
-ALTER TABLE  `runs` ADD  `MeltedNanoribbonsWanted` INT(6) NOT NULL DEFAULT '0';
-ALTER TABLE  `runs` ADD  `ModifiedFluidRouterWanted` INT(6) NOT NULL DEFAULT '0';
-ALTER TABLE  `runs` ADD  `NeurovisualInputMatrixWanted` INT(6) NOT NULL DEFAULT '0';
-ALTER TABLE  `runs` ADD  `PowderedC540GraphiteWanted` INT(6) NOT NULL DEFAULT '0';
-ALTER TABLE  `runs` ADD  `ResonanceCalibrationMatrixWanted` INT(6) NOT NULL DEFAULT '0';
-ALTER TABLE  `runs` ADD  `ThermoelectricCatalystsWanted` INT(6) NOT NULL DEFAULT '0';
-ALTER TABLE  `runs` ADD  `FulleriteC28Wanted` INT(6) NOT NULL DEFAULT '0';
-ALTER TABLE  `runs` ADD  `FulleriteC32Wanted` INT(6) NOT NULL DEFAULT '0';
-ALTER TABLE  `runs` ADD  `FulleriteC50Wanted` INT(6) NOT NULL DEFAULT '0';
-ALTER TABLE  `runs` ADD  `FulleriteC60Wanted` INT(6) NOT NULL DEFAULT '0';
-ALTER TABLE  `runs` ADD  `FulleriteC70Wanted` INT(6) NOT NULL DEFAULT '0';
-ALTER TABLE  `runs` ADD  `FulleriteC72Wanted` INT(6) NOT NULL DEFAULT '0';
-ALTER TABLE  `runs` ADD  `FulleriteC84Wanted` INT(6) NOT NULL DEFAULT '0';
-ALTER TABLE  `runs` ADD  `FulleriteC320Wanted` INT(6) NOT NULL DEFAULT '0';
-ALTER TABLE  `runs` ADD  `FulleriteC540Wanted` INT(6) NOT NULL DEFAULT '0';
-
-INSERT INTO `config` (`name`, `value`) VALUES ('NeuralNetworkAnalyzerEnabled', '0'), 
-('SleeperDataLibraryEnabled', '0'), ('AncientCoordinatesDatabaseEnabled', '0'), ('SleeperDroneAINexusEnabled', '0');
-
-ALTER TABLE  `orevalues` ADD  `NeuralNetworkAnalyzerWorth` DECIMAL( 10, 2 ) NOT NULL DEFAULT  '0.00';
-ALTER TABLE  `orevalues` ADD  `SleeperDataLibraryWorth` DECIMAL( 10, 2 ) NOT NULL DEFAULT  '0.00';
-ALTER TABLE  `orevalues` ADD  `AncientCoordinatesDatabaseWorth` DECIMAL( 10, 2 ) NOT NULL DEFAULT  '0.00';
-ALTER TABLE  `orevalues` ADD  `SleeperDroneAINexusWorth` DECIMAL( 10, 2 ) NOT NULL DEFAULT  '0.00';
-
-ALTER TABLE  `hauled` ADD  `NeuralNetworkAnalyzer` INT(5) NOT NULL DEFAULT '0';
-ALTER TABLE  `hauled` ADD  `SleeperDataLibrary` INT(5) NOT NULL DEFAULT '0';
-ALTER TABLE  `hauled` ADD  `AncientCoordinatesDatabase` INT(5) NOT NULL DEFAULT '0';
-ALTER TABLE  `hauled` ADD  `SleeperDroneAINexus` INT(5) NOT NULL DEFAULT '0';
-
-ALTER TABLE  `runs` ADD  `NeuralNetworkAnalyzer` INT(6) NOT NULL DEFAULT '0';
-ALTER TABLE  `runs` ADD  `SleeperDataLibrary` INT(6) NOT NULL DEFAULT '0';
-ALTER TABLE  `runs` ADD  `AncientCoordinatesDatabase` INT(6) NOT NULL DEFAULT '0';
-ALTER TABLE  `runs` ADD  `SleeperDroneAINexus` INT(6) NOT NULL DEFAULT '0';
-
-ALTER TABLE  `runs` ADD  `NeuralNetworkAnalyzerWanted` INT(6) NOT NULL DEFAULT '0';
-ALTER TABLE  `runs` ADD  `SleeperDataLibraryWanted` INT(6) NOT NULL DEFAULT '0';
-ALTER TABLE  `runs` ADD  `AncientCoordinatesDatabaseWanted` INT(6) NOT NULL DEFAULT '0';
-ALTER TABLE  `runs` ADD  `SleeperDroneAINexusWanted` INT(6) NOT NULL DEFAULT '0';
-
-ALTER TABLE  `orevalues` CHANGE  `ArkonorWorth`  `ArkonorWorth` DECIMAL( 16, 2 ) NOT NULL DEFAULT  '0.00';
-ALTER TABLE `orevalues` CHANGE `CrimsonArkonorWorth` `CrimsonArkonorWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `PrimeArkonorWorth` `PrimeArkonorWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `BistotWorth` `BistotWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `MonoclinicBistotWorth` `MonoclinicBistotWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `TriclinicBistotWorth` `TriclinicBistotWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `CrokiteWorth` `CrokiteWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `CrystallineCrokiteWorth` `CrystallineCrokiteWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `SharpCrokiteWorth` `SharpCrokiteWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `DarkOchreWorth` `DarkOchreWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `ObsidianOchreWorth` `ObsidianOchreWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `OnyxOchreWorth` `OnyxOchreWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `GneissWorth` `GneissWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `IridescentGneissWorth` `IridescentGneissWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `PrismaticGneissWorth` `PrismaticGneissWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `HedbergiteWorth` `HedbergiteWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `GlazedHedbergiteWorth` `GlazedHedbergiteWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `VitricHedbergiteWorth` `VitricHedbergiteWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `HemorphiteWorth` `HemorphiteWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `VividHemorphiteWorth` `VividHemorphiteWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `RadiantHemorphiteWorth` `RadiantHemorphiteWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `JaspetWorth` `JaspetWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `PureJaspetWorth` `PureJaspetWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `PristineJaspetWorth` `PristineJaspetWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `KerniteWorth` `KerniteWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `FieryKerniteWorth` `FieryKerniteWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `LuminousKerniteWorth` `LuminousKerniteWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `MercoxitWorth` `MercoxitWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `MagmaMercoxitWorth` `MagmaMercoxitWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `VitreousMercoxitWorth` `VitreousMercoxitWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `BrightSpodumainWorth` `BrightSpodumainWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `GleamingSpodumainWorth` `GleamingSpodumainWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `SpodumainWorth` `SpodumainWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `OmberWorth` `OmberWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `SilveryOmberWorth` `SilveryOmberWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `GoldenOmberWorth` `GoldenOmberWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `PlagioclaseWorth` `PlagioclaseWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `AzurePlagioclaseWorth` `AzurePlagioclaseWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `RichPlagioclaseWorth` `RichPlagioclaseWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `PyroxeresWorth` `PyroxeresWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `SolidPyroxeresWorth` `SolidPyroxeresWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `ViscousPyroxeresWorth` `ViscousPyroxeresWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `ScorditeWorth` `ScorditeWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `CondensedScorditeWorth` `CondensedScorditeWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `MassiveScorditeWorth` `MassiveScorditeWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `VeldsparWorth` `VeldsparWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `ConcentratedVeldsparWorth` `ConcentratedVeldsparWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `DenseVeldsparWorth` `DenseVeldsparWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `BlueIceWorth` `BlueIceWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `ClearIcicleWorth` `ClearIcicleWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `DarkGlitterWorth` `DarkGlitterWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `EnrichedClearIcicleWorth` `EnrichedClearIcicleWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `GelidusWorth` `GelidusWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `GlacialMassWorth` `GlacialMassWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `GlareCrustWorth` `GlareCrustWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `KrystallosWorth` `KrystallosWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `PristineWhiteGlazeWorth` `PristineWhiteGlazeWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `SmoothGlacialMassWorth` `SmoothGlacialMassWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `ThickBlueIceWorth` `ThickBlueIceWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `WhiteGlazeWorth` `WhiteGlazeWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `CondensedAlloyWorth` `CondensedAlloyWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `CrystalCompoundWorth` `CrystalCompoundWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `PreciousAlloyWorth` `PreciousAlloyWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `SheenCompoundWorth` `SheenCompoundWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `GleamingAlloyWorth` `GleamingAlloyWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `LucentCompoundWorth` `LucentCompoundWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `DarkCompoundWorth` `DarkCompoundWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `MotleyCompoundWorth` `MotleyCompoundWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `LusteringAlloyWorth` `LusteringAlloyWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `GlossyCompoundWorth` `GlossyCompoundWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `PlushCompoundWorth` `PlushCompoundWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `OpulentCompoundWorth` `OpulentCompoundWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `CartesianTemporalCoordinatorWorth` `CartesianTemporalCoordinatorWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `CentralSystemControllerWorth` `CentralSystemControllerWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `DefensiveControlNodeWorth` `DefensiveControlNodeWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `ElectromechanicalHullSheetingWorth` `ElectromechanicalHullSheetingWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `EmergentCombatAnalyzerWorth` `EmergentCombatAnalyzerWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `EmergentCombatIntelligenceWorth` `EmergentCombatIntelligenceWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `FusedNanomechanicalEnginesWorth` `FusedNanomechanicalEnginesWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `HeuristicSelfassemblersWorth` `HeuristicSelfassemblersWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `JumpDriveControlNexusWorth` `JumpDriveControlNexusWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `MeltedNanoribbonsWorth` `MeltedNanoribbonsWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `ModifiedFluidRouterWorth` `ModifiedFluidRouterWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `NeurovisualInputMatrixWorth` `NeurovisualInputMatrixWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `PowderedC540GraphiteWorth` `PowderedC540GraphiteWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `ResonanceCalibrationMatrixWorth` `ResonanceCalibrationMatrixWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `ThermoelectricCatalystsWorth` `ThermoelectricCatalystsWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `FulleriteC28Worth` `FulleriteC28Worth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `FulleriteC32Worth` `FulleriteC32Worth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `FulleriteC50Worth` `FulleriteC50Worth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `FulleriteC60Worth` `FulleriteC60Worth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `FulleriteC70Worth` `FulleriteC70Worth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `FulleriteC72Worth` `FulleriteC72Worth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `FulleriteC84Worth` `FulleriteC84Worth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `FulleriteC320Worth` `FulleriteC320Worth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `FulleriteC540Worth` `FulleriteC540Worth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `NeuralNetworkAnalyzerWorth` `NeuralNetworkAnalyzerWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `SleeperDataLibraryWorth` `SleeperDataLibraryWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `AncientCoordinatesDatabaseWorth` `AncientCoordinatesDatabaseWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00', 
-CHANGE `SleeperDroneAINexusWorth` `SleeperDroneAINexusWorth` DECIMAL(16,2) NOT NULL DEFAULT '0.00';
-
-CREATE TABLE IF NOT EXISTS `shipvalues` (
-  `id` int(5) NOT NULL auto_increment,
-  `modifier` int(5) NOT NULL,
-  `time` int(15) NOT NULL,
-  `AssaultShipValue` decimal(5,4) NOT NULL default '1.000',
-  `BattlecruiserValue` decimal(5,4) NOT NULL default '1.000',
-  `BattleshipValue` decimal(5,4) NOT NULL default '1.000',
-  `CarrierValue` decimal(5,4) NOT NULL default '1.000',
-  `CommandShipValue` decimal(5,4) NOT NULL default '1.000',
-  `CovertOpsValue` decimal(5,4) NOT NULL default '1.000',
-  `CruiserValue` decimal(5,4) NOT NULL default '1.000',
-  `DestroyerValue` decimal(5,4) NOT NULL default '1.000',
-  `DreadnoughtValue` decimal(5,4) NOT NULL default '1.000',
-  `ExhumerValue` decimal(5,4) NOT NULL default '1.000',
-  `FreighterValue` decimal(5,4) NOT NULL default '1.000',
-  `FrigateValue` decimal(5,4) NOT NULL default '1.000',
-  `HeavyAssaultShipValue` decimal(5,4) NOT NULL default '1.000',
-  `IndustrialShipValue` decimal(5,4) NOT NULL default '1.000',
-  `InterceptorValue` decimal(5,4) NOT NULL default '1.000',
-  `InterdictorValue` decimal(5,4) NOT NULL default '1.000',
-  `LogisticsShipValue` decimal(5,4) NOT NULL default '1.000',
-  `MiningBargeValue` decimal(5,4) NOT NULL default '1.000',
-  `ReconShipValue` decimal(5,4) NOT NULL default '1.000',
-  `ShuttleValue` decimal(5,4) NOT NULL default '1.000',
-  `TransportShipValue` decimal(5,4) NOT NULL default '1.000',
-  `CapitalIndustrialShipValue` decimal(5,4) NOT NULL default '1.000',
-  PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
-
-INSERT INTO `shipvalues` (`id`, `modifier`, `time`, `AssaultShipValue`, `BattlecruiserValue`, `BattleshipValue`, `CarrierValue`, `CommandShipValue`, `CovertOpsValue`, `CruiserValue`, `DestroyerValue`, `DreadnoughtValue`, `ExhumerValue`, `FreighterValue`, `FrigateValue`, `HeavyAssaultShipValue`, `IndustrialShipValue`, `InterceptorValue`, `InterdictorValue`, `LogisticsShipValue`, `MiningBargeValue`, `ReconShipValue`, `ShuttleValue`, `TransportShipValue`) VALUES
-(1, -1, 0, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000);
-
-ALTER TABLE `runs`  ADD `shipGlue` INT(4) NOT NULL DEFAULT '0' AFTER `oreGlue`;
-
-INSERT INTO `config` (`name`, `value`) VALUES
-('AssaultShipEnabled', '0'),
-('BattlecruiserEnabled', '0'),
-('BattleshipEnabled', '0'),
-('CarrierEnabled', '0'),
-('CommandShipEnabled', '0'),
-('CovertOpsEnabled', '0'),
-('CruiserEnabled', '0'),
-('DestroyerEnabled', '0'),
-('DreadnoughtEnabled', '0'),
-('ExhumerEnabled', '0'),
-('FreighterEnabled', '0'),
-('FrigateEnabled', '0'),
-('HeavyAssaultShipEnabled', '0'),
-('IndustrialEnabled', '0'),
-('InterceptorEnabled', '0'),
-('InterdictorEnabled', '0'),
-('LogisticsShipEnabled', '0'),
-('MiningBargeEnabled', '0'),
-('ReconShipEnabled', '0'),
-('ShuttleEnabled', '0'),
-('TransportShipEnabled', '0'),
-('CapitalIndustrialShipEnabled', '0');
-
-ALTER TABLE `hauled` 
-   CHANGE COLUMN `Arkonor` `Arkonor` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `CrimsonArkonor` `CrimsonArkonor` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `PrimeArkonor` `PrimeArkonor` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `Bistot` `Bistot` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `MonoclinicBistot` `MonoclinicBistot` BIGINT(255) NOT NULL DEFAULT '0'  ,
-	 CHANGE COLUMN `TriclinicBistot` `TriclinicBistot` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `Crokite` `Crokite` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `CrystallineCrokite` `CrystallineCrokite` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `SharpCrokite` `SharpCrokite` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `DarkOchre` `DarkOchre` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `ObsidianOchre` `ObsidianOchre` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `OnyxOchre` `OnyxOchre` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `Gneiss` `Gneiss` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `IridescentGneiss` `IridescentGneiss` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `PrismaticGneiss` `PrismaticGneiss` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `Hedbergite` `Hedbergite` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `GlazedHedbergite` `GlazedHedbergite` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `VitricHedbergite` `VitricHedbergite` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `Hemorphite` `Hemorphite` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `VividHemorphite` `VividHemorphite` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `RadiantHemorphite` `RadiantHemorphite` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `Jaspet` `Jaspet` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `PureJaspet` `PureJaspet` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `PristineJaspet` `PristineJaspet` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `Kernite` `Kernite` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `FieryKernite` `FieryKernite` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `LuminousKernite` `LuminousKernite` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `Mercoxit` `Mercoxit` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `MagmaMercoxit` `MagmaMercoxit` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `VitreousMercoxit` `VitreousMercoxit` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `BrightSpodumain` `BrightSpodumain` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `GleamingSpodumain` `GleamingSpodumain` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `Spodumain` `Spodumain` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `Plagioclase` `Plagioclase` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `AzurePlagioclase` `AzurePlagioclase` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `RichPlagioclase` `RichPlagioclase` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `Omber` `Omber` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `SilveryOmber` `SilveryOmber` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `GoldenOmber` `GoldenOmber` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `Pyroxeres` `Pyroxeres` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `SolidPyroxeres` `SolidPyroxeres` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `ViscousPyroxeres` `ViscousPyroxeres` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `Scordite` `Scordite` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `CondensedScordite` `CondensedScordite` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `MassiveScordite` `MassiveScordite` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `Veldspar` `Veldspar` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `ConcentratedVeldspar` `ConcentratedVeldspar` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `DenseVeldspar` `DenseVeldspar` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `BlueIce` `BlueIce` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `ClearIcicle` `ClearIcicle` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `DarkGlitter` `DarkGlitter` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `EnrichedClearIcicle` `EnrichedClearIcicle` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `Gelidus` `Gelidus` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `GlacialMass` `GlacialMass` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `GlareCrust` `GlareCrust` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `Krystallos` `Krystallos` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `PristineWhiteGlaze` `PristineWhiteGlaze` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `SmoothGlacialMass` `SmoothGlacialMass` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `ThickBlueIce` `ThickBlueIce` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `WhiteGlaze` `WhiteGlaze` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `CondensedAlloy` `CondensedAlloy` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `CrystalCompound` `CrystalCompound` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `PreciousAlloy` `PreciousAlloy` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `SheenCompound` `SheenCompound` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `GleamingAlloy` `GleamingAlloy` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `LucentCompound` `LucentCompound` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `DarkCompound` `DarkCompound` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `MotleyCompound` `MotleyCompound` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `LusteringAlloy` `LusteringAlloy` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `GlossyCompound` `GlossyCompound` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `PlushCompound` `PlushCompound` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `OpulentCompound` `OpulentCompound` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `CartesianTemporalCoordinator` `CartesianTemporalCoordinator` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `CentralSystemController` `CentralSystemController` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `DefensiveControlNode` `DefensiveControlNode` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `ElectromechanicalHullSheeting` `ElectromechanicalHullSheeting` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `EmergentCombatAnalyzer` `EmergentCombatAnalyzer` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `EmergentCombatIntelligence` `EmergentCombatIntelligence` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `FusedNanomechanicalEngines` `FusedNanomechanicalEngines` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `HeuristicSelfassemblers` `HeuristicSelfassemblers` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `JumpDriveControlNexus` `JumpDriveControlNexus` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `MeltedNanoribbons` `MeltedNanoribbons` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `ModifiedFluidRouter` `ModifiedFluidRouter` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `NeurovisualInputMatrix` `NeurovisualInputMatrix` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `PowderedC540Graphite` `PowderedC540Graphite` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `ResonanceCalibrationMatrix` `ResonanceCalibrationMatrix` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `ThermoelectricCatalysts` `ThermoelectricCatalysts` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `FulleriteC28` `FulleriteC28` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `FulleriteC32` `FulleriteC32` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `FulleriteC50` `FulleriteC50` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `FulleriteC60` `FulleriteC60` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `FulleriteC70` `FulleriteC70` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `FulleriteC72` `FulleriteC72` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `FulleriteC84` `FulleriteC84` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `FulleriteC320` `FulleriteC320` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `FulleriteC540` `FulleriteC540` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `NeuralNetworkAnalyzer` `NeuralNetworkAnalyzer` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `SleeperDataLibrary` `SleeperDataLibrary` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `AncientCoordinatesDatabase` `AncientCoordinatesDatabase` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `SleeperDroneAINexus` `SleeperDroneAINexus` BIGINT(255) NOT NULL DEFAULT '0';
-
-ALTER TABLE `events` 
-	 CHANGE COLUMN `collateral` `collateral` BIGINT(255) NOT NULL DEFAULT '0';
-
-ALTER TABLE `runs` 
-	 CHANGE COLUMN `Arkonor` `Arkonor` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `CrimsonArkonor` `CrimsonArkonor` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `PrimeArkonor` `PrimeArkonor` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `Bistot` `Bistot` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `MonoclinicBistot` `MonoclinicBistot` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `TriclinicBistot` `TriclinicBistot` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `Crokite` `Crokite` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `CrystallineCrokite` `CrystallineCrokite` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `SharpCrokite` `SharpCrokite` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `DarkOchre` `DarkOchre` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `ObsidianOchre` `ObsidianOchre` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `OnyxOchre` `OnyxOchre` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `Gneiss` `Gneiss` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `IridescentGneiss` `IridescentGneiss` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `PrismaticGneiss` `PrismaticGneiss` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `Omber` `Omber` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `SilveryOmber` `SilveryOmber` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `GoldenOmber` `GoldenOmber` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `Hedbergite` `Hedbergite` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `GlazedHedbergite` `GlazedHedbergite` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `VitricHedbergite` `VitricHedbergite` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `Hemorphite` `Hemorphite` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `VividHemorphite` `VividHemorphite` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `RadiantHemorphite` `RadiantHemorphite` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `Jaspet` `Jaspet` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `PureJaspet` `PureJaspet` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `PristineJaspet` `PristineJaspet` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `Kernite` `Kernite` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `FieryKernite` `FieryKernite` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `LuminousKernite` `LuminousKernite` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `Mercoxit` `Mercoxit` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `MagmaMercoxit` `MagmaMercoxit` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `VitreousMercoxit` `VitreousMercoxit` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `BrightSpodumain` `BrightSpodumain` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `GleamingSpodumain` `GleamingSpodumain` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `Spodumain` `Spodumain` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `Plagioclase` `Plagioclase` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `AzurePlagioclase` `AzurePlagioclase` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `RichPlagioclase` `RichPlagioclase` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `Pyroxeres` `Pyroxeres` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `SolidPyroxeres` `SolidPyroxeres` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `ViscousPyroxeres` `ViscousPyroxeres` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `Scordite` `Scordite` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `CondensedScordite` `CondensedScordite` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `MassiveScordite` `MassiveScordite` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `Veldspar` `Veldspar` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `ConcentratedVeldspar` `ConcentratedVeldspar` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `DenseVeldspar` `DenseVeldspar` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `BlueIce` `BlueIce` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `ClearIcicle` `ClearIcicle` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `DarkGlitter` `DarkGlitter` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `EnrichedClearIcicle` `EnrichedClearIcicle` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `Gelidus` `Gelidus` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `GlacialMass` `GlacialMass` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `GlareCrust` `GlareCrust` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `Krystallos` `Krystallos` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `PristineWhiteGlaze` `PristineWhiteGlaze` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `SmoothGlacialMass` `SmoothGlacialMass` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `ThickBlueIce` `ThickBlueIce` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `WhiteGlaze` `WhiteGlaze` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `ArkonorWanted` `ArkonorWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `CrimsonArkonorWanted` `CrimsonArkonorWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `PrimeArkonorWanted` `PrimeArkonorWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `BistotWanted` `BistotWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `MonoclinicBistotWanted` `MonoclinicBistotWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `TriclinicBistotWanted` `TriclinicBistotWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `CrokiteWanted` `CrokiteWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `CrystallineCrokiteWanted` `CrystallineCrokiteWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `SharpCrokiteWanted` `SharpCrokiteWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `DarkOchreWanted` `DarkOchreWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `ObsidianOchreWanted` `ObsidianOchreWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `OnyxOchreWanted` `OnyxOchreWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `GneissWanted` `GneissWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `IridescentGneissWanted` `IridescentGneissWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `PrismaticGneissWanted` `PrismaticGneissWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `HedbergiteWanted` `HedbergiteWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `GlazedHedbergiteWanted` `GlazedHedbergiteWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `VitricHedbergiteWanted` `VitricHedbergiteWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `HemorphiteWanted` `HemorphiteWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `VividHemorphiteWanted` `VividHemorphiteWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `RadiantHemorphiteWanted` `RadiantHemorphiteWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `JaspetWanted` `JaspetWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `PureJaspetWanted` `PureJaspetWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `PristineJaspetWanted` `PristineJaspetWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `KerniteWanted` `KerniteWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `FieryKerniteWanted` `FieryKerniteWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `LuminousKerniteWanted` `LuminousKerniteWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `MercoxitWanted` `MercoxitWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `MagmaMercoxitWanted` `MagmaMercoxitWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `VitreousMercoxitWanted` `VitreousMercoxitWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `BrightSpodumainWanted` `BrightSpodumainWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `GleamingSpodumainWanted` `GleamingSpodumainWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `SpodumainWanted` `SpodumainWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `PlagioclaseWanted` `PlagioclaseWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `AzurePlagioclaseWanted` `AzurePlagioclaseWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `RichPlagioclaseWanted` `RichPlagioclaseWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `PyroxeresWanted` `PyroxeresWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `OmberWanted` `OmberWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `SilveryOmberWanted` `SilveryOmberWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `GoldenOmberWanted` `GoldenOmberWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `SolidPyroxeresWanted` `SolidPyroxeresWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `ViscousPyroxeresWanted` `ViscousPyroxeresWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `ScorditeWanted` `ScorditeWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `CondensedScorditeWanted` `CondensedScorditeWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `MassiveScorditeWanted` `MassiveScorditeWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `VeldsparWanted` `VeldsparWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `ConcentratedVeldsparWanted` `ConcentratedVeldsparWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `DenseVeldsparWanted` `DenseVeldsparWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `BlueIceWanted` `BlueIceWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `ClearIcicleWanted` `ClearIcicleWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `DarkGlitterWanted` `DarkGlitterWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `EnrichedClearIcicleWanted` `EnrichedClearIcicleWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `GelidusWanted` `GelidusWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `GlacialMassWanted` `GlacialMassWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `GlareCrustWanted` `GlareCrustWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `KrystallosWanted` `KrystallosWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `PristineWhiteGlazeWanted` `PristineWhiteGlazeWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `SmoothGlacialMassWanted` `SmoothGlacialMassWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `ThickBlueIceWanted` `ThickBlueIceWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `WhiteGlazeWanted` `WhiteGlazeWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `CondensedAlloy` `CondensedAlloy` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `CrystalCompound` `CrystalCompound` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `PreciousAlloy` `PreciousAlloy` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `SheenCompound` `SheenCompound` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `GleamingAlloy` `GleamingAlloy` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `LucentCompound` `LucentCompound` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `DarkCompound` `DarkCompound` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `MotleyCompound` `MotleyCompound` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `LusteringAlloy` `LusteringAlloy` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `GlossyCompound` `GlossyCompound` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `PlushCompound` `PlushCompound` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `OpulentCompound` `OpulentCompound` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `CartesianTemporalCoordinator` `CartesianTemporalCoordinator` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `CentralSystemController` `CentralSystemController` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `DefensiveControlNode` `DefensiveControlNode` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `ElectromechanicalHullSheeting` `ElectromechanicalHullSheeting` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `EmergentCombatAnalyzer` `EmergentCombatAnalyzer` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `EmergentCombatIntelligence` `EmergentCombatIntelligence` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `FusedNanomechanicalEngines` `FusedNanomechanicalEngines` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `HeuristicSelfassemblers` `HeuristicSelfassemblers` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `JumpDriveControlNexus` `JumpDriveControlNexus` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `MeltedNanoribbons` `MeltedNanoribbons` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `ModifiedFluidRouter` `ModifiedFluidRouter` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `NeurovisualInputMatrix` `NeurovisualInputMatrix` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `PowderedC540Graphite` `PowderedC540Graphite` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `ResonanceCalibrationMatrix` `ResonanceCalibrationMatrix` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `ThermoelectricCatalysts` `ThermoelectricCatalysts` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `FulleriteC28` `FulleriteC28` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `FulleriteC32` `FulleriteC32` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `FulleriteC50` `FulleriteC50` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `FulleriteC60` `FulleriteC60` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `FulleriteC70` `FulleriteC70` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `FulleriteC72` `FulleriteC72` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `FulleriteC84` `FulleriteC84` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `FulleriteC320` `FulleriteC320` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `FulleriteC540` `FulleriteC540` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `CondensedAlloyWanted` `CondensedAlloyWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `CrystalCompoundWanted` `CrystalCompoundWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `PreciousAlloyWanted` `PreciousAlloyWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `SheenCompoundWanted` `SheenCompoundWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `GleamingAlloyWanted` `GleamingAlloyWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `LucentCompoundWanted` `LucentCompoundWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `DarkCompoundWanted` `DarkCompoundWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `MotleyCompoundWanted` `MotleyCompoundWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `LusteringAlloyWanted` `LusteringAlloyWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `GlossyCompoundWanted` `GlossyCompoundWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `PlushCompoundWanted` `PlushCompoundWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `OpulentCompoundWanted` `OpulentCompoundWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `CartesianTemporalCoordinatorWanted` `CartesianTemporalCoordinatorWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `CentralSystemControllerWanted` `CentralSystemControllerWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `DefensiveControlNodeWanted` `DefensiveControlNodeWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `ElectromechanicalHullSheetingWanted` `ElectromechanicalHullSheetingWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `EmergentCombatAnalyzerWanted` `EmergentCombatAnalyzerWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `EmergentCombatIntelligenceWanted` `EmergentCombatIntelligenceWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `FusedNanomechanicalEnginesWanted` `FusedNanomechanicalEnginesWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `HeuristicSelfassemblersWanted` `HeuristicSelfassemblersWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `JumpDriveControlNexusWanted` `JumpDriveControlNexusWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `MeltedNanoribbonsWanted` `MeltedNanoribbonsWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `ModifiedFluidRouterWanted` `ModifiedFluidRouterWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `NeurovisualInputMatrixWanted` `NeurovisualInputMatrixWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `PowderedC540GraphiteWanted` `PowderedC540GraphiteWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `ResonanceCalibrationMatrixWanted` `ResonanceCalibrationMatrixWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `ThermoelectricCatalystsWanted` `ThermoelectricCatalystsWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `FulleriteC28Wanted` `FulleriteC28Wanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `FulleriteC32Wanted` `FulleriteC32Wanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `FulleriteC50Wanted` `FulleriteC50Wanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `FulleriteC60Wanted` `FulleriteC60Wanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `FulleriteC70Wanted` `FulleriteC70Wanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `FulleriteC72Wanted` `FulleriteC72Wanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `FulleriteC84Wanted` `FulleriteC84Wanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `FulleriteC320Wanted` `FulleriteC320Wanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `FulleriteC540Wanted` `FulleriteC540Wanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `NeuralNetworkAnalyzer` `NeuralNetworkAnalyzer` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `SleeperDataLibrary` `SleeperDataLibrary` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `AncientCoordinatesDatabase` `AncientCoordinatesDatabase` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `SleeperDroneAINexus` `SleeperDroneAINexus` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `NeuralNetworkAnalyzerWanted` `NeuralNetworkAnalyzerWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `SleeperDataLibraryWanted` `SleeperDataLibraryWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `AncientCoordinatesDatabaseWanted` `AncientCoordinatesDatabaseWanted` BIGINT(255) NOT NULL DEFAULT '0'  , 
-	 CHANGE COLUMN `SleeperDroneAINexusWanted` `SleeperDroneAINexusWanted` BIGINT(255) NOT NULL DEFAULT '0';
-	 
-ALTER TABLE `payoutRequests` CHANGE COLUMN `amount` `amount` BIGINT(255) NOT NULL;
-
-UPDATE `config` SET `name`='FulleriteC540Enabled' WHERE `name`='FilleriteC540Enabled';
-
-CREATE TABLE `m3values` (
+CREATE TABLE IF NOT EXISTS `m3values` (
   `id` int(5) NOT NULL AUTO_INCREMENT,
   `ArkonorM3` decimal(6,2) NOT NULL DEFAULT '16.00',
   `CrimsonArkonorM3` decimal(6,2) NOT NULL DEFAULT '16.00',
@@ -7868,8 +6953,581 @@ CREATE TABLE `m3values` (
   `AncientCoordinatesDatabaseM3` decimal(6,2) NOT NULL DEFAULT '0.00',
   `SleeperDroneAINexusM3` decimal(6,2) NOT NULL DEFAULT '0.00',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=15 ;
 
-INSERT INTO `m3values` (id,ArkonorM3,CrimsonArkonorM3,PrimeArkonorM3,BistotM3,MonoclinicBistotM3,TriclinicBistotM3,CrokiteM3,CrystallineCrokiteM3,SharpCrokiteM3,DarkOchreM3,ObsidianOchreM3,OnyxOchreM3,GneissM3,IridescentGneissM3,PrismaticGneissM3,HedbergiteM3,GlazedHedbergiteM3,VitricHedbergiteM3,HemorphiteM3,VividHemorphiteM3,RadiantHemorphiteM3,JaspetM3,PureJaspetM3,PristineJaspetM3,KerniteM3,FieryKerniteM3,LuminousKerniteM3,MercoxitM3,MagmaMercoxitM3,VitreousMercoxitM3,BrightSpodumainM3,GleamingSpodumainM3,SpodumainM3,OmberM3,SilveryOmberM3,GoldenOmberM3,PlagioclaseM3,AzurePlagioclaseM3,RichPlagioclaseM3,PyroxeresM3,SolidPyroxeresM3,ViscousPyroxeresM3,ScorditeM3,CondensedScorditeM3,MassiveScorditeM3,VeldsparM3,ConcentratedVeldsparM3,DenseVeldsparM3,BlueIceM3,ClearIcicleM3,DarkGlitterM3,EnrichedClearIcicleM3,GelidusM3,GlacialMassM3,GlareCrustM3,KrystallosM3,PristineWhiteGlazeM3,SmoothGlacialMassM3,ThickBlueIceM3,WhiteGlazeM3,CondensedAlloyM3,CrystalCompoundM3,PreciousAlloyM3,SheenCompoundM3,GleamingAlloyM3,LucentCompoundM3,DarkCompoundM3,MotleyCompoundM3,LusteringAlloyM3,GlossyCompoundM3,PlushCompoundM3,OpulentCompoundM3,CartesianTemporalCoordinatorM3,CentralSystemControllerM3,DefensiveControlNodeM3,ElectromechanicalHullSheetingM3,EmergentCombatAnalyzerM3,EmergentCombatIntelligenceM3,FusedNanomechanicalEnginesM3,HeuristicSelfassemblersM3,JumpDriveControlNexusM3,MeltedNanoribbonsM3,ModifiedFluidRouterM3,NeurovisualInputMatrixM3,PowderedC540GraphiteM3,ResonanceCalibrationMatrixM3,ThermoelectricCatalystsM3,FulleriteC28M3,FulleriteC32M3,FulleriteC50M3,FulleriteC60M3,FulleriteC70M3,FulleriteC72M3,FulleriteC84M3,FulleriteC320M3,FulleriteC540M3,NeuralNetworkAnalyzerM3,SleeperDataLibraryM3,AncientCoordinatesDatabaseM3,SleeperDroneAINexusM3) VALUES (1,'16.00','16.00','16.00','16.00','16.00','16.00','16.00','16.00','16.00','8.00','8.00','8.00','5.00','5.00','5.00','3.00','3.00','3.00','3.00','3.00','3.00','2.00','2.00','2.00','1.20','1.20','1.20','40.00','40.00','40.00','16.00','16.00','16.00','0.60','0.60','0.60','0.35','0.35','0.35','0.30','0.30','0.30','0.15','0.15','0.15','0.10','0.10','0.10','1000.00','1000.00','1000.00','1000.00','1000.00','1000.00','1000.00','1000.00','1000.00','1000.00','1000.00','1000.00','1.00','1.00','1.00','1.00','1.00','1.00','1.00','1.00','1.00','1.00','1.00','1.00','1.00','1.00','1.00','1.00','1.00','1.00','1.00','1.00','1.00','1.00','1.00','1.00','1.00','1.00','1.00','2.00','5.00','1.00','1.00','1.00','2.00','2.00','5.00','10.00','0.01','0.01','0.01','0.01');
+--
+-- Dumping data for table `m3values`
+--
 
-UPDATE config SET value='22' WHERE name='version';
+INSERT INTO `m3values` (`id`, `ArkonorM3`, `CrimsonArkonorM3`, `PrimeArkonorM3`, `BistotM3`, `MonoclinicBistotM3`, `TriclinicBistotM3`, `CrokiteM3`, `CrystallineCrokiteM3`, `SharpCrokiteM3`, `DarkOchreM3`, `ObsidianOchreM3`, `OnyxOchreM3`, `GneissM3`, `IridescentGneissM3`, `PrismaticGneissM3`, `HedbergiteM3`, `GlazedHedbergiteM3`, `VitricHedbergiteM3`, `HemorphiteM3`, `VividHemorphiteM3`, `RadiantHemorphiteM3`, `JaspetM3`, `PureJaspetM3`, `PristineJaspetM3`, `KerniteM3`, `FieryKerniteM3`, `LuminousKerniteM3`, `MercoxitM3`, `MagmaMercoxitM3`, `VitreousMercoxitM3`, `BrightSpodumainM3`, `GleamingSpodumainM3`, `SpodumainM3`, `OmberM3`, `SilveryOmberM3`, `GoldenOmberM3`, `PlagioclaseM3`, `AzurePlagioclaseM3`, `RichPlagioclaseM3`, `PyroxeresM3`, `SolidPyroxeresM3`, `ViscousPyroxeresM3`, `ScorditeM3`, `CondensedScorditeM3`, `MassiveScorditeM3`, `VeldsparM3`, `ConcentratedVeldsparM3`, `DenseVeldsparM3`, `BlueIceM3`, `ClearIcicleM3`, `DarkGlitterM3`, `EnrichedClearIcicleM3`, `GelidusM3`, `GlacialMassM3`, `GlareCrustM3`, `KrystallosM3`, `PristineWhiteGlazeM3`, `SmoothGlacialMassM3`, `ThickBlueIceM3`, `WhiteGlazeM3`, `CondensedAlloyM3`, `CrystalCompoundM3`, `PreciousAlloyM3`, `SheenCompoundM3`, `GleamingAlloyM3`, `LucentCompoundM3`, `DarkCompoundM3`, `MotleyCompoundM3`, `LusteringAlloyM3`, `GlossyCompoundM3`, `PlushCompoundM3`, `OpulentCompoundM3`, `CartesianTemporalCoordinatorM3`, `CentralSystemControllerM3`, `DefensiveControlNodeM3`, `ElectromechanicalHullSheetingM3`, `EmergentCombatAnalyzerM3`, `EmergentCombatIntelligenceM3`, `FusedNanomechanicalEnginesM3`, `HeuristicSelfassemblersM3`, `JumpDriveControlNexusM3`, `MeltedNanoribbonsM3`, `ModifiedFluidRouterM3`, `NeurovisualInputMatrixM3`, `PowderedC540GraphiteM3`, `ResonanceCalibrationMatrixM3`, `ThermoelectricCatalystsM3`, `FulleriteC28M3`, `FulleriteC32M3`, `FulleriteC50M3`, `FulleriteC60M3`, `FulleriteC70M3`, `FulleriteC72M3`, `FulleriteC84M3`, `FulleriteC320M3`, `FulleriteC540M3`, `NeuralNetworkAnalyzerM3`, `SleeperDataLibraryM3`, `AncientCoordinatesDatabaseM3`, `SleeperDroneAINexusM3`) VALUES
+(1, 16.00, 16.00, 16.00, 16.00, 16.00, 16.00, 16.00, 16.00, 16.00, 8.00, 8.00, 8.00, 5.00, 5.00, 5.00, 3.00, 3.00, 3.00, 3.00, 3.00, 3.00, 2.00, 2.00, 2.00, 1.20, 1.20, 1.20, 40.00, 40.00, 40.00, 16.00, 16.00, 16.00, 0.60, 0.60, 0.60, 0.35, 0.35, 0.35, 0.30, 0.30, 0.30, 0.15, 0.15, 0.15, 0.10, 0.10, 0.10, 1000.00, 1000.00, 1000.00, 1000.00, 1000.00, 1000.00, 1000.00, 1000.00, 1000.00, 1000.00, 1000.00, 1000.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 2.00, 5.00, 1.00, 1.00, 1.00, 2.00, 2.00, 5.00, 10.00, 0.01, 0.01, 0.01, 0.01);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `onlinetime`
+--
+
+CREATE TABLE IF NOT EXISTS `onlinetime` (
+  `userid` int(10) NOT NULL,
+  `h00` int(1) NOT NULL DEFAULT '0',
+  `h01` int(1) NOT NULL DEFAULT '0',
+  `h02` int(1) NOT NULL DEFAULT '0',
+  `h03` int(1) NOT NULL DEFAULT '0',
+  `h04` int(1) NOT NULL DEFAULT '0',
+  `h05` int(1) NOT NULL DEFAULT '0',
+  `h06` int(1) NOT NULL DEFAULT '0',
+  `h07` int(1) NOT NULL DEFAULT '0',
+  `h08` int(1) NOT NULL DEFAULT '0',
+  `h09` int(1) NOT NULL DEFAULT '0',
+  `h10` int(1) NOT NULL DEFAULT '0',
+  `h11` int(1) NOT NULL DEFAULT '0',
+  `h12` int(1) NOT NULL DEFAULT '0',
+  `h13` int(1) NOT NULL DEFAULT '0',
+  `h14` int(1) NOT NULL DEFAULT '0',
+  `h15` int(1) NOT NULL DEFAULT '0',
+  `h16` int(1) NOT NULL DEFAULT '0',
+  `h17` int(1) NOT NULL DEFAULT '0',
+  `h18` int(1) NOT NULL DEFAULT '0',
+  `h19` int(1) NOT NULL DEFAULT '0',
+  `h20` int(1) NOT NULL DEFAULT '0',
+  `h21` int(1) NOT NULL DEFAULT '0',
+  `h22` int(1) NOT NULL DEFAULT '0',
+  `h23` int(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`userid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `orevalues`
+--
+
+CREATE TABLE IF NOT EXISTS `orevalues` (
+  `id` int(5) NOT NULL AUTO_INCREMENT,
+  `modifier` int(5) NOT NULL,
+  `time` int(15) NOT NULL,
+  `ArkonorWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `CrimsonArkonorWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `PrimeArkonorWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `BistotWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `MonoclinicBistotWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `TriclinicBistotWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `CrokiteWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `CrystallineCrokiteWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `SharpCrokiteWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `DarkOchreWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `ObsidianOchreWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `OnyxOchreWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `GneissWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `IridescentGneissWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `PrismaticGneissWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `HedbergiteWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `GlazedHedbergiteWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `VitricHedbergiteWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `HemorphiteWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `VividHemorphiteWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `RadiantHemorphiteWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `JaspetWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `PureJaspetWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `PristineJaspetWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `KerniteWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `FieryKerniteWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `LuminousKerniteWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `MercoxitWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `MagmaMercoxitWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `VitreousMercoxitWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `BrightSpodumainWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `GleamingSpodumainWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `SpodumainWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `OmberWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `SilveryOmberWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `GoldenOmberWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `PlagioclaseWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `AzurePlagioclaseWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `RichPlagioclaseWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `PyroxeresWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `SolidPyroxeresWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `ViscousPyroxeresWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `ScorditeWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `CondensedScorditeWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `MassiveScorditeWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `VeldsparWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `ConcentratedVeldsparWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `DenseVeldsparWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `BlueIceWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `ClearIcicleWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `DarkGlitterWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `EnrichedClearIcicleWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `GelidusWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `GlacialMassWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `GlareCrustWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `KrystallosWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `PristineWhiteGlazeWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `SmoothGlacialMassWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `ThickBlueIceWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `WhiteGlazeWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `CondensedAlloyWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `CrystalCompoundWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `PreciousAlloyWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `SheenCompoundWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `GleamingAlloyWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `LucentCompoundWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `DarkCompoundWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `MotleyCompoundWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `LusteringAlloyWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `GlossyCompoundWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `PlushCompoundWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `OpulentCompoundWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `CartesianTemporalCoordinatorWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `CentralSystemControllerWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `DefensiveControlNodeWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `ElectromechanicalHullSheetingWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `EmergentCombatAnalyzerWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `EmergentCombatIntelligenceWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `FusedNanomechanicalEnginesWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `HeuristicSelfassemblersWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `JumpDriveControlNexusWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `MeltedNanoribbonsWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `ModifiedFluidRouterWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `NeurovisualInputMatrixWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `PowderedC540GraphiteWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `ResonanceCalibrationMatrixWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `ThermoelectricCatalystsWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `FulleriteC28Worth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `FulleriteC32Worth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `FulleriteC50Worth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `FulleriteC60Worth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `FulleriteC70Worth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `FulleriteC72Worth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `FulleriteC84Worth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `FulleriteC320Worth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `FulleriteC540Worth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `NeuralNetworkAnalyzerWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `SleeperDataLibraryWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `AncientCoordinatesDatabaseWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `SleeperDroneAINexusWorth` decimal(16,2) NOT NULL DEFAULT '0.00',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `orevalues`
+--
+
+INSERT INTO `orevalues` (`id`, `modifier`, `time`, `ArkonorWorth`, `CrimsonArkonorWorth`, `PrimeArkonorWorth`, `BistotWorth`, `MonoclinicBistotWorth`, `TriclinicBistotWorth`, `CrokiteWorth`, `CrystallineCrokiteWorth`, `SharpCrokiteWorth`, `DarkOchreWorth`, `ObsidianOchreWorth`, `OnyxOchreWorth`, `GneissWorth`, `IridescentGneissWorth`, `PrismaticGneissWorth`, `HedbergiteWorth`, `GlazedHedbergiteWorth`, `VitricHedbergiteWorth`, `HemorphiteWorth`, `VividHemorphiteWorth`, `RadiantHemorphiteWorth`, `JaspetWorth`, `PureJaspetWorth`, `PristineJaspetWorth`, `KerniteWorth`, `FieryKerniteWorth`, `LuminousKerniteWorth`, `MercoxitWorth`, `MagmaMercoxitWorth`, `VitreousMercoxitWorth`, `BrightSpodumainWorth`, `GleamingSpodumainWorth`, `SpodumainWorth`, `OmberWorth`, `SilveryOmberWorth`, `GoldenOmberWorth`, `PlagioclaseWorth`, `AzurePlagioclaseWorth`, `RichPlagioclaseWorth`, `PyroxeresWorth`, `SolidPyroxeresWorth`, `ViscousPyroxeresWorth`, `ScorditeWorth`, `CondensedScorditeWorth`, `MassiveScorditeWorth`, `VeldsparWorth`, `ConcentratedVeldsparWorth`, `DenseVeldsparWorth`, `BlueIceWorth`, `ClearIcicleWorth`, `DarkGlitterWorth`, `EnrichedClearIcicleWorth`, `GelidusWorth`, `GlacialMassWorth`, `GlareCrustWorth`, `KrystallosWorth`, `PristineWhiteGlazeWorth`, `SmoothGlacialMassWorth`, `ThickBlueIceWorth`, `WhiteGlazeWorth`, `CondensedAlloyWorth`, `CrystalCompoundWorth`, `PreciousAlloyWorth`, `SheenCompoundWorth`, `GleamingAlloyWorth`, `LucentCompoundWorth`, `DarkCompoundWorth`, `MotleyCompoundWorth`, `LusteringAlloyWorth`, `GlossyCompoundWorth`, `PlushCompoundWorth`, `OpulentCompoundWorth`, `CartesianTemporalCoordinatorWorth`, `CentralSystemControllerWorth`, `DefensiveControlNodeWorth`, `ElectromechanicalHullSheetingWorth`, `EmergentCombatAnalyzerWorth`, `EmergentCombatIntelligenceWorth`, `FusedNanomechanicalEnginesWorth`, `HeuristicSelfassemblersWorth`, `JumpDriveControlNexusWorth`, `MeltedNanoribbonsWorth`, `ModifiedFluidRouterWorth`, `NeurovisualInputMatrixWorth`, `PowderedC540GraphiteWorth`, `ResonanceCalibrationMatrixWorth`, `ThermoelectricCatalystsWorth`, `FulleriteC28Worth`, `FulleriteC32Worth`, `FulleriteC50Worth`, `FulleriteC60Worth`, `FulleriteC70Worth`, `FulleriteC72Worth`, `FulleriteC84Worth`, `FulleriteC320Worth`, `FulleriteC540Worth`, `NeuralNetworkAnalyzerWorth`, `SleeperDataLibraryWorth`, `AncientCoordinatesDatabaseWorth`, `SleeperDroneAINexusWorth`) VALUES
+(1, -1, 0, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `payoutRequests`
+--
+
+CREATE TABLE IF NOT EXISTS `payoutRequests` (
+  `request` int(6) NOT NULL AUTO_INCREMENT,
+  `time` int(12) NOT NULL,
+  `applicant` int(5) NOT NULL,
+  `amount` bigint(255) NOT NULL,
+  `payoutTime` int(12) DEFAULT NULL,
+  `banker` int(5) DEFAULT NULL,
+  PRIMARY KEY (`request`),
+  KEY `applicant` (`applicant`),
+  KEY `banker` (`banker`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `profiles`
+--
+
+CREATE TABLE IF NOT EXISTS `profiles` (
+  `userid` int(5) NOT NULL,
+  `emailVisible` tinyint(1) NOT NULL DEFAULT '0',
+  `isMiner` tinyint(1) NOT NULL DEFAULT '0',
+  `isHauler` tinyint(1) NOT NULL DEFAULT '0',
+  `isFighter` tinyint(1) NOT NULL DEFAULT '0',
+  `about` blob,
+  PRIMARY KEY (`userid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ranks`
+--
+
+CREATE TABLE IF NOT EXISTS `ranks` (
+  `rankid` int(3) NOT NULL AUTO_INCREMENT,
+  `name` varchar(30) NOT NULL,
+  `rankOrder` varchar(3) DEFAULT NULL,
+  UNIQUE KEY `rankid` (`rankid`),
+  KEY `name` (`name`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `ranks`
+--
+
+INSERT INTO `ranks` (`rankid`, `name`, `rankOrder`) VALUES
+(1, 'CEO', '1');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `runs`
+--
+
+CREATE TABLE IF NOT EXISTS `runs` (
+  `id` int(5) NOT NULL AUTO_INCREMENT,
+  `location` varchar(50) NOT NULL,
+  `starttime` int(15) NOT NULL,
+  `endtime` int(15) DEFAULT NULL,
+  `supervisor` int(5) NOT NULL,
+  `corpkeeps` int(3) NOT NULL DEFAULT '100',
+  `isOfficial` tinyint(1) NOT NULL DEFAULT '0',
+  `isLocked` tinyint(1) NOT NULL DEFAULT '0',
+  `oreGlue` int(4) NOT NULL DEFAULT '0',
+  `shipGlue` int(4) NOT NULL DEFAULT '0',
+  `Arkonor` bigint(255) NOT NULL DEFAULT '0',
+  `tmec` float NOT NULL DEFAULT '0',
+  `CrimsonArkonor` bigint(255) NOT NULL DEFAULT '0',
+  `PrimeArkonor` bigint(255) NOT NULL DEFAULT '0',
+  `Bistot` bigint(255) NOT NULL DEFAULT '0',
+  `MonoclinicBistot` bigint(255) NOT NULL DEFAULT '0',
+  `TriclinicBistot` bigint(255) NOT NULL DEFAULT '0',
+  `Crokite` bigint(255) NOT NULL DEFAULT '0',
+  `CrystallineCrokite` bigint(255) NOT NULL DEFAULT '0',
+  `SharpCrokite` bigint(255) NOT NULL DEFAULT '0',
+  `DarkOchre` bigint(255) NOT NULL DEFAULT '0',
+  `ObsidianOchre` bigint(255) NOT NULL DEFAULT '0',
+  `OnyxOchre` bigint(255) NOT NULL DEFAULT '0',
+  `Gneiss` bigint(255) NOT NULL DEFAULT '0',
+  `IridescentGneiss` bigint(255) NOT NULL DEFAULT '0',
+  `PrismaticGneiss` bigint(255) NOT NULL DEFAULT '0',
+  `Omber` bigint(255) NOT NULL DEFAULT '0',
+  `SilveryOmber` bigint(255) NOT NULL DEFAULT '0',
+  `GoldenOmber` bigint(255) NOT NULL DEFAULT '0',
+  `Hedbergite` bigint(255) NOT NULL DEFAULT '0',
+  `GlazedHedbergite` bigint(255) NOT NULL DEFAULT '0',
+  `VitricHedbergite` bigint(255) NOT NULL DEFAULT '0',
+  `Hemorphite` bigint(255) NOT NULL DEFAULT '0',
+  `VividHemorphite` bigint(255) NOT NULL DEFAULT '0',
+  `RadiantHemorphite` bigint(255) NOT NULL DEFAULT '0',
+  `Jaspet` bigint(255) NOT NULL DEFAULT '0',
+  `PureJaspet` bigint(255) NOT NULL DEFAULT '0',
+  `PristineJaspet` bigint(255) NOT NULL DEFAULT '0',
+  `Kernite` bigint(255) NOT NULL DEFAULT '0',
+  `FieryKernite` bigint(255) NOT NULL DEFAULT '0',
+  `LuminousKernite` bigint(255) NOT NULL DEFAULT '0',
+  `Mercoxit` bigint(255) NOT NULL DEFAULT '0',
+  `MagmaMercoxit` bigint(255) NOT NULL DEFAULT '0',
+  `VitreousMercoxit` bigint(255) NOT NULL DEFAULT '0',
+  `BrightSpodumain` bigint(255) NOT NULL DEFAULT '0',
+  `GleamingSpodumain` bigint(255) NOT NULL DEFAULT '0',
+  `Spodumain` bigint(255) NOT NULL DEFAULT '0',
+  `Plagioclase` bigint(255) NOT NULL DEFAULT '0',
+  `AzurePlagioclase` bigint(255) NOT NULL DEFAULT '0',
+  `RichPlagioclase` bigint(255) NOT NULL DEFAULT '0',
+  `Pyroxeres` bigint(255) NOT NULL DEFAULT '0',
+  `SolidPyroxeres` bigint(255) NOT NULL DEFAULT '0',
+  `ViscousPyroxeres` bigint(255) NOT NULL DEFAULT '0',
+  `Scordite` bigint(255) NOT NULL DEFAULT '0',
+  `CondensedScordite` bigint(255) NOT NULL DEFAULT '0',
+  `MassiveScordite` bigint(255) NOT NULL DEFAULT '0',
+  `Veldspar` bigint(255) NOT NULL DEFAULT '0',
+  `ConcentratedVeldspar` bigint(255) NOT NULL DEFAULT '0',
+  `DenseVeldspar` bigint(255) NOT NULL DEFAULT '0',
+  `BlueIce` bigint(255) NOT NULL DEFAULT '0',
+  `ClearIcicle` bigint(255) NOT NULL DEFAULT '0',
+  `DarkGlitter` bigint(255) NOT NULL DEFAULT '0',
+  `EnrichedClearIcicle` bigint(255) NOT NULL DEFAULT '0',
+  `Gelidus` bigint(255) NOT NULL DEFAULT '0',
+  `GlacialMass` bigint(255) NOT NULL DEFAULT '0',
+  `GlareCrust` bigint(255) NOT NULL DEFAULT '0',
+  `Krystallos` bigint(255) NOT NULL DEFAULT '0',
+  `PristineWhiteGlaze` bigint(255) NOT NULL DEFAULT '0',
+  `SmoothGlacialMass` bigint(255) NOT NULL DEFAULT '0',
+  `ThickBlueIce` bigint(255) NOT NULL DEFAULT '0',
+  `WhiteGlaze` bigint(255) NOT NULL DEFAULT '0',
+  `ArkonorWanted` bigint(255) NOT NULL DEFAULT '0',
+  `CrimsonArkonorWanted` bigint(255) NOT NULL DEFAULT '0',
+  `PrimeArkonorWanted` bigint(255) NOT NULL DEFAULT '0',
+  `BistotWanted` bigint(255) NOT NULL DEFAULT '0',
+  `MonoclinicBistotWanted` bigint(255) NOT NULL DEFAULT '0',
+  `TriclinicBistotWanted` bigint(255) NOT NULL DEFAULT '0',
+  `CrokiteWanted` bigint(255) NOT NULL DEFAULT '0',
+  `CrystallineCrokiteWanted` bigint(255) NOT NULL DEFAULT '0',
+  `SharpCrokiteWanted` bigint(255) NOT NULL DEFAULT '0',
+  `DarkOchreWanted` bigint(255) NOT NULL DEFAULT '0',
+  `ObsidianOchreWanted` bigint(255) NOT NULL DEFAULT '0',
+  `OnyxOchreWanted` bigint(255) NOT NULL DEFAULT '0',
+  `GneissWanted` bigint(255) NOT NULL DEFAULT '0',
+  `IridescentGneissWanted` bigint(255) NOT NULL DEFAULT '0',
+  `PrismaticGneissWanted` bigint(255) NOT NULL DEFAULT '0',
+  `HedbergiteWanted` bigint(255) NOT NULL DEFAULT '0',
+  `GlazedHedbergiteWanted` bigint(255) NOT NULL DEFAULT '0',
+  `VitricHedbergiteWanted` bigint(255) NOT NULL DEFAULT '0',
+  `HemorphiteWanted` bigint(255) NOT NULL DEFAULT '0',
+  `VividHemorphiteWanted` bigint(255) NOT NULL DEFAULT '0',
+  `RadiantHemorphiteWanted` bigint(255) NOT NULL DEFAULT '0',
+  `JaspetWanted` bigint(255) NOT NULL DEFAULT '0',
+  `PureJaspetWanted` bigint(255) NOT NULL DEFAULT '0',
+  `PristineJaspetWanted` bigint(255) NOT NULL DEFAULT '0',
+  `KerniteWanted` bigint(255) NOT NULL DEFAULT '0',
+  `FieryKerniteWanted` bigint(255) NOT NULL DEFAULT '0',
+  `LuminousKerniteWanted` bigint(255) NOT NULL DEFAULT '0',
+  `MercoxitWanted` bigint(255) NOT NULL DEFAULT '0',
+  `MagmaMercoxitWanted` bigint(255) NOT NULL DEFAULT '0',
+  `VitreousMercoxitWanted` bigint(255) NOT NULL DEFAULT '0',
+  `BrightSpodumainWanted` bigint(255) NOT NULL DEFAULT '0',
+  `GleamingSpodumainWanted` bigint(255) NOT NULL DEFAULT '0',
+  `SpodumainWanted` bigint(255) NOT NULL DEFAULT '0',
+  `PlagioclaseWanted` bigint(255) NOT NULL DEFAULT '0',
+  `AzurePlagioclaseWanted` bigint(255) NOT NULL DEFAULT '0',
+  `RichPlagioclaseWanted` bigint(255) NOT NULL DEFAULT '0',
+  `PyroxeresWanted` bigint(255) NOT NULL DEFAULT '0',
+  `OmberWanted` bigint(255) NOT NULL DEFAULT '0',
+  `SilveryOmberWanted` bigint(255) NOT NULL DEFAULT '0',
+  `GoldenOmberWanted` bigint(255) NOT NULL DEFAULT '0',
+  `SolidPyroxeresWanted` bigint(255) NOT NULL DEFAULT '0',
+  `ViscousPyroxeresWanted` bigint(255) NOT NULL DEFAULT '0',
+  `ScorditeWanted` bigint(255) NOT NULL DEFAULT '0',
+  `CondensedScorditeWanted` bigint(255) NOT NULL DEFAULT '0',
+  `MassiveScorditeWanted` bigint(255) NOT NULL DEFAULT '0',
+  `VeldsparWanted` bigint(255) NOT NULL DEFAULT '0',
+  `ConcentratedVeldsparWanted` bigint(255) NOT NULL DEFAULT '0',
+  `DenseVeldsparWanted` bigint(255) NOT NULL DEFAULT '0',
+  `BlueIceWanted` bigint(255) NOT NULL DEFAULT '0',
+  `ClearIcicleWanted` bigint(255) NOT NULL DEFAULT '0',
+  `DarkGlitterWanted` bigint(255) NOT NULL DEFAULT '0',
+  `EnrichedClearIcicleWanted` bigint(255) NOT NULL DEFAULT '0',
+  `GelidusWanted` bigint(255) NOT NULL DEFAULT '0',
+  `GlacialMassWanted` bigint(255) NOT NULL DEFAULT '0',
+  `GlareCrustWanted` bigint(255) NOT NULL DEFAULT '0',
+  `KrystallosWanted` bigint(255) NOT NULL DEFAULT '0',
+  `PristineWhiteGlazeWanted` bigint(255) NOT NULL DEFAULT '0',
+  `SmoothGlacialMassWanted` bigint(255) NOT NULL DEFAULT '0',
+  `ThickBlueIceWanted` bigint(255) NOT NULL DEFAULT '0',
+  `WhiteGlazeWanted` bigint(255) NOT NULL DEFAULT '0',
+  `CondensedAlloy` bigint(255) NOT NULL DEFAULT '0',
+  `CrystalCompound` bigint(255) NOT NULL DEFAULT '0',
+  `PreciousAlloy` bigint(255) NOT NULL DEFAULT '0',
+  `SheenCompound` bigint(255) NOT NULL DEFAULT '0',
+  `GleamingAlloy` bigint(255) NOT NULL DEFAULT '0',
+  `LucentCompound` bigint(255) NOT NULL DEFAULT '0',
+  `DarkCompound` bigint(255) NOT NULL DEFAULT '0',
+  `MotleyCompound` bigint(255) NOT NULL DEFAULT '0',
+  `LusteringAlloy` bigint(255) NOT NULL DEFAULT '0',
+  `GlossyCompound` bigint(255) NOT NULL DEFAULT '0',
+  `PlushCompound` bigint(255) NOT NULL DEFAULT '0',
+  `OpulentCompound` bigint(255) NOT NULL DEFAULT '0',
+  `CartesianTemporalCoordinator` bigint(255) NOT NULL DEFAULT '0',
+  `CentralSystemController` bigint(255) NOT NULL DEFAULT '0',
+  `DefensiveControlNode` bigint(255) NOT NULL DEFAULT '0',
+  `ElectromechanicalHullSheeting` bigint(255) NOT NULL DEFAULT '0',
+  `EmergentCombatAnalyzer` bigint(255) NOT NULL DEFAULT '0',
+  `EmergentCombatIntelligence` bigint(255) NOT NULL DEFAULT '0',
+  `FusedNanomechanicalEngines` bigint(255) NOT NULL DEFAULT '0',
+  `HeuristicSelfassemblers` bigint(255) NOT NULL DEFAULT '0',
+  `JumpDriveControlNexus` bigint(255) NOT NULL DEFAULT '0',
+  `MeltedNanoribbons` bigint(255) NOT NULL DEFAULT '0',
+  `ModifiedFluidRouter` bigint(255) NOT NULL DEFAULT '0',
+  `NeurovisualInputMatrix` bigint(255) NOT NULL DEFAULT '0',
+  `PowderedC540Graphite` bigint(255) NOT NULL DEFAULT '0',
+  `ResonanceCalibrationMatrix` bigint(255) NOT NULL DEFAULT '0',
+  `ThermoelectricCatalysts` bigint(255) NOT NULL DEFAULT '0',
+  `FulleriteC28` bigint(255) NOT NULL DEFAULT '0',
+  `FulleriteC32` bigint(255) NOT NULL DEFAULT '0',
+  `FulleriteC50` bigint(255) NOT NULL DEFAULT '0',
+  `FulleriteC60` bigint(255) NOT NULL DEFAULT '0',
+  `FulleriteC70` bigint(255) NOT NULL DEFAULT '0',
+  `FulleriteC72` bigint(255) NOT NULL DEFAULT '0',
+  `FulleriteC84` bigint(255) NOT NULL DEFAULT '0',
+  `FulleriteC320` bigint(255) NOT NULL DEFAULT '0',
+  `FulleriteC540` bigint(255) NOT NULL DEFAULT '0',
+  `CondensedAlloyWanted` bigint(255) NOT NULL DEFAULT '0',
+  `CrystalCompoundWanted` bigint(255) NOT NULL DEFAULT '0',
+  `PreciousAlloyWanted` bigint(255) NOT NULL DEFAULT '0',
+  `SheenCompoundWanted` bigint(255) NOT NULL DEFAULT '0',
+  `GleamingAlloyWanted` bigint(255) NOT NULL DEFAULT '0',
+  `LucentCompoundWanted` bigint(255) NOT NULL DEFAULT '0',
+  `DarkCompoundWanted` bigint(255) NOT NULL DEFAULT '0',
+  `MotleyCompoundWanted` bigint(255) NOT NULL DEFAULT '0',
+  `LusteringAlloyWanted` bigint(255) NOT NULL DEFAULT '0',
+  `GlossyCompoundWanted` bigint(255) NOT NULL DEFAULT '0',
+  `PlushCompoundWanted` bigint(255) NOT NULL DEFAULT '0',
+  `OpulentCompoundWanted` bigint(255) NOT NULL DEFAULT '0',
+  `CartesianTemporalCoordinatorWanted` bigint(255) NOT NULL DEFAULT '0',
+  `CentralSystemControllerWanted` bigint(255) NOT NULL DEFAULT '0',
+  `DefensiveControlNodeWanted` bigint(255) NOT NULL DEFAULT '0',
+  `ElectromechanicalHullSheetingWanted` bigint(255) NOT NULL DEFAULT '0',
+  `EmergentCombatAnalyzerWanted` bigint(255) NOT NULL DEFAULT '0',
+  `EmergentCombatIntelligenceWanted` bigint(255) NOT NULL DEFAULT '0',
+  `FusedNanomechanicalEnginesWanted` bigint(255) NOT NULL DEFAULT '0',
+  `HeuristicSelfassemblersWanted` bigint(255) NOT NULL DEFAULT '0',
+  `JumpDriveControlNexusWanted` bigint(255) NOT NULL DEFAULT '0',
+  `MeltedNanoribbonsWanted` bigint(255) NOT NULL DEFAULT '0',
+  `ModifiedFluidRouterWanted` bigint(255) NOT NULL DEFAULT '0',
+  `NeurovisualInputMatrixWanted` bigint(255) NOT NULL DEFAULT '0',
+  `PowderedC540GraphiteWanted` bigint(255) NOT NULL DEFAULT '0',
+  `ResonanceCalibrationMatrixWanted` bigint(255) NOT NULL DEFAULT '0',
+  `ThermoelectricCatalystsWanted` bigint(255) NOT NULL DEFAULT '0',
+  `FulleriteC28Wanted` bigint(255) NOT NULL DEFAULT '0',
+  `FulleriteC32Wanted` bigint(255) NOT NULL DEFAULT '0',
+  `FulleriteC50Wanted` bigint(255) NOT NULL DEFAULT '0',
+  `FulleriteC60Wanted` bigint(255) NOT NULL DEFAULT '0',
+  `FulleriteC70Wanted` bigint(255) NOT NULL DEFAULT '0',
+  `FulleriteC72Wanted` bigint(255) NOT NULL DEFAULT '0',
+  `FulleriteC84Wanted` bigint(255) NOT NULL DEFAULT '0',
+  `FulleriteC320Wanted` bigint(255) NOT NULL DEFAULT '0',
+  `FulleriteC540Wanted` bigint(255) NOT NULL DEFAULT '0',
+  `NeuralNetworkAnalyzer` bigint(255) NOT NULL DEFAULT '0',
+  `SleeperDataLibrary` bigint(255) NOT NULL DEFAULT '0',
+  `AncientCoordinatesDatabase` bigint(255) NOT NULL DEFAULT '0',
+  `SleeperDroneAINexus` bigint(255) NOT NULL DEFAULT '0',
+  `NeuralNetworkAnalyzerWanted` bigint(255) NOT NULL DEFAULT '0',
+  `SleeperDataLibraryWanted` bigint(255) NOT NULL DEFAULT '0',
+  `AncientCoordinatesDatabaseWanted` bigint(255) NOT NULL DEFAULT '0',
+  `SleeperDroneAINexusWanted` bigint(255) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `location` (`location`,`supervisor`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `shipvalues`
+--
+
+CREATE TABLE IF NOT EXISTS `shipvalues` (
+  `id` int(5) NOT NULL AUTO_INCREMENT,
+  `modifier` int(5) NOT NULL,
+  `time` int(15) NOT NULL,
+  `AssaultShipValue` decimal(5,4) NOT NULL DEFAULT '1.0000',
+  `BattlecruiserValue` decimal(5,4) NOT NULL DEFAULT '1.0000',
+  `BattleshipValue` decimal(5,4) NOT NULL DEFAULT '1.0000',
+  `CarrierValue` decimal(5,4) NOT NULL DEFAULT '1.0000',
+  `CommandShipValue` decimal(5,4) NOT NULL DEFAULT '1.0000',
+  `CovertOpsValue` decimal(5,4) NOT NULL DEFAULT '1.0000',
+  `CruiserValue` decimal(5,4) NOT NULL DEFAULT '1.0000',
+  `DestroyerValue` decimal(5,4) NOT NULL DEFAULT '1.0000',
+  `DreadnoughtValue` decimal(5,4) NOT NULL DEFAULT '1.0000',
+  `ExhumerValue` decimal(5,4) NOT NULL DEFAULT '1.0000',
+  `FreighterValue` decimal(5,4) NOT NULL DEFAULT '1.0000',
+  `FrigateValue` decimal(5,4) NOT NULL DEFAULT '1.0000',
+  `HeavyAssaultShipValue` decimal(5,4) NOT NULL DEFAULT '1.0000',
+  `IndustrialShipValue` decimal(5,4) NOT NULL DEFAULT '1.0000',
+  `InterceptorValue` decimal(5,4) NOT NULL DEFAULT '1.0000',
+  `InterdictorValue` decimal(5,4) NOT NULL DEFAULT '1.0000',
+  `LogisticsShipValue` decimal(5,4) NOT NULL DEFAULT '1.0000',
+  `MiningBargeValue` decimal(5,4) NOT NULL DEFAULT '1.0000',
+  `ReconShipValue` decimal(5,4) NOT NULL DEFAULT '1.0000',
+  `ShuttleValue` decimal(5,4) NOT NULL DEFAULT '1.0000',
+  `TransportShipValue` decimal(5,4) NOT NULL DEFAULT '1.0000',
+  `CapitalIndustrialShipValue` decimal(5,4) NOT NULL DEFAULT '1.0000',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `shipvalues`
+--
+
+INSERT INTO `shipvalues` (`id`, `modifier`, `time`, `AssaultShipValue`, `BattlecruiserValue`, `BattleshipValue`, `CarrierValue`, `CommandShipValue`, `CovertOpsValue`, `CruiserValue`, `DestroyerValue`, `DreadnoughtValue`, `ExhumerValue`, `FreighterValue`, `FrigateValue`, `HeavyAssaultShipValue`, `IndustrialShipValue`, `InterceptorValue`, `InterdictorValue`, `LogisticsShipValue`, `MiningBargeValue`, `ReconShipValue`, `ShuttleValue`, `TransportShipValue`, `CapitalIndustrialShipValue`) VALUES
+(1, -1, 0, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `templates`
+--
+
+CREATE TABLE IF NOT EXISTS `templates` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `identifier` varchar(20) NOT NULL,
+  `type` varchar(20) NOT NULL,
+  `descr` varchar(80) DEFAULT NULL,
+  `template` blob,
+  PRIMARY KEY (`id`),
+  KEY `identifier` (`identifier`),
+  KEY `type` (`type`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
+
+--
+-- Dumping data for table `templates`
+--
+
+INSERT INTO `templates` (`id`, `identifier`, `type`, `descr`, `template`) VALUES
+(1, 'activation', 'email', 'Account activation email', 0x48656c6c6f207b7b555345524e414d457d7d20210a0a596f75722043454f20686173206a75737420636f6e6669726d656420796f7572206163636f756e742c20616e6420776520617265206d6f7265207468616e0a686170707920746f2070726573656e7420796f7520796f75722070617373776f72642e0a0a506c6561736520757365207468652070617373776f72643a207b7b4e4557504153537d7d0a0a506c65617365206c6f6720696e20746f20796f75206561726c6965737420636f6e76656e69656e636520616e64206368616e676520746861740a70617373776f726420746f20736f6d657468696e672065617369657220746f2072656e656d6265722e204f722077726974652074686973206f6e650a646f776e2e0a0a7b7b56455253494f4e7d7d206f66207b7b534954454e414d457d7d2e0a0a53656520796f7520696e207468652061737465726f6964206669656c647320736f6f6e2c0a0a7b7b534954454e414d457d7d2e),
+(2, 'lostpass', 'email', 'Lost password email', 0x48656c6c6f207b7b555345524e414d457d7d20210a0a536f6d656f6e652066726f6d207b7b49507d7d202d706f737369626c7920796f752d2068617320726563656e746c792076697369746564207468650a7b7b56455253494f4e7d7d206f66207b7b534954454e414d457d7d2e0a0a486f77657665722c20796f75206f722068652f73686520776173206e6f742061626c6520746f206c6f6720696e20616e64206861730a7265717565737465642061206e65772070617373776f72642c2077686963682077652061726520686170707920746f20737570706c7920746f20796f753a0a0a7b7b4e4557504153537d7d0a0a506c65617365206c6f6720696e20746f20796f75206561726c6965737420636f6e76656e69656e636520616e64206368616e676520746861740a70617373776f726420746f20736f6d657468696e672065617369657220746f2072656e656d6265722e204f722077726974652074686973206f6e650a646f776e2e0a0a53656520796f7520696e207468652061737465726f6964206669656c647320736f6f6e2c0a0a7b7b534954454e414d457d7d2e),
+(3, 'newevent', 'email', 'New event accounced email', 0x4772656574696e6773207b7b555345527d7d210a7b7b464c41474f4646494345527d7d20686173206a75737420616e6e6f756e6365642061206e6577204576656e74210a0a52656e656d6265723a20496620796f752077616e7420746f20636f6d652c20706c65617365206c6f67696e207769746820796f75720a202020202020202020206163636f756e7420616e64206a6f696e2074686973206576656e742e20546869732068656c7073207468650a202020202020202020206f6666696365727320696e2063686172676520746f206b6e6f7720686f77206d616e79206172650a20202020202020202020636f6d696e672e0a0a2d2d20383c202d2d202d2d20383c202d2d202d2d20383c202d2d202d2d20383c202d2d202d2d20383c202d2d202d2d20383c202d2d200a0a4556454e5420494e464f524d4154494f4e0a0a4d697373696f6e204944202020202020202020207b7b49447d7d0a4d697373696f6e205479706520202020202020207b7b545950457d7d0a4465736372697074696f6e2020202020202020207b7b5344455343527d7d0a457865637574696e67204f6666696365722020207b7b464c41474f4646494345527d7d0a53797374656d20202020202020202020202020207b7b53595354454d7d7d0a53656375726974792020202020202020202020207b7b53454355524954597d7d0a537461727474696d6520202020202020202020207b7b535441525454494d457d7d0a457374696d61746564204475726174696f6e20207b7b4455524154494f4e7d7d0a446966666963756c7479202020202020202020207b7b5249534b7d7d0a5061796d656e74202020202020202020202020207b7b5041594d454e547d7d0a436f6c6c61746572616c202020202020202020207b7b434f4c4c41544552414c7d7d0a0a4164646974696f6e616c204e6f7465733a0a7b7b4e4f5445537d7d0a0a2d2d20383c202d2d202d2d20383c202d2d202d2d20383c202d2d202d2d20383c202d2d202d2d20383c202d2d202d2d20383c202d2d200a0a596f752072656369766564207468697320654d61696c206265636175736520796f7520617265207375627363726962656420746f0a74686520654d61696c20616e6e6f756e63656d656e742073797374656d206f66204d696e696e6742756464792c200a62656c6f6e67696e6720746f207b7b534954454e414d457d7d2e0a496620796f7520646f206e6f74207769736820746f2072656369766520616e79206d6f726520654d61696c732066726f6d0a7468697320736974652c20706c6561736520676f20746f2074686520666f6c6c6f77696e6720736974652c206c6f67696e0a616e64206f70742d6f75742028707265666572656e6365732070616765292e0a0a7b7b55524c7d7d0a0a2d2d20383c202d2d202d2d20383c202d2d202d2d20383c202d2d202d2d20383c202d2d202d2d20383c202d2d202d2d20383c202d2d200a706f7765726564206279207b7b56455253494f4e7d7d2e),
+(4, 'accountactivated', 'email', 'Account activated email', 0x48656c6c6f207b7b555345524e414d457d7d20210a0a596f757220667269656e646c7920636f72706f726174696f6e2c207b7b434f52507d7d2c0a686173206a757374206372656174656420616e206163636f756e7420666f7220796f7520666f7220746865204d696e696e6742756464790a6174207b7b534954457d7d2e0a0a596f7572206c6f67696e206e616d653a207b7b555345524e414d457d7d0a596f75722050617373776f726420203a207b7b50415353574f52447d7d0a0a506c65617365206c6f6720696e20746f20796f75206561726c6965737420636f6e76656e69656e636520616e64206368616e676520746861740a70617373776f726420746f20736f6d657468696e672065617369657220746f2072656e656d6265722e204f722077726974652074686973206f6e650a646f776e2e0a0a53656520796f7520696e207468652061737465726f6964206669656c647320736f6f6e2c0a0a7b7b43524541544f527d7d0a7b7b434f52507d7d2e),
+(5, 'accountrequest', 'email', 'Account activation email', 0x48656c6c6f2074686572652c2070696c6f74210a0a536f6d656f6e652066726f6d20746865204950207b7b49507d7d2c20706f737369626c7920796f752c2072657175657374656420616e0a6163636f756e7420666f7220746865204d696e696e674275646479206465706c6f796d656e74206c6f63617465642061740a0a7b7b55524c7d7d0a0a546865207265717565737420776173206d616465206f6e207b7b444154457d7d2e0a0a496620796f75207265717565737465642069742c20796f75206e65656420746f20616374697661746520796f7572206163636f756e740a627920636c69636b696e67206f6e2074686973206c696e6b3a0a0a7b7b41435449564154457d7d0a0a496620746865207265717565737420776173206d61646520696e206572726f722c206f72206e6f7420627920796f752c20646f0a6e6f7420776f7272792e20496620796f7520646f206e6f7420646f20616e797468696e6720796f757220656d61696c206164726573730a77696c6c20626520626c61636b6c697374656420696e206f75722073797374656d20616e64206e6f74206265207573656420616761696e2e0a0a5468616e6b20796f752c0a6b696e6420726567617264732c0a5468652043454f206f66207b7b434f52507d7d2e),
+(6, 'receipt', 'email', 'Summary of mining op', 0x7b7b44495649444552544f507d7d0a0a48656c6c6f207b7b555345524e414d457d7d2c0a0a5468616e6b20796f7520666f7220617474656e64696e67206d696e696e67206f7065726174696f6e20237b7b49447d7d2e2042656c6f772069732061206c696e6575700a6f6620796f7572206f7065726174696f6e7320616368696576656d656e743a0a0a4f726573204d696e65643a0a2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d0a7b7b4f5245534d494e45447d7d0a2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d0a20202020202020202020202020202020202020202020202020202020202020202020202020202020544f54414c2056414c55453a207b7b56414c55457d7d0a2020202020202020202020202020202020202020202020202020202020202020202020594f55522047524f53532056414c55453a207b7b47524f535353484152457d7d0a2020202020202020202020202020202020202020202020202020202020202020202020202020202020434f52502054415845533a207b7b434f525054415845537d7d0a2020202020202020202020202020202020202020202020202020202020202020202020202020202020204e45542056414c55453a207b7b4e455456414c55457d7d0a20202020202020202020202020202020202020202020202020202020202020202020202020594f5552204e45542053484152453a207b7b4e455453484152457d7d0a0a0a54686520616d6f6e756e74206f66207b7b4e455453484152457d7d20686173206265656e20637265646974656420746f20796f7572206163636f756e742c0a62656c6f7720697320612073686f72742073756d6d617279206f6620796f757220726563656e74207472616e73616374696f6e733a0a0a2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d0a7b7b4143434f554e547d7d0a2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d0a7b7b4143434f554e5442414c414e43457d7d0a0a5468616e6b20796f7520616761696e20666f722074616b696e67207061727420696e2074686973206d696e696e67206f7065726174696f6e2e20576520686f706520746f0a73656520796f7520696e206675747572652072756e732061732077656c6c210a0a7b7b534954454e414d457d7d0a7b7b55524c7d7d0a0a7b7b44495649444552424f547d7d),
+(7, 'motd', 'announce', 'Announcement after login', '');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `transactions`
+--
+
+CREATE TABLE IF NOT EXISTS `transactions` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `time` int(12) NOT NULL,
+  `owner` int(5) NOT NULL,
+  `banker` int(5) NOT NULL,
+  `type` int(2) NOT NULL DEFAULT '0',
+  `amount` int(15) NOT NULL DEFAULT '0',
+  `reason` varchar(200) NOT NULL DEFAULT 'cash deposit',
+  PRIMARY KEY (`id`),
+  KEY `owner` (`owner`,`banker`,`type`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` int(5) NOT NULL AUTO_INCREMENT,
+  `username` varchar(30) NOT NULL,
+  `password` varchar(50) NOT NULL,
+  `email` varchar(80) DEFAULT 'System',
+  `addedby` int(5) NOT NULL DEFAULT '0',
+  `lastlogin` int(20) DEFAULT '0',
+  `confirmed` int(1) NOT NULL DEFAULT '0',
+  `emailvalid` int(1) NOT NULL DEFAULT '0',
+  `emailcode` bigint(30) DEFAULT NULL,
+  `optIn` int(1) NOT NULL DEFAULT '1',
+  `deleted` int(1) NOT NULL DEFAULT '0',
+  `canLogin` tinyint(1) NOT NULL DEFAULT '1',
+  `canJoinRun` tinyint(1) NOT NULL DEFAULT '1',
+  `canCreateRun` tinyint(1) NOT NULL DEFAULT '0',
+  `canCloseRun` tinyint(1) NOT NULL DEFAULT '0',
+  `canDeleteRun` tinyint(1) NOT NULL DEFAULT '0',
+  `canAddHaul` tinyint(1) NOT NULL DEFAULT '1',
+  `canChangePwd` tinyint(1) NOT NULL DEFAULT '1',
+  `canChangeEmail` tinyint(1) NOT NULL DEFAULT '1',
+  `canChangeOre` tinyint(1) NOT NULL DEFAULT '0',
+  `canAddUser` tinyint(1) NOT NULL DEFAULT '0',
+  `canSeeUsers` tinyint(1) NOT NULL DEFAULT '0',
+  `canDeleteUser` tinyint(1) NOT NULL DEFAULT '0',
+  `canEditRank` tinyint(1) NOT NULL DEFAULT '0',
+  `canManageUser` tinyint(1) NOT NULL DEFAULT '0',
+  `canEditEvents` tinyint(1) NOT NULL DEFAULT '0',
+  `canDeleteEvents` tinyint(1) NOT NULL DEFAULT '0',
+  `canSeeEvents` tinyint(1) NOT NULL DEFAULT '1',
+  `isOfficial` tinyint(1) NOT NULL DEFAULT '0',
+  `isAccountant` tinyint(1) NOT NULL DEFAULT '0',
+  `preferences` blob,
+  `isAdmin` tinyint(1) NOT NULL DEFAULT '0',
+  `rank` int(3) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `username` (`username`,`password`,`email`,`confirmed`,`emailvalid`,`optIn`,`deleted`,`canLogin`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
