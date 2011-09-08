@@ -218,7 +218,7 @@ foreach ($MATERIALS as $mat) {
 
 // Config Data
 
-$SQLVER = "21";
+$SQLVER = "23";
 $CONFIGVER = "9";
 $IS_BETA = false;
 ?>

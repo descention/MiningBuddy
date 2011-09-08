@@ -123,7 +123,7 @@ if ($_SESSION["initdone"] != true) {
 		if (file_exists($filename)) {
 			die("Please update your sql tables <a href=\"$filename\">click here</a>.");
 		} else {
-			die("Please update your sql tables <a href=\"$filename\">click here</a>.");
+			die("Database update file may be missing.  Check files.");
 		}
 	}
 }
