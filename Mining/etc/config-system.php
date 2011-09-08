@@ -39,8 +39,8 @@
  * installation.
  */
 
-$VERSION_COMP = "0.8.6-kam";
-$VERSION = "MiningBuddy " . $VERSION_COMP;
+$VERSION_COMP = "0.8.6-kam-rev24";
+$VERSION = "MiningBuddy Plus " . $VERSION_COMP;
 
 $DSN = "$mysql_protocol://$mysql_username:$mysql_password@$mysql_hostname/$mysql_dbname";
 
