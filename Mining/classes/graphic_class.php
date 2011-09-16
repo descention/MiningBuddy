@@ -107,6 +107,15 @@ class graphic {
 				$this->prefixed = true;
 				break;
 
+			case ("long") :
+				$this->text = "Empty Image";
+				$this->height = 20;
+				$this->width = 250;
+				$this->fontsize = 10;
+				$this->font = "sans";
+				$this->prefixed = true;
+				break;
+
 			default :
 				die("invalid type in graphic.class");
 				break;

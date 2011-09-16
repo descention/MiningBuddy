@@ -103,7 +103,7 @@ class html {
 			$loginLogo->setBGColor("2D2D37");
 			$loginLogo->setPrefixed(false);
 
-			$versionLogo = new graphic("standard");
+			$versionLogo = new graphic("long");
 			$versionLogo->setText($VERSION);
 			$versionLogo->setBGColor("2D2D37");
 			$versionLogo->setPrefixed(false);
@@ -119,11 +119,16 @@ class html {
 			$moneyLogo->setBGColor("2D2D37");
 			$moneyLogo->setPrefixed(false);
 			
-			
+			$api = new api($MySelf->getID());
 			
 			// Replace variables in the header.
 			$this->header = str_replace("%%SITENAME%%", getConfig("sitename") . " - " . $VERSION, $this->header);
 			$this->header = makeMenu($this->header);
+			if ($api->getCharacterID() == "") {
+				$this->header = str_replace("%%PILOT64%%", "", $this->header);
+			} else {
+				$this->header = str_replace("%%PILOT64%%", "<img width='64' height='64' align='left' src='https://image.eveonline.com/Character/". $api->getCharacterID() ."_64.jpg' />", $this->header);
+			}
 			$this->header = str_replace("%%LOGGEDIN%%", $loginLogo->render(), $this->header);
 			$this->header = str_replace("%%RANK%%", $rankLogo->render(), $this->header);
 			$this->header = str_replace("%%CREDITS%%", $moneyLogo->render(), $this->header);

@@ -41,10 +41,11 @@
 <body bgcolor="#2D2D37" text="#ffffff" link="#ff8a00" vlink="#ff8a00" marginwidth="0" marginheight="0" topmargin="0" leftmargin="0">
 
 <table width="100%" cellpadding="2" cellspacing="0">
-<tr><td width="50%" bgcolor="#2D2D37">
+<tr><td bgcolor="#2D2D37">
 <a href="%%URL%%">%%LOGO%%</a>
 </td>
-<td align="right" bgcolor="#2D2D37">
+<td width="220" align="right" bgcolor="#2D2D37">
+%%PILOT64%%
 %%LOGGEDIN%%<br>
 %%RANK%%<br>
 %%CREDITS%%
