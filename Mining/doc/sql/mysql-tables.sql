@@ -172,7 +172,7 @@ INSERT INTO `config` (`name`, `value`) VALUES
 ('MotleyCompoundEnabled', '0'),
 ('LusteringAlloyEnabled', '0'),
 ('GlossyCompoundEnabled', '0'),
-('PlushhCompoundEnabled', '0'),
+('PlushCompoundEnabled', '0'),
 ('OpulentCompoundEnabled', '0'),
 ('CartesianTemporalCoordinatorEnabled', '0'),
 ('CentralSystemControllerEnabled', '0'),
