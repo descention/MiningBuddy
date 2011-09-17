@@ -126,7 +126,7 @@ function showOreValue() {
 		// Ore columns for LEFT side.
 		$table->addCol("<img width=\"32\" height=\"32\" src=\"./images/ores/" . $ORE . ".png\">");
 		$table->addCol($ORE);
-		$table->addCol(number_format($orevalues[$DBORE[$ORE] . Worth]) . " ISK");
+		$table->addCol(number_format($orevalues[$DBORE[$ORE] . Worth], 2) . " ISK");
 		if (!$isLatest) {
 			$diff = $orevalues[$DBORE[$ORE] . Worth] - $latest[$DBORE[$ORE] . Worth];
 			if ($diff > 0) {
@@ -153,7 +153,7 @@ function showOreValue() {
 			// Ore columns for LEFT side.
 			$table->addCol("<img width=\"32\" height=\"32\" src=\"./images/ores/" . $ORE . ".png\">");
 			$table->addCol($ORE);
-			$table->addCol(number_format($orevalues[$DBORE[$ORE] . Worth]) . " ISK");
+			$table->addCol(number_format($orevalues[$DBORE[$ORE] . Worth], 2) . " ISK");
 			if (!$isLatest) {
 				$diff = $orevalues[$DBORE[$ORE] . Worth] - $latest[$DBORE[$ORE] . Worth];
 				if ($diff > 0) {
