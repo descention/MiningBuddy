@@ -128,7 +128,7 @@ class html {
 				$thisCharacterID = $api->getCharacterID();
 			}
 			if ($thisCharacterID == "") {
-				$this->header = str_replace("%%PILOT64%%", $MySelf->isValid(), $this->header);
+				$this->header = str_replace("%%PILOT64%%", "", $this->header);
 			} else {
 				$this->header = str_replace("%%PILOT64%%", "<img width='64' height='64' align='left' src='https://image.eveonline.com/Character/". $api->getCharacterID() ."_64.jpg' />", $this->header);
 			}
