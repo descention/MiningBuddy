@@ -39,7 +39,7 @@
  * installation.
  */
 
-$VERSION_COMP = "0.8.6-kam-rev24";
+$VERSION_COMP = "0.8.6.31";
 $VERSION = "MiningBuddy Plus " . $VERSION_COMP;
 
 $DSN = "$mysql_protocol://$mysql_username:$mysql_password@$mysql_hostname/$mysql_dbname";
@@ -219,6 +219,6 @@ foreach ($MATERIALS as $mat) {
 // Config Data
 
 $SQLVER = "23";
-$CONFIGVER = "9";
+$CONFIGVER = "10";
 $IS_BETA = false;
 ?>

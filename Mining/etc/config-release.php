@@ -123,5 +123,5 @@ $MB_EMAIL = "MiningBuddy@" . $DOMAIN;
  *       file.
  */
 include ('./etc/config-system.php');
-$CONF_VER = "9";
+$CONF_VER = "10";
 ?>
