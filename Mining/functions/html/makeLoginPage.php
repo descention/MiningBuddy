@@ -154,11 +154,13 @@ function makeLoginPage($user = false) {
 	$page .= "<form action=\"index.php\" method=\"post\">";
 
 	// Add special hidden forms for stupid browsers.
-	if (
-	ereg("MSIE", $_SERVER[HTTP_USER_AGENT]) or 
-	ereg("Firefox/6", $_SERVER[HTTP_USER_AGENT]) or 
-	ereg("Firefox/5", $_SERVER[HTTP_USER_AGENT]) or 
-	ereg("Firefox/4", $_SERVER[HTTP_USER_AGENT])
+	$browserinfo = new BrowserInfo();
+	
+	if ( ereg("MSIE", $_SERVER[HTTP_USER_AGENT]) or ( $browserinfo->getBrowser() == BrowserInfo::BROWSER_FIREFOX && $browserinfo->getVersion() >= 4 ) 
+//	ereg("Firefox/7", $_SERVER[HTTP_USER_AGENT]) or 
+//	ereg("Firefox/6", $_SERVER[HTTP_USER_AGENT]) or 
+//	ereg("Firefox/5", $_SERVER[HTTP_USER_AGENT]) or 
+//	ereg("Firefox/4", $_SERVER[HTTP_USER_AGENT])
 	) {	
 		$page .= "<input type=\"hidden\" name=\"login\" value=\"login\">";
 	}
