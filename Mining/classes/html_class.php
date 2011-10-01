@@ -91,7 +91,15 @@ class html {
 			}
 
 //			$this->footer = file_get_contents('./include/html/footer.txt');
-			$this->footer = file_get_contents('./include/html/footer.php');
+			$domainroot = $_SERVER['HTTP_HOST'];
+			if (($domainroot == "miningbuddy.us") or
+			($domainroot == "miningbuddy.net") or
+			($domainroot == "miningbuddy.de")){
+				$this->footer = file_get_contents('./include/html/mbh-footer.php');	
+			}else{
+				$this->footer = file_get_contents('./include/html/footer.php');
+			}
+
 
 			// Generate the images.
 			$mainLogo = new graphic("title");

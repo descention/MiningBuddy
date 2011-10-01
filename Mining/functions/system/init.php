@@ -38,7 +38,24 @@ require_once ('./functions/system/errorHandler.php');
 require_once ('./functions/registry.php');
 
 /* Initialize cookies. Mhh, cookies. */
+
+$currentCookieParams = session_get_cookie_params();
+
+$rootDomain = $_SERVER['HTTP_HOST'];
+$rootPath = dirname($_SERVER['REQUEST_URI']) . "/";
+
+session_set_cookie_params(
+    $currentCookieParams["lifetime"],
+    $rootPath,
+    $rootDomain,
+    $currentCookieParams["secure"],
+    $currentCookieParams["httponly"]
+);
+
+session_name('MiningBuddyPlus');
 session_start();
+
+setcookie($cookieName, $cookieValue, time() + 3600, dirname($_SERVER['REQUEST_URI']), $rootDomain); 
 
 /* get the domain name. */
 $DOMAIN = $_SERVER[HTTP_HOST];
