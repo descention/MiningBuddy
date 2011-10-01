@@ -133,6 +133,7 @@ require_once ('./classes/user_class.php');
 require_once ('./classes/graphic_class.php');
 require_once ('./classes/solarSystem_class.php');
 require_once ('./classes/profile_class.php');
+require_once ('./classes/browserinfo_class.php');
 
 /* User Management */
 require_once ('./functions/usermngt/changeEmail.php');
