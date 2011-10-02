@@ -92,14 +92,17 @@ class html {
 
 //			$this->footer = file_get_contents('./include/html/footer.txt');
 			$domainroot = $_SERVER['HTTP_HOST'];
-			if (($domainroot == "miningbuddy.us") or
-			($domainroot == "miningbuddy.net") or
-			($domainroot == "miningbuddy.de")){
+			
+			// Add page footer
+			// use proper footer for sponcered sites.
+			if (
+			($domainroot == "miningbuddy.us") or
+			($domainroot == "miningbuddy.de") or
+			($domainroot == "miningbuddy.net")){
 				$this->footer = file_get_contents('./include/html/mbh-footer.php');	
 			}else{
 				$this->footer = file_get_contents('./include/html/footer.php');
 			}
-
 
 			// Generate the images.
 			$mainLogo = new graphic("title");
