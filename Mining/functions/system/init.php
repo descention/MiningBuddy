@@ -1,6 +1,5 @@
 <?php
 
-
 /*
 * MiningBuddy (http://miningbuddy.net)
 * $Header: /usr/home/mining/cvs/mining/functions/system/init.php,v 1.4 2008/01/03 15:49:08 mining Exp $
@@ -37,30 +36,24 @@ require_once ('./functions/system/errorHandler.php');
 /* Include all the functions */
 require_once ('./functions/registry.php');
 
-/* Initialize cookies. Mhh, cookies. */
-
-$currentCookieParams = session_get_cookie_params();
-
-$rootDomain = $_SERVER['HTTP_HOST'];
-$rootPath = dirname($_SERVER['REQUEST_URI']) . "/";
-
-session_set_cookie_params(
-    $currentCookieParams["lifetime"],
-    $rootPath,
-    $rootDomain,
-    $currentCookieParams["secure"],
-    $currentCookieParams["httponly"]
-);
-
-session_name('MiningBuddyPlus');
-session_start();
-
-setcookie($cookieName, $cookieValue, time() + 3600, dirname($_SERVER['REQUEST_URI']), $rootDomain); 
-
 /* get the domain name. */
 $DOMAIN = $_SERVER[HTTP_HOST];
 $SCRIPT = dirname($_SERVER[SCRIPT_NAME]);
 $URL = "http://" . $DOMAIN . $SCRIPT;
+
+/* Initialize cookies. Mhh, cookies. */
+$currentCookieParams = session_get_cookie_params();
+
+session_set_cookie_params(
+   	$currentCookieParams["lifetime"],
+   	$SCRIPT,
+   	$DOMAIN,
+   	$currentCookieParams["secure"],
+   	$currentCookieParams["httponly"]
+);
+
+session_name('MBPSession');
+session_start();
 
 /* Die and roll over if we use an archaic PHP version. */
 if (version_compare(phpversion(), "5.0.0") == "-1") {
