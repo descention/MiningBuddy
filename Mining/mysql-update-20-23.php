@@ -71,6 +71,7 @@ if ($upgrade=='1' ){
 		  PRIMARY KEY  (`id`)
   		) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 	");
+	$configupgrade2 = mysql_query("INSERT INTO `shipvalues` (`id`, `modifier`, `time`, `AssaultShipValue`, `BattlecruiserValue`, `BattleshipValue`, `CarrierValue`, `CommandShipValue`, `CovertOpsValue`, `CruiserValue`, `DestroyerValue`, `DreadnoughtValue`, `ExhumerValue`, `FreighterValue`, `FrigateValue`, `HeavyAssaultShipValue`, `IndustrialShipValue`, `InterceptorValue`, `InterdictorValue`, `LogisticsShipValue`, `MiningBargeValue`, `ReconShipValue`, `ShuttleValue`, `TransportShipValue`, `CapitalIndustrialShipValue`) VALUES (1, -1, 0, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000);");
 
 	echo "Upgrading Hauled Table!";
 	echo "<br>";
