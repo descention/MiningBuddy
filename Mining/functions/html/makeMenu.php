@@ -362,6 +362,49 @@ function makeMenu($page = false) {
 	}
 
 	/*
+	 * Lotto related things.
+	 */
+
+	$LOTTO = getConfig("Lotto");
+	if ($LOTTO) {
+		// Are we allowed to play Lotto?
+		if ($MySelf->canPlayLotto()) {
+			// Yeah we are allowed to do this.
+			if ($IGB && $IGB_VISUAL) {
+				// Browswing in the iGB.
+				$lotto_Play = "[<a href=\"index.php?action=lotto\">Lotto</a>]";
+			} else {
+				// Using a real browser.
+				$lotto_Play = "<a href=\"index.php?action=lotto\"><img border=\"0\" src=\"images/lotto-play.png\"></a><br>";
+			}
+		}
+
+		if ($MySelf->isLottoOfficial()) {
+			// Yeah we are allowed to do this.
+			if ($IGB && $IGB_VISUAL) {
+				// Browswing in the iGB.
+				$lotto_Admin = "[<a href=\"index.php?action=editLotto\">Admin Lotto</a>]";
+			} else {
+				// Using a real browser.
+				$lotto_Admin = "<a href=\"index.php?action=editLotto\"><img border=\"0\" src=\"images/lotto-admin.png\"></a><br>";
+			}
+		}
+
+		if ($lotto_Admin || $lotto_Play) {
+			// Assemble the Lotto module.
+			if ($IGB && $IGB_VISUAL) {
+				$lottoModule = $lotto_Play . " " . $lotto_Admin . "<br>";
+			} else {
+				$lottoModule = "<br>";
+				$lottoModule .= "<img src=\"./images/m-lotto.png\"><br>";
+				$lottoModule .= $lotto_Play;
+				$lottoModule .= $lotto_Admin;
+			}
+		}
+
+	}
+
+	/*
 	 * Open operations Module
 	 */
 	if ($IGB && $IGB_VISUAL) {
@@ -449,7 +492,7 @@ function makeMenu($page = false) {
 		$menu->addHeader("Logged in as <font color=\"00aa00\">%%USERNAME%%</font>, Rank: <font color=\"00aa00\">%%RANK%%</font>, $DIV_MENU Credits: <font color=\"00aa00\">%%CREDITS%%</font>.");
 		$modules = $menu->flush();
 	} else {
-		$modules = $UPDATE . $miningModule . $operationsModule . $walletModule . $eventsModule . $prefModule . $adminModule . $logoutModule . $clock;
+		$modules = $UPDATE . $miningModule . $operationsModule . $walletModule . $eventsModule . $lottoModule . $prefModule . $adminModule . $logoutModule . $clock;
 	}
 
 	// And return it all.

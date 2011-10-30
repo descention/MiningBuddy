@@ -242,8 +242,8 @@ function onlineTime() {
 		// We have at least one person who sent in his times.
 		return ($page . $onlineTime->flush() . $editLink);
 	} else {
-		// Noone ever sent in his times. 
-		return ($page . "<b>Noone sent in his/her onlinetimes yet. But you can be the first! :)</b><br>" . $editLink);
+		// No one ever sent in his times. 
+		return ($page . "<b>No one sent in his/her onlinetimes yet. But you can be the first! :)</b><br>" . $editLink);
 	}
 }
 ?>

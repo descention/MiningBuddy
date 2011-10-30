@@ -103,6 +103,13 @@ function configuration() {
 		$table->addCol("<input type=\"text\" name=\"canLifeTime\" value=\"" . getConfig("canLifeTime", true) . "\">");
 	}
 
+	// Max Lotto tickets %
+	if (getConfig("Lotto", true)) {
+		$table->addRow();
+		$table->addCol("Max Lotto tickets (%):", $config);
+		$table->addCol("<input type=\"text\" name=\"LottoPercent\" value=\"" . getConfig("LottoPercent", true) . "\">");
+	}
+
 	// Default Tax.
 	$table->addRow();
 	$table->addCol("Default Corp tax (set to zero for dynamic):", $config);
@@ -162,18 +169,18 @@ function configuration() {
 	$pdm .= "</select>";
 	$table->addCol($pdm);
 
-	$table->addRow();
-	$table->addCol("Advanced Settings:", $config);
+	//$table->addRow();
+	//$table->addCol("Advanced Settings:", $config);
 
-	$advancedOptions = getConfig("advancedOptions", true);
-	if ($advancedOptions) {
-		$pdm = "<option selected value=\"true\">Online</option>";
-		$pdm .= "<option value=\"false\">Offline</option>";
-	} else {
-		$pdm = "<option value=\"true\">Online</option>";
-		$pdm .= "<option selected value=\"false\">Offline</option>";
-	}
-	$table->addCol("<select name=\"advancedOptions\">" . $pdm . "</select>");
+	//$advancedOptions = getConfig("advancedOptions", true);
+	//if ($advancedOptions) {
+	//	$pdm = "<option selected value=\"true\">Online</option>";
+	//	$pdm .= "<option value=\"false\">Offline</option>";
+	//} else {
+	//	$pdm = "<option value=\"true\">Online</option>";
+	//	$pdm .= "<option selected value=\"false\">Offline</option>";
+	//}
+	//$table->addCol("<select name=\"advancedOptions\">" . $pdm . "</select>");
 	unset ($pdm);
 
 	// Use Market Values when loading Manage Ore Values
@@ -312,6 +319,37 @@ function configuration() {
 	}
 	$modules_table->addCol("<select name=\"cargocontainer\">" . $pdm . "</select>");
 	unset ($pdm);
+
+	// Lotto Module enable.
+	$modules_table->addRow();
+	$modules_table->addCol("Lotto Module:", $config);
+
+	$lotto = getConfig("Lotto", true);
+	if ($lotto) {
+		$pdm = "<option selected value=\"true\">Online</option>";
+		$pdm .= "<option value=\"false\">Offline</option>";
+	} else {
+		$pdm = "<option value=\"true\">Online</option>";
+		$pdm .= "<option selected value=\"false\">Offline</option>";
+	}
+	$modules_table->addCol("<select name=\"Lotto\">" . $pdm . "</select>");
+	unset ($pdm);
+
+	// Advanced settings Module Enable.
+	$modules_table->addRow();
+	$modules_table->addCol("Advanced Settings:", $config);
+
+	$advancedOptions = getConfig("advancedOptions", true);
+	if ($advancedOptions) {
+		$pdm = "<option selected value=\"true\">Online</option>";
+		$pdm .= "<option value=\"false\">Offline</option>";
+	} else {
+		$pdm = "<option value=\"true\">Online</option>";
+		$pdm .= "<option selected value=\"false\">Offline</option>";
+	}
+	$modules_table->addCol("<select name=\"advancedOptions\">" . $pdm . "</select>");
+	unset ($pdm);
+
 
 	// Assemble form stuff.
 	$form = "<form action=\"index.php\" method=\"POST\">";

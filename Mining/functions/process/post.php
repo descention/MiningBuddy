@@ -230,7 +230,21 @@ function process_post() {
 		case ("transaction") :
 			createTransaction();
 			break;
+			
+						/*
+			 * Lotto stuff
+			 */
+		case ("editLottoTickets") :
+			lotto_editCreditsInDB();
+			break;
 
+		case ("createDrawing") :
+			lotto_createDrawing();
+			break;
+
+		case ("lottoBuyCredits") :
+			lotto_buyTickets();
+			break;
 	}
 }
 ?>

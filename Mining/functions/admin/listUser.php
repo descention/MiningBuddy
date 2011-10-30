@@ -217,6 +217,8 @@ function listUser() {
 			"canManageUser" => "grant and take permissions.",
 			"isOfficial" => "create official mining runs (with payout).",
 			"isAdmin" => "edit site settings.",
+			"isLottoOfficial" => "administrate the lottery",
+			"canPlayLotto" => "play Lotto!",
 			"isAccountant" => "edit other users credits.",
 			"optIn" => "User has opt-in to eMails."
 		);

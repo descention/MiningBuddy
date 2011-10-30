@@ -298,6 +298,28 @@ function process_get() {
 		default :
 			$page = makeWelcome();
 			break;
+			
+			/* LOTTO STUFF */
+		case ("editLotto") :
+			$page = lotto_editLottery();
+			break;
+
+		case ("lotto") :
+			$page = lotto_playLotto();
+			break;
+
+		case ("claimTicket") :
+			lotto_claimTicket();
+			break;
+
+		case ("drawLotto") :
+			lotto_draw();
+			break;
+
+		case ("buycredits") :
+			$page = lotto_buyTickets();
+			break;
+
 	}
 
 	// Clean & Print the page.

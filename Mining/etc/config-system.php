@@ -39,7 +39,7 @@
  * installation.
  */
 
-$VERSION_COMP = "0.8.6.41";
+$VERSION_COMP = "0.8.7.41";
 $VERSION = "MiningBuddy Plus " . $VERSION_COMP;
 
 $DSN = "$mysql_protocol://$mysql_username:$mysql_password@$mysql_hostname/$mysql_dbname";
@@ -218,7 +218,7 @@ foreach ($MATERIALS as $mat) {
 
 // Config Data
 
-$SQLVER = "23";
+$SQLVER = "24";
 $CONFIGVER = "10";
 $IS_BETA = false;
 ?>

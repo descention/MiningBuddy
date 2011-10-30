@@ -191,6 +191,8 @@ function editUser() {
 			"canSeeEvents",
 			"canEditEvents",
 			"canDeleteEvents",
+			"isLottoOfficial",
+			"canPlayLotto",
 			"isOfficial",
 			"isAdmin",
 			"isAccountant",

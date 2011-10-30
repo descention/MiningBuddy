@@ -63,8 +63,8 @@ class user {
 	private $canEditEvents; // Bool: Is user allowed to add and edit events?
 	private $canDeleteEvents; // Bool: Is user allowed to add and edit events?
 	private $canDeleteRun; // Bool: Is user allowed to delete runs?
-	private $lotto_isAdmin; // Bool: Can create, delete and run groups and drawings.
-	private $lotto_canPlayLotto; // Bool: User can play lotto?
+	private $isLottoOfficial; // Bool: Can create, delete and run groups and drawings.
+	private $canPlayLotto; // Bool: User can play lotto?
 	private $isOfficial; // Bool: Is user an official capacity?
 	private $isAdmin; // Bool: Is the user an admin?
 	private $isAccountant; // Bool: Are we an accountant?
@@ -111,8 +111,8 @@ class user {
 			$this->canSeeEvents = $dro[canSeeEvents];
 			$this->canDeleteEvents = $dro[canDeleteEvents];
 			$this->canEditEvents = $dro[canEditEvents];
-			$this->lotto_canPlayLotto = $dro[lotto_canPlayLotto];
-			$this->lotto_isAdmin = $dro[lotto_isAdmin];
+			$this->canPlayLotto = $dro[canPlayLotto];
+			$this->isLottoOfficial = $dro[isLottoOfficial];
 			$this->optInState = $dro[optIn];
 			$this->isAccountant = $dro[isAccountant];
 			$this->isAdmin = $dro[isAdmin];
@@ -246,12 +246,12 @@ class user {
 		return ($this->canEditRank);
 	}
 	
-	public function lotto_isAdmin() {
-		return ($this->lotto_isAdmin);
+	public function isLottoOfficial() {
+		return ($this->isLottoOfficial);
 	}
 	
-	public function lotto_canPlayLotto() {
-		return ($this->lotto_canPlayLotto);
+	public function canPlayLotto() {
+		return ($this->canPlayLotto);
 	}
 
 	public function isOfficial() {

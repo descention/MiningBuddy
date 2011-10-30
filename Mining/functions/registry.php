@@ -146,8 +146,15 @@ require_once ('./functions/usermngt/idToUsername.php');
 require_once ('./functions/usermngt/lostPassword.php');
 require_once ('./functions/usermngt/requestAccount.php');
 
-/* Lotto module */
-require_once ('./functions/lotto/lotto_createGroup.php');
+// Lottery!
+require_once ('./functions/lotto/lotto_editLottery.php');
+require_once ('./functions/lotto/lotto_checkRatio.php');
+require_once ('./functions/lotto/lotto_createDrawing.php');
+require_once ('./functions/lotto/lotto_playLotto.php');
+require_once ('./functions/lotto/lotto_claimTicket.php');
+require_once ('./functions/lotto/lotto_draw.php');
+require_once ('./functions/lotto/lotto_buyTickets.php');
+require_once ('./functions/lotto/lotto_getOpenDrawing.php');
 
 /* Mathematical functions */
 require_once ('./functions/math/addCredit.php');

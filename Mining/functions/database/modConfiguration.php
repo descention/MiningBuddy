@@ -78,6 +78,13 @@ function modConfiguration() {
 	} else {
 		setConfig("cargocontainer", "0");
 	}
+	
+	// Lotto Module
+	if ($_POST[Lotto] == "true") {
+		setConfig("Lotto", "1");
+	} else {
+		setConfig("Lotto", "0");
+	}
 
 	// Default Tax
 	if (!empty ($_POST[defaultTax])) {
@@ -89,6 +96,12 @@ function modConfiguration() {
 	if (!empty ($_POST[canLifeTime])) {
 		numericCheck($_POST[canLifeTime], 0, 15000);
 		setConfig("canLifeTime", "$_POST[canLifeTime]");
+	}
+
+	// Max Lotto Percent
+	if (!empty ($_POST[LottoPercent])) {
+		numericCheck($_POST[LottoPercent], 0, 15000);
+		setConfig("LottoPercent", "$_POST[LottoPercent]");
 	}
 
 	// Session expiration

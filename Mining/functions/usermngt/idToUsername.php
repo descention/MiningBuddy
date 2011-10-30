@@ -52,7 +52,7 @@ function idToUsername($id) {
 
 	// Valid user?
 	if ($results->numRows() == 0) {
-		return ("noone");
+		return ("no one");
 		makeNotice("Internal Error: Invalid User at idToUsername", "error");
 	}
 
