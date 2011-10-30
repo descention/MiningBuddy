@@ -162,7 +162,7 @@
 |   |
 |   | > PHP 4 OR OLDER BELOW WILL NOT WORK WITH MININGBUDDY
 |   |                        
-|   | > Noone really tried installing MiningBuddy on a "Windows Server" 
+|   | > No one really tried installing MiningBuddy on a "Windows Server" 
 |   |   to my knowledge by now. It May work. But I am not giving support
 |   |   for Windows in any way. If you use Windows and it does
 |   |   not work you are on your own. Sorry.
