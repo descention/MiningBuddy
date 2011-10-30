@@ -112,9 +112,15 @@ function makeOreWorth() {
 		$orevalues = $orevaluesDS->fetchRow();
 	};
 	
+	if($Market == 1) {
+		$headerText = ">> Manage ore values<br><font color=\"#ff0000\"><b>Ore values are current market values.</b></font>";
+	} else {
+		$headerText = ">> Manage ore values";
+	}
+		
 	// Create the table.
 	$table = new table(8, true);
-	$table->addHeader(">> Manage ore values", array (
+	$table->addHeader($headerText, array (
 		"bold" => true,
 		"colspan" => 8
 	));
