@@ -107,24 +107,31 @@ function lotto_playLotto() {
 			$GotWinners = true;
 		}
 	}
-
-	// jackpot! WOOT!
-	$Jackpot = $DB->getCol("SELECT value FROM config WHERE name='jackpot' LIMIT 1");
-	$MyWins->addHeader("The current jackpot is at " . number_format($Jackpot[0], 2) . " ISK.");
-
-	//	$MyWins->addHeader("Please contact your lotto officer to claim your prize.");
+	
+	$drawingID = lotto_getOpenDrawing();
+	$drawingID = $drawingID[0];
 
 	// Load the current drawing.
 	if (!$_GET[showdrawing]) {
 		$drawingID = lotto_getOpenDrawing();
-		$drawingID = $drawingID[0];
+		//$drawingID = $drawingID[0];
 	} else {
 		numericCheck($_GET[showdrawing], 0);
 		$drawingID = $_GET[showdrawing];
 	}
 
+	// jackpot! WOOT!
+	$Jackpot = $DB->getCol("SELECT value FROM config WHERE name='jackpot' LIMIT 1");
+	if ($drawingID != is_null()) {
+		$currentBuyin = $DB->getCol("SELECT COUNT(*) FROM lotteryTickets WHERE drawing=" . $drawingID . " AND owner >=0");
+		$totalJackpot =  $Jackpot[0] + ($currentBuyin[0] * 1000000);
+	}
+	$MyWins->addHeader("The current jackpot is at " . number_format($totalJackpot, 2) . " ISK.");
+
+	//	$MyWins->addHeader("Please contact your lotto officer to claim your prize.");
+
 	// Only do this if we have an open  drawing, doh!
-	if ($drawingID) {
+	if ($drawingID != is_null()) {
 
 		$TICKETS = $DB->query("SELECT *  FROM lotteryTickets WHERE drawing = '$drawingID' ORDER BY ticket");
 		$allowedTickets = lotto_checkRatio($drawingID);
