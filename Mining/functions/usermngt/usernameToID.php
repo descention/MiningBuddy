@@ -54,6 +54,10 @@ function usernameToID($username, $caller) {
 		if ("$caller" == "authKeyIsValid") {
 			return "-1";
 		}
+		if ("$caller" == "Failed_Login") {
+			return "-1";
+		}
+
 		makeNotice("Internal Error: Invalid User at usernameToID<br>(called by $caller)", "error");
 	}
 

@@ -83,8 +83,12 @@
  			$table->addCol($log[ip]);
  			
  			if ($log[username_valid]) {
-				$userID = usernameToID(stripslashes(sanitize($log[username])));
-				$link = "<a href=\"index.php?action=edituser&id=$userID\">".ucfirst(stripslashes(sanitize($log[username])))."</a>";
+				$userID = usernameToID(stripslashes(sanitize($log[username])),"Failed_Login");
+				if($userID == -1) {
+					$link = ucfirst(stripslashes(sanitize($log[username])));					
+				} else {
+					$link = "<a href=\"index.php?action=edituser&id=$userID\">".ucfirst(stripslashes(sanitize($log[username])))."</a>";
+				}
 				$table->addCol($link); 				
  			} else {
  				$table->addCol(ucfirst(sanitize($log[username])));
