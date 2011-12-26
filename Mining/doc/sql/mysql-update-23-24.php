@@ -37,10 +37,11 @@ if ($upgrade=='1' ){
 	$configupgrade3 = mysql_query("ALTER TABLE `users` ADD `canPlayLotto` TINYINT( 1 ) NOT NULL DEFAULT '1' AFTER `isLottoOfficial` ;");
 	$configupgrade4 = mysql_query("ALTER TABLE `users` ADD `lottoCredit` INT( 5 ) NOT NULL DEFAULT '0' AFTER `isAccountant` ;");
 	$configupgrade5 = mysql_query("ALTER TABLE `users` ADD `lottoCreditsSpent` INT( 5 ) NOT NULL DEFAULT '0' AFTER `lottoCredit` ;");
+	$configupgrade6 = mysql_query("UPDATE `config` SET `value` = '0' WHERE `config`.`name` = 'Lotto' ;"); 
 	
 echo "Updating the config version number!";
 	echo "<br>";
-	$configupgrade6 = mysql_query("UPDATE config SET value='24' WHERE name='version'");
+	$configupgrade7 = mysql_query("UPDATE config SET value='24' WHERE name='version'");
 	
 	echo "Upgrade Completed!";
 	echo "<br>";

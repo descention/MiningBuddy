@@ -154,7 +154,7 @@ INSERT INTO `config` (`name`, `value`) VALUES
 ('ConcentratedVeldsparEnabled', '0'),
 ('DenseVeldsparEnabled', '0'),
 ('sitename', 'Generic Mining Corp'),
-('Lotto', 'true'),
+('Lotto', '0'),
 ('LottoPercent', '20'),
 ('timeOffset', '-1'),
 ('defaultTax', '0'),
