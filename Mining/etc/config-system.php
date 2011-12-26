@@ -39,7 +39,7 @@
  * installation.
  */
 
-$VERSION_COMP = "0.8.8.50";
+$VERSION_COMP = "0.8.8.53";
 $VERSION = "MiningBuddy Plus " . $VERSION_COMP;
 
 $DSN = "$mysql_protocol://$mysql_username:$mysql_password@$mysql_hostname/$mysql_dbname";
