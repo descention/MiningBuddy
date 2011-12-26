@@ -119,7 +119,9 @@ if ($_SESSION["initdone"] != true) {
 
 	// NO schema found!
 	if ($DB->isError($CURRENT)) {
-		die("<CENTER>Mining Buddy Tables need to be Created <a href=\"./buildDatabase.php\">Continue</a>.</CENTER>");	
+		print ("<br><center><body bgcolor=\"#2E2E2E\"><font color= white><body link=\"#00FF00\" vlink=\"##00FF00\" alink=\"#FF0000\">");
+		print ("<br><br><br><br><br><br><br><br><br><br><br><br>");
+		die("<CENTER><H1>Mining Buddy Tables need to be Created <a href=\"./buildDatabase.php\">Continue</H1></a>.</CENTER>");	
 	}
 	// Version number incorrect.
 	if ("$CURRENT[0]" < "$SQLVER") {
@@ -128,7 +130,9 @@ if ($_SESSION["initdone"] != true) {
 		$filename = "./mysql-update-" . $CURRENT[0] . "-" . ($CURRENT[0] + 1) . ".php";
 
 		// Update the tables.
-		print ("Your SQL tables are not compatible.<br>");
+		print ("<br><center><body bgcolor=\"#2E2E2E\"><font color= white><body link=\"#00FF00\" vlink=\"##00FF00\" alink=\"#FF0000\">");
+		print ("<br><br><br><br><br><br><br><br><br><br><br><br>");
+		print ("<H1>Your SQL tables are not compatible.</H1><br>");
 
 		if (file_exists($filename)) {
 			die("Please update your sql tables <a href=\"$filename\">click here</a>.");
