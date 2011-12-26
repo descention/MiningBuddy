@@ -1,9 +1,9 @@
 -- phpMyAdmin SQL Dump
--- version 3.4.3.2
+-- version 3.4.7.1
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Sep 06, 2011 at 10:06 PM
+-- Generation Time: Dec 26, 2011 at 09:11 AM
 -- Server version: 5.1.56
 -- PHP Version: 5.2.9
 
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Database: `arnoldj_mbblank`
+-- Database: `arnoldj_mb82`
 --
 
 -- --------------------------------------------------------
@@ -92,7 +92,7 @@ CREATE TABLE IF NOT EXISTS `config` (
 --
 
 INSERT INTO `config` (`name`, `value`) VALUES
-('version', '23'),
+('version', '24'),
 ('ArkonorEnabled', '1'),
 ('BistotEnabled', '1'),
 ('CrokiteEnabled', '1'),
@@ -6704,6 +6704,17 @@ CREATE TABLE IF NOT EXISTS `images` (
   KEY `text` (`text`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `images`
+--
+
+INSERT INTO `images` (`id`, `text`, `type`, `textColor`, `bgColor`, `width`, `height`) VALUES
+(1275005665, 'TmVjcm9zaXMgdmlzY291bnQ=', 'standard', 'ffffff', '2D2D37', 150, 20),
+(1316565785, 'Q0VP', 'standard', 'ffffff', '2D2D37', 150, 20),
+(1323082231, 'TWluaW5nQnVkZHkgUGx1cyAwLjguNy40MQ==', 'long', 'ffffff', '2D2D37', 250, 20),
+(1275320978, 'R2VuZXJpYyBNaW5pbmcgQ29ycA==', 'title', 'ffffff', '2D2D37', 450, 40),
+(1144936079, '', 'standard', 'ffffff', '2D2D37', 150, 20);
+
 -- --------------------------------------------------------
 
 --
@@ -6843,6 +6854,38 @@ CREATE TABLE IF NOT EXISTS `joinups` (
   KEY `userid` (`userid`),
   KEY `run` (`run`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `lotteryTickets`
+--
+
+CREATE TABLE IF NOT EXISTS `lotteryTickets` (
+  `id` int(5) NOT NULL AUTO_INCREMENT,
+  `ticket` int(5) NOT NULL,
+  `drawing` int(4) NOT NULL,
+  `owner` int(5) NOT NULL DEFAULT '-1',
+  `isWinner` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `lotto`
+--
+
+CREATE TABLE IF NOT EXISTS `lotto` (
+  `drawing` int(5) NOT NULL AUTO_INCREMENT,
+  `opened` int(12) NOT NULL,
+  `closed` int(12) NOT NULL,
+  `isOpen` tinyint(1) NOT NULL DEFAULT '0',
+  `winningTicket` int(5) DEFAULT NULL,
+  `winner` int(5) DEFAULT NULL,
+  `potSize` int(8) DEFAULT NULL,
+  PRIMARY KEY (`drawing`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=19 ;
 
 -- --------------------------------------------------------
 
@@ -7520,7 +7563,11 @@ CREATE TABLE IF NOT EXISTS `users` (
   `canDeleteEvents` tinyint(1) NOT NULL DEFAULT '0',
   `canSeeEvents` tinyint(1) NOT NULL DEFAULT '1',
   `isOfficial` tinyint(1) NOT NULL DEFAULT '0',
+  `isLottoOfficial` tinyint(1) NOT NULL DEFAULT '0',
+  `canPlayLotto` tinyint(1) NOT NULL DEFAULT '1',
   `isAccountant` tinyint(1) NOT NULL DEFAULT '0',
+  `lottoCredit` int(5) NOT NULL DEFAULT '0',
+  `lottoCreditsSpent` int(5) NOT NULL DEFAULT '0',
   `preferences` blob,
   `isAdmin` tinyint(1) NOT NULL DEFAULT '0',
   `rank` int(3) DEFAULT NULL,
