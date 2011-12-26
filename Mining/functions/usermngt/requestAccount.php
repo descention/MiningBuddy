@@ -87,10 +87,10 @@ function requestAccount() {
 				" `canJoinRun`, `canCreateRun`, `canCloseRun`, `canDeleteRun`, `canAddHaul`," .
 				" `canChangePwd`, `canChangeEmail`, `canChangeOre`, `canAddUser`, `canSeeUsers`," .
 				" `canDeleteUser`, `canEditRank`, `canManageUser`, `canEditEvents`, `canDeleteEvents`," .
-				" `canSeeEvents`, `isOfficial`, `isAccountant`, `preferences`, `isAdmin`, `rank`) " .
-		"VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", array (
+				" `canSeeEvents`, `isOfficial`, `isLottoOfficial`, `isAccountant`, `preferences`, `isAdmin`, `rank`) " .
+		"VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", array (
 			stripcslashes($NEW_USER), $PASSWORD_ENC, $NEW_EMAIL, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-		    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+		    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
 
 		// Check for success, catch database errors.
 		if (gettype($temp) != "DB_Error" && ($DB->affectedRows() == 1)) {
