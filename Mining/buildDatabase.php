@@ -36,6 +36,8 @@ function Getbasesite($file)
 			or die ('<p>Query: <br><tt>' . $query . '</tt><br>failed. MySQL error: ' . mysql_error());
 		}
 	}
-	die("<CENTER>Mining Buddy Tables Created <a href=\"./index.php\">Start</a> Mining Buddy.</CENTER>");	
+	print ("<br><center><body bgcolor=\"#2E2E2E\"><font color= white><body link=\"#00FF00\" vlink=\"##00FF00\" alink=\"#FF0000\">");
+	print ("<br><br><br><br><br><br><br><br><br><br><br><br>");
+	die("<CENTER><H1>Mining Buddy Tables Created <a href=\"./index.php\">Start</a> Mining Buddy.</H1></CENTER>");	
 
 ?>

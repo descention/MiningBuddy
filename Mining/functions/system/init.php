@@ -121,7 +121,7 @@ if ($_SESSION["initdone"] != true) {
 	if ($DB->isError($CURRENT)) {
 		print ("<br><center><body bgcolor=\"#2E2E2E\"><font color= white><body link=\"#00FF00\" vlink=\"##00FF00\" alink=\"#FF0000\">");
 		print ("<br><br><br><br><br><br><br><br><br><br><br><br>");
-		die("<CENTER><H1>Mining Buddy Tables need to be Created <a href=\"./buildDatabase.php\">Continue</H1></a>.</CENTER>");	
+		die("<CENTER><H1>Mining Buddy Tables need to be Created<BR><a href=\"./buildDatabase.php\">Click to Continue</H1></a></CENTER>");	
 	}
 	// Version number incorrect.
 	if ("$CURRENT[0]" < "$SQLVER") {
