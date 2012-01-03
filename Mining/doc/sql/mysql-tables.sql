@@ -6704,17 +6704,6 @@ CREATE TABLE IF NOT EXISTS `images` (
   KEY `text` (`text`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `images`
---
-
-INSERT INTO `images` (`id`, `text`, `type`, `textColor`, `bgColor`, `width`, `height`) VALUES
-(1275005665, 'TmVjcm9zaXMgdmlzY291bnQ=', 'standard', 'ffffff', '2D2D37', 150, 20),
-(1316565785, 'Q0VP', 'standard', 'ffffff', '2D2D37', 150, 20),
-(1323082231, 'TWluaW5nQnVkZHkgUGx1cyAwLjguNy40MQ==', 'long', 'ffffff', '2D2D37', 250, 20),
-(1275320978, 'R2VuZXJpYyBNaW5pbmcgQ29ycA==', 'title', 'ffffff', '2D2D37', 450, 40),
-(1144936079, '', 'standard', 'ffffff', '2D2D37', 150, 20);
-
 -- --------------------------------------------------------
 
 --
