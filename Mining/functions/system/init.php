@@ -127,7 +127,7 @@ if ($_SESSION["initdone"] != true) {
 	if ("$CURRENT[0]" < "$SQLVER") {
 
 		// Install upgrade.
-		$filename = "./mysql-update-" . $CURRENT[0] . "-" . ($CURRENT[0] + 1) . ".php";
+		$filename = "./doc/sql/mysql-update-" . $CURRENT[0] . "-" . ($CURRENT[0] + 1) . ".php";
 
 		// Update the tables.
 		print ("<br><center><body bgcolor=\"#2E2E2E\"><font color= white><body link=\"#00FF00\" vlink=\"##00FF00\" alink=\"#FF0000\">");
