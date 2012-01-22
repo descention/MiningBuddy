@@ -92,7 +92,7 @@ function lostPassword($user = "", $reason = "lost") {
 	$DB->query("update users set password = '$newpass_crypt' where username='$POST_USERNAME' and email='$POST_EMAIL'");
 
 	// mail it.
-		$DOMAIN = $_SERVER[HTTP_HOST];
+		$DOMAIN = $_SERVER['HTTP_HOST'];
 		$headers = "From:" . $MB_EMAIL;
 	if ("$to" == "") {
 		makeNotice("Internal Error: No valid email found in lostPassword!", "error");

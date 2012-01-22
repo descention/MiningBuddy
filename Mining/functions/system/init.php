@@ -37,7 +37,7 @@ require_once ('./functions/system/errorHandler.php');
 require_once ('./functions/registry.php');
 
 /* get the domain name. */
-$DOMAIN = $_SERVER[HTTP_HOST];
+$DOMAIN = $_SERVER['HTTP_HOST'];
 $SCRIPT = dirname($_SERVER[SCRIPT_NAME]);
 $URL = "http://" . $DOMAIN . $SCRIPT;
 

@@ -193,7 +193,7 @@ function makeEmailReceipt($runid, $array) {
 			$to = $userInfo[email];
 			$subject = "MiningBuddy Payout";
 			$message = $email;
-			$DOMAIN = $_SERVER[HTTP_HOST];
+			$DOMAIN = $_SERVER['HTTP_HOST'];
 			$headers = "From:" . $MB_EMAIL;
 			mail($to,$subject,$message,$headers);
 		}

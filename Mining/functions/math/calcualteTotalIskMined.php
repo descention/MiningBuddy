@@ -1,4 +1,4 @@
-<?
+<?PHP
 /*
  * MiningBuddy (http://miningbuddy.net)
  * $Header: /usr/home/mining/cvs/mining/functions/math/calcualteTotalIskMined.php,v 1.5 2008/01/02 20:01:33 mining Exp $

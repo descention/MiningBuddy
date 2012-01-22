@@ -53,7 +53,7 @@ function mailUser($mail, $subject) {
 	while ($recipient = $EMAIL_DS->fetchRow()) {
 		$copy = str_replace("{{USER}}", "$recipient[username]", $mail);
 		$to = $recipient[email];
-		$DOMAIN = $_SERVER[HTTP_HOST];
+		$DOMAIN = $_SERVER['HTTP_HOST'];
 		$from = "MiningBuddy@" . $DOMAIN;
 		$headers = "From:" . $MB_EMAIL;
 		mail($to,$subject,$copy,$headers);
