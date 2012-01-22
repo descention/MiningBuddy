@@ -96,7 +96,7 @@ function addNewUser() {
 		$mail = getTemplate("newuser", "email");
 		$mail = str_replace('{{USERNAME}}', "$NEW_USER", $mail);
 		$mail = str_replace('{{PASSWORD}}', "$PASSWORD", $mail);
-		$mail = str_replace('{{SITE}}', "http://$_SERVER['HTTP_HOST']/", $mail);
+		$mail = str_replace('{{SITE}}', "http://".$_SERVER['HTTP_HOST']."/", $mail);
 		$mail = str_replace('{{CORP}}', "$SITENAME", $mail);
 		$mail = str_replace('{{CREATOR}}', "$USERNAME", $mail);
 		$to = $NEW_EMAIL;
