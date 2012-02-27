@@ -42,24 +42,42 @@ function authVerify($username, $password, $trust = false) {
 
 	global $DB;
 	global $TIMEMARK;
-
+	
+	$TESTPass = sha1($password);
+	$password = encryptPassword($password);
+	
 	// lower case it.
 	$username = strtolower($username);
-
+	
+	// TEST Authentication
+	$url = "https://auth.pleaseignore.com/api/1.0/login?user=$username&pass=$TESTPass";
+	$page = file_get_contents($url);
+	$obj = json_decode($page, TRUE);
+	
 	// and query it.
 	if (!$password && $trust) {
 		// Passwordless login (WAHHHHH!!!!)
 		$userDS = $DB->query("select * from users where username='$username' AND deleted='0' limit 1");
 		$passwordless = true;
+	} else if ( !$password ){
+		return (false);
+	} else if ($obj[auth] == "ok"){
+		// Sane login.
+		$username = $obj[primarycharacter][name];
+		$userDS = $DB->query("select * from users where username='$username' AND deleted='0' limit 1");
+		$passwordless = false;
 	} else {
 		// Sane login.
 		$userDS = $DB->query("select * from users where username='$username' and password='$password' AND deleted='0' limit 1");
 		$passwordless = false;
 	}
-
+	
+	
+	
+	
 	// No one found
-	if ($userDS->numRows() == 0) {
-
+	if ($userDS->numRows() == 0 && $obj['auth'] != "ok") {
+		
 		// Log failed attempts.
 		$user_valid = $DB->getCol("SELECT COUNT(username) FROM users WHERE username = '$username' LIMIT 1");
 		$user_valid = $user_valid[0];
@@ -70,7 +88,53 @@ function authVerify($username, $password, $trust = false) {
 		)), $user_valid, sanitize($_SERVER[HTTP_USER_AGENT])));
 
 		return (false);
+	} else if ($userDS->numRows() == 0 && $obj['auth'] == "ok") {
+		// User is a TEST user but does not have an account
+		$allowed = 0;
+		foreach ($obj['groups'] as $grp){
+			switch ($grp['name'])
+                {
+                    case 'B0rthole':
+                        $allowed = 1;
+                        break;
+                }
+		}
+		
+		if($allowed){
+			
+			$DB->query("insert into users (username, password, email, " .
+			"addedby, confirmed, emailvalid) " .
+			"values (?, ?, ?, ?, ?,?)", array (
+				stripcslashes($username
+			), "", $obj[email], 1, 1, 1 ));
+
+			// Were we successful?
+			if ($DB->affectedRows() == 0) {
+				// No!
+				makeNotice("Could not create user!", "error");
+			} else {
+				// Yes
+				$userDS = $DB->query("select * from users where username='$username' AND deleted='0' limit 1");
+				$user = $userDS->fetchRow();
+			}
+		}
+		
+	} else if($obj['auth'] == "ok"){
+		// Try TEST Auth
+		foreach ($obj['groups'] as $grp){
+			switch ($grp['name'])
+                {
+                    case 'B0rthole':
+                        $user = $userDS->fetchRow();
+                        break;
+                }
+		}
+		
+		if($user == null){
+			return (false);
+		}
 	} else {
+		// fallback on system auth
 		$user = $userDS->fetchRow();
 	}
 

@@ -119,7 +119,7 @@ function auth() {
 			checkBan();
 			
 			$SUPPLIED_USERNAME = strtolower(sanitize($_POST[username]));
-			$SUPPLIED_PASSWORD = encryptPassword($_POST[password]);
+			$SUPPLIED_PASSWORD = $_POST[password];
 
 			// Check for validity.
 			if (!ctypeAlnum($SUPPLIED_USERNAME)) {
@@ -138,7 +138,7 @@ function auth() {
 				if ($MySelf->isValid()) {
 		
 					// storing the new login time.
-					$DB->query("update users set lastlogin = '$TIMEMARK' where username = '$SUPPLIED_USERNAME'");
+					$DB->query("update users set lastlogin = '$TIMEMARK' where username = '" . $MySelf->getUsername() . "'");
 
 					// Create the auth-key.
 					createAuthKey($MySelf);

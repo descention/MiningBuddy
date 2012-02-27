@@ -176,6 +176,7 @@ $SHIPTYPES = array (
 	"Assault Ship",
 	"Battlecruiser",
 	"Battleship",
+	"Capital Industrial Ship",
 	"Carrier",
 	"Command Ship",
 	"Covert Ops",
@@ -193,8 +194,9 @@ $SHIPTYPES = array (
 	"Mining Barge",
 	"Recon Ship",
 	"Shuttle",
+	"Strategic Cruiser",
 	"Transport Ship",
-	"Capital Industrial Ship"
+	
 );
 
 $SHIPTYPES[99] = "unclassified";
