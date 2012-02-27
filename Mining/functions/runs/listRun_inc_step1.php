@@ -56,7 +56,15 @@ if (("$_GET[id]" >= 0) && (is_numeric($_GET[id]))) {
 }
 
 // Now lets fetch the Dataset.
-$results = $DB->query("SELECT * FROM runs WHERE id = '$ID' limit 1");
+$select = "";
+$r = $DB->query("select item, sum(Quantity) as total from hauled where miningrun = '$ID' group by item having sum(Quantity) <> 0");
+while($r2 = $r->fetchRow()){
+	if($r2[total] != 0){
+		$select .= ", '$r2[total]' as $r2[item]";
+	}
+}
+
+$results = $DB->query("SELECT id,location,starttime,endtime,supervisor,corpkeeps,isOfficial,isLocked,oreGlue,shipGlue,tmec, optype $select FROM runs WHERE id = '$ID' limit 1");
 
 // And check that we actually suceeded.
 if ($results->numRows() != 1) {
@@ -79,9 +87,13 @@ if ($row[shipGlue] <= 0) {
 	$values = $DB->query("SELECT * FROM shipvalues WHERE id='" . $row[shipGlue] . "' limit 1");
 }
 if ($row[oreGlue] <= 0) {
-	$ovalues = $DB->query("SELECT * FROM orevalues order by id desc limit 1");
+	$ovaluesR = $DB->query("select item, Worth, time, modifier from orevalues a where time = (select max(time) from orevalues b where a.item = b.item) group by item ORDER BY time DESC");
+	while($oRow = $ovaluesR->fetchRow())
+		$ovalues[$oRow[item]] = $oRow;
 } else {
-	$ovalues = $DB->query("SELECT * FROM orevalues WHERE id='" . $row[oreGlue] . "' limit 1");
+	$ovaluesR = $DB->query("select item, Worth, time, modifier from orevalues a where time = (select max(time) from orevalues b where a.item = b.item and time <= '".$row[oreGlue]."') group by item ORDER BY time DESC");
+	while($oRow = $ovaluesR->fetchRow())
+		$ovalues[$oRow[item]] = $oRow;
 }
 if ($row[matGlue] <= 0) {
 	$matvalues = $DB->query("SELECT * FROM materials1 order by type desc limit 1");

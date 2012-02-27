@@ -36,7 +36,7 @@
  * and their respective on/off settings.
  */
 
-function getOreSettings($ORE = "") {
+function getOreSettings($ORE = "",$OPTYPE = "") {
 
 	// Quick, but clean :)
 	global $DB;
@@ -51,7 +51,7 @@ function getOreSettings($ORE = "") {
 	// Return the full array or a single 0/1 statement for a single oretype.
 	if ("$ORE" != "") {
 		// Single ore type
-		if ($SETTINGS[$ORE.Enabled]) {
+		if ($SETTINGS[$ORE.$OPTYPE.Enabled]) {
 			return (true);
 		} else {
 			return (false);
@@ -61,4 +61,5 @@ function getOreSettings($ORE = "") {
 		return ($SETTINGS);
 	}
 }
+
 ?>

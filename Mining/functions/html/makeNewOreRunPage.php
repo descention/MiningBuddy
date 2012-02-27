@@ -152,21 +152,34 @@ function makeNewOreRunPage() {
 		"align" => "right",
 		"colspan" => "2"
 	));
+	
+	
+	$table->addRow();
+	$table->addCol("Op Type:");
+	$OPTYPE = isset($_REQUEST[optype])?$_REQUEST[optype]:"";
+	
+	$ops = $DB->getAll("select opName from opTypes;");
+	if($DB->isError($ops)){
+		die($ops->getMessage());
+	}
+	$opSelect = "<select name='optype' onChange='window.location = \"?action=newrun&optype=\"+this.value'>\n";
+	$opSelect .= "<option value=''>Standard</option>\n";
+	foreach($ops as $op){
+		$default = $op[opName] == $OPTYPE?"selected":"";
+		$opSelect .= "<option $default value='".$op[opName]."'>".$op[opName]."</option>\n";
+	}
+	$opSelect .= "</select>";
+	
+	$table->addCol($opSelect);
 
 	// Now we need the sum of all ores. 
 	$totalOres = count($ORENAMES);
 
+	/*
 	// And the sum of all ENABLED ores.
-	$totalEnabledOres = $DB->getCol("select count(name) as active from config where name LIKE '%Enabled' AND value='1'");
+	$totalEnabledOres = $DB->getCol("select count(name) as active from config where name LIKE '%".$OPTYPE."Enabled' AND value='1'");
 	$totalEnabledOres = $totalEnabledOres[0];
-
-	// No ores enabled?
-	if ($totalEnabledOres == 0) {
-		makeNotice("Your CEO has disabled *all* the Oretypes. Please ask your CEO to reactivate at leat one Oretype.", "error", "No valid Oretypes!");
-	}
-
-	// The table is, rounded up, exactly half the size of all enabled ores.
-	$tableLength = ceil($totalEnabledOres / 2);
+	*/
 
 	/*
 	 * This is evil. We have to create an array that we fill up sorted.
@@ -175,7 +188,7 @@ function makeNewOreRunPage() {
 	for ($p = 0; $p < $totalOres; $p++) {
 		// Then we check each ore if it is enabled.
 		$ORE = $DBORE[$ORENAMES[$p]];
-		if (getOreSettings($ORE)) {
+		if (getOreSettings($ORE,$OPTYPE)) {
 			// If the ore is enabled, add it to the array.
 			$left[] = $ORE;
 		} else {
@@ -183,6 +196,16 @@ function makeNewOreRunPage() {
 			$disabledOres[] = $ORE;
 		}
 	}
+	
+	$totalEnabledOres = count($left);
+	
+	// No ores enabled?
+	if ($totalEnabledOres == 0) {
+		makeNotice("Your CEO has disabled *all* the Oretypes. Please ask your CEO to reactivate at leat one Oretype.", "error", "No valid Oretypes!");
+	}
+
+	// The table is, rounded up, exactly half the size of all enabled ores.
+	$tableLength = ceil($totalEnabledOres / 2);
 	// Now, copy the lower second half into a new array.
 	$right = array_slice($left, $tableLength);
 
@@ -242,7 +265,7 @@ function makeNewOreRunPage() {
 			"colspan" => "2"
 		));
 	}
-
+	
 	// Render the table, and return it.
 	return ("<h2>Create a new Mining Operation</h2><form action=\"index.php\" method=\"POST\">" . $table->flush() . "</form>");
 }

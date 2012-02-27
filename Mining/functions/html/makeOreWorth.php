@@ -108,8 +108,9 @@ function makeOreWorth() {
 		}
 	} else {
 		// load the values.
-		$orevaluesDS = $DB->query("select * from orevalues order by id DESC limit 1");
-		$orevalues = $orevaluesDS->fetchRow();
+		$orevaluesDS = $DB->query("select item, Worth, time, modifier from orevalues a where time = (select max(time) from orevalues b where a.item = b.item) group by item ORDER BY time DESC");
+		while($row = $orevaluesDS->fetchRow())
+			$orevalues[$row[item]] = $row;
 	};
 	
 	if($Market == 1) {
@@ -117,7 +118,7 @@ function makeOreWorth() {
 	} else {
 		$headerText = ">> Manage ore values";
 	}
-		
+	
 	// Create the table.
 	$table = new table(8, true);
 	$table->addHeader($headerText, array (
@@ -125,6 +126,24 @@ function makeOreWorth() {
 		"colspan" => 8
 	));
 
+	$OPTYPE = isset($_REQUEST[optype])?$_REQUEST[optype]:"";
+	
+	$table->addRow();
+	$table->addCol("Op Type:");
+	$ops = $DB->getAll("select opName from opTypes;");
+	if($DB->isError($ops)){
+		die($ops->getMessage());
+	}
+	$opSelect = "<select name='optype' onChange='window.location = \"?action=changeow&optype=\"+this.value'>\n";
+	$opSelect .= "<option value=''>Standard</option>\n";
+	foreach($ops as $op){
+		$default = $op[opName] == $OPTYPE?"selected":"";
+		$opSelect .= "<option $default value='".$op[opName]."'>".$op[opName]."</option>\n";
+	}
+	$opSelect .= "</select>";
+	
+	$table->addCol($opSelect, array("colspan"=>7));
+	
 	$table->addRow();
 	$table->addCol("Ore Name", array (
 		"colspan" => 2,
@@ -150,6 +169,8 @@ function makeOreWorth() {
 	// How many ores are there in total? Ie, how long has the table to be?
 	$tableLength = ceil(count($ORENAMES) / 2)-1;
 
+	
+	
 	for ($i = 0; $i <= $tableLength; $i++) {
 
 		$table->addRow();
@@ -163,7 +184,7 @@ function makeOreWorth() {
 		// Ore columns for LEFT side.
 		$table->addCol("<img width=\"32\" height=\"32\" src=\"./images/ores/" . $ORE . ".png\">");
 		$table->addCol($ORE);
-		if (getOreSettings($DBORE[$ORE])) {
+		if (getOreSettings($DBORE[$ORE],$OPTYPE)) {
 			$table->addCol("<input name=\"" . $DBORE[$ORE] . "Enabled\" value=\"true\" type=\"checkbox\" checked=\"checked\">");
 		} else {
 			$table->addCol("<input name=\"" . $DBORE[$ORE] . "Enabled\" value=\"true\" type=\"checkbox\">");
@@ -172,7 +193,7 @@ function makeOreWorth() {
 			$thisPrice = getPriceCache($ORE);
 			$table->addCol("<input type=\"text\" style=\"text-align: right\" name=\"$DBORE[$ORE]\"" . "size=\"10\" value=\"" . $thisPrice . "\">");
 		} else {
-			$table->addCol("<input type=\"text\" style=\"text-align: right\" name=\"$DBORE[$ORE]\"" . "size=\"10\" value=\"" . $orevalues[$DBORE[$ORE] . Worth] . "\">");
+			$table->addCol("<input type=\"text\" style=\"text-align: right\" name=\"$DBORE[$ORE]\"" . "size=\"10\" value=\"" . $orevalues[$DBORE[$ORE]][Worth] . "\">");
 		}
 		// Ore columns for RIGHT side.
 		$ORE = $ORENAMES[$i + $tableLength +1];
@@ -185,7 +206,7 @@ function makeOreWorth() {
 		if ($ORE != "") {
 			$table->addCol("<img width=\"32\" height=\"32\" src=\"./images/ores/" . $ORE . ".png\">");
 			$table->addCol($ORE);
-			if (getOreSettings($DBORE[$ORE])) {
+			if (getOreSettings($DBORE[$ORE],$OPTYPE)) {
 				$table->addCol("<input name=\"" . $DBORE[$ORE] . "Enabled\" value=\"true\" type=\"checkbox\" checked=\"checked\">");
 			} else {
 				$table->addCol("<input name=\"" . $DBORE[$ORE] . "Enabled\" value=\"true\" type=\"checkbox\">");
@@ -194,7 +215,7 @@ function makeOreWorth() {
 			$thisPrice = getPriceCache($ORE);
 			$table->addCol("<input type=\"text\" style=\"text-align: right\" name=\"$DBORE[$ORE]\"" . "size=\"10\" value=\"" . $thisPrice . "\">");
 		} else {
-			$table->addCol("<input type=\"text\" style=\"text-align: right\" name=\"$DBORE[$ORE]\"" . "size=\"10\" value=\"" . $orevalues[$DBORE[$ORE] . Worth] . "\">");
+			$table->addCol("<input type=\"text\" style=\"text-align: right\" name=\"$DBORE[$ORE]\"" . "size=\"10\" value=\"" . $orevalues[$DBORE[$ORE]][Worth] . "\">");
 		}
 		} else {
 			$table->addCol("");
@@ -205,8 +226,11 @@ function makeOreWorth() {
 
 	}
 
+	
+	
 	$form .= "<input type=\"hidden\" name=\"action\" value=\"changeore\">";
 	$form .= "<input type=\"hidden\" name=\"check\" value=\"check\">";
+	$form .= "<input type=\"hidden\" name=\"optype\" value=\"$OPTYPE\">";
 	$form .= "<input type=\"submit\" name=\"change\" value=\"Modify ore settings\">";
 	$table->addHeaderCentered($form, array (
 		"colspan" => 8,

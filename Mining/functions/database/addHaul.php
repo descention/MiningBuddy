@@ -89,14 +89,14 @@ function addHaul() {
 	* Note: I explicitly *allow* negative amounts to be "added", in
 	*       case the hauler got destroyed on his way back.
 	*/
-	
+	/*
 	while ($row = $results->fetchRow()) {
 		foreach ($DBORE as $ORE) {
 			$newcount = $row[$ORE] + $_POST[$ORE]; 			
 			$DB->query("update runs set $ORE = '" . $newcount . "' where id = '$ID'");
 		}
 	}
-
+	*/
 	/*
 	* But wait! There is more!
 	* Someone hauled our ore, lets record that in the
@@ -105,13 +105,11 @@ function addHaul() {
 	*/
 
 	// Lets create the raw entry fist.
-	$DB->query("insert into hauled (miningrun, hauler, time, location) values (?,?,?,?)", array (
-		"$ID",
-		"$userID",
-		"$TIMEMARK",
-		"$location"
-	));
-
+	
+	
+	$OPTYPE = $DB->getCol("select optype from runs where id = $ID");
+	$OPTYPE = $OPTYPE[0];
+	
 	// Now loop through all the ore-types.
 	foreach ($DBORE as $ORE) {
 
@@ -119,12 +117,20 @@ function addHaul() {
 		if ((isset ($_POST[$ORE])) && (!empty ($_POST[$ORE])) && is_numeric($_POST[$ORE])) {
 
 			// Is that ore-type actually enabled?
-			if (getOreSettings($ORE) == 0) {
+			if (getOreSettings($ORE,$OPTYPE) == 0) {
 				makeNotice("Your corporation has globally disabled the mining and hauling of $ORE. Please ask your CEO to re-enable $ORE globally.", "error", "$ORE disabled!", "index.php?action=show&id=$ID", "[back]");
 			}
 
-			// No insert the database.
-			$DB->query("UPDATE hauled SET $ORE = '$_POST[$ORE]' WHERE time ='$TIMEMARK'");
+			// Now insert the database.
+			$DB->query("insert into hauled (miningrun, hauler, time, location, Item, Quantity) values (?,?,?,?,?,?)", array (
+				"$ID",
+				"$userID",
+				"$TIMEMARK",
+				"$location",
+				"$ORE",
+				"$_POST[$ORE]"
+			));
+			//$DB->query("UPDATE hauled SET Item = '$ORE', Quantity = '$_POST[$ORE]' WHERE time ='$TIMEMARK' and hauler = '$userID'");
 			$changed = $changed + $DB->affectedRows();
 		}
 	}

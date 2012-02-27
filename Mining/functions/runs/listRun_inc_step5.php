@@ -58,15 +58,16 @@ $ressources_info->addCol("ISK", array (
 ));
 
 // Load current payout values.
-while ($oval = $ovalues->fetchRow() AND $mval = $mvalues->fetchrow()) {
+while ($mval = $mvalues->fetchrow()) {
 	// Voila, le scary monster!
-
+	//$oval = $ovalues->fetchRow() AND 
+	$oval = $ovalues;
 	foreach ($DBORE as $ORE) {
 
 		// We need a Variable name with the word Wanted and M3 (for the wanted and m3 columns)
 		$OREWANTED = $ORE . "Wanted";
 		//Pulls the m3 of each ore type.
-		$OREWORTH = ($oval[$ORE . "Worth"]);
+		$OREWORTH = ($oval[$ORE]["Worth"]);
 		$OREM3 = ($mval[$ORE . "M3"]);
 		
 		/* If an ore is neither wanted nor has been harvested so far, we dont print

@@ -80,7 +80,7 @@ function makeMenu($page = false) {
 
 	// Ore Quotes
 	if ($IGB && $IGB_VISUAL) {
-		$mining_oreQuotes = "[<a href=\"index.php?action=showorevalue\">Ore Quotes</a>]";
+		$mining_oreQuotes = "[<a href=\"index.php?action=showorevalue\">Quotes</a>]";
 	} else {
 		$mining_oreQuotes = "<a href=\"index.php?action=showorevalue\"><img border=\"0\" src=\"images/orequotes.png\"></a><br>";
 	}
@@ -199,7 +199,7 @@ function makeMenu($page = false) {
 		// Yeah we are allowed to do this.
 		if ($IGB && $IGB_VISUAL) {
 			// Browswing in the iGB.
-			$admin_Ore = "[<a href=\"index.php?action=changeow\">Edit Ore</a>]";
+			$admin_Ore = "[<a href=\"index.php?action=changeow\">Edit Items</a>]";
 		} else {
 			// Using a real browser.
 			$admin_Ore = "<a href=\"index.php?action=changeow\"><img border=\"0\" src=\"images/change-ore-value.png\"></a><br>";

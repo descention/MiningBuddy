@@ -64,11 +64,12 @@ function listRuns() {
 	$mode = array (
 		"bold" => true
 	);
-	$table = new table(8, true);
+	$table = new table(9, true);
 	$table->addHeader(">> Currently active Operations");
 	$table->addRow("#060622");
 	$table->addCol("Run ID");
 	$table->addCol("Supervisor");
+	$table->addCol("Op Type");
 	$table->addCol("Starttime");
 	$table->addCol("Endtime");
 	$table->addCol("Location");
@@ -88,6 +89,7 @@ function listRuns() {
 		$table->addCol("<a href=\"index.php?action=show&id=$row[id]\">" . str_pad($row[id], 5, "0", STR_PAD_LEFT) . "</a>");
 		
 		$table->addCol(makeProfileLink($row[supervisor]));
+		$table->addCol($row[optype]==""?"Standard":$row[optype]);
 		$table->addCol(date("d.m.y H:i", $row[starttime]));
 
 		/* This handles the endtime. Prints endtime if it has already
@@ -138,11 +140,12 @@ function listRuns() {
 	$results = $DB->query("SELECT * FROM runs WHERE endtime IS NOT NULL ORDER BY endtime DESC $page");
 
 	// This is the table header.
-	$table_closed = new table(10, true);
+	$table_closed = new table(11, true);
 	$table_closed->addHeader(">> Archived Operations");
 	$table_closed->addRow("#060622");
 	$table_closed->addCol("Run ID");
 	$table_closed->addCol("Supervisor");
+	$table_closed->addCol("Op Type");
 	$table_closed->addCol("Starttime");
 	$table_closed->addCol("Endtime");
 	$table_closed->addCol("Location");
@@ -170,6 +173,7 @@ function listRuns() {
 		$table_closed->addCol("<a href=\"index.php?action=show&id=$row[id]\">" . str_pad($row[id], 5, "0", STR_PAD_LEFT) . "</a>");
 		
 		$table_closed->addCol(makeProfileLink($row[supervisor]));
+		$table_closed->addCol($row[optype]==""?"Standard":$row[optype]);
 		$table_closed->addCol(date("d.m.y H:i", $row[starttime]));
 
 		/* This handles the endtime. Prints endtime if it has already

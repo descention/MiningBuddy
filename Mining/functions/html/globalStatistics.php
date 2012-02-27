@@ -424,13 +424,15 @@ function globalStatistics() {
 	foreach ($DBORE as $ORE) {
 		$new = $ORE;
 		if ($last) {
-			$SQLADD .= "SUM(" . $last . ") AS total" . $last . ", ";
+			$SQLADD .= "(select coalesce(SUM(Quantity),0) from hauled where Item = '" . $last . "') AS total" . $last . ", ";
 		}
 		$last = $new;
 	}
-	$SQLADD .= "SUM(" . $last . ") AS total" . $last . " ";
-	$SQL = "SELECT " . $SQLADD . " FROM runs";
-
+	$SQLADD .= "(select coalesce(SUM(Quantity),0) from hauled where Item = '" . $last . "') AS total" . $last . " ";
+	$SQL = "SELECT " . $SQLADD ;
+	//$SQL = "select Item, coalesce(SUM(Quantity),0) as total from hauled group by Item";
+	
+	
 	// Now query it.
 	$totalOREDB = $DB->query("$SQL");
 
@@ -440,16 +442,16 @@ function globalStatistics() {
 
 	// Loop through the result (single result!)
 	if ($totalOREDB->numRows() > 0) {
-		
+		echo "<!-- Got rows for ore stats -->";
 		while ($totalORE = $totalOREDB->fetchRow()) {
 			// Now check each ore type.
 			foreach ($ORENAMES as $ORE) {
 				// And ignore never-hauled ore
-				if ($totalORE[total . $ORE] > 0) {
+				if ($totalORE[total . $DBORE[$ORE]] > 0) {
 					// We got some ore!
 					$totalOre_table->addRow();
-					$totalOre_table->addCol("<img width=\"20\" height=\"20\" src=\"./images/ores/" . $ORE . ".png\">Total " . $ORE . " mined:");
-					$totalOre_table->addCol(number_format($totalORE[total . $ORE]));
+					$totalOre_table->addCol("<img width=\"20\" height=\"20\" src=\"./images/ores/" . $ORE . ".png\">Total " . $ORE . ":");
+					$totalOre_table->addCol(number_format($totalORE[total . $DBORE[$ORE]]));
 					$gotOre = true;
 				}
 			}

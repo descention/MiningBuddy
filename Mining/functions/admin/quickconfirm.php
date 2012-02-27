@@ -44,7 +44,10 @@
  	numericCheck($ID);
  	
  	$DB->query("UPDATE users SET confirmed='1' WHERE id='".$ID."'");
- 	
+	
+	$userDS = $DB->query("SELECT * FROM users WHERE id='$ID' LIMIT 1");
+	$user = $userDS->fetchRow();
+ 	lostPassword($user[username]);
  	header("Location: index.php?action=editusers&newusers=true");
  	die();
  	

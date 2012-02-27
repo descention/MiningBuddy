@@ -48,29 +48,38 @@ function changeOreValue() {
 	// Lets set the userID(!)
 	$userID = $MySelf->getID();
 
-	// Insert the new ore values into the database.
-	$DB->query("insert into orevalues (modifier, time) values (?,?)", array (
-		"$userID",
-		"$TIMEMARK"
-	));
+	$OPTYPE = isset($_POST[optype])?$_POST[optype]:"";
+	$opdirect = isset($_POST[optype])?"&optype=$OPTYPE":"";
 	
 	// Now loop through all possible oretypes.
 	foreach ($DBORE as $ORE) {
 		// But check that the submited information is kosher.
-		if ((isset ($_POST[$ORE])) && (is_numeric($_POST[$ORE]))) {
+		if ((isset ($_POST[$ORE])) && (is_numeric($_POST[$ORE]))) {			
+			// Insert the new ore values into the database.
+			$DB->query("insert into orevalues (modifier, time, Item, Worth) 
+				select $userID,$TIMEMARK,'$ORE','$_POST[$ORE]' from dual 
+				where (
+					select worth from orevalues where item = '$ORE' and time = (
+						select max(time) from orevalues where item = '$ORE')
+					) != '$_POST[$ORE]' or (select count(*) from orevalues where item = '$ORE') = 0"
+				);
+			
+			/*
 			// Write the new, updated values.
 			$DB->query("UPDATE orevalues SET " . $ORE . "Worth= '$_POST[$ORE]' WHERE time = '$TIMEMARK'");
-
+			*/
+			
 			// Enable or disable the oretype.
 			if ($_POST[$ORE.Enabled]) {
-				$DB->query("UPDATE config SET value = '1' where name='" . $ORE . "Enabled' ");
+				$DB->query("insert into `config` (value,name) values ('1','" . $ORE . $OPTYPE . "Enabled')");
+				$DB->query("UPDATE config SET value = '1' where name='" . $ORE . $OPTYPE . "Enabled'");
 			} else {
-				$DB->query("UPDATE config SET value = '0' where name='" . $ORE . "Enabled' ");
+				$DB->query("UPDATE config SET value = '0' where name='" . $ORE . $OPTYPE . "Enabled'");
 			}
 		}
 	}
-
+	
 	// Let the user know.         
-	makeNotice("The payout values for ore have been changed.", "notice", "New data accepted.", "index.php?action=changeow", "[OK]");
+	makeNotice("The payout values for ore have been changed.", "notice", "New data accepted.", "index.php?action=changeow$opdirect", "[OK]");
 }
 ?>

@@ -130,7 +130,32 @@ $ORENAMES = array (
 	"Neural Network Analyzer",
 	"Sleeper Data Library",
 	"Ancient Coordinates Database",
-	"Sleeper Drone AI Nexus"
+	"Sleeper Drone AI Nexus",
+	
+		// Ladar
+	"Barren Perimeter Reservoir",
+	"Minor Perimeter Reservoir",
+	"Ordinary Perimeter Reservoir",
+	"Sizable Perimeter Reservoir",
+	"Token Perimeter Reservoir",
+	"Bountiful Frontier Reservoir",
+	"Vast Frontier Reservoir",
+	"Instrumental Core Reservoir",
+	"Vital Core Reservoir",
+	
+		// Cosmic Anomalies
+	"Core Garrison",
+	"Core Stronghold",
+	"Oruze Osobnyk",
+	"Quarantine Area",
+
+		// Magnetometric
+	"Forgotten Core Data Field",
+	"Forgotten Core Information Pen",
+
+		// Radar
+	"Unsecured Frontier Enclave Relay",
+	"Unsecured Frontier Server Bank",
 	
 );
 

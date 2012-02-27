@@ -107,24 +107,29 @@ function addRun() {
 		$tax = "0";
 	}
 	
+	/*
 	// Get the current ore-values.
-	$oreValue = $DB->getCol("SELECT max(id) FROM orevalues");
+	$oreValue = $DB->getCol("SELECT max(time) FROM orevalues");
 	$oreValue = $oreValue[0];
+	*/
 	
 //Edit Starts Here	
 	$shipValue = $DB->getCol("SELECT max(id) FROM shipvalues");
 	$shipValue = $shipValue[0];
+	
+	$optype = $_REQUEST[optype];
 //Edit Ends Here
 
-	$DB->query("insert into runs (location, starttime, supervisor, corpkeeps, isOfficial, oreGlue, shipGlue) " . "values (?,?,?,?,?,?,?)", array (
+	$DB->query("insert into runs (location, starttime, supervisor, corpkeeps, isOfficial, oreGlue, shipGlue,optype) " . "values (?,?,?,?,?,?,?,?)", array (
 		"$location",
 		"$starttime",
 		"$supervisor",
 		$tax,
 		$official,
-		$oreValue,
+		"$TIMEMARK",
 //Edit Starts Here		
 		$shipValue,
+		"$optype",
 //Edit Ends Here		
 	));
 

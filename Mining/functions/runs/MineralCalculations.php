@@ -1,6 +1,21 @@
 <?php
 //Batch Info/Variables (divides total ore mined by the amount per batch) (OreName.Value is OreMinedValue from Runs table)
 
+function RefineBatch1(&$variable, $oreType,$batchSize){
+	$return = $DB->getCol("SELECT (select sum(Quantity) from hauled where miningrun = '$ID' and Item = '$oreType') as $oreType FROM runs WHERE id='$ID' LIMIT 1");
+	$variable = floor(($return[0] / $batchSize));
+}
+
+function RefineBatch2(&$variable, $oreType,$batchSize){
+	$return = $DB->getCol("SELECT (select sum(Quantity) from hauled where miningrun = '$ID' and Item = '$oreType') as $oreType FROM runs WHERE id='$ID' LIMIT 1");
+	$variable = floor(($return[0] / $batchSize)) * 1.05;
+}
+
+function RefineBatch3(&$variable, $oreType,$batchSize){
+	$return = $DB->getCol("SELECT (select sum(Quantity) from hauled where miningrun = '$ID' and Item = '$oreType') as $oreType FROM runs WHERE id='$ID' LIMIT 1");
+	$variable = floor(($return[0] / $batchSize)) * 1.10;
+}
+
   //Ore
 		//Veldspar (Batch Size: 333)
 $Veld = $DB->getCol("SELECT Veldspar FROM runs WHERE id='$ID' LIMIT 1");

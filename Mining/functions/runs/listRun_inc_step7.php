@@ -36,10 +36,10 @@ if (getTotalHaulRuns($ID) > 0) {
 
 	// Ask the oracle.
 	if ($_GET[detailed] != true){
-		$limit = "LIMIT 6";
+		$limit = "6";
 	}
 	
-	$haulingDB = $DB->query("select * from hauled where miningrun = '$ID' ORDER BY time DESC $limit");
+	$haulingDB = $DB->query("select * from hauled where miningrun = '$ID' group by time ORDER BY time DESC");
 	
 	// Create the table header.
 	$hauled_information = new table(4, true);
@@ -78,20 +78,28 @@ if (getTotalHaulRuns($ID) > 0) {
 		 */
 
 		$oc = 1;
-		foreach ($DBORE as $ORE) {
-			if ($row[$ORE] > 0) {
-				$temp .= number_format($row[$ORE], 0) . " " . array_search($ORE, $DBORE) . "<br>";
+		$singleHaulDB = $DB->query("select Item, Quantity from hauled where miningrun = '$ID' and time = $row[time] ORDER BY Item");
+		while ($haul = $singleHaulDB->fetchRow()) {
+			$ORE = $haul[Item];
+			
+			if ($haul[Quantity] > 0) {
+				$temp .= number_format($haul[Quantity], 0) . " &tab;" . array_search($ORE, $DBORE) . "<br>";
 			}
-			elseif ($row[$ORE]) {
+			elseif ($haul[Quantity]) {
 				// Negative amount (storno)
-				$temp .= "<font color=\"#ff0000\">" . number_format($row[$ORE], 0) . " " . array_search($ORE, $DBORE) . "</font><br>";
+				$temp .= "<font color=\"#ff0000\">" . number_format($haul[Quantity], 0) . " " . array_search($ORE, $DBORE) . "</font><br>";
 			}
-			$oc++;
+			
 		}
+		$oc++;
 		$hauled_information->addCol($temp);
 		unset ($temp);
+		if($oc > $limit)
+			break;
 	}
-
+	
+	
+	
 	// offer full view.	
 	if ($limit) {
 		$hauled_information->addHeader("Only the 6 most recent hauls are shown. [<a href=\"index.php?action=show&id=".$ID."&detailed=true\">show all<a>]");

@@ -47,6 +47,11 @@ $general_info->addRow();
 $general_info->addCol("This run is official:", $common_mode);
 $general_info->addCol(yesno($row[isOfficial], true));
 
+// Row: Op Type
+$general_info->addRow();
+$general_info->addCol("Op Type:", $common_mode);
+$general_info->addCol($row[optype]==""?"Standard":$row[optype]);
+
 // Row: Supervisor Name
 $general_info->addRow();
 $general_info->addCol("Supervisor:", $common_mode);
@@ -130,7 +135,7 @@ if ("$row[endtime]" == "") {
 
 		// Are we allowed to haul?
 		if (("$row[endtime]" == "") && ($MySelf->canAddHaul())) {
-			$addHaul .= " [<a href=\"index.php?action=addhaul&id=$ID\">Haul Ore</a>] ";
+			$addHaul .= " [<a href=\"index.php?action=addhaul&id=$ID\">Haul</a>] ";
 		} else {
 			$addHaul .= false;
 		}
@@ -199,8 +204,8 @@ if ($row[oreGlue] > 0) {
 	$general_info->addCol("Ore Quotes:", $common_mode);
 
 	// Is this the current ore quote?
-	$cur = $DB->getCol("SELECT id FROM orevalues ORDER BY time DESC LIMIT 1");
-	if ($cur[0] == $row[oreGlue]) {
+	$cur = $DB->getCol("SELECT time FROM orevalues ORDER BY time DESC LIMIT 1");
+	if ($cur[0] <= $row[oreGlue]) {
 		// it is!
 		$cur = "<font color=\"#00ff00\"><b>(current)</b></font>";
 	} else {
@@ -208,8 +213,8 @@ if ($row[oreGlue] > 0) {
 	}
 
 	// Date of ore mod?
-	$modTime = $DB->getCol("SELECT time FROM orevalues WHERE id='" . $row[oreGlue] . "' LIMIT 1");
-	$modDate = date("d.m.y", $modTime[0]);
+	//$modTime = $DB->getCol("SELECT time FROM orevalues WHERE time='" .  . "' LIMIT 1");
+	$modDate = date("d.m.y", $row[oreGlue]);
 	$general_info->addCol("[<a href=\"index.php?action=showorevalue&id=" . $row[oreGlue] . "\">$modDate</a>] $cur");
 }
 //Edit Starts Here

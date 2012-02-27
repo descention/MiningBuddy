@@ -65,7 +65,7 @@ function makeRequestAccountPage($failedFastLogin = false) {
 	if ($_GET[admin] == true){
 		$table->addCol("Fill out the form below to create the initial superadmin account. " .
 				"This account will have all priviledges - so keep the login credentials safe! " .
-				"Your password will be randomly renerated and revealed to you just once, " .
+				"Your password will be randomly generated and revealed to you just once, " .
 				"so write it down or copy it elsewhere. You will have the option to " .
 				"change your password on your first login.",
 			array ("colspan" => 2));

@@ -85,7 +85,7 @@ function listRun() {
 
 	/*
 	 * STEP FIVE
-	 * The Ressources Information Table
+	 * The Resources Information Table
 	 */
 	include ('./functions/runs/listRun_inc_step5.php');
 
@@ -111,7 +111,7 @@ function listRun() {
 	 * STEP NINE
 	 * Calculate the Material Conversion from a Perfect Refine.
 	 */
-	include ('./functions/runs/listRun_inc_step9.php');
+	//include ('./functions/runs/listRun_inc_step9.php');
 
 	/*
 	 * Assemble & Return the HTML
@@ -154,11 +154,13 @@ function listRun() {
 		$page .= "<b><i>Nothing has been mined (and hauled) yet.</i></b><br>";
 	}
 	
+	/*
 	if (isset ($conversion_info) && $conversion_info->hasContent()) {
 		$page .= "<br>" . $conversion_info->flush();
 	} else {
 		$page .= "<b><i>There are not records of any hauling.</i></b><br>";
 	}
+	*/
 	
 	if (getConfig("cargocontainer")) {
 		if ($isOpen) {

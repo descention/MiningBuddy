@@ -225,6 +225,8 @@ function profile() {
 	 * It is dynamic because this way we can easily add ores from 
 	 * config-system.php to the system without code rewrite.
 	 */
+	 
+	/*
 	global $DBORE;
 	global $ORENAMES;
 	foreach ($DBORE as $ORE) {
@@ -239,14 +241,14 @@ function profile() {
 
 	// Now query it.
 	$totalOREDB = $DB->query("$SQL");
-
+	
 
 if (DB::isError($totalOREDB)) {
-    /*
+    *
      * This is not what you would really want to do in
      * your program.  It merely demonstrates what kinds
      * of data you can get back from error objects.
-     */
+     *
     echo 'Standard Message: ' . $totalOREDB->getMessage() . "\n";
     echo '\n ';
     echo 'Standard Code: ' . $totalOREDB->getCode() . "\n";
@@ -281,7 +283,7 @@ if (DB::isError($totalOREDB)) {
 			$oretable_r = "<br>" . $totalOre_table->flush();
 		}
 	}
-
+*/
 	// Image thingy.
 
 	// We serve small images IGB.
