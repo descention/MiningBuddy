@@ -322,8 +322,10 @@ function process_get() {
 
 	}
 	
-	if($_GET[ajax]){
-		print($html);
+	if($_GET[ajax]=="yes"){
+		
+		$page = str_replace("%%WIDTH%%", "width=\"100%\"", $page);
+		print($page);
 	}else{
 		// Clean & Print the page.
 		$html = new html;

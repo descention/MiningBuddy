@@ -179,7 +179,7 @@ function listRun() {
 	}
 	
 	$page .= "<script>window.setTimeout(function(){\$.ajax({";
-	$page .= "url: './index.php?action=show&id=$ID',";
+	$page .= "url: './index.php?action=show&id=$ID&ajax=yes',";
 	$page .= "success: function(data) {\$('#body').html(data);}";
 	$page .= "});},60000);</script>";
 	return ($page);
