@@ -321,10 +321,14 @@ function process_get() {
 			break;
 
 	}
-
-	// Clean & Print the page.
-	$html = new html;
-	$html->addBody($page);
-	print ($html->flush());
+	
+	if($_GET[ajax]){
+		print($html);
+	}else{
+		// Clean & Print the page.
+		$html = new html;
+		$html->addBody($page);
+		print ($html->flush());
+	}
 }
 ?>

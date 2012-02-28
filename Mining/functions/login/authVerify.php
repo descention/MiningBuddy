@@ -103,10 +103,10 @@ function authVerify($username, $password, $trust = false) {
 		if($allowed){
 			
 			$DB->query("insert into users (username, password, email, " .
-			"addedby, confirmed, emailvalid) " .
-			"values (?, ?, ?, ?, ?,?)", array (
+			"addedby, confirmed, emailvalid,canLogin) " .
+			"values (?, ?, ?, ?, ?,?, ?)", array (
 				stripcslashes($username
-			), "", $obj[email], 1, 1, 1 ));
+			), "", $obj[email], 1, 1, 1, 1 ));
 
 			// Were we successful?
 			if ($DB->affectedRows() == 0) {
@@ -132,6 +132,7 @@ function authVerify($username, $password, $trust = false) {
 		
 		if($user == null){
 			return (false);
+			makeNotice("Your account is not a member of the B0rthole user group." . "<br>Please join the group on TEST Auth.", "error", "Unable to login");
 		}
 	} else {
 		// fallback on system auth

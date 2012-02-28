@@ -178,7 +178,10 @@ function listRun() {
 		$page .= "<b><i>There are not records of any hauling.</i></b><br>";
 	}
 	
-
+	$page .= "<script>window.setTimeout(function(){\$.ajax({";
+	$page .= "url: './index.php?action=show&id=$ID',";
+	$page .= "success: function(data) {\$('#body').html(data);}";
+	$page .= "});},60000);</script>";
 	return ($page);
 }
 ?>

@@ -170,7 +170,7 @@ class html {
 		}
 
 		// Add the html nugget to the body.
-		$this->body .= $html;
+		$this->body .= "<div id='body'>" . $html . "</div>";
 	}
 
 	// This prints out what we have.

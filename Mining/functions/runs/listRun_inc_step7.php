@@ -83,7 +83,7 @@ if (getTotalHaulRuns($ID) > 0) {
 			$ORE = $haul[Item];
 			
 			if ($haul[Quantity] > 0) {
-				$temp .= number_format($haul[Quantity], 0) . " &tab;" . array_search($ORE, $DBORE) . "<br>";
+				$temp .= number_format($haul[Quantity], 0) . " " . array_search($ORE, $DBORE) . "<br>";
 			}
 			elseif ($haul[Quantity]) {
 				// Negative amount (storno)
