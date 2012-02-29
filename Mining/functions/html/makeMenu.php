@@ -421,7 +421,28 @@ function makeMenu($page = false) {
 	/*
 	 * Show the time.
 	 */
-	$clock = "<b><hr><center>" . date("H:i", $TIMEMARK) . " EvE</center><hr></b>";
+	 
+	$clockScript = "<script>
+	var eveTime = new Date($TIMEMARK*1000);
+	eveTime.setHours(eveTime.getHours()-3);
+	var eveTimeRefreshRate = 20;// seconds
+	var eveTimeZone = '';
+	function updateTime(){
+		eveTime = new Date(eveTime.getTime()+(eveTimeRefreshRate * 1000));
+		minutes = eveTime.getMinutes();
+		if(minutes.length < 2){
+			minutes = '0' + minutes;
+		}
+		hours = eveTime.getHours();
+		if(hours.length < 2){
+			hours = '0' + hours;
+		}
+		\$('#eveTime').html(hours + ':' + minutes + ' EvE');
+		setTimeout('updateTime()', eveTimeRefreshRate * 1000);
+	}
+	setTimeout('updateTime()', eveTimeRefreshRate * 1000);
+	</script>";
+	$clock = "<b><hr><center id='eveTime'>" . date("H:i", $TIMEMARK) . " EvE</center><hr>$clockScript</b>";
 	/*
 	 * Assemble the module-block.
 	 */

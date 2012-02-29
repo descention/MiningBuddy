@@ -144,11 +144,13 @@ function makeLoginPage($user = false) {
 
 	$login->addRow("060622");
 	$login->addCol("<a href=\"index.php?auth=lostpass\">lost password</a>");
+	/*
 	$login->addCol("<a href=\"index.php?auth=requestaccount\">request account</a>", array (
 		"align" => "right",
 		"colspan" => "2"
 	));
-
+	*/
+	$login->addCol("",array("colspan"=>"2"));
 	$page = "<br><br><br>";
 
 	$page .= "<form action=\"index.php\" method=\"post\">";
