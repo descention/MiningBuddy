@@ -37,7 +37,7 @@
 
 <title>%%SITENAME%%</title>
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js'></script>
-
+<link rel="stylesheet" type="text/css" href="include/html/default.css" />
 </head>
 <body bgcolor="#2D2D37" text="#ffffff" link="#ff8a00" vlink="#ff8a00" marginwidth="0" marginheight="0" topmargin="0" leftmargin="0">
 

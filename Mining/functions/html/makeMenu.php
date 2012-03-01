@@ -55,7 +55,7 @@ function makeMenu($page = false) {
 			$mining_addOp = "[<a href=\"index.php?action=newrun\">Add Op</a>]";
 		} else {
 			// Using a real browser.
-			$mining_addOp = "<a href=\"index.php?action=newrun\"><img border=\"0\" src=\"images/register-new-op.png\"></a><br>";
+			$mining_addOp = "&nbsp;&nbsp;&nbsp;<a class='menu' href=\"index.php?action=newrun\">&gt; Add Op</a><br/>";
 		}
 	}
 
@@ -67,7 +67,7 @@ function makeMenu($page = false) {
 			$mining_AddHaul = "[<a href=\"index.php?action=addhaul\">Add Haul</a>]";
 		} else {
 			// Using a real browser.
-			$mining_AddHaul = "<a href=\"index.php?action=addhaul\"><img border=\"0\" src=\"images/add-haul.png\"></a><br>";
+			$mining_AddHaul = "&nbsp;&nbsp;&nbsp;<a class='menu' href=\"index.php?action=addhaul\">&gt; Add Haul</a><br/>";
 		}
 	}
 
@@ -75,14 +75,14 @@ function makeMenu($page = false) {
 	if ($IGB && $IGB_VISUAL) {
 		$mining_AllOps = "[<a href=\"index.php?action=list\">List Runs</a>]";
 	} else {
-		$mining_AllOps = "<a href=\"index.php?action=list\"><img border=\"0\" src=\"images/all-runs.png\"></a><br>";
+		$mining_AllOps = "&nbsp;&nbsp;&nbsp;<a class='menu' href=\"index.php?action=list\">&gt; All Runs</a><br>";
 	}
 
 	// Ore Quotes
 	if ($IGB && $IGB_VISUAL) {
 		$mining_oreQuotes = "[<a href=\"index.php?action=showorevalue\">Quotes</a>]";
 	} else {
-		$mining_oreQuotes = "<a href=\"index.php?action=showorevalue\"><img border=\"0\" src=\"images/orequotes.png\"></a><br>";
+		$mining_oreQuotes = "&nbsp;&nbsp;&nbsp;<a class='menu' href=\"index.php?action=showorevalue\">&gt; Ore Quotes</a><br>";
 	}
 
 	// Can timer link
@@ -90,7 +90,7 @@ function makeMenu($page = false) {
 		if ($IGB && $IGB_VISUAL) {
 			$mining_canTimer = "[<a href=\"index.php?action=cans\">Can Timer</a>]";
 		} else {
-			$mining_canTimer = "<a href=\"index.php?action=cans\"><img border=\"0\" src=\"images/cantimer.png\"></a><br>";
+			$mining_canTimer = "&nbsp;&nbsp;&nbsp;<a class='menu' href=\"index.php?action=cans\">&gt; cantimer</a><br>";
 		}
 	}
 
@@ -98,21 +98,21 @@ function makeMenu($page = false) {
 	if ($IGB && $IGB_VISUAL) {
 		$mining_stats = "[<a href=\"index.php?action=globstats\">Statistics</a>]";
 	} else {
-		$mining_stats = "<a href=\"index.php?action=globstats\"><img border=\"0\" src=\"images/statistics.png\"></a><br>";
+		$mining_stats = "&nbsp;&nbsp;&nbsp;<a class='menu' href=\"index.php?action=globstats\">&gt; Statistics</a><br>";
 	}
 	
 	// Hierarchy
 	if ($IGB && $IGB_VISUAL) {
 		$mining_hier = "[<a href=\"index.php?action=hierarchy\">Hierarchy</a>]";
 	} else {
-		$mining_hier = "<a href=\"index.php?action=hierarchy\"><img border=\"0\" src=\"images/hierarchy.png\"></a><br>";
+		$mining_hier = "&nbsp;&nbsp;&nbsp;<a class='menu' href=\"index.php?action=hierarchy\">&gt; Hierarchy</a><br>";
 	}
 
 		// Ship Values
 	if ($IGB && $IGB_VISUAL) {
 		$mining_shipValues = "[<a href=\"index.php?action=showshipvalue\">Ship Values</a>]";
 	} else {
-		$mining_shipValues = "<a href=\"index.php?action=showshipvalue\"><img border=\"0\" src=\"images/shipvalues.png\"></a><br>";
+		$mining_shipValues = "&nbsp;&nbsp;&nbsp;<a class='menu' href=\"index.php?action=showshipvalue\">&gt; Ship Values</a><br>";
 	}
 	
 	// Assemble the mining Module link.
@@ -142,20 +142,20 @@ function makeMenu($page = false) {
 			$pref_emailValid = "[<a href=\"index.php?action=revalidate\">confirm email</a>]";
 		} else {
 			// Using a real browser.
-			$pref_emailValid = "<a href=\"index.php?action=revalidate\"><img border=\"0\" src=\"images/validate.png\"></a><br>";
+			$pref_emailValid = "&nbsp;&nbsp;&nbsp;<a class='menu' href=\"index.php?action=revalidate\">&gt; Validate</a><br>";
 		}
 	}
 
 	if ($IGB && $IGB_VISUAL) {
 		$pref_Pref = "[<a href=\"index.php?action=preferences\">Preferences</a>]";
 	} else {
-		$pref_Pref = "<a href=\"index.php?action=preferences\"><img border=\"0\" src=\"images/preferences.png\"></a><br>";
+		$pref_Pref = "&nbsp;&nbsp;&nbsp;<a class='menu' href=\"index.php?action=preferences\">&gt; Preferences</a><br>";
 	}
 
 	if ($IGB && $IGB_VISUAL) {
 		$pref_Prof = "[<a href=\"index.php?action=profile&id=" . $MySelf->getID() . "\">Profile</a>]";
 	} else {
-		$pref_Prof = "<a href=\"index.php?action=profile&id=" . $MySelf->getID() . "\"><img border=\"0\" src=\"images/profile.png\"></a><br>";
+		$pref_Prof = "&nbsp;&nbsp;&nbsp;<a class='menu' href=\"index.php?action=profile&id=" . $MySelf->getID() . "\">&gt; Profile</a><br>";
 	}
 
 	// Assemble the Preferences module
@@ -186,7 +186,7 @@ function makeMenu($page = false) {
 		} else {
 			$logoutModule = "<br>";
 			$logoutModule .= "<img src=\"images/m-logout.png\"><br>";
-			$logoutModule .= "<a href=\"index.php?auth=logout\"><img border=\"0\" src=\"images/logout.png\"></a><br>";
+			$logoutModule .= "&nbsp;&nbsp;&nbsp;<a class='menu' href=\"index.php?auth=logout\">&gt; Logout</a><br>";
 		}
 	}
 
@@ -202,7 +202,7 @@ function makeMenu($page = false) {
 			$admin_Ore = "[<a href=\"index.php?action=changeow\">Edit Items</a>]";
 		} else {
 			// Using a real browser.
-			$admin_Ore = "<a href=\"index.php?action=changeow\"><img border=\"0\" src=\"images/change-ore-value.png\"></a><br>";
+			$admin_Ore = "&nbsp;&nbsp;&nbsp;<a class='menu' href=\"index.php?action=changeow\">&gt; change-ore-value</a><br>";
 		}
 	}
 
@@ -214,7 +214,7 @@ function makeMenu($page = false) {
 			$admin_Ships = "[<a href=\"index.php?action=changesv\">Edit Ships</a>]";
 		} else {
 			// Using a real browser.
-			$admin_Ships = "<a href=\"index.php?action=changesv\"><img border=\"0\" src=\"images/change-ship-values.png\"></a><br>";
+			$admin_Ships = "&nbsp;&nbsp;&nbsp;<a class='menu' href=\"index.php?action=changesv\">&gt; change-ship-values</a><br>";
 		}
 	}
 	
@@ -226,7 +226,7 @@ function makeMenu($page = false) {
 			$admin_site = "[<a href=\"index.php?action=configuration\">Site Settings</a>]";
 		} else {
 			// Using a real browser.
-			$admin_site = "<a href=\"index.php?action=configuration\"><img border=\"0\" src=\"images/configuration.png\"></a><br>";
+			$admin_site = "&nbsp;&nbsp;&nbsp;<a class='menu' href=\"index.php?action=configuration\">&gt; configuration</a><br>";
 		}
 	}
 
@@ -238,7 +238,7 @@ function makeMenu($page = false) {
 			$admin_maint = "[<a href=\"index.php?action=maintenance\">Maintenance</a>]";
 		} else {
 			// Using a real browser.
-			$admin_maint = "<a href=\"index.php?action=maintenance\"><img border=\"0\" src=\"images/maintenance.png\"></a><br>";
+			$admin_maint = "&nbsp;&nbsp;&nbsp;<a class='menu' href=\"index.php?action=maintenance\">&gt; maintenance</a><br>";
 		}
 	}
 
@@ -250,7 +250,7 @@ function makeMenu($page = false) {
 			$admin_ranks = "[<a href=\"index.php?action=showranks\">Edit Ranks</a>]";
 		} else {
 			// Using a real browser.
-			$admin_ranks = "<a href=\"index.php?action=showranks\"><img border=\"0\" src=\"images/editranks.png\"></a><br>";
+			$admin_ranks = "&nbsp;&nbsp;&nbsp;<a class='menu' href=\"index.php?action=showranks\">&gt; editranks</a><br>";
 		}
 	}
 
@@ -262,7 +262,7 @@ function makeMenu($page = false) {
 			$admin_viewUser = "[<a href=\"index.php?action=editusers\">List Users</a>]";
 		} else {
 			// Using a real browser.
-			$admin_viewUser = "<a href=\"index.php?action=editusers\"><img border=\"0\" src=\"images/user-management.png\"></a><br>";
+			$admin_viewUser = "&nbsp;&nbsp;&nbsp;<a class='menu' href=\"index.php?action=editusers\">&gt; user-management</a><br>";
 		}
 	}
 
@@ -274,7 +274,7 @@ function makeMenu($page = false) {
 			$admin_addUser = "[<a href=\"index.php?action=newuser\">Add User</a>]";
 		} else {
 			// Using a real browser.
-			$admin_addUser = "<a href=\"index.php?action=newuser\"><img src=\"images/add-user.png\" border=\"0\"></a><br>";
+			$admin_addUser = "&nbsp;&nbsp;&nbsp;<a class='menu' href=\"index.php?action=newuser\">&gt; Add new User</a><br>";
 		}
 	}
 
@@ -308,7 +308,7 @@ function makeMenu($page = false) {
 				$events_view = "[<a href=\"index.php?action=showevents\">Schedule</a>]";
 			} else {
 				// Using a real browser.
-				$events_view = "<a href=\"index.php?action=showevents\"><img border=\"0\" src=\"images/scheduled-events.png\"></a><br>";
+				$events_view = "&nbsp;&nbsp;&nbsp;<a class='menu' href=\"index.php?action=showevents\">&gt; scheduled-events</a><br>";
 			}
 		}
 
@@ -320,7 +320,7 @@ function makeMenu($page = false) {
 				$events_add = "[<a href=\"index.php?action=addevent\">Add Event</a>]";
 			} else {
 				// Using a real browser.
-				$events_add = "<a href=\"index.php?action=addevent\"><img border=\"0\" src=\"images/add-event.png\"></a><br>";
+				$events_add = "&nbsp;&nbsp;&nbsp;<a class='menu' href=\"index.php?action=addevent\">&gt; add-event</a><br>";
 			}
 		}
 	}
@@ -329,7 +329,7 @@ function makeMenu($page = false) {
 	if ($IGB && $IGB_VISUAL) {
 		$events_OnlineTimer = "[<a href=\"index.php?action=onlinetime\">Online Time</a>]";
 	} else {
-		$events_OnlineTimer = "<a href=\"index.php?action=onlinetime\"><img border=\"0\" src=\"images/onlinetime.png\"></a><br>";
+		$events_OnlineTimer = "&nbsp;&nbsp;&nbsp;<a class='menu' href=\"index.php?action=onlinetime\">&gt; onlinetime</a><br>";
 	}
 
 	// Assemblte Events module
@@ -338,7 +338,7 @@ function makeMenu($page = false) {
 		$eventsModule = $events_view . " " . $events_add . " " . $events_OnlineTimer . "<br>";
 	} else {
 		$eventsModule = "<br>";
-		$eventsModule .= "<img src=\"./images/m-events.png\"><br>";
+		$eventsModule .= "<img src=\"./images/m-events<br>";
 		$eventsModule .= $events_view;
 		$eventsModule .= $events_add;
 		$eventsModule .= $events_OnlineTimer;
@@ -355,9 +355,9 @@ function makeMenu($page = false) {
 		}
 	} else {
 		$walletModule = "<br><img src=\"./images/wallet.png\"><br>";
-		$walletModule .= "<a href=\"index.php?action=manageWallet\"><img border=\"0\" src=\"images/manageWallet.png\"></a><br>";
+		$walletModule .= "&nbsp;&nbsp;&nbsp;<a class='menu' href=\"index.php?action=manageWallet\">&gt; Manage Wallet</a><br>";
 		if ($MySelf->isAccountant()) {
-			$walletModule .= "<a href=\"index.php?action=payout\"><img border=\"0\" src=\"images/manage_payouts.png\"></a><br>";
+			$walletModule .= "&nbsp;&nbsp;&nbsp;<a class='menu' href=\"index.php?action=payout\">&gt; Manage Payouts</a><br>";
 		}
 	}
 
@@ -375,7 +375,7 @@ function makeMenu($page = false) {
 				$lotto_Play = "[<a href=\"index.php?action=lotto\">Lotto</a>]";
 			} else {
 				// Using a real browser.
-				$lotto_Play = "<a href=\"index.php?action=lotto\"><img border=\"0\" src=\"images/lotto-play.png\"></a><br>";
+				$lotto_Play = "&nbsp;&nbsp;&nbsp;<a class='menu' href=\"index.php?action=lotto\">&gt; lotto-play</a><br>";
 			}
 		}
 
@@ -386,7 +386,7 @@ function makeMenu($page = false) {
 				$lotto_Admin = "[<a href=\"index.php?action=editLotto\">Admin Lotto</a>]";
 			} else {
 				// Using a real browser.
-				$lotto_Admin = "<a href=\"index.php?action=editLotto\"><img border=\"0\" src=\"images/lotto-admin.png\"></a><br>";
+				$lotto_Admin = "&nbsp;&nbsp;&nbsp;<a class='menu' href=\"index.php?action=editLotto\">&gt; lotto-admin</a><br>";
 			}
 		}
 
