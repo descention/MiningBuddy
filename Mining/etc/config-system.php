@@ -115,6 +115,43 @@ $ORENAMES = array (
 	"Resonance Calibration Matrix",
 	"Thermoelectric Catalysts",
 	
+	"Intact Armor Nanobot",
+	"Intact Electromechanical Component",
+	"Intact Hull Section",
+	"Intact Power Cores",
+	"Intact Thruster Sections",
+	"Intact Weapon Subroutines",
+	
+	"Malfunctioning Armor Nanobot",
+	"Malfunctioning Electromechanical Component",
+	"Malfunctioning Hull Section",
+	"Malfunctioning Power Cores",
+	"Malfunctioning Thruster Sections",
+	"Malfunctioning Weapon Subroutines",
+	
+	"Wrecked Armor Nanobot",
+	"Wrecked Electromechanical Component",
+	"Wrecked Hull Section",
+	"Wrecked Power Cores",
+	"Wrecked Thruster Sections",
+	"Wrecked Weapon Subroutines",
+	
+	"Power Circuit",
+	"Micro Circuit",
+	"Interface Circuit",
+	"Logic Circuit",
+	
+	"Amarr Hybrid Tech Decryptor",
+	"Caldari Hybrid Tech Decryptor",
+	"Gallente Hybrid Tech Decryptor",
+	"Minmatar Hybrid Tech Decryptor",
+	
+	"Datacore - Defensive Subsystems Engineering",
+	"Datacore - Electronic Subsystems Engineering",
+	"Datacore - Engineering Subsystems Engineering",
+	"Datacore - Offensive Subsystems Engineering",
+	"Datacore - Propulsion Subsystems Engineering",
+	
 		// Wormhole Gas
 	"Fullerite-C28",
 	"Fullerite-C32",	
@@ -131,7 +168,7 @@ $ORENAMES = array (
 	"Sleeper Data Library",
 	"Ancient Coordinates Database",
 	"Sleeper Drone AI Nexus",
-	
+	/*
 		// Ladar
 	"Barren Perimeter Reservoir",
 	"Minor Perimeter Reservoir",
@@ -156,7 +193,7 @@ $ORENAMES = array (
 		// Radar
 	"Unsecured Frontier Enclave Relay",
 	"Unsecured Frontier Server Bank",
-	
+	*/
 );
 
 foreach ($ORENAMES as $ore) {
