@@ -77,7 +77,7 @@ function auth() {
 				 * No such user found. To avoid a login loop we will now break the cycle and
 				 * present the user with the request account form.
 				 */
-
+				die();
 				global $page;
 				$page = makeRequestAccountPage(true) . makeFooter();
 				print ($page);

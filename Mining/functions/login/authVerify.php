@@ -44,39 +44,37 @@ function authVerify($username, $password, $trust = false) {
 	global $TIMEMARK;
 	
 	$TESTPass = sha1($password);
-	$password = encryptPassword($password);
-	
+	if(!$trust){
+		$password = encryptPassword($password);
+	}
 	// lower case it.
 	$username = strtolower($username);
 	
-	// TEST Authentication
-	$url = "https://auth.pleaseignore.com/api/1.0/login?user=$username&pass=$TESTPass";
-	$page = file_get_contents($url);
-	$obj = json_decode($page, TRUE);
 	
+	//makeNotice("AHHHH PASSWORDLESS AHHHH!$password $trust $username", "error");
 	// and query it.
 	if (!$password && $trust) {
 		// Passwordless login (WAHHHHH!!!!)
 		$userDS = $DB->query("select * from users where username='$username' AND deleted='0' limit 1");
 		$passwordless = true;
-	} else if ( !$password ){
+	} else if ( !$password && !$trust){
 		return (false);
-	} else if ($obj[auth] == "ok"){
-		// Sane login.
-		$username = $obj[primarycharacter][name];
-		$userDS = $DB->query("select * from users where username='$username' AND deleted='0' limit 1");
-		$passwordless = false;
 	} else {
 		// Sane login.
-		$userDS = $DB->query("select * from users where username='$username' and password='$password' AND deleted='0' limit 1");
+		// TEST Authentication
+		$url = "https://auth.pleaseignore.com/api/1.0/login?user=$username&pass=$TESTPass";
+		$contents = file_get_contents($url);
+		$obj = json_decode($contents, TRUE);
+		$username = $obj[primarycharacter][name];
+		$userDS = $DB->query("select * from users where username='$username' AND deleted='0' limit 1");
 		$passwordless = false;
 	}
 	
 	
 	
-	
-	// No one found
-	if ($obj['auth'] != "ok") {
+	if ($passwordless) {
+		$user = $userDS->fetchRow();
+	} else if (!$passwordless && $obj['auth'] != "ok") {// No one found
 		$_SESSION[failedLogins]++;
 		// Log failed attempts.
 		$user_valid = $DB->getCol("SELECT COUNT(username) FROM users WHERE username = '$username' LIMIT 1");

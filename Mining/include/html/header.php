@@ -40,7 +40,7 @@
 <link rel="stylesheet" type="text/css" href="include/html/default.css" />
 <link rel="stylesheet" type="text/css" href="include/html/%%USERNAME%%.css" />
 </head>
-<body text="#ffffff" link="#ff8a00" vlink="#ff8a00" marginwidth="0" marginheight="0" topmargin="0" leftmargin="0">
+<body class='OOGB' text="#ffffff" link="#ff8a00" vlink="#ff8a00" marginwidth="0" marginheight="0" topmargin="0" leftmargin="0">
 
 <table width="100%" cellpadding="2" cellspacing="0">
 <tr><td bgcolor="">

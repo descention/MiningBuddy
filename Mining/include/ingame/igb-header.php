@@ -4,6 +4,6 @@
 <link rel="stylesheet" type="text/css" href="include/html/default.css" />
 <link rel="stylesheet" type="text/css" href="include/html/%%USERNAME%%.css" />
 </head>
-<body>
+<body class='IGB'>
 <h3>%%SITENAME%% (IGB Version)</h3>
 <br>

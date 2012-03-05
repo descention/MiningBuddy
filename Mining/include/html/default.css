@@ -1,6 +1,5 @@
-a.menu, #userInfo{
+.OOGB a.menu, .OOGB #userInfo{
 	font-size: 12px;
-	color: white;
 	font-family: sans-serif;
 	text-decoration: none;
 	text-align: left;
@@ -17,3 +16,8 @@ body{
 .tabelHeader{
 	background-color:#060622;
 }
+
+.IGB a{
+	color:yellow;
+}
+
