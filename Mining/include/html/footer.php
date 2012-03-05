@@ -2,7 +2,7 @@
 </td>
 </table>
 
-<table width="100%"  bgcolor="#2D2D37">
+<table width="100%" >
 <tr><td colspan="2">
 <hr>
 </td></tr>

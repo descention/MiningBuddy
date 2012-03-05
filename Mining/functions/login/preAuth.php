@@ -61,6 +61,7 @@ if ("$_GET[auth]" == "logout") {
  * Someone lost their password.
  */
 if ("$_GET[auth]" == "lostpass") {
+	/*
 	//	global $page;
 	//	$page = makeLostPassForm().makeFooter();
 	//	print ($page);
@@ -68,6 +69,7 @@ if ("$_GET[auth]" == "lostpass") {
 	$html = new html;
 	//	$html->execFlush(makeLostPassForm);
 	$html->addBody(makeLostPassForm());
+	*/
 	die($html->flush());
 }
 
@@ -75,9 +77,11 @@ if ("$_GET[auth]" == "lostpass") {
  * Someone wants a new account.
  */
 if ("$_GET[auth]" == "requestaccount") {
+	/*
 	global $page;
 	$page = makeRequestAccountPage() . makeFooter();
 	print ($page);
+	*/
 	die();
 }
 
@@ -85,7 +89,7 @@ if ("$_GET[auth]" == "requestaccount") {
  * Someone wants a new account, and has submited the form.
  */
 if ("$_POST[action]" == "requestaccount") {
-	requestAccount();
+	//requestAccount();
 	die();
 }
 
@@ -93,7 +97,7 @@ if ("$_POST[action]" == "requestaccount") {
  *  Someone lost their password and has submited the form.
  */
 if ("$_POST[action]" == "lostpass") {
-	lostPassword();
+	//lostPassword();
 	die();
 }
 

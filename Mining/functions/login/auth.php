@@ -46,7 +46,7 @@ function auth() {
 	
 	// Handle possible logouts, activations et all.
 	include_once ('./functions/login/preAuth.php');
-
+	
 	// Trust, INC.
 	$alert = getConfig("trustSetting");
 	if ($IGB && ($alert == 2)) {

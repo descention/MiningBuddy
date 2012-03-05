@@ -1,4 +1,4 @@
-<!--
+<?php
 /* 
 	 * MiningBuddy  
 	 * $Header: /usr/home/mining/cvs/mining/include/html/header.txt,v 1.21 2008/01/10 18:13:32 mining Exp $
@@ -30,7 +30,7 @@
 	 *  OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
 	 *  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 	 *  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-	 */ -->
+	 */ ?>
 	 
 <html>
 <head>
@@ -38,28 +38,29 @@
 <title>%%SITENAME%%</title>
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js'></script>
 <link rel="stylesheet" type="text/css" href="include/html/default.css" />
+<link rel="stylesheet" type="text/css" href="include/html/%%USERNAME%%.css" />
 </head>
-<body bgcolor="#2D2D37" text="#ffffff" link="#ff8a00" vlink="#ff8a00" marginwidth="0" marginheight="0" topmargin="0" leftmargin="0">
+<body text="#ffffff" link="#ff8a00" vlink="#ff8a00" marginwidth="0" marginheight="0" topmargin="0" leftmargin="0">
 
 <table width="100%" cellpadding="2" cellspacing="0">
-<tr><td bgcolor="#2D2D37">
+<tr><td bgcolor="">
 <a href="%%URL%%">%%LOGO%%</a>
 </td>
-<td width="220" align="right" bgcolor="#2D2D37">
+<td id='userInfo' width="220" align="right">
 %%PILOT64%%
 %%LOGGEDIN%%<br>
 %%RANK%%<br>
 %%CREDITS%%
 </td></tr>
-<tr><td colspan="2" bgcolor="#2D2D37">
+<tr><td colspan="2" >
 <hr>
 </td></tr>
 </table>
 
 <table width="100%" cellpadding="2" cellspacing="0" height="75%" >
 
-<tr><td width="160" valign="top" bgcolor="#2D2D37">
+<tr><td id='menu' width="160" valign="top" >
 %%MENU%%
 </td>
-<td valign="top" bgcolor="#3D3D47">
+<td id='content' valign="top">
 

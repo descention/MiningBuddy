@@ -108,28 +108,29 @@ class html {
 			$mainLogo = new graphic("title");
 			$mainLogo->setText(getConfig("sitename"));
 			$mainLogo->setBGColor("2D2D37");
+			if($imageCaching){
+				$loginLogo = new graphic("standard");
+				$loginLogo->setText(ucfirst($MySelf->getUsername()));
+				$loginLogo->setBGColor("2D2D37");
+				$loginLogo->setPrefixed(false);
 
-			$loginLogo = new graphic("standard");
-			$loginLogo->setText(ucfirst($MySelf->getUsername()));
-			$loginLogo->setBGColor("2D2D37");
-			$loginLogo->setPrefixed(false);
+				$versionLogo = new graphic("long");
+				$versionLogo->setText($VERSION);
+				$versionLogo->setBGColor("2D2D37");
+				$versionLogo->setPrefixed(false);
 
-			$versionLogo = new graphic("long");
-			$versionLogo->setText($VERSION);
-			$versionLogo->setBGColor("2D2D37");
-			$versionLogo->setPrefixed(false);
+				$rankLogo = new graphic("standard");
+				$rankLogo->setText($MySelf->getRankName());
+				$rankLogo->setBGColor("2D2D37");
+				$rankLogo->setPrefixed(false);
 
-			$rankLogo = new graphic("standard");
-			$rankLogo->setText($MySelf->getRankName());
-			$rankLogo->setBGColor("2D2D37");
-			$rankLogo->setPrefixed(false);
-
-			$moneyLogo = new graphic("standard");
-			$moneyLogo->setText(number_format(getCredits($MySelf->getID()), 2) . " ISK");
-			$moneyLogo->setDirect(true);
-			$moneyLogo->setBGColor("2D2D37");
-			$moneyLogo->setPrefixed(false);
-						
+				$moneyLogo = new graphic("standard");
+				$moneyLogo->setText(number_format(getCredits($MySelf->getID()), 2) . " ISK");
+				$moneyLogo->setDirect(true);
+				$moneyLogo->setBGColor("2D2D37");
+				$moneyLogo->setPrefixed(false);
+			}
+			
 			// Replace variables in the header.
 			$this->header = str_replace("%%SITENAME%%", getConfig("sitename") . " - " . $VERSION, $this->header);
 			$this->header = makeMenu($this->header);
@@ -143,13 +144,22 @@ class html {
 			} else {
 				$this->header = str_replace("%%PILOT64%%", "<img width='64' height='64' align='left' src='https://image.eveonline.com/Character/". $api->getCharacterID() ."_64.jpg' />", $this->header);
 			}
-			$this->header = str_replace("%%LOGGEDIN%%", $loginLogo->render(), $this->header);
-			$this->header = str_replace("%%RANK%%", $rankLogo->render(), $this->header);
-			$this->header = str_replace("%%CREDITS%%", $moneyLogo->render(), $this->header);
-			$this->header = str_replace("%%URL%%", $URL, $this->header);
-			$this->footer = str_replace("%%IMG%%", $versionLogo->render(), $this->footer);
+			
 			$this->header = str_replace("%%LOGO%%", $mainLogo->render(), $this->header);
-			//$this->header = str_replace("%%PILOTIMAGE%%", $getImage("small"), $this->header);
+			
+			if($imageCaching){
+				$this->header = str_replace("%%LOGGEDIN%%", $loginLogo->render(), $this->header);//
+				$this->header = str_replace("%%RANK%%", $rankLogo->render(), $this->header);
+				$this->header = str_replace("%%CREDITS%%", $moneyLogo->render(), $this->header);
+				$this->footer = str_replace("%%IMG%%", $versionLogo->render(), $this->footer);
+			}else{
+				$this->header = str_replace("%%LOGGEDIN%%", "&nbsp;&nbsp;" . ucfirst($MySelf->getUsername()), $this->header);
+				$this->header = str_replace("%%RANK%%", "&nbsp;&nbsp;" . $MySelf->getRankName(), $this->header);
+				$this->header = str_replace("%%CREDITS%%", "&nbsp;&nbsp;" . number_format(getCredits($MySelf->getID()), 2) . " ISK", $this->header);
+				$this->footer = str_replace("%%IMG%%", $VERSION, $this->footer);
+			}
+			$this->header = str_replace("%%USERNAME%%", ucfirst($MySelf->getUsername()), $this->header);
+			$this->header = str_replace("%%URL%%", $URL, $this->header);
 		}
 
 		$this->header = str_replace("%%VERSION%%", $VERSION, $this->header);
@@ -191,7 +201,7 @@ class html {
 		global $IGB_VISUAL;
 		// Add more spacing for IGB
 		if ($IGB && $IGB_VISUAL) {
-			$html = str_replace("</table>", "</table><br><br>", $html);
+			$html = str_replace("</table>", "</table><br><br>\n", $html);
 		}
 
 		// Use tidy, if we want to.

@@ -1,4 +1,4 @@
-<?php
+
 <html>
 <head>
 <title>%%SITENAME%%</title>

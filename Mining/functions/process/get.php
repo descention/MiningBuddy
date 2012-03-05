@@ -238,12 +238,12 @@ function process_get() {
 			// Show an event.
 		case ("showevent") :
 			$page = showEvent();
-			$ajax = 60;
 			break;
 
 			// lists all ore runs.
 		case ("list") :
 			$page = listRuns();
+			$ajax = 60;
 			break;
 
 			// Manage wallet

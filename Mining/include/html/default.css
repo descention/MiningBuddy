@@ -1,6 +1,19 @@
-a.menu{
+a.menu, #userInfo{
 	font-size: 12px;
 	color: white;
 	font-family: sans-serif;
 	text-decoration: none;
+	text-align: left;
+}
+body{
+	background-color:#2D2D37;
+	color:white;
+}
+
+#content{
+	background-color:#3D3D47;
+}
+
+.tabelHeader{
+	background-color:#060622;
 }

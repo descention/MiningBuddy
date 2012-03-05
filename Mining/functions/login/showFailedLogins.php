@@ -51,7 +51,7 @@
  	} 
  
  	// Ask the oracle.
- 	$FailedDB = $DB->query("SELECT * FROM failed_logins $addQuery LIMIT $limit");
+ 	$FailedDB = $DB->query("SELECT * FROM failed_logins $addQuery order by incident desc LIMIT $limit ");
  	
  	// Check for results.
  	if ($FailedDB->numRows() > 0) {
