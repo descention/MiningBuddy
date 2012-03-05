@@ -52,6 +52,7 @@ function process_get() {
 			// a specific run is requested.
 		case ("show") :
 			$page = listRun();
+			$ajax = 20;
 			break;
 
 			// a profile is requested.
@@ -237,6 +238,7 @@ function process_get() {
 			// Show an event.
 		case ("showevent") :
 			$page = showEvent();
+			$ajax = 60;
 			break;
 
 			// lists all ore runs.
@@ -321,10 +323,21 @@ function process_get() {
 			break;
 
 	}
-	
-	if($_GET[ajax]=="yes"){
+
+	if($ajax){
+		$ajaxHtml = "<script>window.setTimeout(function(){\$.ajax({";
+		$ajaxHtml .= "url: '?". $_SERVER['QUERY_STRING'] ."&ajax',";
+		$ajaxHtml .= "success: function(data) {\$('#body').html(data);}";
+		$ajaxHtml .= "});},(" . ($ajax * 1000) . "));</script>";
 		
-		$page = str_replace("%%WIDTH%%", "width=\"100%\"", $page);
+		$page .= $ajaxHtml;
+	}
+		
+	if(isset($_REQUEST[ajax])){
+	
+		$html = new html;
+		$page = $html->clean($page);
+		
 		print($page);
 	}else{
 		// Clean & Print the page.

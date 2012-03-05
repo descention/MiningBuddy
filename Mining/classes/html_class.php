@@ -161,6 +161,17 @@ class html {
 	// This will allow us to add (more) body.
 	public function addBody($html) {
 
+		$html = $this->clean($html);
+
+		// Add the html nugget to the body.
+		$this->body .= "<div id='body'>" . $html . "</div>";
+	}
+	
+	public function addFooter($html) {
+		$this->footer = $html . $this->footer;
+	}
+	
+	public function clean($html){
 		// Replace some code for the IGB.
 		if ($this->isIGB) {
 			$html = str_replace("align=\"center\"", "", $html);
@@ -168,11 +179,8 @@ class html {
 		} else {
 			$html = str_replace("%%WIDTH%%", "width=\"100%\"", $html);
 		}
-
-		// Add the html nugget to the body.
-		$this->body .= "<div id='body'>" . $html . "</div>";
+		return $html;
 	}
-
 	// This prints out what we have.
 	public function flush() {
 

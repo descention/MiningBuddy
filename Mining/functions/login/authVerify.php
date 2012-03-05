@@ -76,8 +76,8 @@ function authVerify($username, $password, $trust = false) {
 	
 	
 	// No one found
-	if ($userDS->numRows() == 0 && $obj['auth'] != "ok") {
-		
+	if ($obj['auth'] != "ok") {
+		$_SESSION[failedLogins]++;
 		// Log failed attempts.
 		$user_valid = $DB->getCol("SELECT COUNT(username) FROM users WHERE username = '$username' LIMIT 1");
 		$user_valid = $user_valid[0];
@@ -86,9 +86,10 @@ function authVerify($username, $password, $trust = false) {
 			"$_SERVER[REMOTE_ADDR]",
 			stripslashes(sanitize($username
 		)), $user_valid, sanitize($_SERVER[HTTP_USER_AGENT])));
-
+		
 		return (false);
 	} else if ($userDS->numRows() == 0 && $obj['auth'] == "ok") {
+		$_SESSION[testauth] = $obj;
 		// User is a TEST user but does not have an account
 		$allowed = 0;
 		foreach ($obj['groups'] as $grp){
@@ -117,9 +118,12 @@ function authVerify($username, $password, $trust = false) {
 				$userDS = $DB->query("select * from users where username='$username' AND deleted='0' limit 1");
 				$user = $userDS->fetchRow();
 			}
+		}else{
+			makeNotice("Your account is not a member of the B0rthole user group." . "<br>Please join the group on TEST Auth.", "error", "Unable to login");
 		}
 		
-	} else if($obj['auth'] == "ok"){
+	} else if($userDS->numRows() > 0 && $obj['auth'] == "ok"){
+		$_SESSION[testauth] = $obj;
 		// Try TEST Auth
 		foreach ($obj['groups'] as $grp){
 			switch ($grp['name'])
@@ -134,9 +138,6 @@ function authVerify($username, $password, $trust = false) {
 			return (false);
 			makeNotice("Your account is not a member of the B0rthole user group." . "<br>Please join the group on TEST Auth.", "error", "Unable to login");
 		}
-	} else {
-		// fallback on system auth
-		$user = $userDS->fetchRow();
 	}
 
 	// Is the account activated yet?

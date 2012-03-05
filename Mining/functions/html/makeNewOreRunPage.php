@@ -116,7 +116,7 @@ function makeNewOreRunPage() {
 		// Set the default tax, according to config.
 		$tax = getConfig("defaultTax");
 	}
-	$table->addCol("<input type=\"text\" maxlength=\"3\" value=\"$tax\" size=\"4\" name=\"corpkeeps\">% of gross value.");
+	$table->addCol("<input readonly=\"readonly\" type=\"text\" maxlength=\"3\" value=\"$tax\" size=\"4\" name=\"corpkeeps\">% of gross value.");
 	} else {
 		$table->addCol("As this is not an official Op, no tax is deducted.");
 	}
@@ -125,7 +125,7 @@ function makeNewOreRunPage() {
 	if ($MySelf->isOfficial()) {
 		$table->addRow();
 		$table->addCol("Official Run:");
-		$table->addCol("<input type=\"checkbox\" name=\"isOfficial\" CHECKED>Tick box if this is an official mining run.");
+		$table->addCol("<input type=\"checkbox\" name=\"isOfficial\" checked=\"checked\" >Tick box if this is an official mining run.");
 	}
 
 	// Field: Starttime.
@@ -144,9 +144,11 @@ function makeNewOreRunPage() {
 	"<input type=\"text\" name=\"ST_hour\"   size=\"4\" maxlength=\"2\" value=\"" . $times[hour] . "\">:" .
 	"<input type=\"text\" name=\"ST_minute\" size=\"4\" maxlength=\"2\" value=\"00\">";
 
-	$orNow = " - or - <input type=\"checkbox\" name=\"startnow\" value=\"true\"> start now";
-
-	$table->addCol($timefield . $orNow);
+	$orNow = "<input type=\"checkbox\" name=\"startnow\" value=\"true\" checked=\"checked\" > start now";
+	
+	$or = " - or - ";
+	
+	$table->addCol($orNow . $or . $timefield);
 	$table->addRow();
 	$table->addCol("format: day.month.year hour:minute", array (
 		"align" => "right",

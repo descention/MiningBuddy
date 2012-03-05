@@ -104,7 +104,15 @@ $IGB_VISUAL = true;
 $MB_EMAIL = "MiningBuddy@" . $DOMAIN;
 
 /*
- * Step 6: Enable MiningBuddy
+ * Step 6: TEST Auth key
+ * 
+ * Enable MiningBuddy to get user lists with an authentication key.
+ * Ask matalok for a key.
+ */
+$TEST_AUTH = "";
+ 
+/*
+ * Step 7: Enable MiningBuddy
  * 
  * Uncomment this line to enable MiningBuddy by removing the "//" in
  * front of the line.

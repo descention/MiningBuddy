@@ -73,7 +73,7 @@ function makeLoginPage($user = false) {
 		} else {
 			$login->addRow("#660000");
 			$login->addCol("Your supplied credentials are invalid, please check and try again. " .
-			"If you cannot renember your password use the Password Recovery link below.", array (
+			"If you cannot remember your password use the Password Recovery link below.", array (
 				"bold" => "true",
 				"colspan" => 3
 			));
@@ -135,7 +135,28 @@ function makeLoginPage($user = false) {
 		"colspan" => "3",
 		"align" => "center"
 	));
-
+	
+	global $TEST_AUTH;
+	if($TEST_AUTH && $_SESSION[testauth][userid]){
+		
+		$login->addRow();
+		$login->addCol("Character:");
+		
+		$eveApiProxyUrl = "https://auth.pleaseignore.com/api/1.0/eveapi/account/Characters.xml.aspx?apikey=$TEST_AUTH&userid=" . $_SESSION[testauth][userid];
+		$page = file_get_contents($url);
+		$obj = json_decode($page, TRUE);
+		
+		echo "<!--";
+		var_dump($obj);
+		echo "-->";
+		$select = "<select name=\"character\" >";
+		foreach($characters as $character){
+			$select .= "<option value='$character'>$character</option>";
+		}
+		$select .= "</select>";
+		$login->addCol($select, array("colspan"=>"2"));
+	}
+	
 	if ($IGB && $IGB_VISUAL) {
 		$login->addHeaderCentered("<input type=\"submit\" name=\"login\" value=\"login\">");
 	} else {
