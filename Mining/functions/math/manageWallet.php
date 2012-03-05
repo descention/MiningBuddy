@@ -69,6 +69,9 @@ function manageWallet() {
 		$tt->addRow();
 		$tt->addCol("Amount:");
 		$tt->addCol("<input type=\"text\" name=\"amount\">");
+		$tt->addRow();
+		$tt->addCol("Reason:");
+		$tt->addCol("<input type=\"text\" name=\"reason\">");
 		$tt->addHeaderCentered("<input type=\"submit\" name=\"submit\" value=\"Transfer money\">");
 
 		// Create form stuff, and embed the table within.

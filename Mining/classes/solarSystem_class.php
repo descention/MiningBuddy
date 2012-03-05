@@ -165,7 +165,7 @@ class solarSystem {
 
 			$systemTable->addRow();
 			$systemTable->addCol("System Name:");
-			$systemTable->addCol("<a href=\"index.php?action=browse&mode=0&id=" . $this->solarSystemID . "\">" . $this->getName() . "</a>");
+			$systemTable->addCol("<a href=\"index.php?action=browse&mode=0&id=" . $this->solarSystemID . "\">" . $this->getName() . "</a> (<a target=\"_blank\" href=\"http://www.staticmapper.com/index.php?system=".$this->getName()."\">static mapper</a>)(<a target=\"_blank\" href=\"http://evemaps.dotlan.net/system/".$this->getName()."\">dotlan</a>)");
 
 			$systemTable->addRow();
 			$systemTable->addCol("Constellation:");

@@ -70,11 +70,12 @@
  	$from = "<br><br>From: " . ucfirst($MySelf->getUsername());
  	$to = "<br>To: ". ucfirst(idToUsername($_POST[to]));
  	$amount = "<br>Amount: " . number_format($_POST[amount], 2) . " ISK";
- 	confirm("Please authorize this transaction:" . $from . $to . $amount);
+	$reason = "<br>Reason: " . $_POST[reason];
+ 	confirm("Please authorize this transaction:" . $from . $to . $amount . $reason);
 
 	// Lets do it.
 	$transaction = new transaction($_POST[to], 0, $_POST[amount]);
-	$transaction->setReason("Cash transfer from " . ucfirst($MySelf->getUsername()) . " to " . ucfirst(idToUsername($_POST[to])));
+	$transaction->setReason("Cash transfer from " . ucfirst($MySelf->getUsername()) . " to " . ucfirst(idToUsername($_POST[to])) . ": " . $_POST[reason]);
 	$transaction->isTransfer(true);
 	$transaction->commit();
 	

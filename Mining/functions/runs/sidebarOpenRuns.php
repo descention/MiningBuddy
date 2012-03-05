@@ -71,8 +71,8 @@ function sidebarOpenRuns() {
 		// we need this so we know wether there were any runs.
 		$notempty = true;
 		// This creates the links.
-		$links .= "<br><a href=\"index.php?action=show&id=$row[id]\">";
-
+		$links .= "<br>&nbsp;&nbsp;&nbsp;<a class=\"menu\" href=\"index.php?action=show&id=$row[id]\">";
+		
 		// Load the Security Level.
 		$System = new solarSystem($row[location]);
 		if ($System->valid()) {
@@ -80,7 +80,7 @@ function sidebarOpenRuns() {
 		} else {
 			$SecurityStatus = "?";
 		}
-
+		/*
 		// Create an image.
 		$location = new graphic("standard");
 //		$location->setText(str_pad($row[id], 3, "0", STR_PAD_LEFT) . ": $row[location] ($SecurityStatus)");
@@ -96,9 +96,10 @@ function sidebarOpenRuns() {
 		} else {
 			$location->setTextColor("00ff00");
 		}
-
+		*/
 		// Add this run to the sidebar.
-		$links .= $location->render() . "</a>";
+		$links .= "&gt; " . $row[location] . " (". $SecurityStatus .")" . "</a>";
+		
 	}
 
 	// As long as we had at least one result...
