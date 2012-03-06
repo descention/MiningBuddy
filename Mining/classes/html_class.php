@@ -174,7 +174,7 @@ class html {
 		$html = $this->clean($html);
 
 		// Add the html nugget to the body.
-		$this->body .= "<div id='body'>" . $html . "</div>";
+		$this->body .= $html;
 	}
 	
 	public function addFooter($html) {
@@ -185,9 +185,11 @@ class html {
 		// Replace some code for the IGB.
 		if ($this->isIGB) {
 			$html = str_replace("align=\"center\"", "", $html);
-			$html = str_replace("%%WIDTH%%", "width=\"99%\"", $html);
+			//$html = str_replace("%%WIDTH%%", "width=\"99%\"", $html);
+			$html = str_replace("%%WIDTH%%", "", $html);
 		} else {
-			$html = str_replace("%%WIDTH%%", "width=\"100%\"", $html);
+			//$html = str_replace("%%WIDTH%%", "width=\"100%\"", $html);
+			$html = str_replace("%%WIDTH%%", "", $html);
 		}
 		return $html;
 	}

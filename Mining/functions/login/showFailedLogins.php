@@ -79,7 +79,7 @@
  		while ($log = $FailedDB->fetchRow()) {
  			$table->addRow();
  			$table->addCol(str_pad($log[incident], 4, "0", STR_PAD_LEFT));
- 			$table->addCol(date("d.m.y h:m:s", $log[time]));
+ 			$table->addCol(date("d.m.y h:i:s", $log[time]));
  			$table->addCol($log[ip]);
  			
  			if ($log[username_valid]) {

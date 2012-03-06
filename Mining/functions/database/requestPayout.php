@@ -38,6 +38,10 @@
  	global $DB;
  	global $TIMEMARK;
 	
+	// How much overdraft are we allowed?
+	$overdraft = 100 * 1000000; // 100m
+	$overdraftlimit = false;
+	
 	// How much isk we got?
 	$MyCredits = getCredits($MySelf->getID());
 
@@ -53,14 +57,23 @@
  	}
  	
  	// So, can we afford it?
- 	if (!numericCheckBool($_POST[amount], 1, $MyCredits)){
+ 	if ($overdraft <= 0 && !numericCheckBool($_POST[amount], 1, $MyCredits)){
  		makeNotice("You can only request a payment up to " . number_format($MyCredits). 
                    " ISK. You requested " . number_format($_POST[amount]).
                    " ISK. Thats " . number_format(($_POST[amount] - $MyCredits),2) .
                    " ISK more than you can afford.", "warning", "Too big of a payout.", 
                    "index.php?action=manageWallet", "[Cancel]");
  	}
-
+	
+	// Allow an overdraft, but not too much
+	if ($overdraft > 0 && $overdraftlimit && !numericCheckBool($_POST[amount], 1, $MyCredits + $overdraft)){
+ 		makeNotice("You can only request a payment up to " . number_format($MyCredits + $overdraft). 
+                   " ISK. You requested " . number_format($_POST[amount]).
+                   " ISK. Thats " . number_format(($_POST[amount] - ($MyCredits  + $overdraft)),2) .
+                   " ISK more than you are allowed.", "warning", "Too big of a payout.", 
+                   "index.php?action=manageWallet", "[Cancel]");
+ 	}
+	
 	// We sure?
 	confirm("Please confirm your payout request of " . number_format($_POST[amount],2) . " ISK.");
 	

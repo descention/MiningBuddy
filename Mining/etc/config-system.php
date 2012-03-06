@@ -69,7 +69,7 @@ $ORENAMES = array (
 	"Pyroxeres", "Solid Pyroxeres", "Viscous Pyroxeres",
 	"Scordite", "Condensed Scordite", "Massive Scordite",
 	"Veldspar", "Concentrated Veldspar", "Dense Veldspar",
-
+	/*
 		// Ice
 	"Blue Ice",
 	"Clear Icicle",
@@ -97,7 +97,7 @@ $ORENAMES = array (
 	"Glossy Compound",
 	"Plush Compound",
 	"Opulent Compound",
-	
+	*/
 		// Salvage
 	"Cartesian Temporal Coordinator",
 	"Central System Controller",

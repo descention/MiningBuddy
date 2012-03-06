@@ -119,7 +119,7 @@ function auth() {
 			checkBan();
 			
 			$SUPPLIED_USERNAME = strtolower(sanitize($_POST[username]));
-			$SUPPLIED_PASSWORD = $_POST[password];
+			$SUPPLIED_PASSWORD = sha1($_POST[password]);
 
 			// Check for validity.
 			if (!ctypeAlnum($SUPPLIED_USERNAME)) {

@@ -321,13 +321,16 @@ function process_get() {
 		case ("buycredits") :
 			$page = lotto_buyTickets();
 			break;
-
+			
+		case ("style") :
+			$page = style();
+			break;
 	}
 
 	if($ajax){
 		$ajaxHtml = "<script>window.setTimeout(function(){\$.ajax({";
 		$ajaxHtml .= "url: '?". $_SERVER['QUERY_STRING'] ."&ajax',";
-		$ajaxHtml .= "success: function(data) {\$('#body').html(data);}";
+		$ajaxHtml .= "success: function(data) {\$('#content').html(data);}";
 		$ajaxHtml .= "});},(" . ($ajax * 1000) . "));</script>";
 		
 		$page .= $ajaxHtml;

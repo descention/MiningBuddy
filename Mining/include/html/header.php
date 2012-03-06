@@ -40,13 +40,13 @@
 <link rel="stylesheet" type="text/css" href="include/html/default.css" />
 <link rel="stylesheet" type="text/css" href="include/html/%%USERNAME%%.css" />
 </head>
-<body class='OOGB' text="#ffffff" link="#ff8a00" vlink="#ff8a00" marginwidth="0" marginheight="0" topmargin="0" leftmargin="0">
+<body class='OOG'>
 
 <table width="100%" cellpadding="2" cellspacing="0">
 <tr><td bgcolor="">
 <a href="%%URL%%">%%LOGO%%</a>
 </td>
-<td id='userInfo' width="220" align="right">
+<td id='userInfo' align="right">
 %%PILOT64%%
 %%LOGGEDIN%%<br>
 %%RANK%%<br>
@@ -57,9 +57,9 @@
 </td></tr>
 </table>
 
-<table width="100%" cellpadding="2" cellspacing="0" height="75%" >
+<table wcellpadding="2" cellspacing="0" height="75%" >
 
-<tr><td id='menu' width="160" valign="top" >
+<tr><td id='menu' valign="top" >
 %%MENU%%
 </td>
 <td id='content' valign="top">

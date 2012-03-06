@@ -71,22 +71,26 @@ class table {
 		$this->html = "<table " . $align . $width . " cellpadding=\"2\" cellspacing=\"0\">"; // Open up the table.
 	}
 
-	public function addRow($bgcolor = false, $valign = false) {
+	public function addRow($class = false, $valign = false) {
 		// Close current row, if applicable.
 		$this->closeRow();
-
-		if (!$bgcolor) {
-			$bgcolor = $this->bgc[$this->bgi];
+		
+		
+		
+		if (!$class) {
+			$class = $this->bgc[$this->bgi];
 			$this->bgi = 1 - $this->bgi;
 		}
 
+		$class = str_replace('#','x',$class);
+		
 		if ($valign) {
 			$valign = "valign=\"" . $valign . "\"";
 		}
 
 		// Do we want alternating table colors?
 		if ($this->alternating) {
-			$this->html .= "<tr bgcolor=\"" . $bgcolor . "\" $valign>";
+			$this->html .= "<tr class=\"" . $class . "\" $valign>";
 		} else {
 			$this->html .= "<tr>";
 		}

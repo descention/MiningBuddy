@@ -1,10 +1,20 @@
-.OOGB a.menu, .OOGB #userInfo{
-	font-size: 12px;
-	font-family: sans-serif;
-	text-decoration: none;
-	text-align: left;
-	color: white;
+.x222233{
+	background-color:#222233;
 }
+
+.x333344{
+	background-color:#333344;
+}
+
+.x444455{
+	background-color:#444455;
+}
+
+.x060622{
+	background-color:#060622;
+}
+
+
 
 body{
 	background-color:#2D2D37;
@@ -19,7 +29,55 @@ body{
 	background-color:#060622;
 }
 
+.clear{
+	clear:both;
+}
+/* ************************************ */
+/* Out of game browser */
+/* ************************************ */
+.OOG{
+	color:white;
+	margin:0;
+}
+.OOG #content a{
+	color:#ff8a00;
+}
+
+.OOG table{
+	width:100%;
+}
+
+.OOG #menu{
+	width:160px;
+}
+.OOG #menu a{
+	float:left;
+	width:100%;
+	margin-left:10px;
+	margin-bottom:4px;
+}
+.OOG #menu>div{
+	clear:both;
+}
+
+.OOG #userinfo{
+	width:220px;
+}
+
+.OOG #menu a, .OOG #userInfo{
+	font-size: 12px;
+	font-family: sans-serif;
+	text-decoration: none;
+	text-align: left;
+	color:white;
+}
+/* ************************************ */
+/* In game browser */
+/* ************************************ */
+.IGB table{
+	width:99%;
+}
+
 .IGB a{
 	color:yellow;
 }
-

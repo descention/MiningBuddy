@@ -182,6 +182,7 @@ require_once ('./functions/misc/resolveRankID.php');
 require_once ('./functions/misc/yesno.php');
 require_once ('./functions/misc/getRank.php');
 require_once ('./functions/misc/makeProfileLink.php');
+require_once ('./functions/misc/style.php');
 
 /* Process handler functions */
 require_once ('./functions/process/get.php');
