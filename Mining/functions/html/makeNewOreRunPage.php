@@ -173,7 +173,7 @@ function makeNewOreRunPage() {
 	$opSelect .= "</select>";
 	
 	$table->addCol($opSelect);
-
+	
 	// Now we need the sum of all ores. 
 	$totalOres = count($ORENAMES);
 

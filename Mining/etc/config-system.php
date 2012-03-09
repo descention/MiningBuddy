@@ -196,6 +196,8 @@ $ORENAMES = array (
 	*/
 );
 
+include ('./etc/item-gen.php');
+
 foreach ($ORENAMES as $ore) {
 	$dbfriendly = str_replace(" ", "", ucwords($ore));
 	$dbfriendly = str_replace("-", "", ucwords($dbfriendly));
