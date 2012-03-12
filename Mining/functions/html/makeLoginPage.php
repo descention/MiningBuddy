@@ -64,14 +64,14 @@ function makeLoginPage($user = false) {
 
 	if ($user) {
 		if ($user == "__invalidchar") {
-			$login->addRow("#660000");
+			$login->addRow("redish");
 			$login->addCol("Only characters a-z, A-Z and 0-9 are allowed. " .
 			array (
 				"bold" => "true",
 				"colspan" => 3
 			));
 		} else {
-			$login->addRow("#660000");
+			$login->addRow("redish");
 			$login->addCol("Your supplied credentials are invalid, please check and try again. " .
 			"If you cannot remember your password use the Password Recovery link below.", array (
 				"bold" => "true",
@@ -130,7 +130,7 @@ function makeLoginPage($user = false) {
 	$login->addCol("<input type=\"password\" name=\"password\" maxlength=\"80\">", array (
 		"colspan" => "2"
 	));
-	$login->addRow("060622");
+	$login->addRow("#060622");
 	$login->addCol("Please login with your credentials. If you are in need of an account, request an account below and ask your CEO to activate it for you.", array (
 		"colspan" => "3",
 		"align" => "center"
@@ -163,7 +163,7 @@ function makeLoginPage($user = false) {
 		$login->addHeaderCentered("<input type=\"image\" name=\"login\" value=\"login\" src=\"./images/login.png\">");
 	}
 
-	$login->addRow("060622");
+	$login->addRow("#060622");
 	$login->addCol("<a href=\"index.php?auth=lostpass\">lost password</a>");
 	/*
 	$login->addCol("<a href=\"index.php?auth=requestaccount\">request account</a>", array (

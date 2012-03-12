@@ -82,6 +82,7 @@
 	           array($TIMEMARK, $MySelf->getID(), $_POST[amount]));
 	
 	if ($DB->affectedRows() == 1){
+		mailUser("We are notifying you that ".$MySelf->getUsername()." has requested a payout of ".number_format($_POST[amount],2)." ISK","WHB Payout Requested","isAccountant");
 		makeNotice("You request has been logged. An accountant will soon honor your request.", "notice", "Request logged", "index.php?action=manageWallet", "[OK]");
 	} else {
 		makeNotice("Internal Error! Unable to record your request into the database! Inform the admin!", "error", "Internal Error!", "index.php?action=manageWallet", "[cancel]");
