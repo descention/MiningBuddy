@@ -128,6 +128,10 @@ function authVerify($username, $password, $trust = false) {
                 }
 		}
 		
+		if($user[authID] == null){
+			$DB->query("update users set authID='$obj[id]' where id='$user[id]'");
+		}
+		
 		if($user == null){
 			return (false);
 			makeNotice("Your account is not a member of the B0rthole user group." . "<br>Please join the group on TEST Auth.", "error", "Unable to login");
