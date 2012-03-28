@@ -65,8 +65,8 @@ function userInRun($username, $run = "check") {
 	}
 
 	// Query the database and return wether he is in run X or not.
-	$results = $DB->query("select joined from joinups where userid = '$userID' and run = '$run' and parted is NULL limit 1");
-
+	$results = $DB->query("select joined from joinups where userid in (select id from users where authID in (select distinct authID from users where id = '$userID')) and run = '$run' and parted is NULL limit 1");
+	
 	if ($results->numRows() == 0) {
 		return ("none");
 	} else {

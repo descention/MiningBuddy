@@ -196,8 +196,11 @@ function makeMenu($page = false) {
 		} else {
 			$logoutModule = "<div>";
 			$logoutModule .= "<img src=\"images/m-logout.png\">";
+			$logoutModule .= "<a class='menu' href=\"index.php?action=switch\">&gt; Switch Character</a>";
 			$logoutModule .= "<a class='menu' href=\"index.php?auth=logout\">&gt; Logout</a>";
 			$logoutModule .= "</div><div class='clear'></div>";
+			
+			
 		}
 	}
 

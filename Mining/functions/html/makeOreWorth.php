@@ -55,16 +55,38 @@ function objectsIntoArray($arrObjData, $arrSkipIndices = array())
     return $arrData;
 }
 
-function getMarketPrice($id, $type, $criteria) {
+function getMarketPrice($id, $type = "buy", $criteria = "max") {
+	global $TIMEMARK;
+	global $DB;
+	$cacheResult = $DB->query("select value from itemList where itemID = '$id' and updateTime > '".($TIMEMARK - (60 * 60 * 24 * 7))."';");
 	
-	$regionlimit = getConfig("useRegion");
-	$xmlUrl = "http://api.eve-central.com/api/marketstat?typeid=" . $id . "&regionlimit=" . $regionlimit; 
-	// XML feed file/URL
+	
+	if($cacheResult->numRows() == 0){
+		$regionlimit = getConfig("useRegion");
+		$xmlUrl = "http://api.eve-central.com/api/marketstat?typeid=" . $id . "&regionlimit=" . $regionlimit; 
+		// XML feed file/URL
+		$xmlStr = file_get_contents($xmlUrl);
+		$xmlObj = simplexml_load_string($xmlStr);
+		$arrXml = objectsIntoArray($xmlObj);
+		$value = $arrXml["marketstat"]["type"][$type][$criteria];
+		
+		$DB->query("insert into itemList (updateTime, itemID, value) 
+				select '$TIMEMARK','$id','$value' from dual 
+				where (select count(*) from itemList where itemID = '$id') = 0");
+		$DB->query("update itemList set value = '$value', updateTime = '$TIMEMARK' where itemID = '$id'");
+		var_dump($value);
+		return $value;
+	}else{
+		while($r2 = $cacheResult->fetchRow()){
+			return $r2[value];
+		}
+	}
+}
+
+function getXMLobj($xmlUrl){
 	$xmlStr = file_get_contents($xmlUrl);
 	$xmlObj = simplexml_load_string($xmlStr);
-	$arrXml = objectsIntoArray($xmlObj);
-
-	return $arrXml["marketstat"]["type"][$type][$criteria];	
+	return objectsIntoArray($xmlObj);
 }
 
 function getPriceCache($currentOre) {
@@ -90,30 +112,39 @@ function makeOreWorth() {
 	
 	$Market = getConfig("useMarket");
 	
-	IF($Market == 1) {
+	IF($Market) {
 		// Update prices from Eve-Central and store.
-		
-		$CURRENTTIME = date(U) - (getConfig("timeOffset") * 60 * 60);
-		$itemListDB = $DB->query("SELECT * FROM `itemList` ORDER BY `itemName` DESC");
-		$orderType = $OTYPENAME[getConfig("orderType")];
-		$priceCrit = $PRICECRITERIA[getConfig("priceCriteria")];
-				
-		for($i = 0; $i <= $itemListDB->numRows(); $i++) {
-			$itemInfo = $itemListDB->fetchRow();
-			$quoteAge = $CURRENTTIME - $itemInfo['updateTime'];
-			if($quoteAge >= 3600) {
-				$currentPrice = getMarketPrice($itemInfo['itemID'], $orderType, $priceCrit);
-				$DB->query("UPDATE itemList SET `updateTime` = $CURRENTTIME, `value` = $currentPrice WHERE `itemID` = " . $itemInfo['itemID']);
+		if($Market == "eve-central"){
+			$CURRENTTIME = date(U) - (getConfig("timeOffset") * 60 * 60);
+			$itemListDB = $DB->query("SELECT * FROM `itemList` ORDER BY `itemName` DESC");
+			$orderType = $OTYPENAME[getConfig("orderType")];
+			$priceCrit = $PRICECRITERIA[getConfig("priceCriteria")];
+					
+			for($i = 0; $i <= $itemListDB->numRows(); $i++) {
+				$itemInfo = $itemListDB->fetchRow();
+				$quoteAge = $CURRENTTIME - $itemInfo['updateTime'];
+				if($quoteAge >= 3600) {
+					$currentPrice = getMarketPrice($itemInfo['itemID'], $orderType, $priceCrit);
+					$DB->query("UPDATE itemList SET `updateTime` = $CURRENTTIME, `value` = $currentPrice WHERE `itemID` = " . $itemInfo['itemID']);
+				}
 			}
+		}else if($Market == "eve-marketdata"){
+		
+		}else if($Market == "eve-marketeer"){
+			
+			$regionID = getConfig("useRegion");
+			$url = "http://www.evemarketeer.com/api/info/$itemID/xml/$regionID/buy_highest5";
+			$xml = getXMLobj($url);
+			echo $xml[row][buy_highest5];
 		}
 	} else {
 		// load the values.
-		$orevaluesDS = $DB->query("select item, Worth, time, modifier from orevalues a where time = (select max(time) from orevalues b where a.item = b.item) group by item ORDER BY time DESC");
+		$orevaluesDS = $DB->query("select a.item, a.Worth, a.time, a.modifier from orevalues a where time = (select max(time) from orevalues b where a.item = b.item) group by item ORDER BY time DESC");
 		while($row = $orevaluesDS->fetchRow())
 			$orevalues[$row[item]] = $row;
 	};
 	
-	if($Market == 1) {
+	if($Market) {
 		$headerText = ">> Manage ore values<br><font color=\"#ff0000\"><b>Ore values are current market values.</b></font>";
 	} else {
 		$headerText = ">> Manage ore values";
@@ -172,58 +203,37 @@ function makeOreWorth() {
 	
 	
 	for ($i = 0; $i <= $tableLength; $i++) {
-
+		$right = 0;
 		$table->addRow();
-		$ORE = $ORENAMES[$i];
-
-		// Fetch the right image for the ore.
-		$ri_words = str_word_count($ORE, 1);
-		$ri_max = count($ri_words);
-		$ri = strtolower($ri_words[$ri_max -1]);
-
-		// Ore columns for LEFT side.
-		$table->addCol("<img width=\"32\" height=\"32\" src=\"./images/ores/" . $ORE . ".png\">");
-		$table->addCol($ORE);
-		if (getOreSettings($DBORE[$ORE],$OPTYPE)) {
-			$table->addCol("<input name=\"" . $DBORE[$ORE] . "Enabled\" value=\"true\" type=\"checkbox\" checked=\"checked\">");
-		} else {
-			$table->addCol("<input name=\"" . $DBORE[$ORE] . "Enabled\" value=\"true\" type=\"checkbox\">");
-		}
-		IF($Market == 1) {
-			$thisPrice = getPriceCache($ORE);
-			$table->addCol("<input type=\"text\" style=\"text-align: right\" name=\"$DBORE[$ORE]\"" . "size=\"10\" value=\"" . $thisPrice . "\">");
-		} else {
-			$table->addCol("<input type=\"text\" style=\"text-align: right\" name=\"$DBORE[$ORE]\"" . "size=\"10\" value=\"" . $orevalues[$DBORE[$ORE]][Worth] . "\">");
-		}
-		// Ore columns for RIGHT side.
-		$ORE = $ORENAMES[$i + $tableLength +1];
 		
-		// Fetch the right image for the ore.
-		$ri_words = str_word_count($ORE, 1);
-		$ri_max = count($ri_words);
-		$ri = strtolower($ri_words[$ri_max -1]);
-		
-		if ($ORE != "") {
-			$table->addCol("<img width=\"32\" height=\"32\" src=\"./images/ores/" . $ORE . ".png\">");
-			$table->addCol($ORE);
-			if (getOreSettings($DBORE[$ORE],$OPTYPE)) {
-				$table->addCol("<input name=\"" . $DBORE[$ORE] . "Enabled\" value=\"true\" type=\"checkbox\" checked=\"checked\">");
+		for($side = 0; $side <= 1; $side++){
+			$ORE = $ORENAMES[$i + (($tableLength + 1) * $side) ];
+
+			// Fetch the right image for the ore.
+			$ri_words = str_word_count($ORE, 1);
+			$ri_max = count($ri_words);
+			$ri = strtolower($ri_words[$ri_max -1]);
+			if ($ORE != "") {
+				$table->addCol("<img width=\"32\" height=\"32\" src=\"./images/ores/" . $ORE . ".png\">");
+				$table->addCol($ORE);
+				if (getOreSettings($DBORE[$ORE],$OPTYPE)) {
+					$table->addCol("<input name=\"" . $DBORE[$ORE] . "Enabled\" value=\"true\" type=\"checkbox\" checked=\"checked\">");
+				} else {
+					$table->addCol("<input name=\"" . $DBORE[$ORE] . "Enabled\" value=\"true\" type=\"checkbox\">");
+				}
+				IF($Market == 1) {
+					$thisPrice = getPriceCache($ORE);
+					$table->addCol("<input type=\"text\" style=\"text-align: right\" name=\"$DBORE[$ORE]\"" . "size=\"10\" value=\"" . $thisPrice . "\">");
+				} else {
+					$table->addCol("<input type=\"text\" style=\"text-align: right\" name=\"$DBORE[$ORE]\"" . "size=\"10\" value=\"" . $orevalues[$DBORE[$ORE]][Worth] . "\">");
+				}
 			} else {
-				$table->addCol("<input name=\"" . $DBORE[$ORE] . "Enabled\" value=\"true\" type=\"checkbox\">");
+				$table->addCol("");
+				$table->addCol("");
+				$table->addCol("");
+				$table->addCol("");
 			}
-		IF($Market == 1) {
-			$thisPrice = getPriceCache($ORE);
-			$table->addCol("<input type=\"text\" style=\"text-align: right\" name=\"$DBORE[$ORE]\"" . "size=\"10\" value=\"" . $thisPrice . "\">");
-		} else {
-			$table->addCol("<input type=\"text\" style=\"text-align: right\" name=\"$DBORE[$ORE]\"" . "size=\"10\" value=\"" . $orevalues[$DBORE[$ORE]][Worth] . "\">");
 		}
-		} else {
-			$table->addCol("");
-			$table->addCol("");
-			$table->addCol("");
-			$table->addCol("");
-		}
-
 	}
 
 	

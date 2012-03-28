@@ -54,7 +54,7 @@ function makeNewOreRunPage() {
 	// Table
 	$table = new table(2, true);
 
-	$table->addHeader(">> Create a new mining operation");
+	$table->addHeader(">> Create a new operation");
 
 	$table->addRow();
 	// Field: Location.
@@ -70,7 +70,7 @@ function makeNewOreRunPage() {
 			$table->addCol("<input type=\"text\" name=\"location\">");
 		}
 	}
-
+	
 	// Field: Officer in Charge
 	if ($MySelf->isOfficial()) {
 		$SeniorUsers = $DB->getCol("SELECT DISTINCT username FROM users WHERE canCreateRun = 1 AND deleted='0' ORDER BY username");
@@ -96,7 +96,25 @@ function makeNewOreRunPage() {
 		$table->addCol("Executing Officer:");
 		$table->addCol($seniorUsersPDM);
 	}
-
+	
+	$table->addRow();
+	$table->addCol("Op Type:");
+	$OPTYPE = isset($_REQUEST[optype])?$_REQUEST[optype]:"";
+	
+	$ops = $DB->getAll("select opName from opTypes;");
+	if($DB->isError($ops)){
+		die($ops->getMessage());
+	}
+	$opSelect = "<select name='optype' onChange='window.location = \"?action=newrun&optype=\"+this.value'>\n";
+	$opSelect .= "<option value=''>Standard</option>\n";
+	foreach($ops as $op){
+		$default = $op[opName] == $OPTYPE?"selected":"";
+		$opSelect .= "<option $default value='".$op[opName]."'>".$op[opName]."</option>\n";
+	}
+	$opSelect .= "</select>";
+	
+	$table->addCol($opSelect);
+	
 	// Field: Corporation keeps.
 	$table->addRow();
 	$table->addCol("Corporation keeps:");
@@ -110,8 +128,10 @@ function makeNewOreRunPage() {
 
 		// in case there are no taxes yet AND no default has been set.
 		if (!$tax) {
-			$tax = "45";
+			$tax = "15";
 		}
+	} else if ($OPTYPE == "Shopping"){
+		$tax = "0";
 	} else {
 		// Set the default tax, according to config.
 		$tax = getConfig("defaultTax");
@@ -156,26 +176,10 @@ function makeNewOreRunPage() {
 	));
 	
 	
-	$table->addRow();
-	$table->addCol("Op Type:");
-	$OPTYPE = isset($_REQUEST[optype])?$_REQUEST[optype]:"";
 	
-	$ops = $DB->getAll("select opName from opTypes;");
-	if($DB->isError($ops)){
-		die($ops->getMessage());
-	}
-	$opSelect = "<select name='optype' onChange='window.location = \"?action=newrun&optype=\"+this.value'>\n";
-	$opSelect .= "<option value=''>Standard</option>\n";
-	foreach($ops as $op){
-		$default = $op[opName] == $OPTYPE?"selected":"";
-		$opSelect .= "<option $default value='".$op[opName]."'>".$op[opName]."</option>\n";
-	}
-	$opSelect .= "</select>";
-	
-	$table->addCol($opSelect);
 	
 	// Now we need the sum of all ores. 
-	$totalOres = count($ORENAMES);
+	//$totalOres = count($ORENAMES);
 
 	/*
 	// And the sum of all ENABLED ores.
@@ -186,7 +190,7 @@ function makeNewOreRunPage() {
 	/*
 	 * This is evil. We have to create an array that we fill up sorted.
 	 * It aint cheap. First, we loop through all the ore values.
-	 */
+	 *//*
 	for ($p = 0; $p < $totalOres; $p++) {
 		// Then we check each ore if it is enabled.
 		$ORE = $DBORE[$ORENAMES[$p]];
@@ -210,12 +214,12 @@ function makeNewOreRunPage() {
 	$tableLength = ceil($totalEnabledOres / 2);
 	// Now, copy the lower second half into a new array.
 	$right = array_slice($left, $tableLength);
-
+	*/
 	/*
 	 * So now we have an array of all the enabled ores. All we
 	 * need to do now, is create a nice, handsome table of it.
 	 * Loop through this array.
-	 */
+	 *//*
 	for ($i = 0; $i < $tableLength; $i++) {
 
 		// Fetch the right image for the ore.
@@ -252,10 +256,10 @@ function makeNewOreRunPage() {
 	if (!empty ($disabled)) {
 		$disabledText = "The following Oretypes has been disabled by the CEO: $disabled";
 	}
-
+	*/
 	$submitbutton = "<input type=\"hidden\" name=\"check\" value=\"true\">" .
 	"<input type=\"hidden\" value=\"addrun\" name=\"action\">" .
-	"<input type=\"submit\" value=\"Create new Mining Operation\" name=\"submit\">";
+	"<input type=\"submit\" value=\"Create new Operation\" name=\"submit\">";
 
 	// El grande submit button!					
 	$table->addHeaderCentered($submitbutton);
@@ -269,6 +273,6 @@ function makeNewOreRunPage() {
 	}
 	
 	// Render the table, and return it.
-	return ("<h2>Create a new Mining Operation</h2><form action=\"index.php\" method=\"POST\">" . $table->flush() . "</form>");
+	return ("<h2>Create a new Operation</h2><form action=\"index.php\" method=\"POST\">" . $table->flush() . "</form>");
 }
 ?>

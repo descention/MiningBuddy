@@ -47,7 +47,7 @@ function sidebarOpenRuns() {
 	}
 	
 	// Query the database, return only id and location.
-	$result = $DB->query("select id,location,isOfficial,supervisor from runs where endtime is NULL");
+	$result = $DB->query("select id,location,isOfficial,supervisor,optype from runs where endtime is NULL");
 
 	// no open runs.
 	if ($result->numRows() == 0) {
@@ -64,41 +64,18 @@ function sidebarOpenRuns() {
 	while ($row = $result->fetchRow()) {
 		
 		// Skip inofficial runs if user does not want to see them.
-		if ((!$sirstate && !$row[isOfficial]) && !($MySelf->getID() == $row[supervisor])) {
+		if (((!$sirstate && !$row[isOfficial]) && !($MySelf->getID() == $row[supervisor])) || $row[optype] == "Shopping") {
 			continue;
 		}
 		
 		// we need this so we know wether there were any runs.
 		$notempty = true;
 		// This creates the links.
-		$links .= "<br>&nbsp;&nbsp;&nbsp;<a class=\"menu\" href=\"index.php?action=show&id=$row[id]\">";
+		$links .= "<a class=\"menu\" href=\"index.php?action=show&id=$row[id]\">";
 		
-		// Load the Security Level.
-		$System = new solarSystem($row[location]);
-		if ($System->valid()) {
-			$SecurityStatus = $System->getSecurity();
-		} else {
-			$SecurityStatus = "?";
-		}
-		/*
-		// Create an image.
-		$location = new graphic("standard");
-//		$location->setText(str_pad($row[id], 3, "0", STR_PAD_LEFT) . ": $row[location] ($SecurityStatus)");
-		
-		$location->setText($row[location] . " (". $SecurityStatus .")");
-		$location->setBGColor("2d2d37");
-		
-		unset($System);
-		unset($SecurityStatus);
-
-		if (userInRun($MySelf->getUsername(), "$row[id]") == "none") {
-			$location->setTextColor("ffffff");
-		} else {
-			$location->setTextColor("00ff00");
-		}
-		*/
+		$opType = $row[optype]==""?"Standard":$row[optype];
 		// Add this run to the sidebar.
-		$links .= "&gt; " . $row[location] . " (". $SecurityStatus .")" . "</a>";
+		$links .= "&gt; " . $row[location] . " (". $opType .")" . "</a>";
 		
 	}
 

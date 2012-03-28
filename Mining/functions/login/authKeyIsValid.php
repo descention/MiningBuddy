@@ -73,6 +73,8 @@ function authKeyIsValid() {
 	} else {
 		// Something is not right. Destroy all login tokens.
 		$DB->query("DELETE FROM auth WHERE authkey ='$TOKEN'");
+		session_destroy();
+		header("Location: index.php?" . $_SERVER[QUERY_STRING]);
 		return false;
 	}
 

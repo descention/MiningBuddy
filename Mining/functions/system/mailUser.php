@@ -33,7 +33,7 @@
 
 
 
-function mailUser($mail, $subject) {
+function mailUser($mail, $subject, $group = null) {
 
 	// We need the Database to gather all the eMails.
 	global $DB;
@@ -47,17 +47,17 @@ function mailUser($mail, $subject) {
 	// Get the eMail addresses. Only use emails that are opt-in and valid.
 	global $IS_DEMO;
 	if (!$IS_DEMO) {
-		$EMAIL_DS = $DB->query("SELECT username, email FROM users WHERE optIn='1' AND emailValid='1' AND deleted='0'");
+		if($group != null && $group != "")
+			$group = "AND `$group`='1'";
+		$EMAIL_DS = $DB->query("SELECT username, email FROM users WHERE optIn='1' AND emailValid='1' AND deleted='0' $group");
 	
-	// Do this for everyone that opt-ed in.
-	while ($recipient = $EMAIL_DS->fetchRow()) {
-		$copy = str_replace("{{USER}}", "$recipient[username]", $mail);
-		$to = $recipient[email];
-		$DOMAIN = $_SERVER['HTTP_HOST'];
-		$from = "MiningBuddy@" . $DOMAIN;
-		$headers = "From:" . $MB_EMAIL;
-		mail($to,$subject,$copy,$headers);
-	}
+		// Do this for everyone that opt-ed in.
+		while ($recipient = $EMAIL_DS->fetchRow()) {
+			$copy = str_replace("{{USER}}", "$recipient[username]", $mail);
+			$to = $recipient[email];
+			$headers = "From:" . $MB_EMAIL;
+			mail($to,$subject,$copy,$headers);
+		}
 	}
 
 }

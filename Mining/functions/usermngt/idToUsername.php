@@ -35,7 +35,7 @@
  * This function takes an ID and returns a username.
  */
 
-function idToUsername($id) {
+function idToUsername($id, $authID=false) {
 	// Need to access some globals.
 	global $DB;
 
@@ -48,8 +48,12 @@ function idToUsername($id) {
 	}
 
 	// Ask the oracle.
-	$results = $DB->query("select username from users where id='$id' limit 1");
-
+	if(!$authID){
+		$results = $DB->query("select username from users where id='$id' limit 1");
+	} else {
+		$results = $DB->query("select username from users where authID='$id' order by authPrimary desc, id desc limit 1");
+	}
+	
 	// Valid user?
 	if ($results->numRows() == 0) {
 		return ("no one");

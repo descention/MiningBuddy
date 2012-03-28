@@ -68,7 +68,7 @@ class user {
 	private $isOfficial; // Bool: Is user an official capacity?
 	private $isAdmin; // Bool: Is the user an admin?
 	private $isAccountant; // Bool: Are we an accountant?
-
+	
 	// Constructor, Needs a database row (user) and the current time.
 	public function __construct($dro, $mark) {
 
@@ -133,7 +133,7 @@ class user {
 		}
 
 	}
-
+	
 	public function getID() {
 		return ($this->id);
 	}

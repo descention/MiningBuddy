@@ -61,7 +61,10 @@ function addhaulpage() {
 	if (!$ID) {
 		makeNotice("Either you have selected an invalid run, you have not joined that run or it is no longer open.", "warning", "Unable to register your haul");
 	}
-
+	
+	$OPTYPE = $DB->getCol("select optype from runs where id = $ID");
+	$OPTYPE = $OPTYPE[0];
+	
 	// Create the table!
 	$haulpage = new table(2, true);
 	$mode = array (
@@ -70,9 +73,15 @@ function addhaulpage() {
 	);
 	$haulpage->addHeader(">> Register new Hauling");
 	$haulpage->addRow();
-	$haulpage->addCol("Hauling for Op: #<a href=\"index.php?action=show&id=$ID\">" . str_pad($ID, 5, "0", STR_PAD_LEFT) . "</a>", array (
-		"align" => "left"
-	));
+	if($OPTYPE=="Shopping"){
+		$haulpage->addCol("Shopping for Op: #<a href=\"index.php?action=show&id=$ID\">" . str_pad($ID, 5, "0", STR_PAD_LEFT) . "</a> Add *positive* values for purchases", array (
+			"align" => "left"
+		));	
+	} else {
+		$haulpage->addCol("Hauling for Op: #<a href=\"index.php?action=show&id=$ID\">" . str_pad($ID, 5, "0", STR_PAD_LEFT) . "</a>", array (
+			"align" => "left"
+		));
+	}
 
 	// fetch the system the haul is taking place in..
 //	$location = $DB->getCol("select location from runs where endtime is NULL and id='$ID' order by id desc limit 1");
@@ -145,9 +154,6 @@ function addhaulpage() {
 	$totalEnabledOres = $DB->getCol("select count(name) as active from config where name LIKE '%Enabled' AND value='1'");
 	$totalEnabledOres = $totalEnabledOres[0];
 	*/
-	
-	$OPTYPE = $DB->getCol("select optype from runs where id = $ID");
-	$OPTYPE = $OPTYPE[0];
 
 	/*
 	 * This is evil. We have to create an array that we fill up sorted.
@@ -167,54 +173,103 @@ function addhaulpage() {
 	$totalEnabledOres = count($left);
 	
 	// No ores enabled?
-	if ($totalEnabledOres == 0) {
+	if ($totalEnabledOres == 0 && $OPTYPE != "Shopping") {
 		makeNotice("Your CEO has disabled *all* the Oretypes. Please ask your CEO to reactivate at leat one Oretype.", "error", "No valid Oretypes!");
 	}
-
-	// The table is, rounded up, exactly half the size of all enabled ores.
-	$tableLength = ceil($totalEnabledOres / 2);
-	
-	// Now, copy the lower second half into a new array.
-	$right = array_slice($left, $tableLength);
-
-	/*
-	 * So now we have an array of all the enabled ores. All we
-	 * need to do now, is create a nice, handsome table of it.
-	 * Loop through this array.
-	 */
-	for ($i = 0; $i < $tableLength; $i++) {
-
-		// Fetch the right image for the ore.
-		$ri_words = str_word_count(array_search($left[$i], $DBORE), 1);
-		$ri_max = count($ri_words);
-		$ri = strtolower($ri_words[$ri_max -1]);
-
-		// Add a row.
+	$ajaxHaul = isset($_GET[ajaxHaul]);
+	if($ajaxHaul || $OPTYPE == "Shopping"){
 		$haulpage->addRow();
+		$script = "<script>
+var selectedItems = \"\";
+var currentQuery;
+var int;
+function lookForItem(txt){
+	currentQuery = txt;
+	clearInterval(int);
+	if(txt.value.length>2){
+		var int=self.setInterval('execQuery()',2000);
+	}
+}";
+$script .= "
+function execQuery(){
+	clearInterval(int);
+	var txt = currentQuery;
+	\$.ajax({
+		url: 'index.php?action=getItemList&ajax&q=' + txt.value,
+		success: function(data){\$('#ajaxItemList').html(data);}
+	});
+	
+}";
+$script .= "
+function addItem(selection){
+	//$(selection).animate({background-color:yellow;});
+	var item = selection.innerHTML;
+	var dbore = selection.name;
+	//$(selection).animate({background-color:none;});
+	if(selectedItems.split(',').indexOf(item) == -1 ){
+		var print = \$('#selectedItemList').html() + '<div>Add <input type=\"text\" size=\"5\" name=\"' + dbore + '\" value=\"0\">' + item + '</div>';
+		\$('#selectedItemList').html(print);
+		if(selectedItems.length == 0){
+			selectedItems = item;
+		} else {
+			selectedItems += ',' + item;
+		}
+	}
+}
+</script> ";
 
-		// left side.
-		$haulpage->addCol("<img width=\"20\" height=\"20\" src=\"./images/ores/" . array_search($left[$i], $DBORE) . ".png\">" .
-		"Add <input type=\"text\" size=\"5\" name=\"$left[$i]\" value=\"0\"> Units of " . array_search($left[$i], $DBORE));
+		$haulpage->addCol("Search for an item:<input name='itemSearch' onkeyup='lookForItem(this)' />, then click the item name below.",array("colspan"=>2));
+		$haulpage->addRow();
+		$haulpage->addCol("<div id='selectedItemList'></div>",array("colspan"=>2));
+		$haulpage->addRow();
+		$haulpage->addCol("<div id='ajaxItemList'></div>",array("colspan"=>2));
+		
+	} else {
+		// The table is, rounded up, exactly half the size of all enabled ores.
+		$tableLength = ceil($totalEnabledOres / 2);
+		
+		// Now, copy the lower second half into a new array.
+		$right = array_slice($left, $tableLength);
 
-		// We need an ore type (just in case of odd ore numbers)
-		if ($right[$i] != "") {
-			// right side.
+		/*
+		 * So now we have an array of all the enabled ores. All we
+		 * need to do now, is create a nice, handsome table of it.
+		 * Loop through this array.
+		 */
+		for ($i = 0; $i < $tableLength; $i++) {
 
 			// Fetch the right image for the ore.
-			$ri_words = str_word_count(array_search($right[$i], $DBORE), 1);
+			$ri_words = str_word_count(array_search($left[$i], $DBORE), 1);
 			$ri_max = count($ri_words);
 			$ri = strtolower($ri_words[$ri_max -1]);
 
-			// Add the column.
-			$haulpage->addCol("<img width=\"20\" height=\"20\" src=\"./images/ores/" . array_search($right[$i], $DBORE) . ".png\">" .
-			"Add <input type=\"text\" size=\"5\" name=\"" . $right[$i] . "\" value=\"0\"> Units of " . array_search($right[$i], $DBORE));
-		} else {
-			// We have an odd number of ores: add empty cell.
-			$haulpage->addCol("");
+			// Add a row.
+			$haulpage->addRow();
+
+			// left side.
+			$haulpage->addCol("<img width=\"20\" height=\"20\" src=\"./images/ores/" . array_search($left[$i], $DBORE) . ".png\">" .
+			"Add <input type=\"text\" size=\"5\" name=\"$left[$i]\" value=\"0\"> " . array_search($left[$i], $DBORE));
+
+			// We need an ore type (just in case of odd ore numbers)
+			if ($right[$i] != "") {
+				// right side.
+
+				// Fetch the right image for the ore.
+				$ri_words = str_word_count(array_search($right[$i], $DBORE), 1);
+				$ri_max = count($ri_words);
+				$ri = strtolower($ri_words[$ri_max -1]);
+
+				// Add the column.
+				$haulpage->addCol("<img width=\"20\" height=\"20\" src=\"./images/ores/" . array_search($right[$i], $DBORE) . ".png\">" .
+				"Add <input type=\"text\" size=\"5\" name=\"" . $right[$i] . "\" value=\"0\"> " . array_search($right[$i], $DBORE));
+			} else {
+				// We have an odd number of ores: add empty cell.
+				$haulpage->addCol("");
+			}
+
 		}
-
 	}
-
+	/*
 	// Print out all disabled ore types:
 	$disabledOreCount = count($disabledOres);
 
@@ -234,7 +289,10 @@ function addhaulpage() {
 	if (!empty ($disabledOresText)) {
 		$disabledOresText = "The following Oretypes has been disabled by the CEO: $disabledOresText.";
 	}
-
+	*/
+	
+	
+	
 	$haulpage->addRow();
 	$haulpage->addCol("<hr>", array (
 		"colspan" => "2"
@@ -247,15 +305,16 @@ function addhaulpage() {
 	$form_stuff .= "<input type=\"hidden\" value=\"addhaul\" name=\"action\">";
 	$form_stuff .= "<input type=\"hidden\" value=\"" . $ID . "\" name=\"id\">";
 	$form_stuff .= "</form>";
-	$html = "<h2>Submit new transport manifest</h2><form action=\"index.php\" method=\"post\">" . $haulpage->flush() . $form_stuff;
+	$html = "<h2>Submit new transport manifest (<a href='?".$_SERVER['QUERY_STRING']."&ajaxHaul'>ajax</a>)</h2><form action=\"index.php\" method=\"post\">" . $haulpage->flush() . $form_stuff;
 
+	/*
 	// print out all the disabled oretypes.
 	if (!empty ($disabledOresText)) {
 		$page .= "<br><i>" . $disabledOresText . "</i>";
-	}
+	}*/
 
 	// Return the page
-	return ($html . $page);
+	return ( $script . $html . $page);
 
 }
 ?>

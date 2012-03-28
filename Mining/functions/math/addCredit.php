@@ -37,10 +37,10 @@
  */
 
 function addCredit($userID, $banker, $credit, $runID) {
-
+	
 	// Sane?
 	numericCheck($userID, 0);
-	numericCheck($credit, 0);
+	numericCheck(abs($credit), 0);
 	numericCheck($banker, 0);
 
 	// Globals, YAY!
@@ -48,9 +48,13 @@ function addCredit($userID, $banker, $credit, $runID) {
 	global $TIMEMARK;
 
 	// Create a transaction.
-	$transaction = new transaction($userID, 0, $credit);
-	$transaction->setReason("mining operation #".str_pad($runID, 5, "0", STR_PAD_LEFT)." payout");
-	
+	if($credit >= 0){
+		$transaction = new transaction($userID, 0, $credit);
+		$transaction->setReason("operation #".str_pad($runID, 5, "0", STR_PAD_LEFT)." payout");
+	}else{
+		$transaction = new transaction($userID, 1, abs($credit));
+		$transaction->setReason("operation #".str_pad($runID, 5, "0", STR_PAD_LEFT)." charge");	
+	}
 	$state = $transaction->commit();
 	
 	if ($state) {
@@ -60,3 +64,5 @@ function addCredit($userID, $banker, $credit, $runID) {
 	}
 }
 ?>
+
+

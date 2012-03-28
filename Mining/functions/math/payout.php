@@ -133,19 +133,23 @@ function payout() {
 			$table->addCol($rcm);
 		}
 		$table->addCol(date("d.m.y H:i:s", $request[time]));
+		
+		if (getCredits($request[applicant]) < $request[amount]) {
+			$class .= "red";
+		}
+		
 		if ($IGB && $IGB_VISUAL) {
-			$table->addCol("<input type=\"text\" name=\"dumb\" readonly value=\"" . number_format($request[amount], 2) . "\"> ISK");
+			$table->addCol("<input type=\"text\" class=\"$class\" name=\"dumb\" readonly value=\"" . number_format($request[amount], 2) . "\"> ISK");
 		} else {
-			$table->addCol(number_format($request[amount], 2) . " ISK");
+			$table->addCol(number_format($request[amount], 2) . " ISK", array("class"=>$class));
 		}
 
 		// Can the user still cover his request with cash?
-		if (getCredits($request[applicant]) >= $request[amount]) {
-			$table->addCol("<input type=\"checkbox\" name=\"" . $request[request] . "\" value=\"true\">");
-			$haveRequest = true;
-		} else {
-			$table->addCol("<i>not enough ISK</i>");
-		}
+		$table->addCol("<input type=\"checkbox\" name=\"" . $request[request] . "\" value=\"true\">");
+		$haveRequest = true;
+		//} else {
+		//	$table->addCol("<i>not enough ISK</i>");
+		//}
 	}
 	$table->addHeaderCentered("<input type=\"submit\" name=\"submit\" value=\"Mark as paid\">");
 

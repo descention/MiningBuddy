@@ -73,7 +73,7 @@ function endrun() {
 
 	
 
-	if ($OfficialRun[0] && (getTotalWorth($ID) > 0)) {
+	if ($OfficialRun[0] && (getTotalWorth($ID) != 0)) {
 		// Select all people, except banned ones.		
 		$joinedPeople = $DB->query("SELECT DISTINCT userid FROM joinups WHERE run ='$ID' AND status < 2");
 
@@ -100,7 +100,7 @@ function endrun() {
 			$percent = $payoutArray[$name] * $percentModifier;
 			$payout = ($ISK / 100) * $percent;
 			// You cannot loose isk from a mission.
-			if ($payout > 0 && !$charityArray[$name]) {
+			if ($payout != 0 && !$charityArray[$name]) {
 				addCredit($name, $supervisor, $payout, $_GET[id]);
 				$finalPercent[$name]=$payout;
 			}

@@ -42,30 +42,32 @@ function authVerify($username, $password, $trust = false) {
 
 	global $DB;
 	global $TIMEMARK;
-	
-	
+
 	// lower case it.
 	$username = strtolower($username);
+	if(!isset($_SESSION[testauth])){
+		$url = "https://auth.pleaseignore.com/api/1.0/login?user=$username&pass=$password";
+		$contents = file_get_contents($url);
+		$obj = json_decode($contents, TRUE);
+	} else {
+		$obj = $_SESSION[testauth];
+	}
 	
-	$url = "https://auth.pleaseignore.com/api/1.0/login?user=$username&pass=$password";
-	$contents = file_get_contents($url);
-	$obj = json_decode($contents, TRUE);
-	
-	//makeNotice("AHHHH PASSWORDLESS AHHHH!$password $trust $username", "error");
 	// and query it.
 	if (!$password && $trust) {
 		// Passwordless login (WAHHHHH!!!!)
 		$userDS = $DB->query("select * from users where username='$username' AND deleted='0' limit 1");
 		$passwordless = true;
-	} else if ( !$password ){
-		return (false);
-	} else if ($obj['auth'] == "ok") {
+	} else if ($obj['auth'] == "ok" && !isset($_SESSION[testauth])) {
 		// TEST Authentication
-		$username = $obj[primarycharacter][name];
+		$_SESSION[testauth] = $obj;
+		makeLoginPage($SUPPLIED_USERNAME);
+	} else if ($obj[auth] == "ok" && isset($_SESSION[testauth])){
 		$userDS = $DB->query("select * from users where username='$username' AND deleted='0' limit 1");
 		$passwordless = false;
+	} else if ( !$password ){
+		return (false);
 	}
-	
 	
 	
 	if ($passwordless) {
@@ -83,49 +85,29 @@ function authVerify($username, $password, $trust = false) {
 		
 		return (false);
 	} else if ($userDS->numRows() == 0 && $obj['auth'] == "ok") {
-		$_SESSION[testauth] = $obj;
 		// User is a TEST user but does not have an account
-		$allowed = 0;
-		foreach ($obj['groups'] as $grp){
-			switch ($grp['name'])
-                {
-                    case 'B0rthole':
-                        $allowed = 1;
-                        break;
-                }
-		}
-		
-		if($allowed){
-			
-			$DB->query("insert into users (username, password, email, " .
-			"addedby, confirmed, emailvalid,canLogin) " .
-			"values (?, ?, ?, ?, ?,?, ?)", array (
-				stripcslashes($username
-			), "", $obj[email], 1, 1, 1, 1 ));
+		$DB->query("insert into users (username, password, email, " .
+		"addedby, confirmed, emailvalid,canLogin,authID) " .
+		"values (?, ?, ?, ?, ?,?, ?, ?)", array (
+			stripcslashes($username
+		), "", $obj[email], 1, 1, 1, 1, $obj[id] ));
 
-			// Were we successful?
-			if ($DB->affectedRows() == 0) {
-				// No!
-				makeNotice("Could not create user!", "error");
-			} else {
-				// Yes
-				$userDS = $DB->query("select * from users where username='$username' AND deleted='0' limit 1");
-				$user = $userDS->fetchRow();
-			}
-		}else{
-			makeNotice("Your account is not a member of the B0rthole user group." . "<br>Please join the group on TEST Auth.", "error", "Unable to login");
+		// Were we successful?
+		if ($DB->affectedRows() == 0) {
+			// No!
+			makeNotice("Could not create user!", "error");
+		} else {
+			// Yes
+			$userDS = $DB->query("select * from users where username='$username' AND deleted='0' limit 1");
+			$user = $userDS->fetchRow();
 		}
 		
 	} else if($userDS->numRows() > 0 && $obj['auth'] == "ok"){
-		$_SESSION[testauth] = $obj;
 		// Try TEST Auth
-		foreach ($obj['groups'] as $grp){
-			switch ($grp['name'])
-                {
-                    case 'B0rthole':
-                        $user = $userDS->fetchRow();
-                        break;
-                }
+		$user = $userDS->fetchRow();
+		
+		if($user[authID] == null){
+			$DB->query("update users set authID='$obj[id]' where id='$user[id]'");
 		}
 		
 		if($user == null){
@@ -145,6 +127,10 @@ function authVerify($username, $password, $trust = false) {
 		 * Does the API key match?
 		 */
 		if ($passwordless) {
+			// Just return the account as we're using TEST 'leetsauce' auth.
+			$MyAccount = new user($user, $TIMEMARK);
+			return ($MyAccount);
+			
 			// Load the api!
 			$api = new api($user[id]);
 			if (!$api->valid()) {

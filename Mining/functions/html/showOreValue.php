@@ -39,7 +39,7 @@ function showOreValue() {
 	global $DB;
 
 	// load the values.
-	$latestDS = $DB->query("select item, Worth, time, modifier from orevalues a where time = (select max(time) from orevalues b where a.item = b.item) group by item ORDER BY time DESC");
+	$latestDS = $DB->query("select item, Worth, time, modifier, t.volume from orevalues a, evedump.invTypes t where a.item = replace(replace(t.typeName,'-',''),' ','') and time = (select max(time) from orevalues b where a.item = b.item) group by item ORDER BY time DESC");
 	
 	if (!isset ($_GET[id])) {
 		// No ID requested, get latest
@@ -52,7 +52,7 @@ function showOreValue() {
 		} else {
 			// VALID id
 			//$orevaluesDS = $DB->query("select distinct item, from orevalues WHERE time='" . sanitize($_GET[id]) . "' limit 1");
-			$orevaluesDS = $DB->query("select item, Worth, time, modifier from orevalues a where time = (select max(time) from orevalues b where a.item = b.item and time <= '".sanitize($_GET[id])."') group by item ORDER BY time DESC");
+			$orevaluesDS = $DB->query("select item, Worth, time, modifier, t.volume from orevalues a, evedump.invTypes t where a.item = t.typeName and time = (select max(time) from orevalues b where a.item = b.item and time <= '".sanitize($_GET[id])."') group by item ORDER BY time DESC");
 		}
 
 	// Check for a winner.
@@ -129,78 +129,50 @@ function showOreValue() {
 	for ($i = 0; $i <= $tableLength; $i++) {
 
 		$table->addRow();
-		$ORE = $ORENAMES[$i];
-
-		// Fetch the right image for the ore.
-		$ri_words = str_word_count($ORE, 1);
-		$ri_max = count($ri_words);
-		$ri = strtolower($ri_words[$ri_max -1]);
-
-		// Ore columns for LEFT side.
-		$table->addCol("<img width=\"32\" height=\"32\" src=\"./images/ores/" . $ORE . ".png\">");
 		
-		
-		if(!$isLatest && $orevalues[$DBORE[$ORE]][time] != $archiveTime){
-			$DATE = $orevalues[$DBORE[$ORE]][time] > $archiveTime?date("m.d.y H:i:s", $orevalues[$DBORE[$ORE]][time]):"";
-			$color = $orevalues[$DBORE[$ORE]][time] > $archiveTime?"#00ff00":"#ff0000";
-			$ORE = "$ORE <font color=\"$color\">$DATE</font>";
-		}
-		
-		$table->addCol($ORE);
-		$table->addCol(number_format($orevalues[$DBORE[$ORE]][Worth], 2) . " ISK");
-		if (!$isLatest) {
-			$diff = $orevalues[$DBORE[$ORE]][Worth] - $latest[$DBORE[$ORE]][Worth];
-			if ($diff > 0) {
-				$color = "#00ff00";
-			}
-			elseif ($diff == 0) {
-				$color = "";
-			}
-			elseif ($diff <= 0) {
-				$color = "#ff0000";
-			}
-			$table->addCol("<font color=\"$color\">$diff</font>");
-		}
+		for( $side = 0; $side <= 1; $side++){
+			$ORE = $ORENAMES[$i + (($tableLength +1) * $side)];
 
-		// Ore columns for RIGHT side.
-		$ORE = $ORENAMES[$i + $tableLength +1];
+			// Fetch the right image for the ore.
+			$ri_words = str_word_count($ORE, 1);
+			$ri_max = count($ri_words);
+			$ri = strtolower($ri_words[$ri_max -1]);
 
-		// Fetch the right image for the ore.
-		$ri_words = str_word_count($ORE, 1);
-		$ri_max = count($ri_words);
-		$ri = strtolower($ri_words[$ri_max -1]);
-
-		if ($ORE != "") {
-			// Ore columns for LEFT side.
-			$table->addCol("<img width=\"32\" height=\"32\" src=\"./images/ores/" . $ORE . ".png\">");
-			if(!$isLatest && $orevalues[$DBORE[$ORE]][time] != $archiveTime){
-				$DATE = $orevalues[$DBORE[$ORE]][time] > $archiveTime?date("m.d.y H:i:s", $orevalues[$DBORE[$ORE]][time]):"";
-				$color = $orevalues[$DBORE[$ORE]][time] > $archiveTime?"#00ff00":"#ff0000";
-				$ORE = "$ORE <font color=\"$color\">$DATE</font>";
-			}
-			$table->addCol($ORE);
-			$table->addCol(number_format($orevalues[$DBORE[$ORE]][Worth], 2) . " ISK");
-			if (!$isLatest) {
-				$diff = $orevalues[$DBORE[$ORE]][Worth] - $latest[$DBORE[$ORE]][Worth];
-				if ($diff > 0) {
-					$color = "#00ff00";
+			if ($ORE != "") {
+				$table->addCol("<img width=\"32\" height=\"32\" src=\"./images/ores/" . $ORE . ".png\">");
+				if(!$isLatest && $orevalues[$DBORE[$ORE]][time] != $archiveTime){
+					$DATE = $orevalues[$DBORE[$ORE]][time] > $archiveTime?date("m.d.y H:i:s", $orevalues[$DBORE[$ORE]][time]):"";
+					$color = $orevalues[$DBORE[$ORE]][time] > $archiveTime?"#00ff00":"#ff0000";
+					$ORE = "$ORE <font color=\"$color\">$DATE</font>";
 				}
-				elseif ($diff == 0) {
-					$color = "";
+				$table->addCol($ORE);
+				$iskperhour = $orevalues[$DBORE[$ORE]][Worth] / $orevalues[$DBORE[$ORE]][volume];
+				$value = "<div class='value'><div class='isk'>" . number_format($orevalues[$DBORE[$ORE]][Worth], 2) . " ISK"."</div><div class='iph'>" . number_format($iskperhour , 2) . " ISK/m3</div></div>";
+				
+				$table->addCol($value);
+				if (!$isLatest) {
+					$diff = $orevalues[$DBORE[$ORE]][Worth] - $latest[$DBORE[$ORE]][Worth];
+					if ($diff > 0) {
+						$color = "#00ff00";
+					}
+					elseif ($diff == 0) {
+						$color = "";
+					}
+					elseif ($diff <= 0) {
+						$color = "#ff0000";
+					}
+					$table->addCol("<font color=\"$color\">$diff</font>");
 				}
-				elseif ($diff <= 0) {
-					$color = "#ff0000";
-				}
-				$table->addCol("<font color=\"$color\">$diff</font>");
-			}
-		} else {
-			$table->addCol("");
-			$table->addCol("");
-			$table->addCol("");
-			if (!$isLatest) {
+			} else {
 				$table->addCol("");
+				$table->addCol("");
+				$table->addCol("");
+				if (!$isLatest) {
+					$table->addCol("");
+				}
 			}
 		}
+		
 	}
 	if (!$isLatest) {
 		$table->addRow("#882020");
@@ -231,7 +203,10 @@ function showOreValue() {
 		"colspan" => $colspan
 	));
 	*/
+	
+	$script = "<script>\$('.valueHeader').click(function(){\$('.isk').toggle();\$('.iph').toggle();})</script>";
+	
 	// return the page
-	return ("<h2>Ore Quotes</h2>" . $table->flush());
+	return ("<h2>Ore <span class='valueHeader'>Quotes</span></h2>" . $script . $table->flush());
 }
 ?>

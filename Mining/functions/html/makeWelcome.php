@@ -117,7 +117,7 @@ function makeWelcome() {
     }
   
 	$page .= $table->flush();
-
+	
 	/* Show failed Logins to admins. */
 	if ($MySelf->isAdmin()) {
 		$page .= showFailedLogins("15");

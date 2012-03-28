@@ -43,7 +43,7 @@ function listUsers() {
 
 	// Are we allowed to be here?
 	if (!$MySelf->canSeeUsers()) {
-		makeNotice("You are not allowed to delete runs!", "error", "forbidden");
+		makeNotice("You are not allowed to list users!", "error", "forbidden");
 	}
 
 	// Easy-for-the-coder table generator.

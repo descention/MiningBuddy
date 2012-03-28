@@ -325,9 +325,18 @@ function process_get() {
 		case ("style") :
 			$page = style();
 			break;
+		case ("getItemList") :
+			$page = getItemList();
+			break;
+		case ("switch") :
+			$MySelf = null;
+			$_SESSION['MySelf'] = null;
+			unset($_SERVER[QUERY_STRING]);
+			makeLoginPage($SUPPLIED_USERNAME);
+			break;
 	}
 
-	if($ajax){
+	if($ajax > 1){
 		$ajaxHtml = "<script>window.setTimeout(function(){\$.ajax({";
 		$ajaxHtml .= "url: '?". $_SERVER['QUERY_STRING'] ."&ajax',";
 		$ajaxHtml .= "success: function(data) {\$('#content').html(data);}";

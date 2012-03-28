@@ -138,7 +138,7 @@ function listRun() {
 		}
 	}
 
-	if ($ISK > 0) {
+	if ($ISK != 0) {
 		$page .= "<br>" . $payout_info->flush();
 	}
 

@@ -60,7 +60,7 @@ function calcTMEC($runID, $force = false) {
 	}
 	
 	$run = $times->fetchRow();
-	
+	if($run[optype] == "PI"){return "0";}
 	// check that the endtime is valid.
 	if ($run[endtime] == 0) {
 		// Run still ongoing, pretent it ends now.
@@ -82,7 +82,7 @@ function calcTMEC($runID, $force = false) {
 	$playerCount = $playerCount[0];
 
 	// Calculate the TMEC.
-	$TMEC = number_format(((($ISK / $lasted) / $playerCount) / 1000), 3);
+	$TMEC = number_format(((($ISK / ($lasted/60/60)) / $playerCount) / 1000000), 3);
 
 	// Only positive TMECS
 	if ($TMEC < 0) {

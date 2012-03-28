@@ -42,23 +42,37 @@
 		makeNotice("You are not an accountant to your corporation. Access denied.", "error", "Access denied");
 	}
  	
+	if(isset($_GET[auth])){
+		$auth = true;
+	} else {
+		$auth = false;
+	}
  	// Sanity check.
  	numericCheck($_GET[id],0);
  	$username = idToUsername($_GET[id]);
  	$id = $_GET[id];
  	
  	// Load the transaction log.
- 	$page = "<h2>Transaction log for " . ucfirst($username) . "</h2>";
- 	$trans = getTransactions($id);
+	$account = $auth?"'s TEST Auth":"";
+	$page = "<h2>Transaction log for " . ucfirst($username) . "$account</h2>";
  	
- 	if (!$trans) {
- 		$page .= "<b>There are no transactions for $username.</b>";
- 	} else {
- 		$page .= $trans;
+	
+	$users = $DB->query("select id, username from users where ((authID in (select authID from users where id = '$id') and '$auth' = 1) or id = '$id')");
+	
+	while($user = $users->fetchRow()){
+		$userid = $user[id];
+		$username = $user[username];
+		
+		$trans = getTransactions($userid); 	
+		if (!$trans) {
+			$page .= "<b>There are no transactions for $username.</b>";
+		} else {
+			$page .= $trans;
+		}
+		$page .= "<br>";
  	}
- 	
  	// Add the backlink.
- 	$page .= "<br><br><a href=\"index.php?action=payout\">Back to Payouts</a>";
+ 	$page .= "<br><a href=\"index.php?action=payout\">Back to Payouts</a>";
  
  	// Return the page.	
  	return ($page);

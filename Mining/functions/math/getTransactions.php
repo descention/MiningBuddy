@@ -41,8 +41,8 @@ function getTransactions($user) {
 
 	// Grande Heading!
 	$table = new table(6, true);
-	$table->addHeader(">> Transaction log for " . ucfirst(idToUsername($user)));
-
+	$table->addHeader(">> Transaction log for <a href=\"index.php?action=edituser&id=$user\">" . ucfirst(idToUsername($user)) . "</a> " . number_format(getCredits($user), 2) . " ISK");
+	
 	// Table columns descriptors.
 	$table->addRow("#060622");
 	$table->addCol("Date");
@@ -54,6 +54,7 @@ function getTransactions($user) {
 
 	// ask the oracle.
 	$transactions = $DB->getCol("SELECT COUNT(id) as count FROM transactions WHERE owner='" . $user . "' ORDER BY time DESC, id DESC");
+
 	$transactions_count = $transactions[0];
 	$transactions_pages = ceil(($transactions_count / 20));
 	

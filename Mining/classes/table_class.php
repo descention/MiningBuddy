@@ -82,7 +82,7 @@ class table {
 			$this->bgi = 1 - $this->bgi;
 		}
 
-		$class = str_replace('#','x',$class);
+		//$class = str_replace('#','x',$class);
 		
 		if ($valign) {
 			$valign = "valign=\"" . $valign . "\"";
@@ -90,7 +90,11 @@ class table {
 
 		// Do we want alternating table colors?
 		if ($this->alternating) {
-			$this->html .= "<tr class=\"" . $class . "\" $valign>";
+			if(strpos($class,"#") === false){
+				$this->html .= "<tr class=\"" . $class . "\" $valign>";
+			} else {
+				$this->html .= "<tr bgcolor=\"" . $class . "\" $valign>";
+			}
 		} else {
 			$this->html .= "<tr>";
 		}
@@ -185,7 +189,12 @@ class table {
 			if (isset ($modes[bgcolor])) {
 				$bgcolor = "bgcolor=\"" . $modes[bgcolor] . "\"";
 			}
-
+			
+			// Class?
+			if ($modes['class']) {
+				$class = "class=\"" . $modes['class'] . "\"";
+			}
+			
 		} else {
 			// Default Values go here (if no array set)
 			$colspan = 1;
@@ -198,7 +207,7 @@ class table {
 		}
 
 		// Add the content.
-		$this->html .= "<td rowspan=\"" . $rowspan . "\" colspan=\"" . $colspan . "\" $bgcolor width=\"$width\" $align $valign>" . $bold . $cont . $bold_end . "</td>";
+		$this->html .= "<td rowspan=\"" . $rowspan . "\" $class colspan=\"$colspan\" $bgcolor width=\"$width\" $align $valign>" . $bold . $cont . $bold_end . "</td>";
 		$this->current_col = $this->current_col + $colspan;
 		$this->hasContent = true;
 	}

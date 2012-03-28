@@ -70,7 +70,7 @@ if ("$_GET[auth]" == "lostpass") {
 	//	$html->execFlush(makeLostPassForm);
 	$html->addBody(makeLostPassForm());
 	*/
-	die($html->flush());
+	die();
 }
 
 /*

@@ -14,7 +14,9 @@
 	background-color:#060622;
 }
 
-
+.red{
+	color:red;
+}
 
 body{
 	background-color:#2D2D37;
@@ -71,6 +73,25 @@ body{
 	text-align: left;
 	color:white;
 }
+
+.OOG #ajaxItemList > a{
+	width:33%;
+	float:left;
+}
+
+.OOG #selectedItemList > div{
+	width:50%;
+	float:left;
+}
+
+.OOG .value .isk{
+	display:block;
+}
+
+.OOG .value .iph{
+	display:none;
+}
+
 /* ************************************ */
 /* In game browser */
 /* ************************************ */

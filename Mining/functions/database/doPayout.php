@@ -51,7 +51,7 @@
  		// Check if we marked the id as "paid"
  		if ($_POST[$ID[request]]) {
  			// We did. Can user afford payment?
- 			if (getCredits($ID[applicant]) >= $ID[amount]) {
+ 			//if (getCredits($ID[applicant]) >= $ID[amount]) {
  				// Yes, he can!
  				$transaction = new transaction($ID[applicant], 1, $ID[amount]);
  				$transaction->setReason("payout request fulfilled");
@@ -59,7 +59,7 @@
  				if ($transaction->commit()) {
  					$DB->query("UPDATE payoutRequests SET payoutTime = '$TIMEMARK', banker='".$MySelf->getID()."' WHERE request='$ID[request]' LIMIT 1");
  				}
- 			}
+ 			//}
  		} 
  	}
  	

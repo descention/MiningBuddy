@@ -34,13 +34,13 @@
 $ressources_info = new table(7, true);
 $ressources_info->addHeader(">> Resources Information");
 $ressources_info->addRow("#080822");
-$ressources_info->addCol("Ore", array (
+$ressources_info->addCol("Item", array (
 	"bold" => true
 ));
 $ressources_info->addCol("", array (
 	"bold" => true
 ));
-$ressources_info->addCol("Mined / m3", array (
+$ressources_info->addCol("Quantity / m3", array (
 	"bold" => true
 ));
 $ressources_info->addCol("Wanted / m3", array (
@@ -62,19 +62,20 @@ while ($mval = $mvalues->fetchrow()) {
 	// Voila, le scary monster!
 	//$oval = $ovalues->fetchRow() AND 
 	$oval = $ovalues;
-	foreach ($DBORE as $ORE) {
-
+	$r = $DB->query("select item, sum(Quantity) as total, typeName as name, volume, typeID from hauled, evedump.invTypes where item = replace(replace(typeName,' ',''),'-','') and miningrun = '$ID' group by item having sum(Quantity) <> 0");
+	while($r2 = $r->fetchRow()){
+		$ORE = $r2[item];
 		// We need a Variable name with the word Wanted and M3 (for the wanted and m3 columns)
 		$OREWANTED = $ORE . "Wanted";
 		//Pulls the m3 of each ore type.
-		$OREWORTH = ($oval[$ORE]["Worth"]);
-		$OREM3 = ($mval[$ORE . "M3"]);
+		$OREWORTH = getMarketPrice($r2[typeID]);
+		$OREM3 = $r2[volume];
 		
 		/* If an ore is neither wanted nor has been harvested so far, we dont print
 		 * that row to save precious in game browser space.
 		 */
 
-		if (("$row[$ORE]" >= 1) || ("$row[$OREWANTED]" >= 1)) {
+		if (($row[$ORE] != 0) || ($row[$OREWANTED] >= 1)) {
 
 			/* This is actually the main table. It prints the associated array
 			 * lists into a neat human readable output.
@@ -84,14 +85,14 @@ while ($mval = $mvalues->fetchrow()) {
 			$worth = ($OREWORTH * $row[$ORE]);
 			$totalworth = $totalworth + $worth;
 
-//Do Not Make any changes, It's finally working!			
-			if ($row[$ORE] <= 0) {
+			//Do Not Make any changes, It's finally working!			
+			if ($row[$ORE] == 0) {
 				$tmp_ore = "<i>none</i>";
 				$tmp_ore_m3 = "<i>none</i>";
 			} else {
 				$tmp_ore = number_format($row[$ORE]);
-				$tmp_ore_m3 = number_format($OREM3 * $row[$ORE],2) . " m3";
-				$total_ore_m3 = $total_ore_m3 + ($OREM3 * $row[$ORE]);
+				$tmp_ore_m3 = number_format($OREM3 * abs($row[$ORE],2)) . " m3";
+				$total_ore_m3 = $total_ore_m3 + ($OREM3 * abs($row[$ORE]));
 			}
 
 			if ($row[$OREWANTED] == 0) {				
@@ -116,14 +117,14 @@ while ($mval = $mvalues->fetchrow()) {
 			$ressources_info->addRow();
 
 			// Fetch the right image for the ore.
-			$ri_words = str_word_count(array_search($ORE, $DBORE), 1);
+			$ri_words = str_word_count($r2[name], 1);
 			$ri_max = count($ri_words);
 			$ri = strtolower($ri_words[$ri_max -1]);
 
-			$ressources_info->addCol("<img width=\"32\" height=\"32\" src=\"./images/ores/" . array_search($ORE, $DBORE) . ".png\">", array (
+			$ressources_info->addCol("<img width=\"32\" height=\"32\" src=\"./images/ores/" . $r2[name] . ".png\">", array (
 				"width" => "64"
 			));
-			$ressources_info->addCol(array_search($ORE, $DBORE), array (
+			$ressources_info->addCol($r2[name], array (
 				"bold" => true
 			));
 			
@@ -148,7 +149,7 @@ $ressources_info->addCol("Total m3:", array (
 	"align" => "left",
 ));
 //mined ore in m3
-$ressources_info->addCol(number_format($total_ore_m3,2) . " m3 Mined", array (
+$ressources_info->addCol(number_format($total_ore_m3,2) . " m3", array (
 	"align" => "left",
 	"bold" => true
 ));
@@ -175,7 +176,7 @@ $ressources_info->addCol(number_format($totalworth, 2) . " ISK", array (
 
 
 // Math fun.
-$taxes = ($totalworth * $row[corpkeeps]) / 100;
+$taxes = abs($totalworth * $row[corpkeeps]) / 100;
 $net = $totalworth - $taxes;
 
 $ressources_info->addRow("#060622");

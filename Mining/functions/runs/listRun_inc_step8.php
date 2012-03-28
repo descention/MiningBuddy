@@ -36,7 +36,7 @@
 $joinedPeople = $DB->query("SELECT DISTINCT userid FROM joinups WHERE run ='$ID' AND status < '2'");
 $ISK = getTotalWorth($ID, true);
 
-if ($ISK > 0) {
+if ($ISK != 0) {
 
 	$payout_info = new table(3, true);
 	$payout_info->addHeader(">> Payout Information");

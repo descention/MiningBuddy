@@ -111,14 +111,17 @@ function addHaul() {
 	$OPTYPE = $OPTYPE[0];
 	
 	// Now loop through all the ore-types.
-	foreach ($DBORE as $ORE) {
-
+	foreach ($_POST as $ORE => $QTY) {
+		$oreResult = $DB->query("select count(typeName) as v from evedump.invTypes where replace(replace(typeName,' ',''),'-','') = '$ORE'");
 		// Check the input, and insert it!
-		if ((isset ($_POST[$ORE])) && (!empty ($_POST[$ORE])) && is_numeric($_POST[$ORE])) {
+		$validOre = $oreResult->fetchRow();
+		if ($validOre[v] > 0 && (!empty ($QTY)) && is_numeric($QTY) && $QTY > 0) {
 
 			// Is that ore-type actually enabled?
-			if (getOreSettings($ORE,$OPTYPE) == 0) {
+			if (getOreSettings($ORE,$OPTYPE) == 0 && $OPTYPE != "Shopping") {
 				makeNotice("Your corporation has globally disabled the mining and hauling of $ORE. Please ask your CEO to re-enable $ORE globally.", "error", "$ORE disabled!", "index.php?action=show&id=$ID", "[back]");
+			} else if( $OPTYPE == "Shopping" ){
+				$QTY = $QTY * -1;
 			}
 
 			// Now insert the database.
@@ -128,7 +131,7 @@ function addHaul() {
 				"$TIMEMARK",
 				"$location",
 				"$ORE",
-				"$_POST[$ORE]"
+				"$QTY"
 			));
 			//$DB->query("UPDATE hauled SET Item = '$ORE', Quantity = '$_POST[$ORE]' WHERE time ='$TIMEMARK' and hauler = '$userID'");
 			$changed = $changed + $DB->affectedRows();
@@ -137,7 +140,6 @@ function addHaul() {
 
 	// Delete the haul again if nothing (useful) was entered.
 	if ($changed < 1) {
-		$DB->query("DELETE FROM hauled WHERE time = '$TIMEMARK' LIMIT 1");
 		makeNotice("No valid Ore information found in your query, aborted.", "warning", "Haul not accepted", "index.php?action=show&id=$ID", "[cancel]");
 	}
 

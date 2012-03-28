@@ -55,7 +55,7 @@ function makeLoginPage($user = false) {
 	}
 
 	$login->addHeader(">> Welcome to $VERSION.");
-	$login->addRow("060622");
+	$login->addRow("#060622");
 	$login->addCol($SITENAME, array (
 		"colspan" => 3,
 		"align" => "center",
@@ -70,6 +70,9 @@ function makeLoginPage($user = false) {
 				"bold" => "true",
 				"colspan" => 3
 			));
+		} else if (isset($_SESSION[testauth])) {
+			$login->addRow();
+			$login->addCol("Please select the character you wish to login as.", array("colspan"=>3));
 		} else {
 			$login->addRow("#660000");
 			$login->addCol("Your supplied credentials are invalid, please check and try again. " .
@@ -110,51 +113,79 @@ function makeLoginPage($user = false) {
 		));
 	}
 
-	$login->addRow();
-	$login->addCol("Username:");
-
-	// Trust, INC.
-	global $EVE_Charname;
-	if ($EVE_Charname) {
-		$login->addCol("<input type=\"text\" name=\"username\" value=\"$EVE_Charname\" maxlength=\"30\">");
-	} else {
-		$login->addCol("<input type=\"text\" name=\"username\" value=\"" . stripcslashes($user) . "\" maxlength=\"30\">");
-	}
-
-	$login->addCol("<img src=\"./images/keys.png\">", array (
-		"rowspan" => "2"
-	));
-
-	$login->addRow();
-	$login->addCol("Password:");
-	$login->addCol("<input type=\"password\" name=\"password\" maxlength=\"80\">", array (
-		"colspan" => "2"
-	));
-	$login->addRow("060622");
-	$login->addCol("Please login with your credentials. If you are in need of an account, request an account below and ask your CEO to activate it for you.", array (
-		"colspan" => "3",
-		"align" => "center"
-	));
 	
-	global $TEST_AUTH;
-	if($TEST_AUTH && $_SESSION[testauth][userid]){
-		
+
+	// User has logged in, but we need a character name.
+	if (!isset($_SESSION[testauth])){
+		$login->addRow();
+		$login->addCol("Username:");
+		// Trust, INC.
+		global $EVE_Charname;
+		if ($EVE_Charname) {
+			$login->addCol("<input type=\"text\" name=\"username\" value=\"$EVE_Charname\" maxlength=\"30\">");
+		} else {
+			$login->addCol("<input type=\"text\" name=\"username\" value=\"" . stripcslashes($user) . "\" maxlength=\"30\">");
+		}
+
+		$login->addCol("<img src=\"./images/keys.png\">", array (
+			"rowspan" => "2"
+		));
+
+		$login->addRow();
+		$login->addCol("Password:");
+		$login->addCol("<input type=\"password\" name=\"password\" maxlength=\"80\">", array (
+			"colspan" => "2"
+		));
+		$login->addRow("#060622");
+		$login->addCol("Please login with your credentials. If you are in need of an account, request an account below and ask your CEO to activate it for you.", array (
+			"colspan" => "3",
+			"align" => "center"
+		));
+	}else{
 		$login->addRow();
 		$login->addCol("Character:");
+		global $TEST_AUTH;
+		$eveApiProxyUrl = "https://auth.pleaseignore.com/api/1.0/eveapi/?apikey=$TEST_AUTH&userid=" . $_SESSION[testauth][id];
+		$return = file_get_contents($eveApiProxyUrl);
+		$obj = json_decode($return, TRUE);
 		
-		$eveApiProxyUrl = "https://auth.pleaseignore.com/api/1.0/eveapi/account/Characters.xml.aspx?apikey=$TEST_AUTH&userid=" . $_SESSION[testauth][userid];
-		$page = file_get_contents($url);
-		$obj = json_decode($page, TRUE);
+		$count = 0;
 		
-		echo "<!--";
-		var_dump($obj);
-		echo "-->";
-		$select = "<select name=\"character\" >";
-		foreach($characters as $character){
-			$select .= "<option value='$character'>$character</option>";
+		$list[] = array();
+		
+		$select = "<select name=\"username\" >";
+		foreach($obj[keys] as $key){
+			$eveApiProxyUrl = "https://auth.pleaseignore.com/api/1.0/eveapi/account/Characters.xml.aspx?apikey=$TEST_AUTH&userid=" . $key[api_user_id];
+			$return = file_get_contents($eveApiProxyUrl);
+			try{
+				$chars = new SimpleXMLElement($return);
+				
+				
+				
+				foreach($chars->result[0]->rowset[0] as $row){
+					$character = $row[name];
+					if($row[corporationName] != "B0rthole" || in_array($character,$list))
+						continue;
+					if($character == $user)
+						$selected = "selected";
+					$select .= "<option $selected value='$character'>$character</option>";
+					$list[] = $character;
+					$count++;
+				}
+			}catch(Exception $ex){
+			
+			}
 		}
 		$select .= "</select>";
 		$login->addCol($select, array("colspan"=>"2"));
+		
+		if($count == 0){
+			session_destroy();
+			makenotice("You do not belong here. Leave at once!", "warning", "ACCESS DENIED");
+			die();
+		}
+		
+		//file_put_contents($_SESSION[testauth][id].".xml",print_r($list,true));
 	}
 	
 	if ($IGB && $IGB_VISUAL) {
@@ -163,7 +194,7 @@ function makeLoginPage($user = false) {
 		$login->addHeaderCentered("<input type=\"image\" name=\"login\" value=\"login\" src=\"./images/login.png\">");
 	}
 
-	$login->addRow("060622");
+	$login->addRow("#060622");
 	$login->addCol("<a href=\"index.php?auth=lostpass\">lost password</a>");
 	/*
 	$login->addCol("<a href=\"index.php?auth=requestaccount\">request account</a>", array (
@@ -173,9 +204,11 @@ function makeLoginPage($user = false) {
 	*/
 	$login->addCol("",array("colspan"=>"2"));
 	$page = "<br><br><br>";
-
-	$page .= "<form action=\"index.php\" method=\"post\">";
-
+	if(strstr($_SERVER[QUERY_STRING],"switch")){
+		$page .= "<form action=\"index.php?\" method=\"post\">";
+	} else {
+		$page .= "<form action=\"index.php?$_SERVER[QUERY_STRING]\" method=\"post\">";
+	}
 	// Add special hidden forms for stupid browsers.
 	$browserinfo = new BrowserInfo();
 	
@@ -189,6 +222,7 @@ function makeLoginPage($user = false) {
 	}
 	
 	$page .= $login->flush();
+	//$page .= "<input type='hidden' name='redirect' value='$_SERVER[QUERY_STRING]'";
 	$page .= "</form><br><br><br>";
 
 	$html = new html;

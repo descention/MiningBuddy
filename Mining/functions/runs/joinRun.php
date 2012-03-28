@@ -47,7 +47,7 @@ function joinRun() {
 	if (!$MySelf->canJoinRun()) {
 		makeNotice("You are not allowed to join mining operations. Please ask your CEO to unblock your account.", "error", "Forbidden");
 	}
-
+	
 	// Is $runid truly an integer?
 	numericCheck($runid);
 
@@ -55,7 +55,7 @@ function joinRun() {
 	if (!miningRunOpen($runid)) {
 		makeNotice("This mining operation has been closed!", "warning", "Can not join", "index.php?action=show&id=$runid");
 	}
-
+	
 	// Are we banned from the run?
 	$State = $DB->getCol("SELECT status FROM joinups WHERE run='$runid' and userid='" . $MySelf->getID() . "'ORDER BY id DESC LIMIT 1");
 	$State = $State[0];
@@ -91,12 +91,12 @@ function joinRun() {
 			$table->addCol("Warning: You have been recently kicked. Please check if you are allowed to rejoin to avoid a ban.");
 		}
 
-		// If we are banned but an official, inform the user.
+		// If we are banned by an official, inform the user.
 		if ($banned) {
 			$table->addRow("#880000");
 			$table->addCol($banned);
 		}
-
+		
 		$table->addRow();
 		$table->addCol($form . "Join the Operation in " . ucfirst(getLocationOfRun($runid)) . ".");
 		$table->addRow();

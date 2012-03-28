@@ -77,11 +77,12 @@ function auth() {
 				 * No such user found. To avoid a login loop we will now break the cycle and
 				 * present the user with the request account form.
 				 */
+				 
+				makeNotice("You do not belong here. Leave at once!", "warning", "ACCESS DENIED");
 				die();
 				global $page;
 				$page = makeRequestAccountPage(true) . makeFooter();
 				print ($page);
-
 			} else {
 				/*
 				 * Here we found a matching user. What we do now is to create an auth key
@@ -116,25 +117,31 @@ function auth() {
 			*/
 
 			// The dynamical banning module.
+			
 			checkBan();
 			
 			$SUPPLIED_USERNAME = strtolower(sanitize($_POST[username]));
-			$SUPPLIED_PASSWORD = sha1($_POST[password]);
-
+			
 			// Check for validity.
 			if (!ctypeAlnum($SUPPLIED_USERNAME)) {
 				makeNotice("Invalid username. Only characters a-z, A-Z and 0-9 are allowed.", "error", "Invalid Username");
 			}
+			
+			if(!isset($_SESSION[testauth])){
+				$SUPPLIED_PASSWORD = sha1($_POST[password]);
 
-			// Lets check the password.
-			$MySelf = authVerify($SUPPLIED_USERNAME, $SUPPLIED_PASSWORD);
-
+				// Lets check the password.
+				$MySelf = authVerify($SUPPLIED_USERNAME, $SUPPLIED_PASSWORD);
+			}else{
+				$MySelf = authVerify($SUPPLIED_USERNAME, false);
+			}
+			
 			if ($MySelf == false) {
 
 				// Lets try again, shall we?
 				makeLoginPage($SUPPLIED_USERNAME);
 
-			} else
+			} else {
 				if ($MySelf->isValid()) {
 		
 					// storing the new login time.
@@ -144,7 +151,7 @@ function auth() {
 					createAuthKey($MySelf);
 
 				}
-
+			}
 			// We are done here.
 			$_SESSION['MySelf'] = base64_encode(serialize($MySelf));
 
@@ -155,7 +162,7 @@ function auth() {
 				makeNotice("You are using a beta version of MiningBuddy. Be aware that some functions may not " .
 				"be ready for production servers, and that there may be bugs around. You have been warned.", "warning", "Beta Warning");
 			} else {
-				header("Location: index.php");
+				header("Location: index.php?$_SERVER[QUERY_STRING]");
 				die();
 			}
 		}
@@ -180,15 +187,6 @@ function auth() {
 	if (!$_SESSION[seenMotd] && !empty ($MOTD)) {
 		$_SESSION[seenMotd] = true;
 		makeNotice(nl2br(stripslashes($MOTD)), "notice", "Announcement");
-	}
-
-	/*
-	 * Check that user validated his email. If no, BUG him!!
-	 */
-	if (rand(0, 1)) {
-		if (!$_POST[check] && !$MySelf->getEmailvalid() && $_GET[action] != "revalidate") {
-			makeNotice("You have not validated your email address yet. Util you do, I will bug you with this message. A verified email is important for a smooth MB usage.", "warning", "eMail not verified!", "index.php?action=revalidate", "[Validate now!]");
-		}
 	}
 
 	return ($MySelf);

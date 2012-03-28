@@ -120,6 +120,7 @@ require_once ('./functions/database/toggleCan.php');
 require_once ('./functions/database/toggleCharity.php');
 require_once ('./functions/database/userInRun.php');
 require_once ('./functions/database/modProfile.php');
+require_once ('./functions/database/getItemList.php');
 
 /* Classes */
 require_once ('./classes/html_class.php');
