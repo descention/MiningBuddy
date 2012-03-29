@@ -151,7 +151,7 @@ function makeLoginPage($user = false) {
 		
 		$count = 0;
 		
-		$list[] = array();
+		$list = array();
 		
 		$select = "<select name=\"username\" >";
 		foreach($obj[keys] as $key){
@@ -159,8 +159,6 @@ function makeLoginPage($user = false) {
 			$return = file_get_contents($eveApiProxyUrl);
 			try{
 				$chars = new SimpleXMLElement($return);
-				
-				
 				
 				foreach($chars->result[0]->rowset[0] as $row){
 					$character = $row[name];
