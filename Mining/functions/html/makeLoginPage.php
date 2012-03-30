@@ -167,7 +167,7 @@ function makeLoginPage($user = false) {
 					if($character == $user)
 						$selected = "selected";
 					$select .= "<option $selected value='$character'>$character</option>";
-					$list[] = $character;
+					array_push($list, $character);
 					$count++;
 				}
 			}catch(Exception $ex){
