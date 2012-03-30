@@ -1,6 +1,7 @@
 <?php
-
-
+//header("Location: http://whjew.pleaseignore.com");
+//echo "Please hold while I attempt to migrate the DB to the new server";
+//die();
 /*
  * MiningBuddy (http://miningbuddy.net)
  * $Header: /usr/home/mining/cvs/mining/index.php,v 1.69 2008/01/06 19:48:39 mining Exp $

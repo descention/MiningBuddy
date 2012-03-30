@@ -64,7 +64,7 @@ function makeLoginPage($user = false) {
 
 	if ($user) {
 		if ($user == "__invalidchar") {
-			$login->addRow("#660000");
+			$login->addRow("redish");
 			$login->addCol("Only characters a-z, A-Z and 0-9 are allowed. " .
 			array (
 				"bold" => "true",
@@ -74,7 +74,7 @@ function makeLoginPage($user = false) {
 			$login->addRow();
 			$login->addCol("Please select the character you wish to login as.", array("colspan"=>3));
 		} else {
-			$login->addRow("#660000");
+			$login->addRow("redish");
 			$login->addCol("Your supplied credentials are invalid, please check and try again. " .
 			"If you cannot remember your password use the Password Recovery link below.", array (
 				"bold" => "true",

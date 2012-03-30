@@ -194,6 +194,9 @@ $ORENAMES = array (
 	"Unsecured Frontier Enclave Relay",
 	"Unsecured Frontier Server Bank",
 	*/
+	
+	"Water",
+	"Oxygen",
 );
 
 include ('./etc/item-gen.php');
@@ -233,9 +236,7 @@ $SHIPTYPES = array (
 	"Mining Barge",
 	"Recon Ship",
 	"Shuttle",
-	"Strategic Cruiser",
 	"Transport Ship",
-	
 );
 
 $SHIPTYPES[99] = "unclassified";
