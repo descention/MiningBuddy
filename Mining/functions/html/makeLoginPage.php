@@ -151,29 +151,28 @@ function makeLoginPage($user = false) {
 		
 		$count = 0;
 		
-		$list = array();
-		
 		$select = "<select name=\"username\" >";
+		$array = array();
 		foreach($obj[keys] as $key){
 			$eveApiProxyUrl = "https://auth.pleaseignore.com/api/1.0/eveapi/account/Characters.xml.aspx?apikey=$TEST_AUTH&userid=" . $key[api_user_id];
 			$return = file_get_contents($eveApiProxyUrl);
 			try{
 				$chars = new SimpleXMLElement($return);
-				
-				foreach($chars->result[0]->rowset[0] as $row){
-					$character = $row[name];
-					if($row[corporationName] != "B0rthole" || in_array($character,$list))
-						continue;
-					if($character == $user)
-						$selected = "selected";
-					$select .= "<option $selected value='$character'>$character</option>";
-					array_push($list, $character);
-					$count++;
-				}
 			}catch(Exception $ex){
-			
+				continue;
+			}	
+			foreach($chars->result[0]->rowset[0] as $row){
+				$character = (string)$row[name];
+				if($row[corporationName] != "B0rthole" || in_array($character,$array))
+					continue;
+				if($character == $user)
+					$selected = "selected";
+				$select .= "<option $selected value='$character'>$character</option>";
+				$array[] = $character;
+				$count++;
 			}
 		}
+		var_dump($array);
 		$select .= "</select>";
 		$login->addCol($select, array("colspan"=>"2"));
 		
