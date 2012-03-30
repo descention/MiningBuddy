@@ -44,6 +44,7 @@ function listRun() {
 	 * Import variables, and define needed things.
 	 */
 	global $DB; // Database connection
+	global $STATIC_DB; // static db name
 	global $ORENAMES; // A list of all the orenames
 	global $DBORE; // An array of db friendly orenames
 	global $TIMEMARK; // The "current" timestamp

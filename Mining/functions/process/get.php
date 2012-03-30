@@ -338,7 +338,11 @@ function process_get() {
 
 	if($ajax > 1){
 		$ajaxHtml = "<script>window.setTimeout(function(){\$.ajax({";
-		$ajaxHtml .= "url: '?". $_SERVER['QUERY_STRING'] ."&ajax',";
+		if(isset($_REQUEST[ajax])){
+			$ajaxHtml .= "url: '?". $_SERVER['QUERY_STRING'] ."',";
+		}else{
+			$ajaxHtml .= "url: '?". $_SERVER['QUERY_STRING'] ."&ajax',";
+		}
 		$ajaxHtml .= "success: function(data) {\$('#content').html(data);}";
 		$ajaxHtml .= "});},(" . ($ajax * 1000) . "));</script>";
 		

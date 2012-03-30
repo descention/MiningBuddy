@@ -62,7 +62,8 @@ while ($mval = $mvalues->fetchrow()) {
 	// Voila, le scary monster!
 	//$oval = $ovalues->fetchRow() AND 
 	$oval = $ovalues;
-	$r = $DB->query("select item, sum(Quantity) as total, typeName as name, volume, typeID from hauled, evedump.invTypes where item = replace(replace(typeName,' ',''),'-','') and miningrun = '$ID' group by item having sum(Quantity) <> 0");
+	$r = $DB->query("select item, sum(Quantity) as total, typeName as name, volume, typeID from hauled, $STATIC_DB.invTypes where item = replace(replace(typeName,' 
+',''),'-','') and miningrun = '$ID' group by item having sum(Quantity) <> 0");
 	while($r2 = $r->fetchRow()){
 		$ORE = $r2[item];
 		// We need a Variable name with the word Wanted and M3 (for the wanted and m3 columns)
