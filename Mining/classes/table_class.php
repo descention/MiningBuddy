@@ -146,58 +146,24 @@ class table {
 		if (!$this->rowIsOpen) {
 			makeNotice("Row not opened.", "error", "Internal Error");
 		}
-
+		$staticAttributes = "";
+		$colspan = 1;
 		// Do we have a valid modes array?
 		if (isset ($modes) && is_array($modes)) {
-
-			// set the colspanning right.
-			if ($modes[colspan]) {
-				$colspan = $modes[colspan];
-			} else {
-				$colspan = 1;
+			foreach($modes as $key=>$value){
+				if($key=="bold"){
+					$bold = "<b>";
+					$bold_end = "</b>";
+				}else{
+					$staticAttributes .= "$key=\"$value\" ";
+					if($key == "colspan"){
+						$colspan = $value;
+					}
+				}
 			}
-
-			// rowspanning!
-			if ($modes[rowspan]) {
-				$rowspan = $modes[rowspan];
-			} else {
-				$rowspan = 1;
-			}
-
-			// Bold ?
-			if ($modes[bold]) {
-				$bold = "<b>";
-				$bold_end = "</b>";
-			}
-
-			// Width ?
-			if ($modes[width]) {
-				$width = $modes[width];
-			}
-
-			// Align?
-			if (isset ($modes[align])) {
-				$align = "align=\"" . $modes[align] . "\"";
-			}
-
-			// Valign?
-			if (isset ($modes[valign])) {
-				$valign = "valign=\"" . $modes[valign] . "\"";
-			}
-
-			// Color?
-			if (isset ($modes[bgcolor])) {
-				$bgcolor = "bgcolor=\"" . $modes[bgcolor] . "\"";
-			}
-			
-			// Class?
-			if ($modes['class']) {
-				$class = "class=\"" . $modes['class'] . "\"";
-			}
-			
 		} else {
 			// Default Values go here (if no array set)
-			$colspan = 1;
+			$staticAttributes .= "colspan='1' rowspan='1' ";
 		}
 
 		// Are we over-doing it?
@@ -207,7 +173,7 @@ class table {
 		}
 
 		// Add the content.
-		$this->html .= "<td rowspan=\"" . $rowspan . "\" $class colspan=\"$colspan\" $bgcolor width=\"$width\" $align $valign>" . $bold . $cont . $bold_end . "</td>";
+		$this->html .= "<td $staticAttributes>" . $bold . $cont . $bold_end . "</td>";
 		$this->current_col = $this->current_col + $colspan;
 		$this->hasContent = true;
 	}

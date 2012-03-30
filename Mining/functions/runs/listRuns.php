@@ -205,7 +205,7 @@ function listRuns() {
 
 		// get the total ores gained.
 		$totalIsk = getTotalWorth($row[id]);
-		$table_closed->addCol(number_format($totalIsk, 2) . " ISK");
+		$table_closed->addCol(number_format($totalIsk, 2) . " ISK",array("style"=>"text-align:right;"));
 
 		// Add the TMEC
 		if ($row[tmec] == 0) {
@@ -213,10 +213,10 @@ function listRuns() {
 		} else {
 			$TMEC = $row[tmec];
 		}
-		$table_closed->addCol($TMEC);
+		$table_closed->addCol($TMEC,array("style"=>"text-align:right;"));
 
 		// Add "run is official" bit.
-		$table_closed->addCol(yesno($row[isOfficial], true));
+		$table_closed->addCol(yesno($row[isOfficial], true),array("style"=>"text-align:right;"));
 		$closedRunsExist = true; // We wont print out table if there are no open runs.
 
 		// Add possible delete run button.
