@@ -42,6 +42,7 @@ function addHaul() {
 	global $ORENAME_STR;
 	global $TIMEMARK;
 	global $MySelf;
+	global $STATIC_DB;
 	
 	// Some more settings we need
 	$userID = $MySelf->getID();
@@ -112,7 +113,7 @@ function addHaul() {
 	
 	// Now loop through all the ore-types.
 	foreach ($_POST as $ORE => $QTY) {
-		$oreResult = $DB->query("select count(typeName) as v from evedump.invTypes where replace(replace(typeName,' ',''),'-','') = '$ORE'");
+		$oreResult = $DB->query("select count(typeName) as v from $STATIC_DB.invTypes where replace(replace(typeName,' ',''),'-','') = '$ORE'");
 		// Check the input, and insert it!
 		$validOre = $oreResult->fetchRow();
 		if ($validOre[v] > 0 && (!empty ($QTY)) && is_numeric($QTY) && $QTY > 0) {

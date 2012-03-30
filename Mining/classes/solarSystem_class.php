@@ -63,13 +63,15 @@ class solarSystem {
 
 		// We need the DB to load stuff.
 		global $DB;
+		global $STATIC_DB;
+		
 		$this->DB = & $DB;
 
 		// Try to load the System.
 		if (is_numeric($assumedName)) {
-			$assumedSystem = $this->DB->query("SELECT * FROM eve_SolarSystems WHERE solarSystemID = '$assumedName' LIMIT 1");
+			$assumedSystem = $this->DB->query("SELECT * FROM $STATIC_DB.mapSolarSystems WHERE solarSystemID = '$assumedName' LIMIT 1");
 		} else {
-			$assumedSystem = $this->DB->query("SELECT * FROM eve_SolarSystems WHERE solarSystemName = '$assumedName' LIMIT 1");
+			$assumedSystem = $this->DB->query("SELECT * FROM $STATIC_DB.mapSolarSystems WHERE solarSystemName = '$assumedName' LIMIT 1");
 		}
 
 		// Check if there is such a system
@@ -87,14 +89,14 @@ class solarSystem {
 			$this->solarSystemSecurity = number_format($SystemDB[security], 1);
 
 			// But wait, there is more! We need to load the Constellation!
-			$ConstellationDB = $this->DB->query("SELECT * FROM eve_Constellations WHERE ConstellationID ='" . $this->solarSystemConstellation . "' LIMIT 1");
+			$ConstellationDB = $this->DB->query("SELECT * FROM $STATIC_DB.mapConstellations WHERE ConstellationID ='" . $this->solarSystemConstellation . "' LIMIT 1");
 			$Constellation = $ConstellationDB->fetchRow();
 			$this->constellationName = $Constellation[constellationName];
 			$this->constellationID = $Constellation[constellationID];
 			$this->constellationRegion = $Constellation[regionID];
 
 			// Even more! Region!
-			$RegionDB = $this->DB->query("SELECT * FROM eve_Regions WHERE regionID = '" . $this->solarSystemRegion . "' LIMIT 1");
+			$RegionDB = $this->DB->query("SELECT * FROM $STATIC_DB.mapRegions WHERE regionID = '" . $this->solarSystemRegion . "' LIMIT 1");
 			$Region = $RegionDB->fetchRow();
 			$this->regionName = $Region[regionName];
 			$this->regionID = $Region[regionID];
@@ -133,7 +135,8 @@ class solarSystem {
 		/*
 		 * This will query the database for other systems in the same region and constellation.
 		 */
-		$nbs = $this->DB->query("SELECT solarSystemName FROM eve_SolarSystems WHERE regionID='" . $this->regionID . "' AND constellationID='" . $this->constellationID . "' ORDER BY solarSystemName ASC");
+		global $STATIC_DB;
+		$nbs = $this->DB->query("SELECT solarSystemName FROM $STATIC_DB.mapSolarSystems WHERE regionID='" . $this->regionID . "' AND constellationID='" . $this->constellationID . "' ORDER BY solarSystemName ASC");
 
 		// Are there any systems?	
 		if ($nbs->numRows() > 0) {
@@ -194,12 +197,12 @@ class solarSystem {
 
 	// Show other Systems.
 	public function makeConstellationTable() {
-
+		global $STATIC_DB;
 		// First we check if the system name we got is valid.
 		if ($this->valid()) {
 
 			// It is, so lets load all other systems in the same region and constellation.
-			$otherSystems = $this->DB->query("SELECT * FROM eve_SolarSystems WHERE constellationID = '" . $this->constellationID . "' AND regionID ='" . $this->regionID . "' ORDER BY solarSystemName ASC");
+			$otherSystems = $this->DB->query("SELECT * FROM $STATIC_DB.mapSolarSystems WHERE constellationID = '" . $this->constellationID . "' AND regionID ='" . $this->regionID . "' ORDER BY solarSystemName ASC");
 
 			// Sanity check: Do we have more than 0?
 			if ($otherSystems->numRows() > 0) {

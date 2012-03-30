@@ -43,7 +43,8 @@ function getTotalWorth($id, $net = false) {
 	global $DBORE;
 	global $SHIPTYPES;
 	global $DBSHIP;
-
+	global $STATIC_DB;
+	
 	// Is $id truly an integer?
 	numericCheck($id);
 	
@@ -54,7 +55,7 @@ function getTotalWorth($id, $net = false) {
 	}
 	
 	// we need some results.
-	$r = $DB->query("select sum(Quantity) as total, typeID from hauled, evedump.invTypes where item = replace(replace(typeName,' ',''),'-','') and miningrun = '$id' group by item");
+	$r = $DB->query("select sum(Quantity) as total, typeID from hauled, $STATIC_DB.invTypes where item = replace(replace(typeName,' ',''),'-','') and miningrun = '$id' group by item");
 	while($r2 = $r->fetchRow()){
 		if($r2[total] != 0){
 			$value += ($r2[total] * getMarketPrice($r2[typeID]));

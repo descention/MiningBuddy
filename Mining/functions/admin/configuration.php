@@ -199,7 +199,7 @@ function configuration() {
 		
 		// Select Region to get prices from
 		
-		$regionDS = $DB->query("SELECT * FROM `eve_Regions` ORDER BY regionName ASC");
+		$regionDS = $DB->query("SELECT * FROM `$STATIC_DB.mapRegions` ORDER BY regionName ASC");
 		$regionCount = $regionDS->numRows();
 		
 		$useRegion = getConfig("useRegion", true);
