@@ -64,12 +64,12 @@ while ($mval = $mvalues->fetchrow()) {
 	$oval = $ovalues;
 	$r = $DB->query("select item, sum(Quantity) as total, typeName as name, volume, typeID from hauled, ".$STATIC_DB.".invTypes where item = replace(replace(typeName,' ',''),'-','') and miningrun = '$ID' group by item having sum(Quantity) <> 0");
 	while($r2 = $r->fetchRow()){
-		$ORE = $r2[item];
+		$ORE = $r2['item'];
 		// We need a Variable name with the word Wanted and M3 (for the wanted and m3 columns)
 		$OREWANTED = $ORE . "Wanted";
 		//Pulls the m3 of each ore type.
-		$OREWORTH = getMarketPrice($r2[typeID]);
-		$OREM3 = $r2[volume];
+		$OREWORTH = getMarketPrice($r2['typeID']);
+		$OREM3 = $r2['volume'];
 		
 		/* If an ore is neither wanted nor has been harvested so far, we dont print
 		 * that row to save precious in game browser space.
@@ -117,14 +117,14 @@ while ($mval = $mvalues->fetchrow()) {
 			$ressources_info->addRow();
 
 			// Fetch the right image for the ore.
-			$ri_words = str_word_count($r2[name], 1);
+			$ri_words = str_word_count($r2['name'], 1);
 			$ri_max = count($ri_words);
 			$ri = strtolower($ri_words[$ri_max -1]);
 
-			$ressources_info->addCol("<img width=\"32\" height=\"32\" src=\"./images/ores/" . $r2[name] . ".png\">", array (
+			$ressources_info->addCol("<img width=\"32\" height=\"32\" src=\"./images/ores/" . $r2['name'] . ".png\">", array (
 				"width" => "64"
 			));
-			$ressources_info->addCol($r2[name], array (
+			$ressources_info->addCol($r2['name'], array (
 				"bold" => true
 			));
 			
@@ -176,7 +176,7 @@ $ressources_info->addCol(number_format($totalworth, 2) . " ISK", array (
 
 
 // Math fun.
-$taxes = abs($totalworth * $row[corpkeeps]) / 100;
+$taxes = abs($totalworth * $row['corpkeeps']) / 100;
 $net = $totalworth - $taxes;
 
 $ressources_info->addRow("#060622");

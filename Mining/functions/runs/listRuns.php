@@ -76,51 +76,51 @@ function listRuns() {
 	$table->addCol("Security");
 	$table->addCol("Official run");
 	$table->addCol("Locked");
-
+	$runsExist = false;
 	// Now we loop through each returned result.
 	while ($row = $results->fetchRow()) {
 
 		// Skip inofficial runs if user does not want to see them.
-		if ((!$sirstate && !$row[isOfficial]) && !($MySelf->getID() == $row[supervisor])) {
+		if ((!$sirstate && !$row['isOfficial']) && !($MySelf->getID() == $row['supervisor'])) {
 			continue;
 		}
 
 		$table->addRow();
-		$table->addCol("<a href=\"index.php?action=show&id=$row[id]\">" . str_pad($row[id], 5, "0", STR_PAD_LEFT) . "</a>");
+		$table->addCol("<a href=\"index.php?action=show&id=$row[id]\">" . str_pad($row['id'], 5, "0", STR_PAD_LEFT) . "</a>");
 		
-		$table->addCol(makeProfileLink($row[supervisor]));
-		$table->addCol($row[optype]==""?"Standard":$row[optype]);
-		$table->addCol(date("d.m.y H:i", $row[starttime]));
+		$table->addCol(makeProfileLink($row['supervisor']));
+		$table->addCol($row['optype']==""?"Standard":$row['optype']);
+		$table->addCol(date("d.m.y H:i", $row['starttime']));
 
 		/* This handles the endtime. Prints endtime if it has already
 		* ended, or "active" along with an "end run"-link if still open.
 		*/
 		unset ($tmp);
-		if ("$row[endtime]" == "") {
+		if ($row['endtime'] == "") {
 			$tmp = "<b>active</b>";
 			// If access level is above or equal 3 give option to close run.
 			if ($MySelf->canCloseRun()) {
 				$tmp .= " (<a href=\"index.php?action=endrun&id=$row[id]\">close run</a>)";
 			}
 		} else {
-			$tmp = date("d.m.y H:i", $row[endtime]);
+			$tmp = date("d.m.y H:i", $row['endtime']);
 		}
 
 		// Add the end-time to the table.
 		$table->addCol($tmp);
 
 		// Show the security status
-		$System = new solarSystem($row[location]);
+		$System = new solarSystem($row['location']);
 		if ($System->valid()) {
 			$table->addCol($System->makeFancyLink());
 			$table->addCol($System->getSecurity());
 		} else {
-			$table->addCol(ucfirst($row[location]));
+			$table->addCol(ucfirst($row['location']));
 			$table->addCol("?");
 		}
 
-		$table->addCol(yesno($row[isOfficial], true));
-		$table->addCol(yesno($row[isLocked], true, true));
+		$table->addCol(yesno($row['isOfficial'], true));
+		$table->addCol(yesno($row['isLocked'], true, true));
 		$runsExist = true; // We wont print out table if there are no open runs.
 	}
 
@@ -129,10 +129,10 @@ function listRuns() {
 	 */
 
 	// Query it. 
-	if (is_numeric($_GET[page]) && $_GET[page] > 0) {
-		$page = "LIMIT ". ($_GET[page] * 20) . ", 20" ;
+	if (isset($_GET['page']) && is_numeric($_GET['page']) && $_GET['page'] > 0) {
+		$page = "LIMIT ". ($_GET['page'] * 20) . ", 20" ;
 	}
-	elseif ($_GET[page] == "all") {
+	elseif (isset($_GET['page']) && $_GET['page'] == "all") {
 		$page = "";
 	} else {
 		$page = "LIMIT 20";
@@ -165,16 +165,16 @@ function listRuns() {
 	while ($row = $results->fetchRow()) {
 
 		// Skip inofficial runs if user does not want to see them.
-		if ((!$sirstate && !$row[isOfficial]) && !($MySelf->getID() == $row[supervisor])) {
+		if ((!$sirstate && !$row['isOfficial']) && !($MySelf->getID() == $row['supervisor'])) {
 			continue;
 		}
 
 		$table_closed->addRow();
-		$table_closed->addCol("<a href=\"index.php?action=show&id=$row[id]\">" . str_pad($row[id], 5, "0", STR_PAD_LEFT) . "</a>");
+		$table_closed->addCol("<a href=\"index.php?action=show&id=$row[id]\">" . str_pad($row['id'], 5, "0", STR_PAD_LEFT) . "</a>");
 		
-		$table_closed->addCol(makeProfileLink($row[supervisor]));
-		$table_closed->addCol($row[optype]==""?"Standard":$row[optype]);
-		$table_closed->addCol(date("d.m.y H:i", $row[starttime]));
+		$table_closed->addCol(makeProfileLink($row['supervisor']));
+		$table_closed->addCol($row['optype']==""?"Standard":$row['optype']);
+		$table_closed->addCol(date("d.m.y H:i", $row['starttime']));
 
 		/* This handles the endtime. Prints endtime if it has already
 		* ended, or "active" along with an "end run"-link if still open.
@@ -187,36 +187,36 @@ function listRuns() {
 				$tmp .= " (<a href=\"index.php?action=endrun&id=$row[id]\">close run</a>)";
 			}
 		} else {
-			$tmp = date("d.m.y H:i", $row[endtime]);
+			$tmp = date("d.m.y H:i", $row['endtime']);
 		}
 
 		// Add the end-time to the table.
 		$table_closed->addCol($tmp);
 
 		// Show the security status
-		$System = new solarSystem($row[location]);
+		$System = new solarSystem($row['location']);
 		if ($System->valid()) {
 			$table_closed->addCol($System->makeFancyLink());
 			$table_closed->addCol($System->getSecurity());
 		} else {
-			$table_closed->addCol(ucfirst($row[location]));
+			$table_closed->addCol(ucfirst($row['location']));
 			$table_closed->addCol("?");
 		}
 
 		// get the total ores gained.
-		$totalIsk = getTotalWorth($row[id]);
+		$totalIsk = getTotalWorth($row['id']);
 		$table_closed->addCol(number_format($totalIsk, 2) . " ISK",array("style"=>"text-align:right;"));
 
 		// Add the TMEC
-		if ($row[tmec] == 0) {
-			$TMEC = calcTMEC($row[id]);
+		if ($row['tmec'] == 0) {
+			$TMEC = calcTMEC($row['id']);
 		} else {
-			$TMEC = $row[tmec];
+			$TMEC = $row['tmec'];
 		}
 		$table_closed->addCol($TMEC,array("style"=>"text-align:right;"));
 
 		// Add "run is official" bit.
-		$table_closed->addCol(yesno($row[isOfficial], true),array("style"=>"text-align:right;"));
+		$table_closed->addCol(yesno($row['isOfficial'], true),array("style"=>"text-align:right;"));
 		$closedRunsExist = true; // We wont print out table if there are no open runs.
 
 		// Add possible delete run button.

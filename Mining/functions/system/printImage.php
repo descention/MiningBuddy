@@ -37,21 +37,21 @@
 //$g->setBGColor("2d2d37");
 //die($g->render());
 
-if (isset ($_GET[image])) {
+if (isset ($_GET['image'])) {
 	// Load the preferences.
-	$prefs = unserialize(base64_decode($_SESSION["img_".$_GET[image]]));
-	unset($_SESSION["img_".$_GET[image]]);
+	$prefs = unserialize(base64_decode($_SESSION["img_".$_GET['image']]));
+	unset($_SESSION["img_".$_GET['image']]);
 
 	// Create a new empty shell for the  image.
-	$p = new graphic($prefs[type]);
+	$p = new graphic($prefs['type']);
 
 	// Restore the old parameters.
 	$p->setDirect(true);
 	$p->setSecondPass(true);
-	$p->setPrefixed($prefs[prefixed]);
-	$p->setText($prefs[text]);
-	$p->setBGColor($prefs[bgcolor]);
-	$p->setTextColor($prefs[color]);
+	$p->setPrefixed($prefs['prefixed']);
+	$p->setText($prefs['text']);
+	$p->setBGColor($prefs['bgcolor']);
+	$p->setTextColor($prefs['color']);
 
 	// Send png header to client.
 	header('Content-Type: image/png');

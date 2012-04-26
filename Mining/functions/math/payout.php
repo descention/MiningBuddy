@@ -56,15 +56,15 @@ function payout() {
 
 	// Create a row for each member.
 	while ($id = $uniqeMembers->fetchRow()) {
-		$playerCreds = getCredits($id[id]);
+		$playerCreds = getCredits($id['id']);
 
 		// We need this later on...
-		$allPeeps[$id[id]] = ucfirst(idToUsername($id[id]));
+		$allPeeps[$id['id']] = ucfirst(idToUsername($id['id']));
 
 		// if the member has more or less than zero isk, list him.
 		if ($playerCreds != 0) {
 			$iskOwned->addRow();
-			$iskOwned->addCol("<a href=\"index.php?action=showTransactions&id=" . $id[id] . "\">" . $allPeeps[$id[id]] . "</a>");
+			$iskOwned->addCol("<a href=\"index.php?action=showTransactions&id=" . $id['id'] . "\">" . $allPeeps[$id['id']] . "</a>");
 			$iskOwned->addCol(number_format($playerCreds, 2) . " ISK");
 		}
 	}
@@ -120,32 +120,32 @@ function payout() {
 	while ($request = $requests->fetchRow()) {
 
 		if ($IGB && $IGB_VISUAL) {
-			$api = new api($request[applicant]);
-//			$profile = new profile($request[applicant]);
+			$api = new api($request['applicant']);
+//			$profile = new profile($request['applicant']);
 			if ($api->valid() && ($IGB && $IGB_VISUAL)) {
 				$rcm = " [<a href=\"showinfo:1378//" . $api->getCharacterID() . "\">RCM</a>]";
 			}
 		}
 		$table->addRow();
-		$table->addCol("#" . str_pad($request[request], "5", "0", STR_PAD_LEFT));
-		$table->addCol("<a href=\"index.php?action=showTransactions&id=$request[applicant]\">" . ucfirst(idToUsername($request[applicant])) . "</a>");
+		$table->addCol("#" . str_pad($request['request'], "5", "0", STR_PAD_LEFT));
+		$table->addCol("<a href=\"index.php?action=showTransactions&id=$request[applicant]\">" . ucfirst(idToUsername($request['applicant'])) . "</a>");
 		if ($IGB && $IGB_VISUAL) {
 			$table->addCol($rcm);
 		}
-		$table->addCol(date("d.m.y H:i:s", $request[time]));
+		$table->addCol(date("d.m.y H:i:s", $request['time']));
 		
-		if (getCredits($request[applicant]) < $request[amount]) {
+		if (getCredits($request['applicant']) < $request['amount']) {
 			$class .= "red";
 		}
 		
 		if ($IGB && $IGB_VISUAL) {
-			$table->addCol("<input type=\"text\" class=\"$class\" name=\"dumb\" readonly value=\"" . number_format($request[amount], 2) . "\"> ISK");
+			$table->addCol("<input type=\"text\" class=\"$class\" name=\"dumb\" readonly value=\"" . number_format($request['amount'], 2) . "\"> ISK");
 		} else {
-			$table->addCol(number_format($request[amount], 2) . " ISK", array("class"=>$class));
+			$table->addCol(number_format($request['amount'], 2) . " ISK", array("class"=>$class));
 		}
 
 		// Can the user still cover his request with cash?
-		$table->addCol("<input type=\"checkbox\" name=\"" . $request[request] . "\" value=\"true\">");
+		$table->addCol("<input type=\"checkbox\" name=\"" . $request['request'] . "\" value=\"true\">");
 		$haveRequest = true;
 		//} else {
 		//	$table->addCol("<i>not enough ISK</i>");
@@ -162,10 +162,10 @@ function payout() {
 	/*
 	 * Show fulfilled requests
 	 */
-	if (is_numeric($_GET[page]) && $_GET[page] > 0) {
-		$page = "LIMIT " . ($_GET[page] * 20) . ", 20";
+	if (is_numeric($_GET['page']) && $_GET['page'] > 0) {
+		$page = "LIMIT " . ($_GET['page'] * 20) . ", 20";
 	}
-	elseif ($_GET[page] == "all") {
+	elseif ($_GET['page'] == "all") {
 		$page = "";
 	} else {
 		$page = "LIMIT 20";
@@ -185,12 +185,12 @@ function payout() {
 
 	while ($request = $requests->fetchRow()) {
 		$table_done->addRow();
-		$table_done->addCol("#" . str_pad($request[request], "5", "0", STR_PAD_LEFT));
-		$table_done->addCol("<a href=\"index.php?action=showTransactions&id=$request[applicant]\">" . ucfirst(idToUsername($request[applicant])) . "</a>");
-		$table_done->addCol(date("d.m.y H:i:s", $request[time]));
-		$table_done->addCol(number_format($request[amount], 2) . " ISK");
-		$table_done->addCol(date("d.m.y H:i:s", $request[payoutTime]));
-		$table_done->addCol(ucfirst(idToUsername($request[banker])));
+		$table_done->addCol("#" . str_pad($request['request'], "5", "0", STR_PAD_LEFT));
+		$table_done->addCol("<a href=\"index.php?action=showTransactions&id=$request[applicant]\">" . ucfirst(idToUsername($request['applicant'])) . "</a>");
+		$table_done->addCol(date("d.m.y H:i:s", $request['time']));
+		$table_done->addCol(number_format($request['amount'], 2) . " ISK");
+		$table_done->addCol(date("d.m.y H:i:s", $request['payoutTime']));
+		$table_done->addCol(ucfirst(idToUsername($request['banker'])));
 		$haveOldRequests = true;
 	}
 

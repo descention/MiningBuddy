@@ -74,15 +74,15 @@ class user {
 
 		if ($dro && $mark) {
 			// General info
-			$this->id = $dro[id];
-			$this->username = $dro[username];
-			$this->email = $dro[email];
-			$this->rank = $dro[rank];
-			$this->lastlogin = $dro[lastlogin];
-			$this->confirmed = $dro[confirmed];
-			$this->emailvalid = $dro[emailvalid];
-			$this->isOfficial = $dro[isOfficial];
-			$this->canDeleteRun = $dro[canDeleteRun];
+			$this->id = $dro['id'];
+			$this->username = $dro['username'];
+			$this->email = $dro['email'];
+			$this->rank = $dro['rank'];
+			$this->lastlogin = $dro['lastlogin'];
+			$this->confirmed = $dro['confirmed'];
+			$this->emailvalid = $dro['emailvalid'];
+			$this->isOfficial = $dro['isOfficial'];
+			$this->canDeleteRun = $dro['canDeleteRun'];
 			$this->logintime = $mark;
 
 			// Rank Goodness.			
@@ -95,27 +95,27 @@ class user {
 			}
 
 			// Permissions
-			$this->canLogin = $dro[canLogin];
-			$this->canJoinRun = $dro[canJoinRun];
-			$this->canCreateRun = $dro[canCreateRun];
-			$this->canCloseRun = $dro[canCloseRun];
-			$this->canAddHaul = $dro[canAddHaul];
-			$this->canChangePwd = $dro[canChangePwd];
-			$this->canChangeEmail = $dro[canChangeEmail];
-			$this->canChangeOre = $dro[canChangeOre];
-			$this->canAddUser = $dro[canAddUser];
-			$this->canSeeUsers = $dro[canSeeUsers];
-			$this->canDeleteUser = $dro[canDeleteUser];
-			$this->canEditRank = $dro[canEditRank];
-			$this->canManageuser = $dro[canManageUser];
-			$this->canSeeEvents = $dro[canSeeEvents];
-			$this->canDeleteEvents = $dro[canDeleteEvents];
-			$this->canEditEvents = $dro[canEditEvents];
-			$this->canPlayLotto = $dro[canPlayLotto];
-			$this->isLottoOfficial = $dro[isLottoOfficial];
-			$this->optInState = $dro[optIn];
-			$this->isAccountant = $dro[isAccountant];
-			$this->isAdmin = $dro[isAdmin];
+			$this->canLogin = $dro['canLogin'];
+			$this->canJoinRun = $dro['canJoinRun'];
+			$this->canCreateRun = $dro['canCreateRun'];
+			$this->canCloseRun = $dro['canCloseRun'];
+			$this->canAddHaul = $dro['canAddHaul'];
+			$this->canChangePwd = $dro['canChangePwd'];
+			$this->canChangeEmail = $dro['canChangeEmail'];
+			$this->canChangeOre = $dro['canChangeOre'];
+			$this->canAddUser = $dro['canAddUser'];
+			$this->canSeeUsers = $dro['canSeeUsers'];
+			$this->canDeleteUser = $dro['canDeleteUser'];
+			$this->canEditRank = $dro['canEditRank'];
+			$this->canManageuser = $dro['canManageUser'];
+			$this->canSeeEvents = $dro['canSeeEvents'];
+			$this->canDeleteEvents = $dro['canDeleteEvents'];
+			$this->canEditEvents = $dro['canEditEvents'];
+			$this->canPlayLotto = $dro['canPlayLotto'];
+			$this->isLottoOfficial = $dro['isLottoOfficial'];
+			$this->optInState = $dro['optIn'];
+			$this->isAccountant = $dro['isAccountant'];
+			$this->isAdmin = $dro['isAdmin'];
 		} else {
 			$this->id = -1;
 		}

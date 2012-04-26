@@ -43,6 +43,21 @@ function makeMenu($page = false) {
 	global $UPDATE;
 	global $IGB_VISUAL;
 
+	$mining_AddHaul = "";
+	$mining_canTimer = "";
+	$mining_addOp = "";
+	$admin_addUser = "";
+	$admin_Ore = "";
+	$admin_Ships = "";
+	$admin_viewUser = "";
+	$events_add = "";
+	$events_view = "";
+	$operationsModule = "";
+	$eventsModule = "";
+	$lottoModule = "";
+	$adminModule = "";
+	$pref_emailValid = "";
+	
 	/*
 	 * Mining related Menues.
 	 */

@@ -38,18 +38,18 @@
 /* Logout
  * Maybe the user wants to logout. Lets grant him that wish.
  */
-if ("$_GET[auth]" == "logout") {
+if (isset($_GET['auth']) && $_GET['auth'] == "logout") {
 	// Destroy all login related information.
 
 	// Are we sure?
 	confirm("Do you wish to logout now?");
 
 	// Sanitize the input and delete all relevant tokens from the database.
-	$TOKEN = sanitize($_SESSION[auth]);
+	$TOKEN = sanitize($_SESSION['auth']);
 	$DB->query("UPDATE auth SET disabled='1' WHERE authkey = '$TOKEN'");
 
 	// Destroy the cookie jar.
-	$_SESSION[lastModDisplay] = false;
+	$_SESSION['lastModDisplay'] = false;
 	session_destroy();
 
 	// .. then print it.
@@ -60,7 +60,7 @@ if ("$_GET[auth]" == "logout") {
 /*
  * Someone lost their password.
  */
-if ("$_GET[auth]" == "lostpass") {
+if (isset($_GET['auth']) && $_GET['auth'] == "lostpass") {
 	/*
 	//	global $page;
 	//	$page = makeLostPassForm().makeFooter();
@@ -76,7 +76,7 @@ if ("$_GET[auth]" == "lostpass") {
 /*
  * Someone wants a new account.
  */
-if ("$_GET[auth]" == "requestaccount") {
+if (isset($_GET['auth']) && $_GET['auth'] == "requestaccount") {
 	/*
 	global $page;
 	$page = makeRequestAccountPage() . makeFooter();
@@ -88,7 +88,7 @@ if ("$_GET[auth]" == "requestaccount") {
 /*
  * Someone wants a new account, and has submited the form.
  */
-if ("$_POST[action]" == "requestaccount") {
+if (isset($_POST['action']) && $_POST['action'] == "requestaccount") {
 	//requestAccount();
 	die();
 }
@@ -96,7 +96,7 @@ if ("$_POST[action]" == "requestaccount") {
 /*
  *  Someone lost their password and has submited the form.
  */
-if ("$_POST[action]" == "lostpass") {
+if (isset($_POST['action']) && $_POST['action'] == "lostpass") {
 	//lostPassword();
 	die();
 }
@@ -104,8 +104,8 @@ if ("$_POST[action]" == "lostpass") {
 /*
  * Someone wants to validate their email address.
  */
-if ("$_GET[action]" == "activate") {
-	if (empty ($_GET[code])) {
+if (isset($_GET['action']) && $_GET['action'] == "activate") {
+	if (empty ($_GET['code'])) {
 		makeNotice("You need to supply an activation code!", "error", "Not confirmed");
 	} else {
 		$DB->query("UPDATE users SET emailvalid = '1' where emailcode='$_GET[code]' LIMIT 1");

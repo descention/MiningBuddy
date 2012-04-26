@@ -38,8 +38,8 @@ function getLogins($user) {
 	global $MySelf;
 	numericCheck($user, 0);
 
-	if (isset ($_GET[loginPage])) {
-		numericCheck($_GET[loginPage]);
+	if (isset ($_GET['loginPage'])) {
+		numericCheck($_GET['loginPage']);
 	}
 
 	// ask the oracle.
@@ -52,7 +52,7 @@ function getLogins($user) {
 		return (false);
 	}
 
-	$currentPage = $_GET[loginPage];
+	$currentPage = $_GET['loginPage'];
 
 	// Get the right amount of datasets from the dbase.
 	if ($currentPage > 0 && is_numeric($currentPage)) {
@@ -82,9 +82,9 @@ function getLogins($user) {
 	// Create a row for each login.
 	while ($row = $loginDS->fetchRow()) {
 		$login_table->addRow();
-		$login_table->addCol(date("d.m.y H:i", $row[issued]));
-		$login_table->addCol($row[ip]);
-		$login_table->addCol(substr($row[agent], 0, 60) . "...");
+		$login_table->addCol(date("d.m.y H:i", $row['issued']));
+		$login_table->addCol($row['ip']);
+		$login_table->addCol(substr($row['agent'], 0, 60) . "...");
 		$haveLogins = true;
 	}
 
@@ -138,7 +138,9 @@ function getLogins($user) {
 				if ($currentPage == $i) {
 					$text .= "[$i]";
 				} else {
-					$text .= "[<a href=\"index.php?action=$_GET[action]&id=$_GET[id]&loginPage=$i\">$i</a>] ";
+					$action = isset($_GET['action'])?$_GET['action']:"";
+					$id = isset($_GET['id'])?$_GET['id']:"";
+					$text .= "[<a href=\"index.php?action=$action&id=$id&loginPage=$i\">$i</a>] ";
 				}
 			}
 			$login_table->addRow("#060622");

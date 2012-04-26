@@ -37,9 +37,9 @@
  */
 
 // We have to SELECT the most fitting ID. This can be done in three ways.
-if (("$_GET[id]" >= 0) && (is_numeric($_GET[id]))) {
+if (("$_GET[id]" >= 0) && (is_numeric($_GET['id']))) {
 	// Way Nr. 1: The user specified an ID.
-	$ID = $_GET[id];
+	$ID = $_GET['id'];
 } else {
 	// Way Nr. 2: The user is in a Mining run, but has not given us an ID. Use the joined MiningOP ID.		
 	$ID = userInRun($userID, "check");
@@ -51,7 +51,7 @@ if (("$_GET[id]" >= 0) && (is_numeric($_GET[id]))) {
 			MakeNotice("There are no mining operations in the database! You have to create an operation prior to join.", "warning", "Not joined");
 		}
 		$getid = $results->fetchRow();
-		$ID = $getid[run];
+		$ID = $getid['run'];
 	}
 }
 
@@ -59,7 +59,7 @@ if (("$_GET[id]" >= 0) && (is_numeric($_GET[id]))) {
 $select = "";
 $r = $DB->query("select item, sum(Quantity) as total from hauled where miningrun = '$ID' group by item having sum(Quantity) <> 0");
 while($r2 = $r->fetchRow()){
-	if($r2[total] != 0){
+	if($r2['total'] != 0){
 		$select .= ", '$r2[total]' as $r2[item]";
 	}
 }
@@ -76,26 +76,26 @@ if ($results->numRows() != 1) {
 // Now that we have the run loaded in RAM, we can load several other things.
 $joinlog = $DB->query("SELECT * FROM joinups WHERE run = '$ID' order by ID DESC");
 $activelog = $DB->query("SELECT * FROM joinups WHERE run = '$ID' and parted is NULL");
-if ($row[m3Glue] <= 0) {
+if (!isset($row['m3Glue']) || $row['m3Glue'] <= 0) {
 	$mvalues = $DB->query("SELECT * FROM m3values order by id desc limit 1");
 } else {
-	$mvalues = $DB->query("SELECT * FROM m3values WHERE id='" . $row[m3Glue] . "' limit 1");
+	$mvalues = $DB->query("SELECT * FROM m3values WHERE id='" . $row['m3Glue'] . "' limit 1");
 }
-if ($row[shipGlue] <= 0) {
+if (!isset($row['shipGlue']) || $row['shipGlue'] <= 0) {
 	$values = $DB->query("SELECT * FROM shipvalues order by id desc limit 1");
 } else {
-	$values = $DB->query("SELECT * FROM shipvalues WHERE id='" . $row[shipGlue] . "' limit 1");
+	$values = $DB->query("SELECT * FROM shipvalues WHERE id='" . $row['shipGlue'] . "' limit 1");
 }
-if ($row[oreGlue] <= 0) {
+if ($row['oreGlue'] <= 0) {
 	$ovaluesR = $DB->query("select item, Worth, time, modifier from orevalues a where time = (select max(time) from orevalues b where a.item = b.item) group by item ORDER BY time DESC");
 	while($oRow = $ovaluesR->fetchRow())
-		$ovalues[$oRow[item]] = $oRow;
+		$ovalues[$oRow['item']] = $oRow;
 } else {
-	$ovaluesR = $DB->query("select item, Worth, time, modifier from orevalues a where time = (select max(time) from orevalues b where a.item = b.item and time <= '".$row[oreGlue]."') group by item ORDER BY time DESC");
+	$ovaluesR = $DB->query("select item, Worth, time, modifier from orevalues a where time = (select max(time) from orevalues b where a.item = b.item and time <= '".$row['oreGlue']."') group by item ORDER BY time DESC");
 	while($oRow = $ovaluesR->fetchRow())
-		$ovalues[$oRow[item]] = $oRow;
+		$ovalues[$oRow['item']] = $oRow;
 }
-if ($row[matGlue] <= 0) {
+if (!isset($row['matGlue']) || $row['matGlue'] <= 0) {
 	$matvalues = $DB->query("SELECT * FROM materials1 order by type desc limit 1");
 } else {
 	$matvalues = $DB->query("SELECT * FROM materials1 WHERE type='" . $MAT . "' limit 1");

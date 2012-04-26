@@ -45,12 +45,12 @@ function authVerify($username, $password, $trust = false) {
 
 	// lower case it.
 	$username = strtolower($username);
-	if(!isset($_SESSION[testauth])){
+	if(!isset($_SESSION['testauth'])){
 		$url = "https://auth.pleaseignore.com/api/1.0/login?user=$username&pass=$password";
 		$contents = file_get_contents($url);
 		$obj = json_decode($contents, TRUE);
 	} else {
-		$obj = $_SESSION[testauth];
+		$obj = $_SESSION['testauth'];
 	}
 	
 	// and query it.
@@ -58,11 +58,11 @@ function authVerify($username, $password, $trust = false) {
 		// Passwordless login (WAHHHHH!!!!)
 		$userDS = $DB->query("select * from users where username='$username' AND deleted='0' limit 1");
 		$passwordless = true;
-	} else if ($obj['auth'] == "ok" && !isset($_SESSION[testauth])) {
+	} else if ($obj['auth'] == "ok" && !isset($_SESSION['testauth'])) {
 		// TEST Authentication
-		$_SESSION[testauth] = $obj;
+		$_SESSION['testauth'] = $obj;
 		makeLoginPage($SUPPLIED_USERNAME);
-	} else if ($obj[auth] == "ok" && isset($_SESSION[testauth])){
+	} else if ($obj['auth'] == "ok" && isset($_SESSION['testauth'])){
 		$userDS = $DB->query("select * from users where username='$username' AND deleted='0' limit 1");
 		$passwordless = false;
 	} else if ( !$password ){
@@ -73,7 +73,7 @@ function authVerify($username, $password, $trust = false) {
 	if ($passwordless) {
 		$user = $userDS->fetchRow();
 	} else if ($obj['auth'] != "ok") {// No one found
-		$_SESSION[failedLogins]++;
+		$_SESSION['failedLogins']++;
 		// Log failed attempts.
 		$user_valid = $DB->getCol("SELECT COUNT(username) FROM users WHERE username = '$username' LIMIT 1");
 		$user_valid = $user_valid[0];
@@ -81,7 +81,7 @@ function authVerify($username, $password, $trust = false) {
 			$TIMEMARK,
 			"$_SERVER[REMOTE_ADDR]",
 			stripslashes(sanitize($username
-		)), $user_valid, sanitize($_SERVER[HTTP_USER_AGENT])));
+		)), $user_valid, sanitize($_SERVER['HTTP_USER_AGENT'])));
 		
 		return (false);
 	} else if ($userDS->numRows() == 0 && $obj['auth'] == "ok") {
@@ -90,7 +90,7 @@ function authVerify($username, $password, $trust = false) {
 		"addedby, confirmed, emailvalid,canLogin,authID) " .
 		"values (?, ?, ?, ?, ?,?, ?, ?)", array (
 			stripcslashes($username
-		), "", $obj[email], 1, 1, 1, 1, $obj[id] ));
+		), "", $obj['email'], 1, 1, 1, 1, $obj[id] ));
 
 		// Were we successful?
 		if ($DB->affectedRows() == 0) {
@@ -106,11 +106,11 @@ function authVerify($username, $password, $trust = false) {
 		// Try TEST Auth
 		$user = $userDS->fetchRow();
 		
-		if($user[authID] == null){
+		if($user['authID'] == null){
 			$DB->query("update users set authID='$obj[id]' where id='$user[id]'");
 		}
 		
-		if($user[authID] == null){
+		if($user['authID'] == null){
 			$DB->query("update users set authID='$obj[id]' where id='$user[id]'");
 		}
 		
@@ -136,7 +136,7 @@ function authVerify($username, $password, $trust = false) {
 			return ($MyAccount);
 			
 			// Load the api!
-			$api = new api($user[id]);
+			$api = new api($user['id']);
 			if (!$api->valid()) {
 				// NO valid api key!!!!11
 				session_destroy();

@@ -57,7 +57,7 @@ function userInRun($username, $run = "check") {
 		$results = $DB->getCol("select run from joinups where userid = '$userID' and parted is NULL limit 1");
 
 		// Return false if in no run, else ID of runNr.
-		if ($results[0] == "") {
+		if ($results == null) {
 			return (false);
 		} else {
 			return ($results[0]);

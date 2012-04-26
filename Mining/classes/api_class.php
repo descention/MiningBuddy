@@ -71,10 +71,10 @@ class api {
 		} else {
 			// API Key found
 			$myKeyDB = $myKeyDB->fetchRow();
-			$this->api_key = $myKeyDB[apiKey];
-			$this->api_id = $myKeyDB[apiID];
-			$this->valid = $myKeyDB[api_valid];
-			$this->validatedOn = $myKeyDB[time];
+			$this->api_key = $myKeyDB['apiKey'];
+			$this->api_id = $myKeyDB['apiID'];
+			$this->valid = $myKeyDB['api_valid'];
+			$this->validatedOn = $myKeyDB['time'];
 
 			// Calculate when next verification should occur.
 			global $TIMEMARK;
@@ -99,7 +99,7 @@ class api {
 				}
 			}
 
-			$this->characterID = $myKeyDB[charid];
+			$this->characterID = $myKeyDB['charid'];
 			return (true);
 		}
 	}
@@ -208,10 +208,10 @@ class api {
 			 * we find the one that matches the username.
 			 */
 			foreach ($xml->result->rowset->row as $row) {
-				if (strtolower($row[name]) == strtolower($MySelf->getUsername())) {
-					//fwrite($log, "Trying: $row[name] for " . $MySelf->getUsername());
-					$api_char = strtolower(sanitize($row[name]));
-					$api_id = $row[characterID];
+				if (strtolower($row['name']) == strtolower($MySelf->getUsername())) {
+					//fwrite($log, "Trying: $row['name'] for " . $MySelf->getUsername());
+					$api_char = strtolower(sanitize($row['name']));
+					$api_id = $row['characterID'];
 					$found = true;
 				}
 			}

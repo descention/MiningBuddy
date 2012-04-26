@@ -59,12 +59,13 @@ function sidebarOpenRuns() {
 	} else {
 		$sirstate = 1;
 	}
-
+	
+	$links = "";
 	// now loop through each result, and create the hyperlink and image.  
 	while ($row = $result->fetchRow()) {
 		
 		// Skip inofficial runs if user does not want to see them.
-		if (((!$sirstate && !$row[isOfficial]) && !($MySelf->getID() == $row[supervisor])) || $row[optype] == "Shopping") {
+		if (((!$sirstate && !$row['isOfficial']) && !($MySelf->getID() == $row['supervisor'])) || $row['optype'] == "Shopping") {
 			continue;
 		}
 		
@@ -73,9 +74,9 @@ function sidebarOpenRuns() {
 		// This creates the links.
 		$links .= "<a class=\"menu\" href=\"index.php?action=show&id=$row[id]\">";
 		
-		$opType = $row[optype]==""?"Standard":$row[optype];
+		$opType = $row['optype']==""?"Standard":$row['optype'];
 		// Add this run to the sidebar.
-		$links .= "&gt; " . $row[location] . " (". $opType .")" . "</a>";
+		$links .= "&gt; " . $row['location'] . " (". $opType .")" . "</a>";
 		
 	}
 

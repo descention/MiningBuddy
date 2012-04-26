@@ -1,7 +1,5 @@
 <?php
-//header("Location: http://whjew.pleaseignore.com");
-//echo "Please hold while I attempt to migrate the DB to the new server";
-//die();
+ini_set("display_errors","Off");
 /*
  * MiningBuddy (http://miningbuddy.net)
  * $Header: /usr/home/mining/cvs/mining/index.php,v 1.69 2008/01/06 19:48:39 mining Exp $
@@ -54,7 +52,7 @@ $MySelf = auth();
 /*
  * Is this a call for an image only (non-cached)?
  */
- include_once ('./functions/system/printImage.php');
+include_once ('./functions/system/printImage.php');
 
 /*
  * Load User preferences. 
@@ -67,7 +65,7 @@ $PREFS = new preferences($MySelf->getID());
  * are there any females playing the game?)
  */
 
-if (isset ($_POST[check])) {
+if (isset ($_POST['check'])) {
 	// User has submited a form.
 	process_post();
 } else {

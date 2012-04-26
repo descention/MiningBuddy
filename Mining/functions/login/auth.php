@@ -109,7 +109,7 @@ function auth() {
 		* Lets see wether there is a login request, this has priority over
 		* anything else. We dont want to create a login loop.
 		*/
-		if (isset ($_POST[login])) {
+		if (isset ($_POST['login'])) {
 			/*
 			* So we have a login post. We will now check the username and
 			* password combination against the database. Lets see if it is
@@ -120,15 +120,15 @@ function auth() {
 			
 			checkBan();
 			
-			$SUPPLIED_USERNAME = strtolower(sanitize($_POST[username]));
+			$SUPPLIED_USERNAME = strtolower(sanitize($_POST['username']));
 			
 			// Check for validity.
 			if (!ctypeAlnum($SUPPLIED_USERNAME)) {
 				makeNotice("Invalid username. Only characters a-z, A-Z and 0-9 are allowed.", "error", "Invalid Username");
 			}
 			
-			if(!isset($_SESSION[testauth])){
-				$SUPPLIED_PASSWORD = sha1($_POST[password]);
+			if(!isset($_SESSION['testauth'])){
+				$SUPPLIED_PASSWORD = sha1($_POST['password']);
 
 				// Lets check the password.
 				$MySelf = authVerify($SUPPLIED_USERNAME, $SUPPLIED_PASSWORD);
@@ -157,7 +157,7 @@ function auth() {
 
 			// Beta Warning.
 			global $IS_BETA;
-			if ($IS_BETA && ($_SESSION[betawarning] != $MySelf->getLastlogin())) {
+			if ($IS_BETA && ($_SESSION['betawarning'] != $MySelf->getLastlogin())) {
 				$_SESSION[betawarning] = $MySelf->getLastlogin();
 				makeNotice("You are using a beta version of MiningBuddy. Be aware that some functions may not " .
 				"be ready for production servers, and that there may be bugs around. You have been warned.", "warning", "Beta Warning");
@@ -173,7 +173,7 @@ function auth() {
 		$MySelf = authKeyIsValid();
 
 		if ($MySelf == false) {
-			$_SESSION[lastModDisplay] = false;
+			$_SESSION['lastModDisplay'] = false;
 			session_destroy();
 			makeLoginPage();
 			die();
@@ -184,8 +184,8 @@ function auth() {
 	 * Print motd. (Only on login) - and only if set.
 	 */
 	$MOTD = getTemplate("motd", "announce");
-	if (!$_SESSION[seenMotd] && !empty ($MOTD)) {
-		$_SESSION[seenMotd] = true;
+	if (!$_SESSION['seenMotd'] && !empty ($MOTD)) {
+		$_SESSION['seenMotd'] = true;
 		makeNotice(nl2br(stripslashes($MOTD)), "notice", "Announcement");
 	}
 

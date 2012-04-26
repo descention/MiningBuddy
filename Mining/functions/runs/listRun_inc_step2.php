@@ -40,36 +40,36 @@ $general_info->addHeader(">> General Information");
 // Row: Mining Run ID
 $general_info->addRow();
 $general_info->addCol("Mining ID:", $common_mode);
-$general_info->addCol(str_pad($row[id], 5, "0", STR_PAD_LEFT));
+$general_info->addCol(str_pad($row['id'], 5, "0", STR_PAD_LEFT));
 
 // Row: Is official run?
 $general_info->addRow();
 $general_info->addCol("This run is official:", $common_mode);
-$general_info->addCol(yesno($row[isOfficial], true));
+$general_info->addCol(yesno($row['isOfficial'], true));
 
 // Row: Op Type
 $general_info->addRow();
 $general_info->addCol("Op Type:", $common_mode);
-$general_info->addCol($row[optype]==""?"Standard":$row[optype]);
+$general_info->addCol($row['optype']==""?"Standard":$row['optype']);
 
 // Row: Supervisor Name
 $general_info->addRow();
 $general_info->addCol("Supervisor:", $common_mode);
-$general_info->addCol(makeProfileLink($row[supervisor]));
+$general_info->addCol(makeProfileLink($row['supervisor']));
 
 // Row: Taxes
 $general_info->addRow();
 $general_info->addCol("Corp Taxes:", $common_mode);
-$general_info->addCol($row[corpkeeps] . ".0%");
+$general_info->addCol($row['corpkeeps'] . ".0%");
 
 // Row: Starttime
 $general_info->addRow();
 $general_info->addCol("Starttime:", $common_mode);
-$general_info->addCol(date("d.m.y H:i", $row[starttime]));
+$general_info->addCol(date("d.m.y H:i", $row['starttime']));
 
 // Row: Endtime
 
-if ("$row[endtime]" == "") {
+if ($row['endtime'] == "") {
 
 	// Run is still open.
 	$endtime = "ACTIVE";
@@ -77,8 +77,8 @@ if ("$row[endtime]" == "") {
 	$general_info->addCol("Endtime:", $common_mode);
 
 	// Row: Endtime
-	$time = numberToString($TIMEMARK - $row[starttime]);
-	$secRunTime= $TIMEMARK - $row[starttime];
+	$time = numberToString($TIMEMARK - $row['starttime']);
+	$secRunTime= $TIMEMARK - $row['starttime'];
 	if ($time) {
 		$general_info->addCol("<font color=\"#00ff00\">ACTIVE for " . numberToString($secRunTime) . "</font>");
 	} else {
@@ -93,7 +93,7 @@ if ("$row[endtime]" == "") {
 	// Current TMEC
 	$general_info->addRow();
 	$general_info->addCol("Current TMEC:");
-	$general_info->addCol(calcTMEC($row[id], true));
+	$general_info->addCol(calcTMEC($row['id'], true));
 
 	// Statistical breakdown
 	$totalISK = getTotalWorth($ID);
@@ -134,15 +134,15 @@ if ("$row[endtime]" == "") {
 		// User IS in this run.
 
 		// Are we allowed to haul?
-		if (("$row[endtime]" == "") && ($MySelf->canAddHaul())) {
+		if (($row['endtime'] == "") && ($MySelf->canAddHaul())) {
 			$addHaul .= " [<a href=\"index.php?action=addhaul&id=$ID\">Haul</a>] ";
 		} else {
 			$addHaul .= false;
 		}
 
 		// Run-Owner: Lock/Unlock run (to dissallow people joining)
-		if (runSupervisor($row[id]) == $MySelf->getUsername()) {
-			if (runIsLocked($row[id])) {
+		if (runSupervisor($row['id']) == $MySelf->getUsername()) {
+			if (runIsLocked($row['id'])) {
 				$lock .= " [<a href=\"index.php?action=lockrun&id=$row[id]&state=unlock\">Unlock Run</a>] ";
 			} else {
 				$lock .= " [<a href=\"index.php?action=lockrun&id=$row[id]&state=lock\">Lock Run</a>] ";
@@ -162,7 +162,7 @@ if ("$row[endtime]" == "") {
 		}
 	}
 	// Give option to end this op.
-	if (($MySelf->getID() == $row[supervisor]) || ($MySelf->canCloseRun() && ($MySelf->isOfficial() || runSupervisor($row[id]) == $MySelf->getUsername()))) {
+	if (($MySelf->getID() == $row['supervisor']) || ($MySelf->canCloseRun() && ($MySelf->isOfficial() || runSupervisor($row['id']) == $MySelf->getUsername()))) {
 		$add2 = " [<a href=\"index.php?action=endrun&id=$ID\">Close Op</a>]";
 	}
 
@@ -176,8 +176,8 @@ if ("$row[endtime]" == "") {
 	// Row: Ended
 	$general_info->addRow();
 	$general_info->addCol("Ended on:", $common_mode);
-	$general_info->addCol(date("d.m.y H:i", $row[endtime]));
-	$ranForSecs = $row[endtime] - $row[starttime];
+	$general_info->addCol(date("d.m.y H:i", $row['endtime']));
+	$ranForSecs = $row['endtime'] - $row['starttime'];
 
 	// Duration
 	$general_info->addRow();
@@ -194,18 +194,18 @@ if ("$row[endtime]" == "") {
 	// Current TMEC
 	$general_info->addRow();
 	$general_info->addCol("TMEC reached:");
-	$general_info->addCol(calcTMEC($row[id]), true);
+	$general_info->addCol(calcTMEC($row['id']), true);
 }
 
 // We have to check for "0" - archiac runs that have no ore values glued to them
 
-if ($row[oreGlue] > 0) {
+if ($row['oreGlue'] > 0) {
 	$general_info->addRow();
 	$general_info->addCol("Ore Quotes:", $common_mode);
 
 	// Is this the current ore quote?
 	$cur = $DB->getCol("SELECT time FROM orevalues ORDER BY time DESC LIMIT 1");
-	if ($cur[0] <= $row[oreGlue]) {
+	if ($cur[0] <= $row['oreGlue']) {
 		// it is!
 		$cur = "<font color=\"#00ff00\"><b>(current)</b></font>";
 	} else {
@@ -214,19 +214,19 @@ if ($row[oreGlue] > 0) {
 
 	// Date of ore mod?
 	//$modTime = $DB->getCol("SELECT time FROM orevalues WHERE time='" .  . "' LIMIT 1");
-	$modDate = date("d.m.y", $row[oreGlue]);
-	$general_info->addCol("[<a href=\"index.php?action=showorevalue&id=" . $row[oreGlue] . "\">$modDate</a>] $cur");
+	$modDate = date("d.m.y", $row['oreGlue']);
+	$general_info->addCol("[<a href=\"index.php?action=showorevalue&id=" . $row['oreGlue'] . "\">$modDate</a>] $cur");
 }
 //Edit Starts Here
 // We have to check for "0" - archiac runs that have no ship values glued to them
 
-if ($row[shipGlue] > 0) {
+if ($row['shipGlue'] > 0) {
 	$general_info->addRow();
 	$general_info->addCol("Ship Values:", $common_mode);
 
 	// Are these the current Ship Values?
 	$cur = $DB->getCol("SELECT id FROM shipvalues ORDER BY time DESC LIMIT 1");
-	if ($cur[0] == $row[shipGlue]) {
+	if ($cur[0] == $row['shipGlue']) {
 		// it is!
 		$cur = "<font color=\"#00ff00\"><b>(current)</b></font>";
 	} else {
@@ -234,9 +234,9 @@ if ($row[shipGlue] > 0) {
 	}
 
 	// Date of ship mod?
-	$modTime = $DB->getCol("SELECT time FROM shipvalues WHERE id='" . $row[shipGlue] . "' LIMIT 1");
+	$modTime = $DB->getCol("SELECT time FROM shipvalues WHERE id='" . $row['shipGlue'] . "' LIMIT 1");
 	$modDate = date("d.m.y", $modTime[0]);
-	$general_info->addCol("[<a href=\"index.php?action=showshipvalue&id=" . $row[shipGlue] . "\">$modDate</a>] $cur");
+	$general_info->addCol("[<a href=\"index.php?action=showshipvalue&id=" . $row['shipGlue'] . "\">$modDate</a>] $cur");
 }
 //Edit Ends Here
 ?>

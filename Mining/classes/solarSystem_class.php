@@ -82,24 +82,24 @@ class solarSystem {
 		} else {
 			// Yes :)
 			$SystemDB = $assumedSystem->fetchRow();
-			$this->solarSystemName = $SystemDB[solarSystemName];
-			$this->solarSystemRegion = $SystemDB[regionID];
-			$this->solarSystemConstellation = $SystemDB[constellationID];
-			$this->solarSystemID = $SystemDB[solarSystemID];
-			$this->solarSystemSecurity = number_format($SystemDB[security], 1);
+			$this->solarSystemName = $SystemDB['solarSystemName'];
+			$this->solarSystemRegion = $SystemDB['regionID'];
+			$this->solarSystemConstellation = $SystemDB['constellationID'];
+			$this->solarSystemID = $SystemDB['solarSystemID'];
+			$this->solarSystemSecurity = number_format($SystemDB['security'], 1);
 
 			// But wait, there is more! We need to load the Constellation!
 			$ConstellationDB = $this->DB->query("SELECT * FROM $STATIC_DB.mapConstellations WHERE ConstellationID ='" . $this->solarSystemConstellation . "' LIMIT 1");
 			$Constellation = $ConstellationDB->fetchRow();
-			$this->constellationName = $Constellation[constellationName];
-			$this->constellationID = $Constellation[constellationID];
-			$this->constellationRegion = $Constellation[regionID];
+			$this->constellationName = $Constellation['constellationName'];
+			$this->constellationID = $Constellation['constellationID'];
+			$this->constellationRegion = $Constellation['regionID'];
 
 			// Even more! Region!
 			$RegionDB = $this->DB->query("SELECT * FROM $STATIC_DB.mapRegions WHERE regionID = '" . $this->solarSystemRegion . "' LIMIT 1");
 			$Region = $RegionDB->fetchRow();
-			$this->regionName = $Region[regionName];
-			$this->regionID = $Region[regionID];
+			$this->regionName = $Region['regionName'];
+			$this->regionID = $Region['regionID'];
 
 			// We found something!
 			$this->valid = true;
@@ -143,7 +143,7 @@ class solarSystem {
 			// There are! Now loop'em!
 			while ($neighbour = $nbs->fetchRow()) {
 				// Add to array.
-				$array[] = $neighbour[solarSystemName];
+				$array[] = $neighbour['solarSystemName'];
 			}
 			// Return array.
 			return ($array);
@@ -226,14 +226,14 @@ class solarSystem {
 					}
 
 					// Add the information.
-					$curRuns = $this->DB->getCol("SELECT COUNT(location) FROM runs WHERE location = '" . $otherSystem[solarSystemName] . "' AND endtime IS NULL");
+					$curRuns = $this->DB->getCol("SELECT COUNT(location) FROM runs WHERE location = '" . $otherSystem['solarSystemName'] . "' AND endtime IS NULL");
 					if ($curRuns[0] > 0) {
 						$curRuns = "(" . $curRuns[0] . " active runs)";
 					} else {
 						$curRuns = "";
 					}
 
-					$table->addCol("<a href=\"index.php?action=browse&mode=0&id=" . $otherSystem[solarSystemID] . "\">" . $otherSystem[solarSystemName] . "</a> (" . number_format($otherSystem[security], 1) . ") $curRuns");
+					$table->addCol("<a href=\"index.php?action=browse&mode=0&id=" . $otherSystem['solarSystemID'] . "\">" . $otherSystem['solarSystemName'] . "</a> (" . number_format($otherSystem['security'], 1) . ") $curRuns");
 				}
 			}
 

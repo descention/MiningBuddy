@@ -32,7 +32,12 @@
  */
 
 function numberToString($id) {
-
+	$string = "";
+	$days = 0;
+	$hours = 0;
+	$minutes = 0;
+	$seconds = 0;
+	$thingies = 0;
 	// We need a number. GOE0.
 	if (!number_format($id, 0)) {
 		$BT = nl2br(print_r(debug_backtrace(), true));		
@@ -122,7 +127,7 @@ function numberToString($id) {
 }
 
 function numberToString_internal($thingies) {
-
+	$string = "";
 	switch ($thingies) {
 		case (0) :
 			$string .= ".";

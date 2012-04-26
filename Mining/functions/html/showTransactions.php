@@ -42,15 +42,15 @@
 		makeNotice("You are not an accountant to your corporation. Access denied.", "error", "Access denied");
 	}
  	
-	if(isset($_GET[auth])){
+	if(isset($_GET['auth'])){
 		$auth = true;
 	} else {
 		$auth = false;
 	}
  	// Sanity check.
- 	numericCheck($_GET[id],0);
- 	$username = idToUsername($_GET[id]);
- 	$id = $_GET[id];
+ 	numericCheck($_GET['id'],0);
+ 	$username = idToUsername($_GET['id']);
+ 	$id = $_GET['id'];
  	
  	// Load the transaction log.
 	$account = $auth?"'s TEST Auth":"";
@@ -60,8 +60,8 @@
 	$users = $DB->query("select id, username from users where ((authID in (select authID from users where id = '$id') and '$auth' = 1) or id = '$id')");
 	
 	while($user = $users->fetchRow()){
-		$userid = $user[id];
-		$username = $user[username];
+		$userid = $user['id'];
+		$username = $user['username'];
 		
 		$trans = getTransactions($userid); 	
 		if (!$trans) {

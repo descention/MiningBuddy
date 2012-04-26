@@ -108,6 +108,9 @@ class html {
 			$mainLogo = new graphic("title");
 			$mainLogo->setText(getConfig("sitename"));
 			$mainLogo->setBGColor("2D2D37");
+			
+			// this is here to retain some code. Image caching seemed to be pretty useless.
+			$imageCaching  = false;
 			if($imageCaching){
 				$loginLogo = new graphic("standard");
 				$loginLogo->setText(ucfirst($MySelf->getUsername()));

@@ -41,8 +41,10 @@
 function process_get() {
 	global $page;
 	global $MySelf;
-
-	switch ("$_GET[action]") {
+	
+	$ajax = 0;
+	
+	switch ($_GET['action']) {
 
 		// Maintenance!
 		case ("maintenance") :
@@ -338,7 +340,7 @@ function process_get() {
 
 	if($ajax > 1){
 		$ajaxHtml = "<script>window.setTimeout(function(){\$.ajax({";
-		if(isset($_REQUEST[ajax])){
+		if(isset($_REQUEST['ajax'])){
 			$ajaxHtml .= "url: '?". $_SERVER['QUERY_STRING'] ."',";
 		}else{
 			$ajaxHtml .= "url: '?". $_SERVER['QUERY_STRING'] ."&ajax',";
@@ -349,7 +351,7 @@ function process_get() {
 		$page .= $ajaxHtml;
 	}
 		
-	if(isset($_REQUEST[ajax])){
+	if(isset($_REQUEST['ajax'])){
 	
 		$html = new html;
 		$page = $html->clean($page);

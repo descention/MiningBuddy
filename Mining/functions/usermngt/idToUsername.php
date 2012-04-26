@@ -62,7 +62,7 @@ function idToUsername($id, $authID=false) {
 
 	// return the username.
 	while ($row = $results->fetchRow()) {
-		return ($row[username]);
+		return ($row['username']);
 	}
 
 }

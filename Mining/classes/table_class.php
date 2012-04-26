@@ -146,6 +146,8 @@ class table {
 		if (!$this->rowIsOpen) {
 			makeNotice("Row not opened.", "error", "Internal Error");
 		}
+		$bold = "";
+		$bold_end = "";
 		$staticAttributes = "";
 		$colspan = 1;
 		// Do we have a valid modes array?

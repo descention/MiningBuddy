@@ -78,7 +78,7 @@ function getMarketPrice($id, $type = "buy", $criteria = "max") {
 		return $value;
 	}else{
 		while($r2 = $cacheResult->fetchRow()){
-			return $r2[value];
+			return $r2['value'];
 		}
 	}
 }

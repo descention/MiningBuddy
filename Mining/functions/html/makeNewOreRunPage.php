@@ -42,11 +42,12 @@ function makeNewOreRunPage() {
 	global $DB;
 	global $MySelf;
 
+	$locationPDM = "";
 	// We need a list of all the previous run locations.
 	$locations = $DB->query("SELECT DISTINCT location FROM runs ORDER BY location");
 	if ($locations->numRows() > 0) {
 		while ($location = $locations->fetchRow()) {
-			$locationPDM .= "<option value=\"" . $location[location] . "\">" . $location[location] . "</option>";
+			$locationPDM .= "<option value=\"" . $location['location'] . "\">" . $location['location'] . "</option>";
 		}
 		$locationPDM = "<select name=\"locations\">" . $locationPDM . "</select>";
 	}
@@ -65,12 +66,13 @@ function makeNewOreRunPage() {
 	} else {
 		// There are not target systems in the database.
 		if (getConfig("trustSetting") > 0) {
-			$table->addCol("<input type=\"text\" value=\"" . $_SERVER[HTTP_EVE_SOLARSYSTEMNAME] . "\" name=\"location\">");
+			$table->addCol("<input type=\"text\" value=\"" . $_SERVER['HTTP_EVE_SOLARSYSTEMNAME'] . "\" name=\"location\">");
 		} else {
 			$table->addCol("<input type=\"text\" name=\"location\">");
 		}
 	}
 	
+	$pdm = "";
 	// Field: Officer in Charge
 	if ($MySelf->isOfficial()) {
 		$SeniorUsers = $DB->getCol("SELECT DISTINCT username FROM users WHERE canCreateRun = 1 AND deleted='0' ORDER BY username");
@@ -99,7 +101,7 @@ function makeNewOreRunPage() {
 	
 	$table->addRow();
 	$table->addCol("Op Type:");
-	$OPTYPE = isset($_REQUEST[optype])?$_REQUEST[optype]:"";
+	$OPTYPE = isset($_REQUEST['optype'])?$_REQUEST['optype']:"";
 	
 	$ops = $DB->getAll("select opName from opTypes;");
 	if($DB->isError($ops)){
@@ -108,8 +110,8 @@ function makeNewOreRunPage() {
 	$opSelect = "<select name='optype' onChange='window.location = \"?action=newrun&optype=\"+this.value'>\n";
 	$opSelect .= "<option value=''>Standard</option>\n";
 	foreach($ops as $op){
-		$default = $op[opName] == $OPTYPE?"selected":"";
-		$opSelect .= "<option $default value='".$op[opName]."'>".$op[opName]."</option>\n";
+		$default = $op['opName'] == $OPTYPE?"selected":"";
+		$opSelect .= "<option $default value='".$op['opName']."'>".$op['opName']."</option>\n";
 	}
 	$opSelect .= "</select>";
 	
@@ -157,11 +159,11 @@ function makeNewOreRunPage() {
 	// NEXT hour.
 	$times = humanTime("toHuman", ($TIMEMARK +3600));
 
-	$timefield = "<input type=\"text\" name=\"ST_day\"    size=\"4\" maxlength=\"2\" value=\"" . $times[day] . "\">." .
-	"<input type=\"text\" name=\"ST_month\"  size=\"4\" maxlength=\"2\" value=\"" . $times[month] . "\">." .
-	"<input type=\"text\" name=\"ST_year\"   size=\"6\" maxlength=\"4\" value=\"" . $times[year] . "\">" .
+	$timefield = "<input type=\"text\" name=\"ST_day\"    size=\"4\" maxlength=\"2\" value=\"" . $times['day'] . "\">." .
+	"<input type=\"text\" name=\"ST_month\"  size=\"4\" maxlength=\"2\" value=\"" . $times['month'] . "\">." .
+	"<input type=\"text\" name=\"ST_year\"   size=\"6\" maxlength=\"4\" value=\"" . $times['year'] . "\">" .
 	"&nbsp;&nbsp;" .
-	"<input type=\"text\" name=\"ST_hour\"   size=\"4\" maxlength=\"2\" value=\"" . $times[hour] . "\">:" .
+	"<input type=\"text\" name=\"ST_hour\"   size=\"4\" maxlength=\"2\" value=\"" . $times['hour'] . "\">:" .
 	"<input type=\"text\" name=\"ST_minute\" size=\"4\" maxlength=\"2\" value=\"00\">";
 
 	$orNow = "<input type=\"checkbox\" name=\"startnow\" value=\"true\" checked=\"checked\" > start now";
@@ -264,13 +266,14 @@ function makeNewOreRunPage() {
 	// El grande submit button!					
 	$table->addHeaderCentered($submitbutton);
 
+	/*
 	// Show, if any, disabled ore-types.
 	if ($disabledText) {
 		$table->addRow();
 		$table->addCol("<br><br>" . $disabledText . ".", array (
 			"colspan" => "2"
 		));
-	}
+	}*/
 	
 	// Render the table, and return it.
 	return ("<h2>Create a new Operation</h2><form action=\"index.php\" method=\"POST\">" . $table->flush() . "</form>");

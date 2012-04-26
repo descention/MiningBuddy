@@ -52,6 +52,7 @@ function joinAs($id = false) {
 		foreach ($SHIPTYPES as $type) {
 			$pdm .= "<option value=\"" . $count . "\">" . $type . "</option>";
 			$count++;
+			break;
 		}
 		$pdm .= "</select>";
 

@@ -41,7 +41,7 @@ function authKeyIsValid() {
 	global $TIMEMARK;
 	global $MySelf;
 
-	$MySelf = unserialize(base64_decode($_SESSION[MySelf]));
+	$MySelf = unserialize(base64_decode($_SESSION['MySelf']));
 
 	// No object, no service.
 	if (!is_object($MySelf)) {
@@ -49,9 +49,9 @@ function authKeyIsValid() {
 	}
 
 	// Set up other variables needed for auth.
-	$TOKEN = sanitize($_SESSION[auth]);
-	$IP = $_SERVER[REMOTE_ADDR];
-	$AGENT = sanitize($_SERVER[HTTP_USER_AGENT]);
+	$TOKEN = sanitize($_SESSION['auth']);
+	$IP = $_SERVER['REMOTE_ADDR'];
+	$AGENT = sanitize($_SERVER['HTTP_USER_AGENT']);
 	$USER = $MySelf->getID();
 
 	// Ask the oracle.
@@ -64,17 +64,17 @@ function authKeyIsValid() {
 	}
 
 	$token = $tokens->fetchRow();
-	$TTL = $token[issued] + (getConfig("TTL") * 60);
+	$TTL = $token['issued'] + (getConfig("TTL") * 60);
 	
 	// Check that every bit of the auth token matches valid values.
-	if (("$token[authkey]" == "$TOKEN") && ("$token[user]" == "$USER") && ("$token[ip]" == "$IP") && (substr($token[agent], 0, 100) == substr($AGENT, 0, 100)) && ($TIMEMARK <= $TTL)) {
+	if (("$token[authkey]" == "$TOKEN") && ("$token[user]" == "$USER") && ("$token[ip]" == "$IP") && (substr($token['agent'], 0, 100) == substr($AGENT, 0, 100)) && ($TIMEMARK <= $TTL)) {
 		// It does. Token valid.
 		return $MySelf;
 	} else {
 		// Something is not right. Destroy all login tokens.
 		$DB->query("DELETE FROM auth WHERE authkey ='$TOKEN'");
 		session_destroy();
-		header("Location: index.php?" . $_SERVER[QUERY_STRING]);
+		header("Location: index.php?" . $_SERVER['QUERY_STRING']);
 		return false;
 	}
 

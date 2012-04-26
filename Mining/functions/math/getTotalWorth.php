@@ -53,12 +53,12 @@ function getTotalWorth($id, $net = false) {
 	if ($runs->numRows() != 1) {
 		makeNotice("Specified run not found, or does no longer exist!", "warning", "Internal Error");
 	}
-	
+	$value = 0;
 	// we need some results.
 	$r = $DB->query("select sum(Quantity) as total, typeID from hauled, $STATIC_DB.invTypes where item = replace(replace(typeName,' ',''),'-','') and miningrun = '$id' group by item");
 	while($r2 = $r->fetchRow()){
-		if($r2[total] != 0){
-			$value += ($r2[total] * getMarketPrice($r2[typeID]));
+		if($r2['total'] != 0){
+			$value += ($r2['total'] * getMarketPrice($r2['typeID']));
 		}
 	}
 	

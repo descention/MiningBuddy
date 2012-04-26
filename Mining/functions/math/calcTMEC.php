@@ -60,19 +60,19 @@ function calcTMEC($runID, $force = false) {
 	}
 	
 	$run = $times->fetchRow();
-	if($run[optype] == "PI"){return "0";}
+	if($run['optype'] == "PI"){return "0";}
 	// check that the endtime is valid.
-	if ($run[endtime] == 0) {
+	if ($run['endtime'] == 0) {
 		// Run still ongoing, pretent it ends now.
 		global $TIMEMARK;
 		$endtime = $TIMEMARK;
 	} else {
 		// Use real endtime.
-		$endtime = $run[endtime];
+		$endtime = $run['endtime'];
 	}
 	
 	// Calculate how many seconds the run lasted.
-	$lasted = $endtime - $run[starttime];
+	$lasted = $endtime - $run['starttime'];
 
 	// Get the total ISK mined by the run.
 	$ISK = getTotalWorth($runID);

@@ -42,16 +42,16 @@ function getOreSettings($ORE = "",$OPTYPE = "") {
 	global $DB;
 
 	// Cache the ressource.
-	if (!isset ($_SESSION[oretypes])) {
+	if (!isset ($_SESSION['oretypes'])) {
 		$SETTINGS = $DB->getAssoc("SELECT * FROM config WHERE name LIKE '%Enabled'");
 	} else {
-		$SETTINGS = $_SESSION[oretypes];
+		$SETTINGS = $_SESSION['oretypes'];
 	}
 
 	// Return the full array or a single 0/1 statement for a single oretype.
 	if ("$ORE" != "") {
 		// Single ore type
-		if ($SETTINGS[$ORE.$OPTYPE.Enabled]) {
+		if (isset($SETTINGS[$ORE.$OPTYPE.'Enabled']) && $SETTINGS[$ORE.$OPTYPE.'Enabled']) {
 			return (true);
 		} else {
 			return (false);

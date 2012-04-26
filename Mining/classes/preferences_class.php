@@ -46,7 +46,7 @@ class preferences {
 
 		$this->UserID = $id;
 		$this->preferences = $this->loadPrefs();
-		$_SESSION[PREFS] = serialize($this->preferences);
+		$_SESSION['PREFS'] = serialize($this->preferences);
 	}
 
 	public function getPref($pref) {
@@ -88,7 +88,7 @@ class preferences {
 		$DB->query("UPDATE users SET preferences = '" . $serializedPrefs . "' where ID='" . $this->UserID . "'");
 
 		// Update the session, too.
-		$_SESSION[PREFS] = serialize($this->preferences);
+		$_SESSION['PREFS'] = serialize($this->preferences);
 	}
 
 	private function loadPrefs() {
@@ -100,8 +100,8 @@ class preferences {
 		 */
 
 		// Can we used cached data?
-		if (!empty ($_SESSION[PREFS])) {
-			$TEMP = unserialize($_SESSION[PREFS]);
+		if (!empty ($_SESSION['PREFS'])) {
+			$TEMP = unserialize($_SESSION['PREFS']);
 			if (is_array($TEMP)) {
 				return ($TEMP);
 			}
@@ -118,7 +118,7 @@ class preferences {
 		if ($DB->numRows() == 1) {
 			// ok, found the row, but is there something in it?
 			$serializedPrefs = $DS->fetchRow();
-			$prefs = unserialize($serializedPrefs[preferences]);
+			$prefs = unserialize($serializedPrefs['preferences']);
 
 			if (!empty ($prefs)) {
 				// Row found, and prefs are not empty.

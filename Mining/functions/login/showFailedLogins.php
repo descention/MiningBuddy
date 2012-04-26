@@ -43,7 +43,9 @@
  	// Specify a user, if given.
  	if ($user){
  		$addQuery = "WHERE username = '" . $user ."'";
- 	}
+ 	}else{
+		$addQuery = "";
+	}
  	
  	// Set the default results (10)
  	if ($limit < 1) {
@@ -78,23 +80,23 @@
  		// Add the data-rows.
  		while ($log = $FailedDB->fetchRow()) {
  			$table->addRow();
- 			$table->addCol(str_pad($log[incident], 4, "0", STR_PAD_LEFT));
- 			$table->addCol(date("d.m.y h:i:s", $log[time]));
- 			$table->addCol($log[ip]);
+ 			$table->addCol(str_pad($log['incident'], 4, "0", STR_PAD_LEFT));
+ 			$table->addCol(date("d.m.y h:i:s", $log['time']));
+ 			$table->addCol($log['ip']);
  			
- 			if ($log[username_valid]) {
-				$userID = usernameToID(stripslashes(sanitize($log[username])),"Failed_Login");
+ 			if ($log['username_valid']) {
+				$userID = usernameToID(stripslashes(sanitize($log['username'])),"Failed_Login");
 				if($userID == -1) {
-					$link = ucfirst(stripslashes(sanitize($log[username])));					
+					$link = ucfirst(stripslashes(sanitize($log['username'])));					
 				} else {
-					$link = "<a href=\"index.php?action=edituser&id=$userID\">".ucfirst(stripslashes(sanitize($log[username])))."</a>";
+					$link = "<a href=\"index.php?action=edituser&id=$userID\">".ucfirst(stripslashes(sanitize($log['username'])))."</a>";
 				}
 				$table->addCol($link); 				
  			} else {
- 				$table->addCol(ucfirst(sanitize($log[username])));
+ 				$table->addCol(ucfirst(sanitize($log['username'])));
  			}
- 			$table->addCol(yesno($log[username_valid]));
-// 			$table->addCol($log[agent]);
+ 			$table->addCol(yesno($log['username_valid']));
+// 			$table->addCol($log['agent']);
  		}
  		
  		$table->addHeaderCentered("Securing your system is your responsibility!");

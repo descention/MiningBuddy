@@ -63,7 +63,7 @@ function getTransactions($user) {
 		return (false);
 	}
 
-	$currentPage = $_GET[walletPage];
+	$currentPage = isset($_GET['walletPage'])?$_GET['walletPage']:0;
 	
 	// Get the right amount of datasets from the dbase.
 	if ($currentPage > 0 && is_numeric($currentPage)) {
@@ -77,11 +77,11 @@ function getTransactions($user) {
 	
 	while ($transaction = $transactions->fetchRow()) {
 		$table->addRow();
-		$table->addCol(date("d.m.y H:i:s", $transaction[time]));
-		$table->addCol(str_pad($transaction[id], "6", "0", STR_PAD_LEFT));
-		$table->addCol(ucfirst(idToUsername($transaction[banker])));
+		$table->addCol(date("d.m.y H:i:s", $transaction['time']));
+		$table->addCol(str_pad($transaction['id'], "6", "0", STR_PAD_LEFT));
+		$table->addCol(ucfirst(idToUsername($transaction['banker'])));
 
-		switch ($transaction[type]) {
+		switch ($transaction['type']) {
 			case ("0") :
 				$table->addCol("deposit");
 				break;
@@ -90,17 +90,17 @@ function getTransactions($user) {
 				break;
 		}
 
-		if ($transaction[amount] > 0) {
-			$table->addCol("<font color=\"#00ff00\">" . number_format($transaction[amount], 2) . " ISK</font>");
+		if ($transaction['amount'] > 0) {
+			$table->addCol("<font color=\"#00ff00\">" . number_format($transaction['amount'], 2) . " ISK</font>");
 		} else {
-			$table->addCol("<font color=\"#ff0000\">" . number_format($transaction[amount], 2) . " ISK</font>");
+			$table->addCol("<font color=\"#ff0000\">" . number_format($transaction['amount'], 2) . " ISK</font>");
 		}
 
-		$table->addCol(strtolower($transaction[reason]));
+		$table->addCol(strtolower($transaction['reason']));
 	}
 
 	// Get the right next and previous pages.
-	$currentPage = $_GET[walletPage];
+	$currentPage = isset($_GET['walletPage'])?$_GET['walletPage']:0;
 	
 	// if we have more than 1 page, show the navbar.
 	if ($transactions_pages > 1) {

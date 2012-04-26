@@ -52,7 +52,7 @@
  	if ($template->numRows() == 1) {
  		// Yes!
  		$temp = $template->fetchRow();
- 		return($temp[template]);
+ 		return($temp['template']);
  	} else {
  		// We dont have it :(
  		return(false);
