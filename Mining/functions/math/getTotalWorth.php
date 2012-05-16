@@ -43,29 +43,74 @@ function getTotalWorth($id, $net = false) {
 	global $DBORE;
 	global $SHIPTYPES;
 	global $DBSHIP;
-	global $STATIC_DB;
-	
+
 	// Is $id truly an integer?
 	numericCheck($id);
-	
-	$runs = $DB->query("SELECT id FROM runs WHERE id = '$id' limit 1");
+
+	// we need some results.
+	$select = "";
+	$r = $DB->query("select item, sum(Quantity) as total from hauled where miningrun = '$id' group by item having sum(Quantity) <> 0");
+	while($r2 = $r->fetchRow()){
+		if($r2[total] != 0){
+			$select .= ", '$r2[total]' as $r2[item]";
+		}
+	}
+
+	$runs = $DB->query("SELECT id,oreGlue $select FROM runs WHERE id = '$id' limit 1");
+
+	// And check that we actually suceeded.
+	if ($runs->numRows() != 1) {
+		makeNotice("Internal error: SELECT id,oreGlue $select FROM runs WHERE id = '$id' limit 1", "error", "Internal Error!");
+	} else {
+		$run = $runs->fetchRow();
+	}
 	
 	if ($runs->numRows() != 1) {
 		makeNotice("Specified run not found, or does no longer exist!", "warning", "Internal Error");
 	}
-	$value = 0;
-	// we need some results.
-	$r = $DB->query("select sum(Quantity) as total, typeID from hauled, $STATIC_DB.invTypes where item = replace(replace(typeName,' ',''),'-','') and miningrun = '$id' group by item");
-	while($r2 = $r->fetchRow()){
-		if($r2['total'] != 0){
-			$value += ($r2['total'] * getMarketPrice($r2['typeID']));
-		}
+
+	// Load the appropiate ore values.
+	if ($run[oreGlue] <= 0) {
+		$oreValueR = $DB->query("select * from orevalues a where time = (select max(time) from orevalues b where a.item = b.item) group by item ORDER BY time DESC");
+	} else {
+		$oreValueR = $DB->query("select * from orevalues a where time = (select max(time) from orevalues b where a.item = b.item and time <= (select oreglue from runs where id = '$id')) group by item ORDER BY time DESC");
+	}
+
+	// Create variables according to ore names, fill them with price info.
+	while ($row = $oreValueR->fetchRow()) {
+		$oreValue[$row[Item]] = $row[Worth];
+	}
+
+	// Now multiply each ore amount with raw value, add it to total value.
+	foreach ($DBORE as $ORE) {
+		$value = $value + ($run[$ORE] * $oreValue[$ORE]);
 	}
 	
+	/*
+//Edit Starts Here	
+	// Load the appropiate ship values.
+	if ($run[shipGlue] <= 0) {
+		$shipvalues = $DB->query("select * from shipvalues order by id desc limit 1");
+	} else {
+		$shipvalues = $DB->query("select * from shipvalues where id='" . $run[shipGlue] . "' limit 1");
+	}
+	$row = $shipvalues->fetchRow();
+
+	// Create variables according to ship names, fill them with price info.
+	foreach ($DBSHIP as $SHIP) {
+		$shipValue[$SHIP] = $row[$SHIP . Value];
+	}
+
+	// Now multiply each ship amount with raw value, and subtract it from total value.
+	foreach ($DBSHIP as $SHIP) {
+		$svalue = $svalue - ($run[$SHIP] * $shipValue[$SHIP]);
+	}
+//Edit Ends Here, but continues.
+	*/
 	// Deduct corp tax.
 	if ($net) {
 		$CorpTax = $DB->getCol("SELECT corpkeeps FROM runs WHERE id='$id'");
-		$taxes = abs($value * $CorpTax[0]) / 100;
+		$taxes = ($value * $CorpTax[0]) / 100;
 		$value = $value - $taxes;
 	}
 //Edit Continues Here

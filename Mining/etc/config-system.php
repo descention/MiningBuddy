@@ -194,7 +194,8 @@ $ORENAMES = array (
 	"Unsecured Frontier Enclave Relay",
 	"Unsecured Frontier Server Bank",
 	*/
-	
+
+	"Scan Sig",
 	"Water",
 	"Oxygen",
 );

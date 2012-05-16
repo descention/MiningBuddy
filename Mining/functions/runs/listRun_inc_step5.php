@@ -68,7 +68,8 @@ while ($mval = $mvalues->fetchrow()) {
 		// We need a Variable name with the word Wanted and M3 (for the wanted and m3 columns)
 		$OREWANTED = $ORE . "Wanted";
 		//Pulls the m3 of each ore type.
-		$OREWORTH = getMarketPrice($r2['typeID']);
+		//$OREWORTH = getMarketPrice($r2['typeID']);
+		$OREWORTH = ($oval[$ORE]["Worth"]);
 		$OREM3 = $r2['volume'];
 		
 		/* If an ore is neither wanted nor has been harvested so far, we dont print
@@ -85,7 +86,7 @@ while ($mval = $mvalues->fetchrow()) {
 			$worth = ($OREWORTH * $row[$ORE]);
 			$totalworth = $totalworth + $worth;
 
-			//Do Not Make any changes, It's finally working!			
+			//Do Not Make any changes, It's finally working!
 			if ($row[$ORE] == 0) {
 				$tmp_ore = "<i>none</i>";
 				$tmp_ore_m3 = "<i>none</i>";
