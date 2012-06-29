@@ -82,7 +82,7 @@ function calcTMEC($runID, $force = false) {
 	$playerCount = $playerCount[0];
 
 	// Calculate the TMEC.
-	$TMEC = number_format(((($ISK / ($lasted/60/60)) / $playerCount) / 1000000), 3);
+	$TMEC = (($ISK / ($lasted/60/60)) / $playerCount) / 1000000;
 
 	// Only positive TMECS
 	if ($TMEC < 0) {
@@ -94,7 +94,7 @@ function calcTMEC($runID, $force = false) {
 		$DB->query("UPDATE runs SET tmec ='" . $TMEC . "' WHERE id='" . $runID . "' LIMIT 1");
 	}
 
-	return ($TMEC);
+	return number_format($TMEC, 3);
 
 }
 ?>
