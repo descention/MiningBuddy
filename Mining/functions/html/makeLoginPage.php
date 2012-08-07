@@ -70,7 +70,7 @@ function makeLoginPage($user = false) {
 				"bold" => "true",
 				"colspan" => 3
 			));
-		} else if (isset($_SESSION[testauth])) {
+		} else if (isset($_SESSION['testauth'])) {
 			$login->addRow();
 			$login->addCol("Please select the character you wish to login as.", array("colspan"=>3));
 		} else {
@@ -160,10 +160,10 @@ function makeLoginPage($user = false) {
 				$chars = new SimpleXMLElement($return);
 			}catch(Exception $ex){
 				continue;
-			}	
+			}
 			foreach($chars->result[0]->rowset[0] as $row){
 				$character = (string)$row[name];
-				if($row[corporationName] != "B0rthole" || in_array($character,$array))
+				if($row['corporationName'] != "B0rthole" || in_array($character,$array))
 					continue;
 				if($character == $user)
 					$selected = "selected";
@@ -172,7 +172,7 @@ function makeLoginPage($user = false) {
 				$count++;
 			}
 		}
-		var_dump($array);
+		//var_dump($array);
 		$select .= "</select>";
 		$login->addCol($select, array("colspan"=>"2"));
 		

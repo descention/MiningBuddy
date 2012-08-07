@@ -78,7 +78,7 @@ function getTotalWorth($id, $net = false) {
 
 	// Create variables according to ore names, fill them with price info.
 	while ($row = $oreValueR->fetchRow()) {
-		$oreValue[$row[Item]] = $row[Worth];
+		$oreValue[$row['Item']] = $row['Worth'];
 	}
 
 	// Now multiply each ore amount with raw value, add it to total value.
