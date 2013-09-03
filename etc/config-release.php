@@ -51,9 +51,9 @@
  *    Hint: If you get errors about mysqli or if you are having problems
  *          with your database, change the protocol from mysqli to mysql.
  */
-$mysql_username = "whbuddy";
-$mysql_password = "whbuddy1.0";
-$mysql_hostname = "home.descention.net:13306";
+$mysql_username = "";
+$mysql_password = "";
+$mysql_hostname = "localhost";
 $mysql_dbname = "whbuddy";
 $mysql_protocol = "mysqli";
 
@@ -125,7 +125,7 @@ $AUTH_TYPE = "base";
 /* 
  * End configuration.
  * Changing anything below this line will cause the MiningBuddy to break,
- * grow wings, become a Minmatar and beeing sold into slavery.
+ * grow wings, become a Minmatar, and be sold into slavery.
  * 
  * Hint: You can change the CONF_VER number if you manually updated this 
  *       configuration file and you are sure that your configuration file
