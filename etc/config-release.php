@@ -51,10 +51,10 @@
  *    Hint: If you get errors about mysqli or if you are having problems
  *          with your database, change the protocol from mysqli to mysql.
  */
-$mysql_username = "";
-$mysql_password = "";
-$mysql_hostname = "localhost";
-$mysql_dbname = "mining";
+$mysql_username = "whbuddy";
+$mysql_password = "whbuddy1.0";
+$mysql_hostname = "home.descention.net:13306";
+$mysql_dbname = "whbuddy";
 $mysql_protocol = "mysqli";
 
 /*
@@ -103,13 +103,16 @@ $IGB_VISUAL = true;
  */
 $MB_EMAIL = "MiningBuddy@" . $DOMAIN;
 
-/*
- * Step 6: TEST Auth key
+ /*
+ * Step 6: Auth selection
  * 
- * Enable MiningBuddy to get user lists with an authentication key.
- * Ask matalok for a key.
- */
-$TEST_AUTH = "";
+ * Enable MiningBuddy to authenticate against other sources.
+ * Current options include:
+ *   testauth - Test Alliance Please Ignore Web API 1.0
+ *   smf - Simple Machines Rest API 2.0
+ *   base - built in authentication
+ */ 
+$AUTH_TYPE = "base";
  
 /*
  * Step 7: Enable MiningBuddy

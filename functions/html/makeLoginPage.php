@@ -115,8 +115,8 @@ function makeLoginPage($user = false) {
 
 	
 
-	// User has logged in, but we need a character name.
-	if (!isset($_SESSION[testauth])){
+	
+	if ($AUTH_TYPE != "testauth" || !isset($_SESSION["testauth"])){
 		$login->addRow();
 		$login->addCol("Username:");
 		// Trust, INC.
@@ -141,47 +141,50 @@ function makeLoginPage($user = false) {
 			"colspan" => "3",
 			"align" => "center"
 		));
-	}else{
+	}else if($AUTH_TYPE == "testauth" && isset($_SESSION["testauth"])){ // User has logged in, but we need a character name.
 		$login->addRow();
 		$login->addCol("Character:");
-		global $TEST_AUTH;
-		$eveApiProxyUrl = "https://auth.pleaseignore.com/api/1.0/eveapi/?apikey=$TEST_AUTH&userid=" . $_SESSION[testauth][id];
-		$return = file_get_contents($eveApiProxyUrl);
-		$obj = json_decode($return, TRUE);
-		
-		$count = 0;
-		
-		$select = "<select name=\"username\" >";
-		$array = array();
-		foreach($obj[keys] as $key){
-			$eveApiProxyUrl = "https://auth.pleaseignore.com/api/1.0/eveapi/account/Characters.xml.aspx?apikey=$TEST_AUTH&userid=" . $key[api_user_id];
+		if($AUTH_TYPE=="testauth"){
+			global $TEST_AUTH;
+			$eveApiProxyUrl = "https://auth.pleaseignore.com/api/1.0/eveapi/?apikey=$TEST_AUTH&userid=" . $_SESSION[testauth][id];
 			$return = file_get_contents($eveApiProxyUrl);
-			try{
-				$chars = new SimpleXMLElement($return);
-			}catch(Exception $ex){
-				continue;
-			}
-			foreach($chars->result[0]->rowset[0] as $row){
-				$character = (string)$row[name];
-				if($row['corporationName'] != "B0rthole" || in_array($character,$array))
+			$obj = json_decode($return, TRUE);
+			
+			$count = 0;
+			
+			$select = "<select name=\"username\" >";
+			$array = array();
+			foreach($obj[keys] as $key){
+				$eveApiProxyUrl = "https://auth.pleaseignore.com/api/1.0/eveapi/account/Characters.xml.aspx?apikey=$TEST_AUTH&userid=" . $key[api_user_id];
+				$return = file_get_contents($eveApiProxyUrl);
+				try{
+					$chars = new SimpleXMLElement($return);
+				}catch(Exception $ex){
 					continue;
-				if($character == $user)
-					$selected = "selected";
-				$select .= "<option $selected value='$character'>$character</option>";
-				$array[] = $character;
-				$count++;
+				}
+				global $TEST_ALLOWED_CORP;
+				
+				foreach($chars->result[0]->rowset[0] as $row){
+					$character = (string)$row[name];
+					if($row['corporationName'] != $TEST_ALLOWED_CORP || in_array($character,$array))
+						continue;
+					if($character == $user)
+						$selected = "selected";
+					$select .= "<option $selected value='$character'>$character</option>";
+					$array[] = $character;
+					$count++;
+				}
+			}
+			//var_dump($array);
+			$select .= "</select>";
+			$login->addCol($select, array("colspan"=>"2"));
+			
+			if($count == 0){
+				session_destroy();
+				makenotice("You do not belong here. Leave at once!", "warning", "ACCESS DENIED");
+				die();
 			}
 		}
-		//var_dump($array);
-		$select .= "</select>";
-		$login->addCol($select, array("colspan"=>"2"));
-		
-		if($count == 0){
-			session_destroy();
-			makenotice("You do not belong here. Leave at once!", "warning", "ACCESS DENIED");
-			die();
-		}
-		
 		//file_put_contents($_SESSION[testauth][id].".xml",print_r($list,true));
 	}
 	
@@ -193,12 +196,12 @@ function makeLoginPage($user = false) {
 
 	$login->addRow("#060622");
 	$login->addCol("<a href=\"index.php?auth=lostpass\">lost password</a>");
-	/*
+	
 	$login->addCol("<a href=\"index.php?auth=requestaccount\">request account</a>", array (
 		"align" => "right",
 		"colspan" => "2"
 	));
-	*/
+	
 	$login->addCol("",array("colspan"=>"2"));
 	$page = "<br><br><br>";
 	if(strstr($_SERVER[QUERY_STRING],"switch")){

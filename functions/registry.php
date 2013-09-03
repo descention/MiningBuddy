@@ -81,8 +81,7 @@ require_once ('./functions/admin/deleteAPIKey.php');
 require_once ('./functions/admin/editUser.php');
 require_once ('./functions/admin/listUser.php');
 require_once ('./functions/admin/listUsers.php');
-require_once ('./functions/admin/setConfig.php');
-require_once ('./functions/admin/getConfig.php');
+require_once ('./functions/admin/config.php');
 require_once ('./functions/admin/configuration.php');
 require_once ('./functions/admin/maintenance.php');
 require_once ('./functions/admin/toggleLogin.php');
@@ -215,4 +214,15 @@ require_once ('./functions/system/errorHandler.php');
 require_once ('./functions/system/mailUser.php');
 require_once ('./functions/system/numericCheck.php');
 require_once ('./functions/system/numericCheckBool.php');
+
+if($AUTH_TYPE == "testauth"){
+	require_once ('./classes/auth/TestAlliancePleaseIgnore.php');
+}else if($AUTH_TYPE == "smf"){
+	require_once ('./classes/auth/SmfConfig.php');
+}else{
+	require_once( './classes/auth/base.php');
+}
+
+
+
 ?>

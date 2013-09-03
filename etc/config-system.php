@@ -39,8 +39,8 @@
  * installation.
  */
 
-$VERSION_COMP = "0.8.8.62";
-$VERSION = "MiningBuddy Plus " . $VERSION_COMP;
+$VERSION_COMP = "1.1";
+$VERSION = "Wormhole Buddy (WHBuddy) " . $VERSION_COMP;
 
 $DSN = "$mysql_protocol://$mysql_username:$mysql_password@$mysql_hostname/$mysql_dbname";
 

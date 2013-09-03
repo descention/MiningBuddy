@@ -127,13 +127,13 @@ function auth() {
 				makeNotice("Invalid username. Only characters a-z, A-Z and 0-9 are allowed.", "error", "Invalid Username");
 			}
 			
-			if(!isset($_SESSION['testauth'])){
+			if($AUTH_TYPE == "testauth" && isset($_SESSION['testauth'])){
+				$MySelf = authVerify($SUPPLIED_USERNAME, false);
+			}else{
 				$SUPPLIED_PASSWORD = sha1($_POST['password']);
 
 				// Lets check the password.
 				$MySelf = authVerify($SUPPLIED_USERNAME, $SUPPLIED_PASSWORD);
-			}else{
-				$MySelf = authVerify($SUPPLIED_USERNAME, false);
 			}
 			
 			if ($MySelf == false) {
