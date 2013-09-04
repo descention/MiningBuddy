@@ -215,6 +215,8 @@ require_once ('./functions/system/mailUser.php');
 require_once ('./functions/system/numericCheck.php');
 require_once ('./functions/system/numericCheckBool.php');
 
+global $AUTH_TYPE;
+
 if($AUTH_TYPE == "testauth"){
 	require_once ('./classes/auth/TestAlliancePleaseIgnore.php');
 }else if($AUTH_TYPE == "smf"){

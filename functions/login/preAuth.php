@@ -61,7 +61,7 @@ if (isset($_GET['auth']) && $_GET['auth'] == "logout") {
  * Someone lost their password.
  */
 if (isset($_GET['auth']) && $_GET['auth'] == "lostpass") {
-	/*
+	
 	//	global $page;
 	//	$page = makeLostPassForm().makeFooter();
 	//	print ($page);
@@ -69,7 +69,7 @@ if (isset($_GET['auth']) && $_GET['auth'] == "lostpass") {
 	$html = new html;
 	//	$html->execFlush(makeLostPassForm);
 	$html->addBody(makeLostPassForm());
-	*/
+	
 	die();
 }
 
@@ -77,11 +77,11 @@ if (isset($_GET['auth']) && $_GET['auth'] == "lostpass") {
  * Someone wants a new account.
  */
 if (isset($_GET['auth']) && $_GET['auth'] == "requestaccount") {
-	/*
+	
 	global $page;
 	$page = makeRequestAccountPage() . makeFooter();
 	print ($page);
-	*/
+	
 	die();
 }
 
@@ -89,7 +89,7 @@ if (isset($_GET['auth']) && $_GET['auth'] == "requestaccount") {
  * Someone wants a new account, and has submited the form.
  */
 if (isset($_POST['action']) && $_POST['action'] == "requestaccount") {
-	//requestAccount();
+	requestAccount();
 	die();
 }
 
@@ -97,7 +97,7 @@ if (isset($_POST['action']) && $_POST['action'] == "requestaccount") {
  *  Someone lost their password and has submited the form.
  */
 if (isset($_POST['action']) && $_POST['action'] == "lostpass") {
-	//lostPassword();
+	lostPassword();
 	die();
 }
 

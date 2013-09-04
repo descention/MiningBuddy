@@ -2,7 +2,6 @@
 -- version 3.3.7deb7
 -- http://www.phpmyadmin.net
 --
--- Host: mysql.pleaseignore.com
 -- Generation Time: Apr 27, 2012 at 02:25 PM
 -- Server version: 5.1.61
 -- PHP Version: 5.3.10-1~dotdeb.1
@@ -86,6 +85,10 @@ CREATE TABLE IF NOT EXISTS `config` (
   PRIMARY KEY (`name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+INSERT INTO `config` (`name`,`value`) values
+('sitename','WHBuddy'),
+('version','25'),
+('TTL', '120')
 -- --------------------------------------------------------
 
 --

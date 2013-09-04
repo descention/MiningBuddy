@@ -42,6 +42,7 @@ function authVerify($username, $password, $trust = false) {
 
 	global $DB;
 	global $TIMEMARK;
+	global $AUTH_TYPE;
 
 	// lower case username.
 	$username = strtolower($username);
@@ -86,7 +87,11 @@ function authVerify($username, $password, $trust = false) {
 			// Sane login.
 			$userDS = $DB->query("select * from users where username='$username' and password='$password' AND deleted='0' limit 1");
 			$passwordless = false;
-			$login = true;
+			if($userDS->numRows() > 0){
+				$login = true;
+			}else{
+				$login = false;
+			}
 		}
 	}
 	
@@ -111,7 +116,7 @@ function authVerify($username, $password, $trust = false) {
 		"addedby, confirmed, emailvalid,canLogin,authID) " .
 		"values (?, ?, ?, ?, ?,?, ?, ?)", array (
 			stripcslashes($username
-		), "", $obj['email'], 1, getConfig("autoConfirm"), 1, 1, $obj[id] ));
+		), "", "", 1, getConfig("autoConfirm"), 1, 1, 0 ));
 
 		// Were we successful?
 		if ($DB->affectedRows() == 0) { // No!
@@ -124,7 +129,7 @@ function authVerify($username, $password, $trust = false) {
 	} else if($userDS->numRows() > 0 && $login){
 		// User authenticated and found in database
 		$user = $userDS->fetchRow();
-		
+		echo "test";
 		if($user['authID'] == null && $AUTH_TYPE == "testauth"){
 			$DB->query("update users set authID='$obj[id]' where id='$user[id]'");
 		}
@@ -134,13 +139,12 @@ function authVerify($username, $password, $trust = false) {
 			makeNotice("Your account is not a member of the B0rthole user group." . "<br>Please join the group on TEST Auth.", "error", "Unable to login");
 		}
 	}
-
+	echo "test";
 	// Is the account activated yet?
 	if (("$user[canLogin]" != "1") || ("$user[confirmed]" != "1")) {
 		// Nyet!
 		makeNotice("Your account has not yet been activated or been blocked." . "<br>Please ask your CEO for assistance.", "error", "Unable to login");
 	} else {
-
 		/* HOLD IT RIGHT THERE!
 		 * We have a login from IGB with valid trust setting. BUT HEY!
 		 * Does the API key match?
@@ -165,7 +169,7 @@ function authVerify($username, $password, $trust = false) {
 				}
 			}
 		} else {
-//			// Out of game logins.
+			// Out of game logins.
 			$MyAccount = new user($user, $TIMEMARK);
 			return ($MyAccount);
 		}

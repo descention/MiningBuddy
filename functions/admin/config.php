@@ -58,28 +58,15 @@ function getConfig($var, $forceFresh = false) {
 
 	// Not cached, get from DB.
 	$setting = $DB->getCol("SELECT value FROM config WHERE name='$var' LIMIT 1");
+	if(isset($setting[0])){
+		// Cache it.
+		$_SESSION["config_$var"] = $setting[0];
 
-	// Cache it.
-	$_SESSION["config_$var"] = $setting[0];
-
-	// And return it.
-//	switch($setting[0]){
-//		case("0"):
-//			return(false);
-//			break;
-//		case("false"):
-//			return(false);
-//			break;
-//		case("1"):
-//			return(true);
-//			break;
-//		case("true"):
-//			return(true);
-//			break;
-//		default:
-//			return($setting[0]);
-//	}
-	return($setting[0]);
+		// And return it.
+		return($setting[0]);
+	}else{
+		return "";
+	}
 
 }
  

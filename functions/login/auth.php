@@ -43,7 +43,8 @@ function auth() {
 	global $DB;
 	global $TIMEMARK;
 	global $IGB;
-	
+	global $AUTH_TYPE;
+
 	// Handle possible logouts, activations et all.
 	include_once ('./functions/login/preAuth.php');
 	
@@ -130,7 +131,7 @@ function auth() {
 			if($AUTH_TYPE == "testauth" && isset($_SESSION['testauth'])){
 				$MySelf = authVerify($SUPPLIED_USERNAME, false);
 			}else{
-				$SUPPLIED_PASSWORD = sha1($_POST['password']);
+				$SUPPLIED_PASSWORD = encryptPassword($_POST['password']);
 
 				// Lets check the password.
 				$MySelf = authVerify($SUPPLIED_USERNAME, $SUPPLIED_PASSWORD);
