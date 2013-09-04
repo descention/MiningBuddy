@@ -56,6 +56,11 @@ body{
 .OOG #menu{
 	width:160px;
 }
+
+.OOG #menu .header{
+	
+}
+
 .OOG #menu a{
 	float:left;
 	width:100%;
