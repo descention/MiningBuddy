@@ -83,7 +83,9 @@ function getTotalWorth($id, $net = false) {
 
 	// Now multiply each ore amount with raw value, add it to total value.
 	foreach ($DBORE as $ORE) {
-		$value = $value + ($run[$ORE] * $oreValue[$ORE]);
+		if(isset($oreValue[$ORE])){
+			$value = $value + ($run[$ORE] * $oreValue[$ORE]);
+		}
 	}
 	
 	/*

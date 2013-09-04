@@ -89,15 +89,16 @@ function setConfig($var, $val) {
 	$val = sanitize($val);
 
 	// Do we have a valid config entry?
-	$setting = $DB->query("DELETE FROM config WHERE name='".$var."' LIMIT 1");
-
-	// Cache it.
-	$setting = $DB->query("INSERT INTO config (name, value) VALUES (?,?)",
+	$setting = $DB->query("UPDATE config set `value`='".$val."' WHERE name='".$var."' LIMIT 1");
+	if($DB->affectedRows() < 1){
+		// Cache it.
+		$setting = $DB->query("INSERT INTO config (name, value) VALUES (?,?)",
 	                array("$var", "$val"));
 	                
-	if ($DB->affectedRows() != 1) {
-		makeNotice("Could not update the database registry (setConfig)!", "error", "Internal error!");
+		if ($DB->affectedRows() != 1) {
+			makeNotice("Could not update the database registry (setConfig)!", "error", "Internal error!");
+		}
 	}
-
+	$_SESSION["config_".$var] = $val;
 }
 ?>

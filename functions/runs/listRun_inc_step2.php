@@ -205,7 +205,7 @@ if ($row['oreGlue'] > 0) {
 
 	// Is this the current ore quote?
 	$cur = $DB->getCol("SELECT time FROM orevalues ORDER BY time DESC LIMIT 1");
-	if ($cur[0] <= $row['oreGlue']) {
+	if (isset($cur[0]) && $cur[0] <= $row['oreGlue']) {
 		// it is!
 		$cur = "<font color=\"#00ff00\"><b>(current)</b></font>";
 	} else {

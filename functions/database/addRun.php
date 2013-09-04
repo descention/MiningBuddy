@@ -48,7 +48,7 @@ function addRun() {
 		makeNotice("You are not allowed to create a mining op!", "error", "forbidden");
 	}
 
-	if ($_POST[startnow]) {
+	if ($_POST['startnow']) {
 		$starttime = $TIMEMARK;
 	} else {
 		// Startting time goodness.
@@ -65,17 +65,17 @@ function addRun() {
 	}
 
 	// Having fun with checkboxes, yet again.
-	if ($_POST[isOfficial] == "on") {
+	if ($_POST['isOfficial'] == "on") {
 		$official = true;
 	} else {
 		$official = false;
 	}
 
 	// We using either predefined locations.
-	if (empty ($_POST[location])) {
-		$location = $_POST[locations];
+	if (empty ($_POST['location'])) {
+		$location = $_POST['locations'];
 	} else {
-		$location = $_POST[location];
+		$location = $_POST['location'];
 	}
 	
 	if (empty ($location)) {
@@ -84,12 +84,12 @@ function addRun() {
 
 	// Supervisor
 	if ($MySelf->isOfficial()) {
-		if (empty ($_POST[supervisor])) {
+		if (empty ($_POST['supervisor'])) {
 			// Is official, but no one named!
 			makeNotice("You need to name someone as the supervisor for this run!", "warning", "Missing Information", "index.php?action=newrun", "[Cancel]");
 		} else {
 			// Grab ID of named supervisor.
-			$supervisor = usernameToID(sanitize($_POST[supervisor]));
+			$supervisor = usernameToID(sanitize($_POST['supervisor']));
 		}
 	} else {
 		// Non official, use own ID
@@ -98,10 +98,10 @@ function addRun() {
 	
 	// Corp tax
 	if ($MySelf->isOfficial()) {
-		if ($_POST[corpkeeps] > 100 || $_POST[corpkeeps] < 0 || !numericCheckBool($_POST[corpkeeps])) {
+		if ($_POST['corpkeeps'] > 100 || $_POST['corpkeeps'] < 0 || !numericCheckBool($_POST['corpkeeps'])) {
 			makeNotice("The corporation can not keep more than 100% and most certainly wont pay out more than the gross worth (values below 0%). A value of " . $_POST[corpkeeps] . " is really not valid.", "warning", "Out of range", "index.php?action=newrun", "[Cancel]");
 		} else {
-			$tax = $_POST[corpkeeps];
+			$tax = $_POST['corpkeeps'];
 		}
 	} else {
 		$tax = "0";
@@ -117,7 +117,7 @@ function addRun() {
 	$shipValue = $DB->getCol("SELECT max(id) FROM shipvalues");
 	$shipValue = $shipValue[0];
 	
-	$optype = $_REQUEST[optype];
+	$optype = $_REQUEST['optype'];
 //Edit Ends Here
 
 	$DB->query("insert into runs (location, starttime, supervisor, corpkeeps, isOfficial, oreGlue, shipGlue,optype) " . "values (?,?,?,?,?,?,?,?)", array (
@@ -128,7 +128,7 @@ function addRun() {
 		$official,
 		"$TIMEMARK",
 //Edit Starts Here		
-		$shipValue,
+		0,
 		"$optype",
 //Edit Ends Here		
 	));

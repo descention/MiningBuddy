@@ -205,7 +205,7 @@ function makeLoginPage($user = false) {
 	
 //	$login->addCol("",array("colspan"=>"2"));
 	$page = "<br><br><br>";
-	if(strstr($_SERVER['QUERY_STRING'],"switch")){
+	if(!isset($_SERVER['QUERY_STRING']) || strstr($_SERVER['QUERY_STRING'],"switch")){
 		$page .= "<form action=\"index.php?\" method=\"post\">";
 	} else {
 		$page .= "<form action=\"index.php?" . $_SERVER['QUERY_STRING'] . "\" method=\"post\">";

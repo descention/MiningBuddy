@@ -185,7 +185,7 @@ function auth() {
 	 * Print motd. (Only on login) - and only if set.
 	 */
 	$MOTD = getTemplate("motd", "announce");
-	if (!$_SESSION['seenMotd'] && !empty ($MOTD)) {
+	if ((!isset($_SESSION['seenMotd']) || !$_SESSION['seenMotd']) && !empty ($MOTD)) {
 		$_SESSION['seenMotd'] = true;
 		makeNotice(nl2br(stripslashes($MOTD)), "notice", "Announcement");
 	}

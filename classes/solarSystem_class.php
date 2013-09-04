@@ -64,7 +64,12 @@ class solarSystem {
 		// We need the DB to load stuff.
 		global $DB;
 		global $STATIC_DB;
-		
+
+		if(!isset($STATIC_DB)){ 
+			$this->solarSystemName = $assumedName;
+			return (false);
+		}
+
 		$this->DB = & $DB;
 
 		// Try to load the System.
