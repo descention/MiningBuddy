@@ -126,16 +126,16 @@ function requestAccount() {
 
 		$CODE = rand(111111111111, 9999999999999);
 		$DB->query("insert into users (username, password, email, " .
-		"addedby, emailcode) " .
-		"values (?, ?, ?, ?, ?)", array (
+		"addedby, emailcode, emailValid) " .
+		"values (?, ?, ?, ?, ?, ?)", array (
 			stripcslashes($NEW_USER
-		), "$PASSWORD_ENC", "$NEW_EMAIL", $MySelf->getID(), "$CODE"));
+		), "$PASSWORD_ENC", "$NEW_EMAIL", $MySelf->getID(), "$CODE", !getConfig("emailValidation")));
 
 		// Were we successful?
 		if ($DB->affectedRows() == 0) {
 			// No!
 			makeNotice("Could not create user!", "error");
-		} else {
+		} else if(getConfig("emailValidation") == 1) {
 			// Load more globals
 			global $SITENAME;
 			global $URL;
@@ -156,6 +156,8 @@ function requestAccount() {
 			$headers = "From:" . $MB_EMAIL;
 			mail($to,$VERSION,$EMAIL,$headers);
 			makeNotice("A confirmation email has been sent to your supplied email address.<br>Please follow the instructions therein.", "notice", "Account created");
+		}else{
+			makeNotice("Your account must be approved by your CEO", "notice", "Account created");
 		}
 	}
 }

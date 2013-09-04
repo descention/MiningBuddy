@@ -1,3 +1,8 @@
+requires:
+php5-common
+php5-curl
+php5-mysql
+
 /* Not actually used yet. Will implement this and remove the images from the repo once most bugs are fixed.
 For images/thumbnails of items, download the image dump from CCP for the current release.
 Release: Retribution
@@ -15,6 +20,9 @@ Supported Authentication methods:
 base user authentication
 SMF 2.0 Rest API (in development)
 Test Alliance Auth API 1.0
+
+Post Install:
+You'll want to go to "Edit Items" and enable a few while adding prices. A price must exist for an item to be enabled.
 
 Issues I've had:
 

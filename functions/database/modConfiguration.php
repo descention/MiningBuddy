@@ -86,6 +86,8 @@ function modConfiguration() {
 		setConfig("Lotto", "0");
 	}
 
+	
+
 	// Default Tax
 	if (!empty ($_POST[defaultTax])) {
 		numericCheck($_POST[defaultTax], 0, 100);
@@ -128,6 +130,13 @@ function modConfiguration() {
 		setConfig("api_keys_valid", "$_POST[api_keys]");
 	}
 	
+	// require email validation
+	if($_POST['emailValidation']){
+		setConfig("emailValidation","1");
+	}else{
+		setConfig("emailValidation","0");
+	}
+
 	// Use Market Values Setting
 	if ($_POST[useMarket]) {
 		if (getConfig("useMarket") != 1) {
