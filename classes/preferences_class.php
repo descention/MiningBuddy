@@ -141,7 +141,8 @@ class preferences {
 			"CanRunCans" => "1",
 			"CanAllCans" => "1",
 			"CanForRun" => "1",
-			"CanNaming" => "1"
+			"CanNaming" => "1",
+			"sirstate" => "1"
 		);
 
 		// We are just generating here. No touchies.

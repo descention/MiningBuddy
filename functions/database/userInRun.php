@@ -40,6 +40,7 @@ function userInRun($username, $run = "check") {
 
 	// Get / Set important variables.
 	global $DB;
+	global $AUTH_TYPE;
 
 	// If username is given, convert to ID.
 	if (!is_numeric($username)) {
@@ -65,8 +66,12 @@ function userInRun($username, $run = "check") {
 	}
 
 	// Query the database and return wether he is in run X or not.
-	$results = $DB->query("select joined from joinups where userid in (select id from users where authID in (select distinct authID from users where id = '$userID')) and run = '$run' and parted is NULL limit 1");
-	
+	if($AUTH_TYPE=="testauth"){
+		$results = $DB->query("select joined from joinups where userid in (select id from users where authID in (select distinct authID from users where id = '$userID')) and run = '$run' and parted is NULL limit 1");
+	}else{
+		$results = $DB->query("select joined from joinups where userid = '$userID' and run = '$run' and parted is NULL limit 1");
+	}
+
 	if ($results->numRows() == 0) {
 		return ("none");
 	} else {

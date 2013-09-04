@@ -47,10 +47,10 @@ function modConfiguration() {
 	}
 
 	// Edit sitename.
-	setConfig("sitename", sanitize($_POST[sitename]));
+	setConfig("sitename", sanitize($_POST['sitename']));
 
 	// Ban goodness.
-	if ($_POST[banAttempts] >= 5 && is_numeric($_POST[banAttempts])) {
+	if ($_POST[banAttempts] >= 5 && is_numeric($_POST['banAttempts'])) {
 		setConfig("banAttempts", "$_POST[banAttempts]");
 	}
 
