@@ -22,10 +22,13 @@ SMF 2.0 Rest API (in development)
 Test Alliance Auth API 1.0
 
 Post Install:
-You'll want to go to "Edit Items" and enable a few while adding prices. A price must exist for an item to be enabled.
+You'll want to go to "Edit Items" after login and add prices to items. A price must exist for an item to be enabled.
+Additional Op types (default "Standard") may be added, such as Mining, Incursion, PI, etc... by adding a row to the 'opType' table.
+My corp uses 
 
 Issues I've had:
 
-Web server buffer size was not big enough to save configuration:
+Web server buffer size was not big enough to save configuration changes (nginx):
 http://stackoverflow.com/questions/2307231/how-to-avoid-nginx-upstream-sent-too-big-header-errors
 
+Email isn't sent from my server, and thus is untested and has code to exclude email sending during account creation. If you wish to enable email, add/update the 'emailValidation' row (1 = enabled, 0 = disabled) in the 'config' table of the database.
