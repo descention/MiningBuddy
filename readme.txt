@@ -33,4 +33,4 @@ http://stackoverflow.com/questions/2307231/how-to-avoid-nginx-upstream-sent-too-
 
 Email isn't sent from my server, and thus is untested and has code to exclude email sending during account creation. If you wish to enable email, add/update the 'emailValidation' row (1 = enabled, 0 = disabled) in the 'config' table of the database.
 
-My corporation does not use differentnot percentages for pay based on ship type, so this has been temporarily disabled until other bugs may be worked out. 
+My corporation does not use different percentages for pay based on ship type, so this has been temporarily disabled until other bugs may be worked out. 
