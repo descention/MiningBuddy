@@ -87,7 +87,7 @@ CREATE TABLE IF NOT EXISTS `config` (
 
 INSERT INTO `config` (`name`,`value`) values
 ('sitename','WHBuddy'),
-('version','25'),
+('version','26'),
 ('TTL', '120');
 -- --------------------------------------------------------
 
