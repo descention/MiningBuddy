@@ -45,6 +45,11 @@ body{
 	color:white;
 	margin:0;
 }
+
+#loginTable{
+	width:400px;
+}
+
 .OOG #content a{
 	color:#ff8a00;
 }

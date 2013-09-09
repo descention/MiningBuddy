@@ -46,7 +46,7 @@ function makeLoginPage($user = false) {
 	if ($IGB && $IGB_VISUAL) {
 		$login = new table(3, true);
 	} else {
-		$login = new table(3, true, "width=\"400\"", "align=\"center\"");
+		$login = new table(3, true, "id=\"loginTable\"", "align=\"center\"");
 	}
 	
 	$peeps = $DB->getCol("SELECT COUNT(id) FROM users");

@@ -37,7 +37,9 @@
 <head>
 
 <title>%%SITENAME%%</title>
-
+<link rel="stylesheet" type="text/css" href="include/html/default.css" media="only screen and (min-device-width:481px)" />
+<link rel="stylesheet" type="text/css" href="include/html/mobile.css" media="only screen and (max-device-width:480px)" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body bgcolor="#2D2D37" text="#ffffff" link="#ff8a00" vlink="#ff8a00" marginwidth="0" marginheight="0" topmargin="0" leftmargin="0">
 
