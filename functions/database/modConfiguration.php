@@ -58,6 +58,11 @@ function modConfiguration() {
 		setConfig("banTime", "$_POST[banTime]");
 	}
 
+	// Corp Tax
+	if(isset($_POST['defaultTax'])){
+		setConfig("defaultTax", "$_POST[defaultTax]");
+	}
+
 	// Events Module
 	if ($_POST[events] == "true") {
 		setConfig("events", "1");
