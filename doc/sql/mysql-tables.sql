@@ -482,7 +482,11 @@ CREATE TABLE IF NOT EXISTS `ranks` (
   `rankOrder` varchar(3) DEFAULT NULL,
   UNIQUE KEY `rankid` (`rankid`),
   KEY `name` (`name`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+INSERT INTO `ranks` (`name`) values
+('Admin'),
+('Member')
 
 -- --------------------------------------------------------
 
