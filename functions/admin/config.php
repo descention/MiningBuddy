@@ -50,10 +50,8 @@ function getConfig($key, $forceFresh = false) {
 	$key = sanitize($key);
 
 	// Check if the value has been cached, unless forced.
-	if (!$forceFresh) {
-		if (isset ($_SESSION["config_$key"])) {
-			return ($_SESSION["config_$key"]);
-		}
+	if (!$forceFresh && isset ($_SESSION["config_$key"])) {
+		return ($_SESSION["config_$key"]);
 	}
 
 	// Not cached, get from DB.
@@ -65,6 +63,7 @@ function getConfig($key, $forceFresh = false) {
 		// And return it.
 		return($setting[0]);
 	}else{
+		echo "<!-- $key missing -->";
 		return "";
 	}
 
