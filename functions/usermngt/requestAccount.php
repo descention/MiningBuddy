@@ -65,12 +65,12 @@ function requestAccount() {
 	}
 
 	// So we have an email address?
-	if (empty ($_POST[email])) {
+	if (empty ($_POST['email'])) {
 		// We dont!
 		makeNotice("You need to supply an email address!", "error", "Account not created");
 	} else {
 		// We do. Clean it.
-		$NEW_EMAIL = sanitize($_POST[email]);
+		$NEW_EMAIL = sanitize($_POST['email']);
 
 		// Valid one, too?
 		if (!checkEmailAddress($NEW_EMAIL)) {
@@ -99,7 +99,15 @@ function requestAccount() {
 			$email = "Superuser information: Username " . stripcslashes($NEW_USER) . ", Password $PASSWORD - change this as soon as possible!";
 			global $VERSION;
 			$headers = "From:" . $MB_EMAIL;
-			mail("$NEW_EMAIL", "Superuser login information (" . $VERSION . ")", $email, $headers);
+			global $MAIL;
+			if(isset($MAIL)){
+				$MAIL->AddAddress($NEW_EMAIL);
+				$MAIL->Subject = "Superuser login information (" . $VERSION . ")";
+				$MAIL->Body = $email;
+				$MAIL->Send();
+			}else{
+				mail("$NEW_EMAIL", "Superuser login information (" . $VERSION . ")", $email, $headers);
+			}
 			unset ($email);
 
 			// Inform the user.
@@ -126,16 +134,16 @@ function requestAccount() {
 
 		$CODE = rand(111111111111, 9999999999999);
 		$DB->query("insert into users (username, password, email, " .
-		"addedby, emailcode) " .
-		"values (?, ?, ?, ?, ?)", array (
+		"addedby, emailcode, emailValid) " .
+		"values (?, ?, ?, ?, ?, ?)", array (
 			stripcslashes($NEW_USER
-		), "$PASSWORD_ENC", "$NEW_EMAIL", $MySelf->getID(), "$CODE"));
+		), "$PASSWORD_ENC", "$NEW_EMAIL", $MySelf->getID(), "$CODE", !getConfig("emailValidation")));
 
 		// Were we successful?
 		if ($DB->affectedRows() == 0) {
 			// No!
 			makeNotice("Could not create user!", "error");
-		} else {
+		} else if(getConfig("emailValidation") == 1) {
 			// Load more globals
 			global $SITENAME;
 			global $URL;
@@ -156,6 +164,8 @@ function requestAccount() {
 			$headers = "From:" . $MB_EMAIL;
 			mail($to,$VERSION,$EMAIL,$headers);
 			makeNotice("A confirmation email has been sent to your supplied email address.<br>Please follow the instructions therein.", "notice", "Account created");
+		}else{
+			makeNotice("Your account must be approved by your CEO", "notice", "Account created");
 		}
 	}
 }

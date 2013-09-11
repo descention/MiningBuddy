@@ -64,7 +64,7 @@ function createAuthKey($MySelf) {
 	));
 	
 	// Set the key.
-	$_SESSION[auth] = $KEY;
+	$_SESSION['auth'] = $KEY;
 
 }
 ?>

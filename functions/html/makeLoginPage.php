@@ -46,7 +46,7 @@ function makeLoginPage($user = false) {
 	if ($IGB && $IGB_VISUAL) {
 		$login = new table(3, true);
 	} else {
-		$login = new table(3, true, "width=\"400\"", "align=\"center\"");
+		$login = new table(3, true, "id=\"loginTable\"", "align=\"center\"");
 	}
 	
 	$peeps = $DB->getCol("SELECT COUNT(id) FROM users");
@@ -115,7 +115,8 @@ function makeLoginPage($user = false) {
 
 	
 
-	
+	global $AUTH_TYPE;
+
 	if ($AUTH_TYPE != "testauth" || !isset($_SESSION["testauth"])){
 		$login->addRow();
 		$login->addCol("Username:");
@@ -202,22 +203,22 @@ function makeLoginPage($user = false) {
 		"colspan" => "2"
 	));
 	
-	$login->addCol("",array("colspan"=>"2"));
+//	$login->addCol("",array("colspan"=>"2"));
 	$page = "<br><br><br>";
-	if(strstr($_SERVER[QUERY_STRING],"switch")){
+	if(!isset($_SERVER['QUERY_STRING']) || strstr($_SERVER['QUERY_STRING'],"switch")){
 		$page .= "<form action=\"index.php?\" method=\"post\">";
 	} else {
-		$page .= "<form action=\"index.php?$_SERVER[QUERY_STRING]\" method=\"post\">";
+		$page .= "<form action=\"index.php?" . $_SERVER['QUERY_STRING'] . "\" method=\"post\">";
 	}
 	// Add special hidden forms for stupid browsers.
 	$browserinfo = new BrowserInfo();
 	
-	if ( ereg("MSIE", $_SERVER[HTTP_USER_AGENT]) or ( $browserinfo->getBrowser() == BrowserInfo::BROWSER_FIREFOX && $browserinfo->getVersion() >= 4 ) 
+	if ( ereg("MSIE", $_SERVER['HTTP_USER_AGENT']) or ( $browserinfo->getBrowser() == BrowserInfo::BROWSER_FIREFOX && $browserinfo->getVersion() >= 4 ) 
 //	ereg("Firefox/7", $_SERVER[HTTP_USER_AGENT]) or 
 //	ereg("Firefox/6", $_SERVER[HTTP_USER_AGENT]) or 
 //	ereg("Firefox/5", $_SERVER[HTTP_USER_AGENT]) or 
 //	ereg("Firefox/4", $_SERVER[HTTP_USER_AGENT])
-	) {	
+	) {
 		$page .= "<input type=\"hidden\" name=\"login\" value=\"login\">";
 	}
 	

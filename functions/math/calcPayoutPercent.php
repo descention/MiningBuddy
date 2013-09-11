@@ -195,12 +195,14 @@ function calcPayoutPercent($run, $pilot) {
 				break;
 			case "99":
 			default:
-				$ShipTypeValue = "0";
+				$ShipTypeValue = "1";
 				break;
 		}
 		
 //Edit Ends Here
-	
+	// OVERRIDE SHIP SHIT
+	$ShipTypeValue = 1;
+
 	$myPart1 = ((100 / $totalPilots) * ($timePercent / 100)) * $ShipTypeValue;
 	$myPart = $myPart - $myPart1;
 

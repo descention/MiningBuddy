@@ -15,12 +15,13 @@ function Getbasesite($file)
 	$pathsite = $sitename.$sitenamepath;
 
 	include ("./etc/config.$sitename.php");
-	
+	echo $_SERVER["HTTP_HOST"];
 	$file = $pathsite;
 	
 	$site = Getbasesite($file);
 
-	$db_conn = mysql_connect($mysql_hostname, $mysql_username, $mysql_password); 
+	$db_conn = mysql_connect($mysql_hostname, $mysql_username, $mysql_password);
+	
 	mysql_select_db($mysql_dbname);
 
 	$tbl_List = mysql_query("SHOW TABLES");

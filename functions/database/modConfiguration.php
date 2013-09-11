@@ -50,12 +50,17 @@ function modConfiguration() {
 	setConfig("sitename", sanitize($_POST['sitename']));
 
 	// Ban goodness.
-	if ($_POST[banAttempts] >= 5 && is_numeric($_POST[banAttempts])) {
+	if ($_POST[banAttempts] >= 5 && is_numeric($_POST['banAttempts'])) {
 		setConfig("banAttempts", "$_POST[banAttempts]");
 	}
 
 	if ($_POST[banTime] > 0 && is_numeric($_POST[banTime])) {
 		setConfig("banTime", "$_POST[banTime]");
+	}
+
+	// Corp Tax
+	if(isset($_POST['defaultTax'])){
+		setConfig("defaultTax", "$_POST[defaultTax]");
 	}
 
 	// Events Module
@@ -85,6 +90,8 @@ function modConfiguration() {
 	} else {
 		setConfig("Lotto", "0");
 	}
+
+	
 
 	// Default Tax
 	if (!empty ($_POST[defaultTax])) {
@@ -128,6 +135,13 @@ function modConfiguration() {
 		setConfig("api_keys_valid", "$_POST[api_keys]");
 	}
 	
+	// require email validation
+	if($_POST['emailValidation']){
+		setConfig("emailValidation","1");
+	}else{
+		setConfig("emailValidation","0");
+	}
+
 	// Use Market Values Setting
 	if ($_POST[useMarket]) {
 		if (getConfig("useMarket") != 1) {

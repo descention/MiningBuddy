@@ -82,7 +82,7 @@ function addhaulpage() {
 			"align" => "left"
 		));
 	}
-
+	/*
 	// fetch the system the haul is taking place in..
 //	$location = $DB->getCol("select location from runs where endtime is NULL and id='$ID' order by id desc limit 1");
 //	$runLocation = $location[0];
@@ -137,7 +137,7 @@ function addhaulpage() {
 		}
 	}
 	$pdm = "<select name=\"location\">" . $pdm . "</select>";
-	
+	*/
 	$haulpage->addCol("System hauling to: ".$pdm." -or- <input type=\"text\" name=\"location2\" value=\"\">", array (
 		"align" => "right"
 	));
@@ -145,6 +145,18 @@ function addhaulpage() {
 	$haulpage->addCol("<hr>", array (
 		"colspan" => "2"
 	));
+
+	$haulpage->addRow();
+	$haulDumpScript = "<script>
+function parseDump(sender){
+  var items = sender.value.split(\"\\n\");
+  for(var x =0;x< items.length;x++){
+    var item = items[x].split(\"\\t\");
+    document.getElementsByName(item[0].replace(' ',''))[0].value = item[1].replace(',','');
+  }
+}
+</script>";
+	$haulpage->addCol("$haulDumpScript<textarea cols='50' rows='4' name='dumpHaul' onblur='parseDump(this)'></textarea>", array("colspan"=>"2"));
 
 	// Now we need the sum of all ores. 
 	$totalOres = count($ORENAMES);

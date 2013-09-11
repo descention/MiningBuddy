@@ -113,10 +113,16 @@ function addHaul() {
 	
 	// Now loop through all the ore-types.
 	foreach ($_POST as $ORE => $QTY) {
-		$oreResult = $DB->query("select count(typeName) as v from $STATIC_DB.invTypes where replace(replace(typeName,' ',''),'-','') = '$ORE'");
-		// Check the input, and insert it!
-		$validOre = $oreResult->fetchRow();
-		if ($validOre[v] > 0 && (!empty ($QTY)) && is_numeric($QTY) && $QTY > 0) {
+		if($ORE=="id"){continue;}
+		if(isset($STATIC_DB)){
+			$oreResult = $DB->query("select count(typeName) as v from $STATIC_DB.invTypes where replace(replace(typeName,' ',''),'-','') = '$ORE'");
+			// Check the input, and insert it!
+			$validOre = $oreResult->fetchRow();
+			$skipOreCheck = false;
+		}else{
+			$skipOreCheck = true;
+		}
+		if (($skipOreCheck || $validOre[v] > 0) && (!empty ($QTY)) && is_numeric($QTY) && $QTY > 0) {
 
 			// Is that ore-type actually enabled?
 			if (getOreSettings($ORE,$OPTYPE) == 0 && $OPTYPE != "Shopping") {

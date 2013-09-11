@@ -90,7 +90,8 @@ function makeNotice($body, $type = "notice", $title = "", $backlink = "index.php
 	$STAMP = date("r", $TIMEMARK);
 
 	// Assemble the raw html page.
-	//	$HTML = $page;
+	//$HTML = $page;
+	$HTML = "";
 
 	if ($IGB && $IGB_VISUAL) {
 		$HTML .= file_get_contents('./include/ingame/igb-notice.txt');
@@ -98,7 +99,7 @@ function makeNotice($body, $type = "notice", $title = "", $backlink = "index.php
 		$HTML .= file_get_contents('./include/html/notice.txt');
 	}
 
-	//	$HTML .= $footer;
+	//$HTML .= $footer;
 
 	// Replace placeholders with information.
 	$HTML = str_replace("%%TITLE%%", "$title", $HTML);

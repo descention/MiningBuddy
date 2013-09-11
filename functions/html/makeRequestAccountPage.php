@@ -46,7 +46,7 @@ function makeRequestAccountPage($failedFastLogin = false) {
 		$table = new table(2, true, "width=\"500\"", "align=\"center\"");
 	}
 	
-	if ($_GET[admin] == true){
+	if (isset($_GET['admin']) && $_GET['admin'] == true){
 		$table->addHeader(">> Create initial Superadmin account");	
 	} else {
 		$table->addHeader(">> Request an account");
@@ -62,7 +62,7 @@ function makeRequestAccountPage($failedFastLogin = false) {
 	
 	$table->addRow("#060622");
 	
-	if ($_GET[admin] == true){
+	if (isset($_GET['admin']) && $_GET['admin'] == true){
 		$table->addCol("Fill out the form below to create the initial superadmin account. " .
 				"This account will have all priviledges - so keep the login credentials safe! " .
 				"Your password will be randomly generated and revealed to you just once, " .
@@ -91,11 +91,11 @@ function makeRequestAccountPage($failedFastLogin = false) {
 	$table->addCol("Your valid eMail:");
 	$table->addCol("<input type=\"text\" name=\"email\" maxlength=\"70\">");
 
-	if ($_GET[admin] == false){
+	if (!isset($_GET['admin']) || $_GET[admin] == false){
 		$table->addHeaderCentered("<input type=\"submit\" name=\"login\" value=\"request account\">");
 		$table->addRow("#060622");
 		$table->addCol("[<a href=\"index.php\">Cancel request</a>]", array (
-			"colspan" => 2		
+			"colspan" => 2
 		));
 	} else {
 		$table->addHeaderCentered("<input type=\"submit\" name=\"login\" value=\"Create Superadmin\">");

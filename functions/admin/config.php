@@ -36,50 +36,36 @@
  * Its used to quickly get the info we need.
  */
 
-function getConfig($var, $forceFresh = false) {
+function getConfig($key, $forceFresh = false) {
 
 	// Globals! Yay!
 	global $DB;
 
 	// Check that we have a descriptor.
-	if ($var == "") {
+	if ($key == "") {
 		makeNotice("Invalid descriptor in getConfig!", "error", "internal Error!");
 	}
 
 	// Sanitize it.
-	$var = sanitize($var);
+	$key = sanitize($key);
 
 	// Check if the value has been cached, unless forced.
-	if (!$forceFresh) {
-		if (isset ($_SESSION["config_$var"])) {
-			return ($_SESSION["config_$var"]);
-		}
+	if (!$forceFresh && isset ($_SESSION["config_$key"])) {
+		return ($_SESSION["config_$key"]);
 	}
 
 	// Not cached, get from DB.
-	$setting = $DB->getCol("SELECT value FROM config WHERE name='$var' LIMIT 1");
+	$setting = $DB->getCol("SELECT value FROM config WHERE name='$key' LIMIT 1");
+	if(isset($setting[0])){
+		// Cache it.
+		$_SESSION["config_$key"] = $setting[0];
 
-	// Cache it.
-	$_SESSION["config_$var"] = $setting[0];
-
-	// And return it.
-//	switch($setting[0]){
-//		case("0"):
-//			return(false);
-//			break;
-//		case("false"):
-//			return(false);
-//			break;
-//		case("1"):
-//			return(true);
-//			break;
-//		case("true"):
-//			return(true);
-//			break;
-//		default:
-//			return($setting[0]);
-//	}
-	return($setting[0]);
+		// And return it.
+		return($setting[0]);
+	}else{
+		echo "<!-- $key missing -->";
+		return "";
+	}
 
 }
  
@@ -87,30 +73,35 @@ function getConfig($var, $forceFresh = false) {
  * This function writes a value to the database.
  */
 
-function setConfig($var, $val) {
+function setConfig($key, $val) {
 
 	// Globals! Yay!
 	global $DB;
 
 	// Check that we have a descriptor.
-	if ($var == "") {
+	if ($key == "") {
 		makeNotice("Invalid descriptor in setConfig!", "error", "internal Error!");
 	}
 	
 	// Sanitize it.
-	$var = sanitize($var);
+	$key = sanitize($key);
 	$val = sanitize($val);
 
 	// Do we have a valid config entry?
-	$setting = $DB->query("DELETE FROM config WHERE name='".$var."' LIMIT 1");
 
-	// Cache it.
-	$setting = $DB->query("INSERT INTO config (name, value) VALUES (?,?)",
-	                array("$var", "$val"));
-	                
-	if ($DB->affectedRows() != 1) {
-		makeNotice("Could not update the database registry (setConfig)!", "error", "Internal error!");
+	$setting = $DB->getCol("SELECT value FROM config WHERE name='$key' LIMIT 1");
+	if(isset($setting[0]) && $setting[0] != $val){
+
+		$setting = $DB->query("UPDATE config SET `value` = '" . $val . "' WHERE `name` = '". $key ."' LIMIT 1");
+		if($DB->affectedRows() < 1){
+			// Cache it.
+			$setting = $DB->query("INSERT INTO config (name, value) VALUES (?,?)",
+		                array("$key", "$val"));
+			if ($DB->affectedRows() != 1) {
+				makeNotice("Could not update the database registry (setConfig) $key = $val!", "error", "Internal error!");
+			}
+		}
 	}
-
+	$_SESSION["config_".$key] = $val;
 }
 ?>

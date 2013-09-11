@@ -52,7 +52,11 @@ function getLogins($user) {
 		return (false);
 	}
 
-	$currentPage = $_GET['loginPage'];
+	if(isset($_GET['loginPage'])){
+		$currentPage = $_GET['loginPage'];
+	}else{
+		$currentPage = 0;
+	}
 
 	// Get the right amount of datasets from the dbase.
 	if ($currentPage > 0 && is_numeric($currentPage)) {

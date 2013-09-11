@@ -37,8 +37,10 @@
 
 <title>%%SITENAME%%</title>
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js'></script>
-<link rel="stylesheet" type="text/css" href="include/html/default.css" />
+<link rel="stylesheet" type="text/css" href="include/html/default.css" media="screen" />
 <link rel="stylesheet" type="text/css" href="include/html/%%USERNAME%%.css" />
+<link rel="stylesheet" type="text/css" href="include/html/mobile.css" media="handheld" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body class='OOG'>
 

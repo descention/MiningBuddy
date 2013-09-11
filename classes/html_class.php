@@ -148,7 +148,7 @@ class html {
 				$this->header = str_replace("%%PILOT64%%", "<img width='64' height='64' align='left' src='https://image.eveonline.com/Character/". $api->getCharacterID() ."_64.jpg' />", $this->header);
 			}
 			
-			$this->header = str_replace("%%LOGO%%", $mainLogo->render(), $this->header);
+			$this->header = str_replace("%%LOGO%%", getConfig("sitename"), $this->header);
 			
 			if($imageCaching){
 				$this->header = str_replace("%%LOGGEDIN%%", $loginLogo->render(), $this->header);//

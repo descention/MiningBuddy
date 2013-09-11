@@ -135,7 +135,7 @@ function makeMenu($page = false) {
 		$miningModule = $mining_AllOps . " " . $mining_AddHaul . " " . $mining_canTimer . " " . $mining_oreQuotes . " " . $mining_ShipValues . " " . $mining_addOp . " " . $mining_stats . "";
 	} else {
 		$miningModule = "<div>";
-		$miningModule .= "<img src=\"./images/m-mining.png\">";
+		$miningModule .= "<div class='header'>Mining</div>";
 		$miningModule .= $mining_AllOps;
 		$miningModule .= $mining_AddHaul;
 		$miningModule .= $mining_canTimer;
@@ -186,7 +186,7 @@ function makeMenu($page = false) {
 		$prefModule = $pref_Pref . " " . $pref_Prof . " " . $pref_emailValid . "";
 	} else {
 		$prefModule = "<div>";
-		$prefModule .= "<img border=\"0\" src=\"images/m-preferences.png\">";
+		$prefModule .= "<div class='header'>Preferences</div>";
 		$prefModule .= $pref_Pref;
 		$prefModule .= $pref_Prof;
 		$prefModule .= $pref_emailValid;
@@ -210,7 +210,7 @@ function makeMenu($page = false) {
 			$logoutModule = "";
 		} else {
 			$logoutModule = "<div>";
-			$logoutModule .= "<img src=\"images/m-logout.png\">";
+			$logoutModule .= "<div class='header'>Logout</div>";
 			$logoutModule .= "<a class='menu' href=\"index.php?action=switch\">&gt; Switch Character</a>";
 			$logoutModule .= "<a class='menu' href=\"index.php?auth=logout\">&gt; Logout</a>";
 			$logoutModule .= "</div><div class='clear'></div>";
@@ -313,7 +313,7 @@ function makeMenu($page = false) {
 			$adminModule = $admin_site . " " . $admin_ranks . " " . $admin_viewUser . " " . $admin_addUser . " " . $admin_Ore . " " . $admin_Ships . "";
 		} else {
 			$adminModule = "<div>";
-			$adminModule .= "<img src=\"images/m-administration.png\">";
+			$adminModule .= "<div class='header'>Administration</div>";
 			$adminModule .= $admin_site;
 			$adminModule .= $admin_maint;
 			$adminModule .= $admin_viewUser;
@@ -368,7 +368,7 @@ function makeMenu($page = false) {
 				$eventsModule = $events_view . " " . $events_add . " " . $events_OnlineTimer . "";
 			} else {
 				$eventsModule = "<div>";
-				$eventsModule .= "<img src=\"./images/m-events.png\">";
+				$eventsModule .= "<div class='header'>Events</div>";
 				$eventsModule .= $events_view;
 				$eventsModule .= $events_add;
 				$eventsModule .= $events_OnlineTimer;
@@ -385,7 +385,7 @@ function makeMenu($page = false) {
 			$walletModule .= " [<a href=\"index.php?action=payout\">Manage Payouts</a>]";
 		}
 	} else {
-		$walletModule = "<div><img src=\"./images/wallet.png\">";
+		$walletModule = "<div><div class='header'>Wallet</div>";
 		$walletModule .= "<a class='menu' href=\"index.php?action=manageWallet\">&gt; Manage Wallet</a>";
 		if ($MySelf->isAccountant()) {
 			$walletModule .= "<a class='menu' href=\"index.php?action=payout\">&gt; Manage Payouts</a>";
@@ -428,7 +428,7 @@ function makeMenu($page = false) {
 				$lottoModule = $lotto_Play . " " . $lotto_Admin . "";
 			} else {
 				$lottoModule = "<div>";
-				$lottoModule .= "<img src=\"./images/m-lotto.png\">";
+				$lottoModule .= "<div class='header'>Lotto</div>";
 				$lottoModule .= $lotto_Play;
 				$lottoModule .= $lotto_Admin;
 				$lottoModule .= "</div><div class='clear'></div>";
@@ -446,7 +446,7 @@ function makeMenu($page = false) {
 		$runs = sidebarOpenRuns();
 		if ($runs) {
 			$operationsModule = "<div>";
-			$operationsModule .= "<img src=\"./images/m-runs-in-progress.png\">";
+			$operationsModule .= "<div class='header'>Runs</div>";
 			$operationsModule .= sidebarOpenRuns() . "";
 			$operationsModule .= "</div><div class='clear'></div>";
 		}

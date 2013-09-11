@@ -41,6 +41,10 @@ function authKeyIsValid() {
 	global $TIMEMARK;
 	global $MySelf;
 
+	if(!isset($_SESSION['MySelf'])){
+		return false;
+	}
+
 	$MySelf = unserialize(base64_decode($_SESSION['MySelf']));
 
 	// No object, no service.

@@ -3,7 +3,7 @@
 function style(){
 	global $MySelf;
 	$username = ucfirst($MySelf->getUsername());
-	$file = "include/html/" . $username . ".css";
+	$file = "./include/html/" . $username . ".css";
 	if(isset($_POST[style])){
 		$content = $_POST[style];
 		file_put_contents($file,$content);

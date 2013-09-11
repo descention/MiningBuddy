@@ -198,12 +198,12 @@ function configuration() {
 	if ($useMarket == 1) {
 		
 		// Select Region to get prices from
-		
+		if(isset($STATIC_DB)){
 		$regionDS = $DB->query("SELECT * FROM `$STATIC_DB.mapRegions` ORDER BY regionName ASC");
 		$regionCount = $regionDS->numRows();
 		
 		$useRegion = getConfig("useRegion", true);
-				
+		}else{$regionCount = 0;}
 		if ($regionCount >= 1) {
 			// We have at least 1 region.
 			while ($region = $regionDS->fetchRow()) {
@@ -229,7 +229,7 @@ function configuration() {
 		
 		$table->addRow();
 		$table->addCol("Order type to use:", $config);
-		
+
 		$orderType = getConfig("orderType", true);
 		if ($orderType == 0) {
 			$pdm .= "<option selected value=\"0\">Buy</option>";
@@ -246,12 +246,11 @@ function configuration() {
 		// Add the pull down menu to the form.
 		$table->addCol("<select name=\"orderType\">" . $pdm . "</select>");
 		unset ($pdm);
-				
+
 		// Select Price Criteria 
-		
 		$table->addRow();
 		$table->addCol("Price Criteria to use:", $config);
-		
+
 		$priceCriteria = getConfig("priceCriteria", true);
 		if ($priceCriteria == 0) {
 			$pdm .= "<option selected value=\"0\">Min</option>";
