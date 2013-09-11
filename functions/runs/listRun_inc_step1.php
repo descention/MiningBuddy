@@ -37,7 +37,7 @@
  */
 
 // We have to SELECT the most fitting ID. This can be done in three ways.
-if (("$_GET[id]" >= 0) && (is_numeric($_GET['id']))) {
+if (($_GET['id'] >= 0) && (is_numeric($_GET['id']))) {
 	// Way Nr. 1: The user specified an ID.
 	$ID = $_GET['id'];
 } else {
@@ -60,7 +60,7 @@ $select = "";
 $r = $DB->query("select item, sum(Quantity) as total from hauled where miningrun = '$ID' group by item having sum(Quantity) <> 0");
 while($r2 = $r->fetchRow()){
 	if($r2['total'] != 0){
-		$select .= ", '$r2[total]' as $r2[item]";
+		$select .= ", '".$r2['total']."' as ".$r2['item'];
 	}
 }
 

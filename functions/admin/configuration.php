@@ -207,12 +207,12 @@ function configuration() {
 		if ($regionCount >= 1) {
 			// We have at least 1 region.
 			while ($region = $regionDS->fetchRow()) {
-				if ($region[regionID] == $useRegion) {
+				if ($region['regionID'] == $useRegion) {
 					// The current region is selected.
-					$region_pdm .= "<option SELECTED value=\"$region[regionID]\">$region[regionName]</option>";
+					$region_pdm .= "<option SELECTED value=\"$region['regionID']\">$region['regionName']</option>";
 				} else {
 					// The others of course, are not.
-					$region_pdm .= "<option value=\"$region[regionID]\">$region[regionName]</option>";
+					$region_pdm .= "<option value=\"$region['regionID']\">$region['regionName']</option>";
 				}
 			}
 			$regionColumn = "<select name=\"useRegion\">" . $region_pdm . "</select>";
@@ -376,9 +376,9 @@ function configuration() {
 			// Create a row for every template
 			while ($template = $templates_DS->fetchRow()) {
 				$template_table->addRow();
-				$template_table->addCol($template[type]);
-				$template_table->addCol("<a href=\"index.php?action=edittemplate&id=" . $template[id] . "\">" . $template[identifier] . "</a>");
-				$template_table->addCol($template[descr]);
+				$template_table->addCol($template['type']);
+				$template_table->addCol("<a href=\"index.php?action=edittemplate&id=" . $template['id'] . "\">" . $template['identifier'] . "</a>");
+				$template_table->addCol($template['descr']);
 			}
 
 			$templates = $template_table->flush();

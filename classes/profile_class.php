@@ -74,11 +74,11 @@ class profile {
 		}
 
 		// Set some vars.
-		$this->minerFlag = $this->profileDB[isMiner];
-		$this->haulerFlag = $this->profileDB[isHauler];
-		$this->fighterFlag = $this->profileDB[isFighter];
-		$this->emailVisible = $this->profileDB[emailVisible];
-		$this->about = $this->profileDB[about];
+		$this->minerFlag = $this->profileDB['isMiner'];
+		$this->haulerFlag = $this->profileDB['isHauler'];
+		$this->fighterFlag = $this->profileDB['isFighter'];
+		$this->emailVisible = $this->profileDB['emailVisible'];
+		$this->about = $this->profileDB['about'];
 	}
 
 	// This sets the picture URLS.

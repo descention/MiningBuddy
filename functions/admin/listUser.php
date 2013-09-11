@@ -46,10 +46,10 @@ function listUser() {
 	}
 
 	// Is the supplied ID truly numeric?
-	if (!is_numeric($_GET[id])) {
+	if (!is_numeric($_GET['id'])) {
 		makeNotice("Why would you do such a thing? Are you evil at heart? Lets assume its a \"mistake\" for now..", "warning", "*cough*", "index.php?action=editusers", "I'm sorry...");
 	} else {
-		$id = (int) $_GET[id];
+		$id = (int) $_GET['id'];
 	}
 
 	// Query the database.
@@ -59,29 +59,29 @@ function listUser() {
 	while ($row = $users->fetchRow()) {
 
 		$table = new table(2, true);
-		$table->addHeader(">> Managing user " . ucfirst($row[username]));
-		$username = ucfirst($row[username]);
+		$table->addHeader(">> Managing user " . ucfirst($row['username']));
+		$username = ucfirst($row['username']);
 
 		$table->addRow();
 		$table->addCol("ID:");
-		$table->addCol(str_pad("$row[id]", 5, "0", STR_RIGHT_PAD));
+		$table->addCol(str_pad("$row['id']", 5, "0", STR_RIGHT_PAD));
 
 		$table->addRow();
 		$table->addCol("Username:");
 
 		// Allow ubah-admins to change usernames. WAH, can of worms!
 		if ($MySelf->isAdmin() && $MySelf->canManageUser()) {
-			$uname_temp = strtolower($row[username]);
+			$uname_temp = strtolower($row['username']);
 			$field_temp = "<input type=\"text\" name=\"username\" value=\"" . $uname_temp . "\">";
 			$confi_temp = "<input type=\"checkbox\" name=\"username_check\" value=\"true\">";
 			$table->addCol($field_temp . " (changing username tick here also: " . $confi_temp . ")");
 		} else {
-			$table->addCol(ucfirst($row[username]));
+			$table->addCol(ucfirst($row['username']));
 		}
 
 		$table->addRow();
 		$table->addCol("eMail:");
-		$table->addCol("<input type=\"text\" size=\"40\" name=\"email\" value=\"" . ($row[email] == "" ? 'no email supplied' : $row[email]) . "\">");
+		$table->addCol("<input type=\"text\" size=\"40\" name=\"email\" value=\"" . ($row['email'] == "" ? 'no email supplied' : $row['email']) . "\">");
 
 		$table->addRow();
 		$table->addCol("Password:");
@@ -94,12 +94,12 @@ function listUser() {
 		if ($rankCount >= 1) {
 			// We have at least 1 rank.
 			while ($rank = $RanksDS->fetchRow()) {
-				if ($rank[rankid] == $row[rank]) {
+				if ($rank['rankid'] == $row['rank']) {
 					// The current rank is selected.
-					$rank_pdm .= "<option SELECTED value=\"$rank[rankid]\">$rank[name]</option>";
+					$rank_pdm .= "<option SELECTED value=\"$rank['rankid']\">$rank['name']</option>";
 				} else {
 					// The others of course, are not.
-					$rank_pdm .= "<option value=\"$rank[rankid]\">$rank[name]</option>";
+					$rank_pdm .= "<option value=\"$rank['rankid']\">$rank['name']</option>";
 				}
 			}
 			$rankColumn = "<select name=\"rank\">" . $rank_pdm . "</select>";
@@ -116,18 +116,18 @@ function listUser() {
 		$table->addCol("Last login:");
 
 		// Handle folks that never logged in.
-		if ("$row[lastlogin]" < 10) {
+		if ("$row['lastlogin']" < 10) {
 			$table->addCol("never");
 		} else {
-			$table->addCol(date("d.m.y H:i:s", $row[lastlogin]));
+			$table->addCol(date("d.m.y H:i:s", $row['lastlogin']));
 		}
 
 		$table->addRow();
 		$table->addCol("Credits:");
-		$table->addCol(number_format(getCredits($row[id]), 2) . " ISK");
+		$table->addCol(number_format(getCredits($row['id']), 2) . " ISK");
 
 		// Is the account confirmed?
-		if ("$row[confirmed]" == "0") {
+		if ("$row['confirmed']" == "0") {
 
 			$table->addRow();
 			$table->addCol("Account confirmed:");
@@ -141,7 +141,7 @@ function listUser() {
 			$table->addCol("Account confirmed:");
 
 			// Give a red light if user has not even verified himself.
-			if ("$row[emailvalid]" == "0") {
+			if ("$row['emailvalid']" == "0") {
 				$table->addCol("<b>WARNING!</b><br> The User has not yet verified this email yet! If you choose to enable" . " this account at this time, be very sure that you know the person requesting the account!", array (
 					"bgcolor" => "#662222"
 				));
@@ -153,7 +153,7 @@ function listUser() {
 			$table->addRow();
 			$table->addCol("This account has been confirmed.");
 
-			if ("$row[emailvalid]" == "0") {
+			if ("$row['emailvalid']" == "0") {
 				$table->addCol("<font color=\"#ff0000\">WARNING!</b></font><br> The User has not verified this email but the account has been confirmed!");
 
 				// Add a "confirm email" checkbox.
@@ -170,9 +170,9 @@ function listUser() {
 		/*
 		 * API Goodness
 		 */
-		$api = new api($row[id], true);
+		$api = new api($row['id'], true);
 		$apit = new table(2, true);
-		$apit->addHeader(">> Api information for " . ucfirst($row[username]));
+		$apit->addHeader(">> Api information for " . ucfirst($row['username']));
 		$apit->addRow();
 
 		$apit->addCol("API Key in database:");
@@ -225,7 +225,7 @@ function listUser() {
 
 		// Create a seperate permissions table.
 		$perm_table = new table(2, true);
-		$perm_table->addHeader(">> " . ucfirst($row[username]) . " has permission to... ");
+		$perm_table->addHeader(">> " . ucfirst($row['username']) . " has permission to... ");
 
 		$perm_keys = array_keys($perms);
 		$LoR = 1;
@@ -270,7 +270,7 @@ function listUser() {
 	}
 
 	$form .= "<form action=\"index.php\" method=\"POST\">";
-	$form .= "<input type=\"hidden\" name=\"id\" value=\"" . $_GET[id] . "\">";
+	$form .= "<input type=\"hidden\" name=\"id\" value=\"" . $_GET['id'] . "\">";
 	$form .= "<input type=\"hidden\" name=\"check\" value=\"true\">";
 	$form .= "<input type=\"hidden\" name=\"action\" value=\"edituser\">";
 
@@ -327,7 +327,7 @@ function listUser() {
 
 		$transBox = "<form action=\"index.php\" method=\"POST\">";
 		$transBox .= $acc->flush();
-		$transBox .= "<input type=\"hidden\" name=\"id\" value=\"" . $_GET[id] . "\">";
+		$transBox .= "<input type=\"hidden\" name=\"id\" value=\"" . $_GET['id'] . "\">";
 		$transBox .= "<input type=\"hidden\" name=\"check\" value=\"true\">";
 		$transBox .= "<input type=\"hidden\" name=\"action\" value=\"transaction\">";
 		$transBox .= "</form>";

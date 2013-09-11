@@ -270,12 +270,12 @@ class graphic {
 			} else {
 				// First pass:
 				$rand = rand(11111, 99999);
-				$prefs[type] = "standard";
-				$prefs[text] = $this->text;
-				$prefs[bgcolor] = $this->rawBGColor;
-				$prefs[color] = $this->rawColor;
-				$prefs[prefixed] = $this->prefixed;
-				$prefs[id] = $rand;
+				$prefs['type'] = "standard";
+				$prefs['text'] = $this->text;
+				$prefs['bgcolor'] = $this->rawBGColor;
+				$prefs['color'] = $this->rawColor;
+				$prefs['prefixed'] = $this->prefixed;
+				$prefs['id'] = $rand;
 				$_SESSION["img_$rand"] = base64_encode(serialize($prefs));
 
 				$url = "index.php?image=$rand";

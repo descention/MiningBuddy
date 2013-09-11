@@ -38,7 +38,7 @@ function editUser() {
 	global $MySelf;
 	global $IS_DEMO;
 
-	if ($IS_DEMO && $_POST[id] == "1") {
+	if ($IS_DEMO && $_POST['id'] == "1") {
 		makeNotice("The user would have been changed. (Operation canceled due to demo site restrictions.)", "notice", "Password change confirmed");
 	}
 
@@ -48,7 +48,7 @@ function editUser() {
 	}
 
 	// Sanitize the ID
-	$ID = sanitize($_POST[id]);
+	$ID = sanitize($_POST['id']);
 	$SELF = $MySelf->getID();
 
 	if (!is_numeric($ID)) {
@@ -61,12 +61,12 @@ function editUser() {
 	$user = $userDS->fetchRow();
 
 	// Non-admin tries to edit an admin, err no.
-	if ($user[isAdmin] && !$MySelf->isAdmin()) {
+	if ($user['isAdmin'] && !$MySelf->isAdmin()) {
 		makeNotice("Only an Administrator may edit another Administrator. You do have the rights to edit users, but you are not allowed to modify an Administrators account.", "warning", "Insufficient rights!", "index.php?action=edituser&id=$ID", "Cancel");
 	}
 
 	// Do we want to delete the user?
-	if ($_POST[delete] == "true") {
+	if ($_POST['delete'] == "true") {
 		if ($ID == $SELF) {
 			makeNotice("You can not delete yourself! Why would you do such a thing? " .
 			"Life is not that bad, c'mon...'", "warning", "Operation canceled", "index.php?action=edituser&id=$ID", "get yourself together, man");
@@ -89,7 +89,7 @@ function editUser() {
 	}
 
 	// Activate the account, or disable it.
-	if ("$_POST[canLogin]" == "on") {
+	if ("$_POST['canLogin']" == "on") {
 		$DB->query("UPDATE users SET active='1' WHERE id ='$ID' LIMIT 1");
 	} else {
 		if ($ID == $SELF) {
@@ -100,36 +100,36 @@ function editUser() {
 	}
 
 	// Confirm the account.
-	if ("$_POST[confirm]" == "true") {
+	if ("$_POST['confirm']" == "true") {
 		$DB->query("UPDATE users SET confirmed='1' WHERE id ='$ID' LIMIT 1");
-		lostPassword($user[username]);
+		lostPassword($user['username']);
 		$ADD = " Due to confirmation I have sent an email to the user with his password.";
 	}
 
 	// Force the users email to be valid.
-	if ("$_POST[SetEmailValid]" == "true") {
+	if ("$_POST['SetEmailValid']" == "true") {
 		$DB->query("UPDATE users SET emailvalid='1' WHERE id ='$ID' LIMIT 1");
 	}
 
 	global $IS_DEMO;
 	if (!$IS_DEMO) {
 		// Set the new email.
-		if (!empty ($_POST[email])) {
-			$email = sanitize("$_POST[email]");
+		if (!empty ($_POST['email'])) {
+			$email = sanitize("$_POST['email']");
 			$DB->query("UPDATE users SET email='$email' WHERE id ='$ID'");
 		}
 
 		// Set the new Password.
-		if (!empty ($_POST[password])) {
-			$password = encryptPassword(sanitize("$_POST[password]"));
+		if (!empty ($_POST['password'])) {
+			$password = encryptPassword(sanitize("$_POST['password']"));
 			$DB->query("UPDATE users SET password='$password' WHERE id ='$ID'");
 		}
 
 		// Change (shudder) the username.
-		if ($_POST[username_check] == "true" && $_POST[username] != "") {
+		if ($_POST[username_check] == "true" && $_POST['username'] != "") {
 			if ($MySelf->isAdmin() && $MySelf->canManageUser()) {
 				// Permissions OK.
-				$new_username = sanitize($_POST[username]);
+				$new_username = sanitize($_POST['username']);
 
 				// Check for previously assigned username
 				$count = $DB->getCol("SELECT COUNT(username) FROM users WHERE username='$new_username'");
@@ -158,14 +158,14 @@ function editUser() {
 	if ($MySelf->canEditRank()) {
 
 		// Set the new Rank.
-		if (is_numeric($_POST[rank]) && $_POST[rank] >= 0) {
-			$rank = sanitize("$_POST[rank]");
+		if (is_numeric($_POST['rank']) && $_POST['rank'] >= 0) {
+			$rank = sanitize("$_POST['rank']");
 			$DB->query("UPDATE users SET rank='$rank' WHERE id ='$ID'");
 		}
 
 		// toggle the opt-in setting.
 		// Its a checkbox. So we have to endure the pain.
-		if ($_POST[optIn]) {
+		if ($_POST['optIn']) {
 			$state = 1;
 		} else {
 			$state = 0;

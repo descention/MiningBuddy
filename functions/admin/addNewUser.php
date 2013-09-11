@@ -43,18 +43,18 @@ function addNewUser() {
 
 	// Sanitize the input.
 	$USERNAME = $MySelf->getUsername;
-	$NEW_USER = strtolower(sanitize($_POST[username])); // supplied new username.
+	$NEW_USER = strtolower(sanitize($_POST['username'])); // supplied new username.
 	
 	if (!ctypeAlnum($NEW_USER)) {
 		makeNotice("Only characters a-z, A-Z and 0-9 are allowed as username.", "error", "Invalid Username");
 	}
 
 	/* Password busines */
-	if ($_POST[pass1] != $_POST[pass2]) {
+	if ($_POST['pass1'] != $_POST['pass2']) {
 		makeNotice("The passwords did not match!", "warning", "Passwords invalid", "index.php?action=newuser", "[retry]");
 	}
 
-	$PASSWORD = encryptPassword("$_POST[pass1]");
+	$PASSWORD = encryptPassword($_POST['pass1']);
 	$PASSWORD_ENC = $PASSWORD;
 
 	/* lets see if the users (that is logged in) has sufficient
@@ -71,12 +71,12 @@ function addNewUser() {
 	}
 
 	// So we have an email address?
-	if (empty ($_POST[email])) {
+	if (empty ($_POST['email'])) {
 		// We dont!
 		makeNotice("You need to supply an email address!", "error", "Account not created");
 	} else {
 		// We do. Clean it.
-		$NEW_EMAIL = sanitize($_POST[email]);
+		$NEW_EMAIL = sanitize($_POST['email']);
 	}
 
 	// Inser the new user into the database!

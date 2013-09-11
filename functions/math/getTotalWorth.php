@@ -51,8 +51,8 @@ function getTotalWorth($id, $net = false) {
 	$select = "";
 	$r = $DB->query("select item, sum(Quantity) as total from hauled where miningrun = '$id' group by item having sum(Quantity) <> 0");
 	while($r2 = $r->fetchRow()){
-		if($r2[total] != 0){
-			$select .= ", '$r2[total]' as $r2[item]";
+		if($r2['total'] != 0){
+			$select .= ", '$r2['total']' as $r2['item']";
 		}
 	}
 
@@ -70,7 +70,7 @@ function getTotalWorth($id, $net = false) {
 	}
 
 	// Load the appropiate ore values.
-	if ($run[oreGlue] <= 0) {
+	if ($run['oreGlue'] <= 0) {
 		$oreValueR = $DB->query("select * from orevalues a where time = (select max(time) from orevalues b where a.item = b.item) group by item ORDER BY time DESC");
 	} else {
 		$oreValueR = $DB->query("select * from orevalues a where time = (select max(time) from orevalues b where a.item = b.item and time <= (select oreglue from runs where id = '$id')) group by item ORDER BY time DESC");
@@ -91,10 +91,10 @@ function getTotalWorth($id, $net = false) {
 	/*
 //Edit Starts Here	
 	// Load the appropiate ship values.
-	if ($run[shipGlue] <= 0) {
+	if ($run['shipGlue'] <= 0) {
 		$shipvalues = $DB->query("select * from shipvalues order by id desc limit 1");
 	} else {
-		$shipvalues = $DB->query("select * from shipvalues where id='" . $run[shipGlue] . "' limit 1");
+		$shipvalues = $DB->query("select * from shipvalues where id='" . $run['shipGlue'] . "' limit 1");
 	}
 	$row = $shipvalues->fetchRow();
 

@@ -37,10 +37,10 @@
  	global $DB;
  
  	if ($MySelf->canManageUser()) {
- 	    numericCheck($_GET[id]);
- 	    $api = new api($_GET[id]);
+ 	    numericCheck($_GET['id']);
+ 	    $api = new api($_GET['id']);
  	    $api->deleteApiKey();
- 	    makeNotice("Api key for user " . ucfirst(idToUsername($_GET[id])) . " has been deleted from the database", "notice", "API deleted.", "index.php?action=edituser&id=".$_GET[id], "[OK]" );
+ 	    makeNotice("Api key for user " . ucfirst(idToUsername($_GET['id'])) . " has been deleted from the database", "notice", "API deleted.", "index.php?action=edituser&id=".$_GET['id'], "[OK]" );
  	}
  	makeNotice("You do not have permission to modify users.", "warning", "Access denied.");	
  
