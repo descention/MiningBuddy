@@ -147,7 +147,7 @@ function authVerify($username, $password, $trust = false) {
 		 */
 		if ($passwordless) {
 			if($AUTH_TYPE == "testauth"){
-				// Just return the account as we're using TEST 'leetsauce' auth.
+				// Just return the account as we're using TEST auth.
 				$MyAccount = new user($user, $TIMEMARK);
 				return ($MyAccount);
 			}else{

@@ -37,7 +37,7 @@ function modConfiguration() {
 	global $DB;
 	global $MySelf;
 	
-	// Use this to trac if something has change in Market Settings
+	// Use this to track if something has change in Market Settings
 	$marketSettingChanged = false;
 
 	// Are we allowed to be here?
@@ -47,7 +47,7 @@ function modConfiguration() {
 	}
 
 	// Edit sitename.
-	setConfig("sitename", sanitize($_POST[sitename]));
+	setConfig("sitename", sanitize($_POST['sitename']));
 
 	// Ban goodness.
 	if ($_POST[banAttempts] >= 5 && is_numeric($_POST[banAttempts])) {

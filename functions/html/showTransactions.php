@@ -53,7 +53,7 @@
  	$id = $_GET['id'];
  	
  	// Load the transaction log.
-	$account = $auth?"'s TEST Auth":"";
+	$account = $auth?"'s Auth":"";
 	$page = "<h2>Transaction log for " . ucfirst($username) . "$account</h2>";
  	
 	
