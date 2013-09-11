@@ -43,7 +43,7 @@ function process_get() {
 	global $MySelf;
 	
 	$ajax = 0;
-	if(isset($_GET['action']))
+	if(isset($_GET['action'])){
 		switch ($_GET['action']) {
 
 			// Maintenance!
