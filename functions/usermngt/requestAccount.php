@@ -47,7 +47,7 @@ function requestAccount() {
 	$PASSWORD_ENC = encryptPassword($PASSWORD);
 
 	// Sanitize the input.
-	$NEW_USER = strtolower(sanitize($_POST[username])); // supplied new username.
+	$NEW_USER = strtolower(sanitize($_POST['username'])); // supplied new username.
 
 	// Lets prevent adding multiple users with the same name.
 	if (userExists($NEW_USER)) {
@@ -55,12 +55,12 @@ function requestAccount() {
 	}
 
 	// So we have a username?
-	if (strlen($_POST[username]) < 3) {
+	if (strlen($_POST['username']) < 3) {
 		makeNotice("Your username must be longer than 3 letters.", "error", "Invalid Username");
 	}
 
 	// Let me rephrase: Do we have a VALID username?
-	if (!ctypeAlnum($_POST[username])) {
+	if (!ctypeAlnum($_POST['username'])) {
 		makeNotice("Only characters a-z, A-Z, 0-9 and spaces are allowed as username.", "error", "Invalid Username");
 	}
 

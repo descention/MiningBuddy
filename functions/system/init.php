@@ -70,7 +70,7 @@ if (ini_get('register_globals')) {
 }
 
 /* Set the error handler. */
-set_error_handler('errorHandler', E_WARNING);
+//set_error_handler('errorHandler', E_WARNING);
 
 /* Do we have the config file? */
 if (!isset($_SESSION["initdone"]) || $_SESSION["initdone"] != true) {
@@ -83,7 +83,7 @@ if (!isset($_SESSION["initdone"]) || $_SESSION["initdone"] != true) {
 require_once ("./etc/config." . $DOMAIN . ".php");
 
 /* is the images cache dir existant and writeable? */
-if (!file_exists("./images/cache/" . $DOMAIN)) {
+if (!file_exists("./images/cache/" . $DOMAIN) && is_writable("./images/cache/" . $DOMAIN)) {
 	mkdir("./images/cache/" . $DOMAIN, 0755);
 }
 
@@ -121,7 +121,7 @@ if (!isset($_SESSION["initdone"]) || $_SESSION["initdone"] != true) {
 	if ($DB->isError($CURRENT)) {
 		print ("<br><center><body bgcolor=\"#2E2E2E\"><font color= white><body link=\"#00FF00\" vlink=\"##00FF00\" alink=\"#FF0000\">");
 		print ("<br><br><br><br><br><br><br><br><br><br><br><br>");
-		die("<CENTER><H1>Mining Buddy Tables need to be Created<BR><a href=\"./buildDatabase.php\">Click to Continue</H1></a></CENTER>");	
+		die("<CENTER><H1>Mining Buddy Tables need to be Created<BR><a href=\"./buildDatabase.php\">Click to Continue</H1></a></CENTER>");
 	}
 	// Version number incorrect.
 	if ("$CURRENT[0]" < "$SQLVER") {

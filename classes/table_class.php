@@ -141,7 +141,7 @@ class table {
 		));
 	}
 
-	public function addCol($cont, $modes) {
+	public function addCol($cont, $modes = array()) {
 		// Do we have an open row?
 		if (!$this->rowIsOpen) {
 			makeNotice("Row not opened.", "error", "Internal Error");
