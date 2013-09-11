@@ -486,7 +486,7 @@ CREATE TABLE IF NOT EXISTS `ranks` (
 
 INSERT INTO `ranks` (`name`) values
 ('Admin'),
-('Member')
+('Member');
 
 -- --------------------------------------------------------
 
