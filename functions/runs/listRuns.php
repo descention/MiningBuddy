@@ -160,7 +160,7 @@ function listRuns() {
 	} else {
 		$table_closed->addCol("");
 	}
-
+	$closedRunsExist = false;
 	// Now we loop through each returned result.
 	while ($row = $results->fetchRow()) {
 
