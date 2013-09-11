@@ -165,7 +165,7 @@ function requestAccount() {
 			mail($to,$VERSION,$EMAIL,$headers);
 			makeNotice("A confirmation email has been sent to your supplied email address.<br>Please follow the instructions therein.", "notice", "Account created");
 		}else{
-			makeNotice("Your account must be approved by your CEO<br/>Username: " . stripcslashes($NEW_USER) . "<br>Password: $PASSWORD", "notice", "Account created");
+			makeNotice("Your account must be approved by HR<br/>Username: " . stripcslashes($NEW_USER) . "<br>Password: $PASSWORD", "notice", "Account created");
 		}
 	}
 }
