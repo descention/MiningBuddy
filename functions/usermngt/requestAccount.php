@@ -65,12 +65,12 @@ function requestAccount() {
 	}
 
 	// So we have an email address?
-	if (empty ($_POST[email])) {
+	if (empty ($_POST['email'])) {
 		// We dont!
 		makeNotice("You need to supply an email address!", "error", "Account not created");
 	} else {
 		// We do. Clean it.
-		$NEW_EMAIL = sanitize($_POST[email]);
+		$NEW_EMAIL = sanitize($_POST['email']);
 
 		// Valid one, too?
 		if (!checkEmailAddress($NEW_EMAIL)) {
@@ -99,7 +99,15 @@ function requestAccount() {
 			$email = "Superuser information: Username " . stripcslashes($NEW_USER) . ", Password $PASSWORD - change this as soon as possible!";
 			global $VERSION;
 			$headers = "From:" . $MB_EMAIL;
-			mail("$NEW_EMAIL", "Superuser login information (" . $VERSION . ")", $email, $headers);
+			global $MAIL;
+			if(isset($MAIL)){
+				$MAIL->AddAddress($NEW_EMAIL);
+				$MAIL->Subject = "Superuser login information (" . $VERSION . ")";
+				$MAIL->Body = $email;
+				$MAIL->Send();
+			}else{
+				mail("$NEW_EMAIL", "Superuser login information (" . $VERSION . ")", $email, $headers);
+			}
 			unset ($email);
 
 			// Inform the user.

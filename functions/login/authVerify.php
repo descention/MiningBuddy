@@ -136,10 +136,9 @@ function authVerify($username, $password, $trust = false) {
 		
 		if($user == null){
 			return (false);
-			makeNotice("Your account is not a member of the B0rthole user group." . "<br>Please join the group on TEST Auth.", "error", "Unable to login");
+			makeNotice("Issues. Get ahold of Descention." . "<br>Please join the group on TEST Auth.", "error", "Unable to login");
 		}
 	}
-	echo "test";
 	// Is the account activated yet?
 	if (("$user[canLogin]" != "1") || ("$user[confirmed]" != "1")) {
 		// Nyet!
