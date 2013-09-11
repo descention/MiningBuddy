@@ -99,22 +99,20 @@ function makeWelcome() {
 		$table->addCol("It is not affected by expiration. It runs with the highest priority on the server and all limitations have been lifted.");
 	}
     
-    // Set the filename to the announce textfile.
-    $announceFile = "/path/to/your/announce/txt.file";
-    // Check its existance...
-    if (file_exists($announceFile))
-    // Then load it.
-    $globalAnnounce = file_get_contents($announceFile);
-    // Only display contents if more than X characters long.
-    if (strlen($globalAnnounce) > 10) {
-    	// Create announcement table...
-    	$announceTable = new table(1, true);
-    	$announceTable->addHeader(">>> Important hosting information");
-    	$announceTable->addRow();
-    	$announceTable->addCol("$globalAnnounce");
-    	// ... and add it to the page.
-    	$page .= $announceTable->flush();
-    }
+    // Set the file name to the announce text file.
+    $announceFile = getConfig("announceFile");
+    // Check its existence...
+    if (isset($announceFile) && file_exists($announceFile)){
+		// Then load it.
+		$globalAnnounce = file_get_contents($announceFile);
+		// Create announcement table...
+		$announceTable = new table(1, true);
+		$announceTable->addHeader(">>> Important hosting information");
+		$announceTable->addRow();
+		$announceTable->addCol("$globalAnnounce");
+		// ... and add it to the page.
+		$page .= $announceTable->flush();
+	}
   
 	$page .= $table->flush();
 	

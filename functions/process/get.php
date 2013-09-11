@@ -43,301 +43,301 @@ function process_get() {
 	global $MySelf;
 	
 	$ajax = 0;
-	
-	switch ($_GET['action']) {
+	if(isset($_GET['action']))
+		switch ($_GET['action']) {
 
-		// Maintenance!
-		case ("maintenance") :
-			$page = maintenance();
-			break;
+			// Maintenance!
+			case ("maintenance") :
+				$page = maintenance();
+				break;
 
-			// a specific run is requested.
-		case ("show") :
-			$page = listRun();
-			$ajax = 20;
-			break;
+				// a specific run is requested.
+			case ("show") :
+				$page = listRun();
+				$ajax = 20;
+				break;
 
-			// a profile is requested.
-		case ("profile") :
-			$page = profile();
-			break;
+				// a profile is requested.
+			case ("profile") :
+				$page = profile();
+				break;
 
-			// a profile change is requested.
-		case ("modprofile") :
-			$page = modProfile();
-			break;
+				// a profile change is requested.
+			case ("modprofile") :
+				$page = modProfile();
+				break;
 
-			// Admin request to delete an api key (NOT user deleting own!)
-		case ("delapi") :
-			$page = deleteAPIKey();
-			break;
-			
-			// Quick toggle of login capabilities.
-		case ("toggleLogin"):
-			$page = toggleLogin();
-			break;
-			
-			// Quick confirm an account.
-		case ("quickconfirm"):
-			$page = quickConfirm();
-			break;
+				// Admin request to delete an api key (NOT user deleting own!)
+			case ("delapi") :
+				$page = deleteAPIKey();
+				break;
+				
+				// Quick toggle of login capabilities.
+			case ("toggleLogin"):
+				$page = toggleLogin();
+				break;
+				
+				// Quick confirm an account.
+			case ("quickconfirm"):
+				$page = quickConfirm();
+				break;
 
-			// Change of eMail requested
-		case ("changeemail") :
-			$page = makeEmailChangeForm();
-			break;
+				// Change of eMail requested
+			case ("changeemail") :
+				$page = makeEmailChangeForm();
+				break;
 
-			// Show corp hierarchy
-		case ("hierarchy") :
-			$page = showHierarchy();
-			break;
+				// Show corp hierarchy
+			case ("hierarchy") :
+				$page = showHierarchy();
+				break;
 
-			// Browser solar Systems
-		case ("browse") :
-			$page = browser();
-			break;
+				// Browser solar Systems
+			case ("browse") :
+				$page = browser();
+				break;
 
-			// User wants to delete a run.
-		case ("deleterun") :
-			deleteRun();
-			break;
+				// User wants to delete a run.
+			case ("deleterun") :
+				deleteRun();
+				break;
 
-			// User wants to see the preferences page.
-		case ("preferences") :
-			$page = makePreferences();
-			break;
+				// User wants to see the preferences page.
+			case ("preferences") :
+				$page = makePreferences();
+				break;
 
-			// A banker wants to see the transaction log for a user.
-		case ("showTransactions") :
-			$page = showTransactions();
-			break;
+				// A banker wants to see the transaction log for a user.
+			case ("showTransactions") :
+				$page = showTransactions();
+				break;
 
-			// User wants to manage his cans.
-		case ("cans") :
-			$page = makeCanPage();
-			break;
+				// User wants to manage his cans.
+			case ("cans") :
+				$page = makeCanPage();
+				break;
 
-			// Print out fancy global statistics
-		case ("globstats") :
-			$page = globalStatistics();
-			break;
+				// Print out fancy global statistics
+			case ("globstats") :
+				$page = globalStatistics();
+				break;
 
-			// User wants to re-validate his email.
-		case ("revalidate") :
-			validate();
-			break;
+				// User wants to re-validate his email.
+			case ("revalidate") :
+				validate();
+				break;
 
-			// User wants to pop a can.
-		case ("popcan") :
-			$page = popCan();
-			break;
+				// User wants to pop a can.
+			case ("popcan") :
+				$page = popCan();
+				break;
 
-			// Kick a user.
-		case ("kickban") :
-			$page = kick();
-			break;
+				// Kick a user.
+			case ("kickban") :
+				$page = kick();
+				break;
 
-			// User wants to toggle the empty/full setting of a can.
-		case ("togglecan") :
-			$page = toggleCan();
-			break;
+				// User wants to toggle the empty/full setting of a can.
+			case ("togglecan") :
+				$page = toggleCan();
+				break;
 
-			// close a run.
-		case ("endrun") :
-			endrun();
-			break;
+				// close a run.
+			case ("endrun") :
+				endrun();
+				break;
 
-			// Show ore values
-		case ("showorevalue") :
-			$page = showOreValue();
-			break;
+				// Show ore values
+			case ("showorevalue") :
+				$page = showOreValue();
+				break;
 
-			// Show ship values
-		case ("showshipvalue") :
-			$page = showShipValue();
-			break;
-			
-			// Show Corp Hierarchy
-		case ("hier") :
-			$page = showHierarchy();
-			break;
+				// Show ship values
+			case ("showshipvalue") :
+				$page = showShipValue();
+				break;
+				
+				// Show Corp Hierarchy
+			case ("hier") :
+				$page = showHierarchy();
+				break;
 
-			// manage payouts
-		case ("payout") :
-			$page = payout();
-			break;
+				// manage payouts
+			case ("payout") :
+				$page = payout();
+				break;
 
-			// set/view the online time
-		case ("onlinetime") :
-			$page = onlineTime();
-			break;
+				// set/view the online time
+			case ("onlinetime") :
+				$page = onlineTime();
+				break;
 
-			// Mods a template
-		case ("edittemplate") :
-			$page = editTemplate();
-			break;
+				// Mods a template
+			case ("edittemplate") :
+				$page = editTemplate();
+				break;
 
-			// Some Admin wants to change the ore values.
-		case ("changeow") :
-			$page = makeOreWorth();
-			break;
+				// Some Admin wants to change the ore values.
+			case ("changeow") :
+				$page = makeOreWorth();
+				break;
 
-			// Some Admin wants to change the ore values.
-		case ("changesv") :
-			$page = makeShipValue();
-			break;
-			
-			// Password change request. We wont touch that.
-		case ("changepw") :
-			$page = makePWChangeForm();
-			break;
+				// Some Admin wants to change the ore values.
+			case ("changesv") :
+				$page = makeShipValue();
+				break;
+				
+				// Password change request. We wont touch that.
+			case ("changepw") :
+				$page = makePWChangeForm();
+				break;
 
-			// User wants to join the selected run.
-		case ("joinrun") :
-			$page = joinRun();
-			break;
+				// User wants to join the selected run.
+			case ("joinrun") :
+				$page = joinRun();
+				break;
 
-			// User wants to part the selected run.
-		case ("partrun") :
-			$page = leaveRun();
-			break;
+				// User wants to part the selected run.
+			case ("partrun") :
+				$page = leaveRun();
+				break;
 
-			// Password change request. We wont touch that.
-		case ("lostpass") :
-			$page = makeLostPassForm();
-			break;
-			
-			// Lotto: Create group
-		case ("lotto_createGroup") :
-			$page = lotto_createGroup();
-			break;
+				// Password change request. We wont touch that.
+			case ("lostpass") :
+				$page = makeLostPassForm();
+				break;
+				
+				// Lotto: Create group
+			case ("lotto_createGroup") :
+				$page = lotto_createGroup();
+				break;
 
-			// add ore from a haul to an open run.
-		case ("addhaul") :
-			$page = addHaulPage();
-			break;
+				// add ore from a haul to an open run.
+			case ("addhaul") :
+				$page = addHaulPage();
+				break;
 
-			// Edit site configuration
-		case ("configuration") :
-			$page = configuration();
-			break;
+				// Edit site configuration
+			case ("configuration") :
+				$page = configuration();
+				break;
 
-			// Add an event.
-		case ("addevent") :
-			$page = addEvent();
-			break;
+				// Add an event.
+			case ("addevent") :
+				$page = addEvent();
+				break;
 
-			// Show all events.
-		case ("showevents") :
-			$page = showEvents();
-			break;
+				// Show all events.
+			case ("showevents") :
+				$page = showEvents();
+				break;
 
-			// Join an Event
-		case ("joinevent") :
-			$page = joinEvent();
-			break;
+				// Join an Event
+			case ("joinevent") :
+				$page = joinEvent();
+				break;
 
-			// Show an event.
-		case ("showevent") :
-			$page = showEvent();
-			break;
+				// Show an event.
+			case ("showevent") :
+				$page = showEvent();
+				break;
 
-			// lists all ore runs.
-		case ("list") :
-			$page = listRuns();
-			$ajax = 60;
-			break;
+				// lists all ore runs.
+			case ("list") :
+				$page = listRuns();
+				$ajax = 60;
+				break;
 
-			// Manage wallet
-		case ("manageWallet") :
-			$page = manageWallet();
-			break;
+				// Manage wallet
+			case ("manageWallet") :
+				$page = manageWallet();
+				break;
 
-			// Show current ranks
-		case ("showranks") :
-			$page = showRanks();
-			break;
+				// Show current ranks
+			case ("showranks") :
+				$page = showRanks();
+				break;
 
-			// delete a rank
-		case ("deleterank") :
-			$page = delRank();
-			break;
+				// delete a rank
+			case ("deleterank") :
+				$page = delRank();
+				break;
 
-			// delete an event from the database.
-		case ("deleteevent") :
-			$page = deleteEvent();
-			break;
+				// delete an event from the database.
+			case ("deleteevent") :
+				$page = deleteEvent();
+				break;
 
-			// lists all users.
-		case ("editusers") :
-			$page = listUsers();
-			break;
+				// lists all users.
+			case ("editusers") :
+				$page = listUsers();
+				break;
 
-			// lists one user.
-		case ("edituser") :
-			$page = listUser();
-			break;
+				// lists one user.
+			case ("edituser") :
+				$page = listUser();
+				break;
 
-			// prints the form for a new run.
-		case ("newrun") :
-			$page = makeNewOreRunPage();
-			break;
+				// prints the form for a new run.
+			case ("newrun") :
+				$page = makeNewOreRunPage();
+				break;
 
-			// add a new user.
-		case ("newuser") :
-			$page = makeAddUserForm();
-			break;
+				// add a new user.
+			case ("newuser") :
+				$page = makeAddUserForm();
+				break;
 
-			// Toggle the charity flag.
-		case ("toggleCharity") :
-			toggleCharity();
-			break;
+				// Toggle the charity flag.
+			case ("toggleCharity") :
+				toggleCharity();
+				break;
 
-			/* Locking unlocking */
-		case ("lockrun") :
-			toggleLock();
-			break;
+				/* Locking unlocking */
+			case ("lockrun") :
+				toggleLock();
+				break;
 
-			// prints the main welcome page.
-		default :
-			$page = makeWelcome();
-			break;
-			
-			/* LOTTO STUFF */
-		case ("editLotto") :
-			$page = lotto_editLottery();
-			break;
+				// prints the main welcome page.
+			default :
+				$page = makeWelcome();
+				break;
+				
+				/* LOTTO STUFF */
+			case ("editLotto") :
+				$page = lotto_editLottery();
+				break;
 
-		case ("lotto") :
-			$page = lotto_playLotto();
-			break;
+			case ("lotto") :
+				$page = lotto_playLotto();
+				break;
 
-		case ("claimTicket") :
-			lotto_claimTicket();
-			break;
+			case ("claimTicket") :
+				lotto_claimTicket();
+				break;
 
-		case ("drawLotto") :
-			lotto_draw();
-			break;
+			case ("drawLotto") :
+				lotto_draw();
+				break;
 
-		case ("buycredits") :
-			$page = lotto_buyTickets();
-			break;
-			
-		case ("style") :
-			$page = style();
-			break;
-		case ("getItemList") :
-			$page = getItemList();
-			break;
-		case ("switch") :
-			$MySelf = null;
-			$_SESSION['MySelf'] = null;
-			unset($_SERVER[QUERY_STRING]);
-			makeLoginPage($SUPPLIED_USERNAME);
-			break;
+			case ("buycredits") :
+				$page = lotto_buyTickets();
+				break;
+				
+			case ("style") :
+				$page = style();
+				break;
+			case ("getItemList") :
+				$page = getItemList();
+				break;
+			case ("switch") :
+				$MySelf = null;
+				$_SESSION['MySelf'] = null;
+				unset($_SERVER[QUERY_STRING]);
+				makeLoginPage($SUPPLIED_USERNAME);
+				break;
+		}
 	}
-
 	if($ajax > 1){
 		$ajaxHtml = "<script>window.setTimeout(function(){\$.ajax({";
 		if(isset($_REQUEST['ajax'])){
