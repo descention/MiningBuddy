@@ -37,7 +37,8 @@
  */
 
 function getConfig($key, $forceFresh = false) {
-
+	global $TRACE;
+	$TRACE .= "> getConfig($key,$forceFresh)";
 	// Globals! Yay!
 	global $DB;
 
@@ -56,7 +57,10 @@ function getConfig($key, $forceFresh = false) {
 
 	// Not cached, get from DB.
 	$setting = $DB->getCol("SELECT value FROM config WHERE name='$key' LIMIT 1");
-	if(isset($setting[0])){
+	if ($DB->isError($setting)){
+		echo "getConfig error";
+		die();
+	}else if(isset($setting[0])){
 		// Cache it.
 		$_SESSION["config_$key"] = $setting[0];
 
@@ -68,7 +72,7 @@ function getConfig($key, $forceFresh = false) {
 	}
 
 }
- 
+
 /*
  * This function writes a value to the database.
  */

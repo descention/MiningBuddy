@@ -1,5 +1,5 @@
 <?php
-ini_set("display_errors","Off");
+ini_set("display_errors","On");
 /*
  * MiningBuddy (http://miningbuddy.net)
  * $Header: /usr/home/mining/cvs/mining/index.php,v 1.69 2008/01/06 19:48:39 mining Exp $
@@ -29,6 +29,14 @@ ini_set("display_errors","Off");
  *  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  *  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+
+function CustomErrorHandler($eNo, $eMsg, $eFile, $eLine, $eContext)
+{
+	global $TRACE;
+	echo "[$eNo] $eMsg<br/>\n$TRACE";
+}
+//set_error_handler("CustomErrorHandler");
+$TRACE = "index";
 
 /*
  * Initialization, configuration, checks and more.

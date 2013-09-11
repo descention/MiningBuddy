@@ -115,7 +115,7 @@ class preferences {
 		$DS = $DB->query("SELECT preferences FROM users WHERE ID='" . $this->UserID . "' AND deleted='0' LIMIT 1");
 
 		// Did we fish something?
-		if ($DB->numRows() == 1) {
+		if ($DS->numRows() == 1) {
 			// ok, found the row, but is there something in it?
 			$serializedPrefs = $DS->fetchRow();
 			$prefs = unserialize($serializedPrefs['preferences']);

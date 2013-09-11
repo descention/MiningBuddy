@@ -77,21 +77,21 @@ function makeRequestAccountPage($failedFastLogin = false) {
 	}
 
 	$table->addRow();
-	$table->addCol("Character Name:");
+	$table->addCol("Character Name:", array());
 	
 	// Trust, INC.
 	global $EVE_Charname;
 	if ($EVE_Charname) {
-		$table->addCol("<input type=\"text\" name=\"username\" value=\"$EVE_Charname\" maxlength=\"30\">");
+		$table->addCol("<input type=\"text\" name=\"username\" value=\"$EVE_Charname\" maxlength=\"30\">", array());
 	} else {
-		$table->addCol("<input type=\"text\" name=\"username\" maxlength=\"30\">");
+		$table->addCol("<input type=\"text\" name=\"username\" maxlength=\"30\">", array());
 	}
 
 	$table->addRow();
 	$table->addCol("Your valid eMail:");
-	$table->addCol("<input type=\"text\" name=\"email\" maxlength=\"70\">");
+	$table->addCol("<input type=\"text\" name=\"email\" maxlength=\"70\">", array());
 
-	if (!isset($_GET['admin']) || $_GET[admin] == false){
+	if (!isset($_GET['admin']) || $_GET['admin'] == false){
 		$table->addHeaderCentered("<input type=\"submit\" name=\"login\" value=\"request account\">");
 		$table->addRow("#060622");
 		$table->addCol("[<a href=\"index.php\">Cancel request</a>]", array (
