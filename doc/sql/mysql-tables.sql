@@ -111,7 +111,7 @@ CREATE TABLE IF NOT EXISTS `events` (
   `ships` varchar(2000) DEFAULT NULL,
   `signups` varchar(2000) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -128,7 +128,7 @@ CREATE TABLE IF NOT EXISTS `failed_logins` (
   `agent` varchar(100) NOT NULL,
   PRIMARY KEY (`incident`),
   KEY `username` (`username`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=132 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -148,7 +148,7 @@ CREATE TABLE IF NOT EXISTS `hauled` (
   KEY `miningrun` (`miningrun`),
   KEY `hauler` (`hauler`),
   KEY `location` (`location`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1506 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -200,7 +200,7 @@ CREATE TABLE IF NOT EXISTS `joinups` (
   PRIMARY KEY (`id`),
   KEY `userid` (`userid`),
   KEY `run` (`run`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=544 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -215,7 +215,7 @@ CREATE TABLE IF NOT EXISTS `lotteryTickets` (
   `owner` int(5) NOT NULL DEFAULT '-1',
   `isWinner` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=31 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -232,7 +232,7 @@ CREATE TABLE IF NOT EXISTS `lotto` (
   `winner` int(5) DEFAULT NULL,
   `potSize` int(8) DEFAULT NULL,
   PRIMARY KEY (`drawing`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=20 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -343,7 +343,7 @@ CREATE TABLE IF NOT EXISTS `m3values` (
   `AncientCoordinatesDatabaseM3` decimal(6,2) NOT NULL DEFAULT '0.00',
   `SleeperDroneAINexusM3` decimal(6,2) NOT NULL DEFAULT '0.00',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=15 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -391,7 +391,7 @@ CREATE TABLE IF NOT EXISTS `opTypes` (
   `opName` varchar(256) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `opName` (`opName`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=14 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -434,7 +434,7 @@ CREATE TABLE IF NOT EXISTS `orevalues` (
   `Item` varchar(256) NOT NULL,
   `Worth` decimal(16,2) NOT NULL DEFAULT '0.00',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=464 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -452,7 +452,7 @@ CREATE TABLE IF NOT EXISTS `payoutRequests` (
   PRIMARY KEY (`request`),
   KEY `applicant` (`applicant`),
   KEY `banker` (`banker`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=41 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -509,7 +509,7 @@ CREATE TABLE IF NOT EXISTS `runs` (
   `optype` varchar(256) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `location` (`location`,`supervisor`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=190 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -544,7 +544,10 @@ CREATE TABLE IF NOT EXISTS `shipvalues` (
   `TransportShipValue` decimal(5,4) NOT NULL DEFAULT '1.0000',
   `CapitalIndustrialShipValue` decimal(5,4) NOT NULL DEFAULT '1.0000',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+INSERT INTO `shipvalues` (`id`, `modifier`, `time`, `AssaultShipValue`, `BattlecruiserValue`, `BattleshipValue`, `CarrierValue`, `CommandShipValue`, `CovertOpsValue`, `CruiserValue`, `DestroyerValue`, `DreadnoughtValue`, `ExhumerValue`, `FreighterValue`, `FrigateValue`, `HeavyAssaultShipValue`, `IndustrialShipValue`, `InterceptorValue`, `InterdictorValue`, `LogisticsShipValue`, `MiningBargeValue`, `ReconShipValue`, `ShuttleValue`, `TransportShipValue`, `CapitalIndustrialShipValue`) VALUES 
+(NULL, '0', '0', '1.0000', '1.0000', '1.0000', '1.0000', '1.0000', '1.0000', '1.0000', '1.0000', '1.0000', '1.0000', '1.0000', '1.0000', '1.0000', '1.0000', '1.0000', '1.0000', '1.0000', '1.0000', '1.0000', '1.0000', '1.0000', '1.0000');
 
 -- --------------------------------------------------------
 
@@ -561,7 +564,7 @@ CREATE TABLE IF NOT EXISTS `templates` (
   PRIMARY KEY (`id`),
   KEY `identifier` (`identifier`),
   KEY `type` (`type`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 INSERT INTO `templates` (`id`, `identifier`, `type`, `descr`, `template`) VALUES
 (1, 'activation', 'email', 'Account activation email', 0x48656c6c6f207b7b555345524e414d457d7d20210a0a596f75722043454f20686173206a75737420636f6e6669726d656420796f7572206163636f756e742c20616e6420776520617265206d6f7265207468616e0a686170707920746f2070726573656e7420796f7520796f75722070617373776f72642e0a0a506c6561736520757365207468652070617373776f72643a207b7b4e4557504153537d7d0a0a506c65617365206c6f6720696e20746f20796f75206561726c6965737420636f6e76656e69656e636520616e64206368616e676520746861740a70617373776f726420746f20736f6d657468696e672065617369657220746f2072656e656d6265722e204f722077726974652074686973206f6e650a646f776e2e0a0a7b7b56455253494f4e7d7d206f66207b7b534954454e414d457d7d2e0a0a53656520796f7520696e207468652061737465726f6964206669656c647320736f6f6e2c0a0a7b7b534954454e414d457d7d2e),
@@ -589,7 +592,7 @@ CREATE TABLE IF NOT EXISTS `transactions` (
   `reason` varchar(200) NOT NULL DEFAULT 'cash deposit',
   PRIMARY KEY (`id`),
   KEY `owner` (`owner`,`banker`,`type`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=588 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -639,4 +642,4 @@ CREATE TABLE IF NOT EXISTS `users` (
   `rank` int(3) DEFAULT '3',
   PRIMARY KEY (`id`),
   KEY `username` (`username`,`password`,`email`,`confirmed`,`emailvalid`,`optIn`,`deleted`,`canLogin`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=75 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
