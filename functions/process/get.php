@@ -43,7 +43,9 @@ function process_get() {
 	global $MySelf;
 	
 	$ajax = 0;
-	if(isset($_GET['action'])){
+	if(!isset($_GET['action'])){
+		$_GET['action'] = "";
+	}
 		switch ($_GET['action']) {
 
 			// Maintenance!
@@ -337,7 +339,7 @@ function process_get() {
 				makeLoginPage($SUPPLIED_USERNAME);
 				break;
 		}
-	}
+	
 	if($ajax > 1){
 		$ajaxHtml = "<script>window.setTimeout(function(){\$.ajax({";
 		if(isset($_REQUEST['ajax'])){

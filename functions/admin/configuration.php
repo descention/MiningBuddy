@@ -72,7 +72,9 @@ function configuration() {
 
 	// Time Offset.
 	$currentOffset = getConfig("timeOffset", true);
+
 	// Make the options.
+	$pdm = "";
 	for ($i = -12; $i <= 12; $i++) {
 		// Calculate offset for eve time.
 		$eve = date("l, H:i", (date("U") - ($i * 60 * 60)));
@@ -120,7 +122,7 @@ function configuration() {
 	$table->addCol("IGB Trust setting:", $config);
 	unset ($pdm);
 	$trustSetting = getConfig("trustSetting", true);
-
+	$pdm = "";
 	// Preselect the entry.
 	if ($trustSetting == 0) {
 		$pdm .= "<option selected value=\"0\">Do not trust IGB at all. (disable)</option>";
@@ -358,7 +360,7 @@ function configuration() {
 	/*
 	 * Templates
 	 */
-
+	$templates = "";
 	if (getConfig("advancedOptions")) {
 		// Load all templates identifiers (but not the templates to save RAM)
 		$templates_DS = $DB->query("SELECT id, identifier, type, descr FROM templates ORDER BY type ASC, identifier");
