@@ -1,5 +1,5 @@
 <?php
-ini_set("display_errors","On");
+ini_set("display_errors","Off");
 /*
  * MiningBuddy (http://miningbuddy.net)
  * $Header: /usr/home/mining/cvs/mining/index.php,v 1.69 2008/01/06 19:48:39 mining Exp $
