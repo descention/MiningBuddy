@@ -75,12 +75,23 @@ $SALT = "s98ss7fsc7fd2rf62ctcrlwztstnzve9toezexcsdhfgviuinusxcdtsvbrg";
 
 /*
  * Step 3: Optional Modules
- * 
- * TIDY_ENABLE: This enabled or disables the use of Tidy. Rule of thumb:
- *              If you do not know what tidy is, you do no need it.
- *              Keep it turned off unless you *really* need it.
+ *
+ * PHPMailer: If you wish to use PHPMailer instead of your system's email
+ *            function, uncomment the section below.
  */
-$TIDY_ENABLE = false;
+
+require_once("./classes/class.phpmailer.php");
+
+$MAIL = new PHPMailer;
+$MAIL->IsSMTP();
+$MAIL->Host = "";          // specify mail and backup server. ; delimited
+$MAIL->Port = 465;
+$MAIL->SMTPAuth = true;    // Enable SMTP Authentication
+$MAIL->Username = "";      // SMTP Username
+$MAIL->Password = "";      // SMTP Password
+$MAIL->SMTPSecure = "ssl"; // enable encryption (tls,ssl)
+$MAIL->IsHTML(true);
+
 
 /*
  * Step 4: IGB Visual

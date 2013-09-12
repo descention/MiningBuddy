@@ -78,14 +78,14 @@ function lostPassword($user = "", $reason = "lost") {
 		}
 
 		$email = getTemplate("lostpass", "email");
-		$email = str_replace("{{USERNAME}}", $row[username], $email);
-		$email = str_replace("{{IP}}", $_SERVER[REMOTE_ADDR], $email);
+		$email = str_replace("{{USERNAME}}", $row['username'], $email);
+		$email = str_replace("{{IP}}", $_SERVER['REMOTE_ADDR'], $email);
 		$email = str_replace("{{VERSION}}", $VERSION, $email);
 		$email = str_replace("{{SITENAME}}", $SITENAME, $email);
 		$email = str_replace("{{NEWPASS}}", $newpass, $email);
 
 		// Remember the email. We dont want to use the supplied one.
-		$to = $row[email];
+		$to = $row['email'];
 	}
 
 	// Set the new password into the database.
@@ -97,7 +97,15 @@ function lostPassword($user = "", $reason = "lost") {
 	if ("$to" == "") {
 		makeNotice("Internal Error: No valid email found in lostPassword!", "error");
 	} else {
-		mail($to,$VERSION,$email,$headers);
+		global $MAIL;
+		if(isset($MAIL)){
+			$MAIL->AddAddress($to);
+                        $MAIL->Subject = $VERSION;
+                        $MAIL->Body = $email;
+			$MAIL->Send();
+		}else{
+			mail($to,$VERSION,$email,$headers);
+		}
 	}
 
 	// print success page.

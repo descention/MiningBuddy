@@ -53,7 +53,12 @@ function showOreValue() {
 		} else {
 			// VALID id
 			//$orevaluesDS = $DB->query("select distinct item, from orevalues WHERE time='" . sanitize($_GET[id]) . "' limit 1");
-			$orevaluesDS = $DB->query("select item, Worth, time, modifier, t.volume from orevalues a, $STATIC_DB.invTypes t where a.item = t.typeName and time = (select max(time) from orevalues b where a.item = b.item and time <= '".sanitize($_GET['id'])."') group by item ORDER BY time DESC");
+			if(isset($STATIC_DB)){
+				$orevaluesDS = $DB->query("select item, Worth, time, modifier, t.volume from orevalues a, $STATIC_DB.invTypes t where a.item = t.typeName and time = (select max(time) from orevalues b where a.item = b.item and time <= '".sanitize($_GET['id'])."') group by item ORDER BY time DESC");
+			}else{
+				die();
+				$orevaluesDS = $DB->query("select item, Wotrh, time, modifier from orevalues a");
+			}
 		}
 
 	// Check for a winner.
