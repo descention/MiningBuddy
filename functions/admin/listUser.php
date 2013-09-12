@@ -64,7 +64,7 @@ function listUser() {
 
 		$table->addRow();
 		$table->addCol("ID:");
-		$table->addCol(str_pad("$row['id']", 5, "0", STR_RIGHT_PAD));
+		$table->addCol(str_pad($row['id'], 5, "0", STR_RIGHT_PAD));
 
 		$table->addRow();
 		$table->addCol("Username:");
@@ -96,10 +96,10 @@ function listUser() {
 			while ($rank = $RanksDS->fetchRow()) {
 				if ($rank['rankid'] == $row['rank']) {
 					// The current rank is selected.
-					$rank_pdm .= "<option SELECTED value=\"$rank['rankid']\">$rank['name']</option>";
+					$rank_pdm .= "<option SELECTED value=\"".$rank['rankid']."\">".$rank['name']."</option>";
 				} else {
 					// The others of course, are not.
-					$rank_pdm .= "<option value=\"$rank['rankid']\">$rank['name']</option>";
+					$rank_pdm .= "<option value=\"".$rank['rankid']."\">".$rank['name']."</option>";
 				}
 			}
 			$rankColumn = "<select name=\"rank\">" . $rank_pdm . "</select>";
@@ -116,7 +116,7 @@ function listUser() {
 		$table->addCol("Last login:");
 
 		// Handle folks that never logged in.
-		if ("$row['lastlogin']" < 10) {
+		if ($row['lastlogin'] < 10) {
 			$table->addCol("never");
 		} else {
 			$table->addCol(date("d.m.y H:i:s", $row['lastlogin']));
@@ -127,7 +127,7 @@ function listUser() {
 		$table->addCol(number_format(getCredits($row['id']), 2) . " ISK");
 
 		// Is the account confirmed?
-		if ("$row['confirmed']" == "0") {
+		if ($row['confirmed'] == 0) {
 
 			$table->addRow();
 			$table->addCol("Account confirmed:");
@@ -141,7 +141,7 @@ function listUser() {
 			$table->addCol("Account confirmed:");
 
 			// Give a red light if user has not even verified himself.
-			if ("$row['emailvalid']" == "0") {
+			if ($row['emailvalid'] == "0") {
 				$table->addCol("<b>WARNING!</b><br> The User has not yet verified this email yet! If you choose to enable" . " this account at this time, be very sure that you know the person requesting the account!", array (
 					"bgcolor" => "#662222"
 				));
@@ -153,7 +153,7 @@ function listUser() {
 			$table->addRow();
 			$table->addCol("This account has been confirmed.");
 
-			if ("$row['emailvalid']" == "0") {
+			if ($row['emailvalid'] == "0") {
 				$table->addCol("<font color=\"#ff0000\">WARNING!</b></font><br> The User has not verified this email but the account has been confirmed!");
 
 				// Add a "confirm email" checkbox.

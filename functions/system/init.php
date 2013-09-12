@@ -70,7 +70,7 @@ if (ini_get('register_globals')) {
 }
 
 /* Set the error handler. */
-//set_error_handler('errorHandler', E_WARNING);
+set_error_handler('errorHandler', E_WARNING);
 
 /* Do we have the config file? */
 if (!isset($_SESSION["initdone"]) || $_SESSION["initdone"] != true) {

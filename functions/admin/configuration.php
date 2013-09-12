@@ -209,10 +209,10 @@ function configuration() {
 			while ($region = $regionDS->fetchRow()) {
 				if ($region['regionID'] == $useRegion) {
 					// The current region is selected.
-					$region_pdm .= "<option SELECTED value=\"$region['regionID']\">$region['regionName']</option>";
+					$region_pdm .= "<option SELECTED value=\"".$region['regionID']."\">".$region['regionName']."</option>";
 				} else {
 					// The others of course, are not.
-					$region_pdm .= "<option value=\"$region['regionID']\">$region['regionName']</option>";
+					$region_pdm .= "<option value=\"".$region['regionID']."\">".$region['regionName']."</option>";
 				}
 			}
 			$regionColumn = "<select name=\"useRegion\">" . $region_pdm . "</select>";

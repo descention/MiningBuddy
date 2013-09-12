@@ -88,7 +88,7 @@ if ($row['endtime'] == "") {
 	// Row: Corporation keeps %
 	$general_info->addRow();
 	$general_info->addCol("Corporation keeps:", $common_mode);
-	$general_info->addCol("$row['corpkeeps']% of gross value.");
+	$general_info->addCol($row['corpkeeps']."% of gross value.");
 
 	// Current TMEC
 	$general_info->addRow();

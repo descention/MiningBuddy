@@ -52,7 +52,7 @@ function getTotalWorth($id, $net = false) {
 	$r = $DB->query("select item, sum(Quantity) as total from hauled where miningrun = '$id' group by item having sum(Quantity) <> 0");
 	while($r2 = $r->fetchRow()){
 		if($r2['total'] != 0){
-			$select .= ", '$r2['total']' as $r2['item']";
+			$select .= ", '".$r2['total']."' as ".$r2['item'];
 		}
 	}
 

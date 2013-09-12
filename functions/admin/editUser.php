@@ -89,7 +89,7 @@ function editUser() {
 	}
 
 	// Activate the account, or disable it.
-	if ("$_POST['canLogin']" == "on") {
+	if ($_POST['canLogin'] == "on") {
 		$DB->query("UPDATE users SET active='1' WHERE id ='$ID' LIMIT 1");
 	} else {
 		if ($ID == $SELF) {
@@ -100,14 +100,14 @@ function editUser() {
 	}
 
 	// Confirm the account.
-	if ("$_POST['confirm']" == "true") {
+	if ($_POST['confirm'] == "true") {
 		$DB->query("UPDATE users SET confirmed='1' WHERE id ='$ID' LIMIT 1");
 		lostPassword($user['username']);
 		$ADD = " Due to confirmation I have sent an email to the user with his password.";
 	}
 
 	// Force the users email to be valid.
-	if ("$_POST['SetEmailValid']" == "true") {
+	if ($_POST['SetEmailValid'] == "true") {
 		$DB->query("UPDATE users SET emailvalid='1' WHERE id ='$ID' LIMIT 1");
 	}
 
@@ -115,13 +115,13 @@ function editUser() {
 	if (!$IS_DEMO) {
 		// Set the new email.
 		if (!empty ($_POST['email'])) {
-			$email = sanitize("$_POST['email']");
+			$email = sanitize($_POST['email']);
 			$DB->query("UPDATE users SET email='$email' WHERE id ='$ID'");
 		}
 
 		// Set the new Password.
 		if (!empty ($_POST['password'])) {
-			$password = encryptPassword(sanitize("$_POST['password']"));
+			$password = encryptPassword(sanitize($_POST['password']));
 			$DB->query("UPDATE users SET password='$password' WHERE id ='$ID'");
 		}
 
@@ -159,7 +159,7 @@ function editUser() {
 
 		// Set the new Rank.
 		if (is_numeric($_POST['rank']) && $_POST['rank'] >= 0) {
-			$rank = sanitize("$_POST['rank']");
+			$rank = sanitize($_POST['rank']);
 			$DB->query("UPDATE users SET rank='$rank' WHERE id ='$ID'");
 		}
 
