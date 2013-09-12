@@ -97,7 +97,14 @@ function lostPassword($user = "", $reason = "lost") {
 	if ("$to" == "") {
 		makeNotice("Internal Error: No valid email found in lostPassword!", "error");
 	} else {
-		mail($to,$VERSION,$email,$headers);
+		if(isset($MAIL)){
+			$MAIL->AddAddress($to);
+                        $MAIL->Subject = $VERSION;
+                        $MAIL->Body = $email;
+			$MAIL->send();
+		}else{
+			mail($to,$VERSION,$email,$headers);
+		}
 	}
 
 	// print success page.

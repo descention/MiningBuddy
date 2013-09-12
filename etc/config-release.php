@@ -80,7 +80,19 @@ $SALT = "s98ss7fsc7fd2rf62ctcrlwztstnzve9toezexcsdhfgviuinusxcdtsvbrg";
  *              If you do not know what tidy is, you do no need it.
  *              Keep it turned off unless you *really* need it.
  */
-$TIDY_ENABLE = false;
+
+require_once("./classes/class.phpmailer.php");
+
+$MAIL = new PHPMailer;
+$MAIL->IsSMTP();
+$MAIL->Host = "";          // specify mail and backup server. ; delimited
+$MAIL->Port = 465;
+$MAIL->SMTPAuth = true;    // Enable SMTP Authentication
+$MAIL->Username = "";      // SMTP Username
+$MAIL->Password = "";      // SMTP Password
+$MAIL->SMTPSecure = "ssl"; // enable encryption (tls,ssl)
+$MAIL->IsHTML(true);
+
 
 /*
  * Step 4: IGB Visual

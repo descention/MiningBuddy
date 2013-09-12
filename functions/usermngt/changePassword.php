@@ -52,7 +52,7 @@ function changePassword() {
 	}
 	
 	// Passwords empty?
-	if (empty($_POST[password1]) || empty($_POST[password2])) {
+	if (empty($_POST['password1']) || empty($_POST['password2'])) {
 		makeNotice("You need to enter passwords in both fields!!", "error", "Password missing!", "index.php?action=changepw", "[retry]");
 	}
 
