@@ -75,10 +75,9 @@ $SALT = "s98ss7fsc7fd2rf62ctcrlwztstnzve9toezexcsdhfgviuinusxcdtsvbrg";
 
 /*
  * Step 3: Optional Modules
- * 
- * TIDY_ENABLE: This enabled or disables the use of Tidy. Rule of thumb:
- *              If you do not know what tidy is, you do no need it.
- *              Keep it turned off unless you *really* need it.
+ *
+ * PHPMailer: If you wish to use PHPMailer instead of your system's email
+ *            function, uncomment the section below.
  */
 
 require_once("./classes/class.phpmailer.php");
