@@ -100,7 +100,7 @@ function setConfig($key, $val) {
 		if($DB->affectedRows() < 1){
 			// did the setting change?
 		}
-	}else{
+	}else if(!isset($setting[0])){
 		$insert = true;
 	}
 	
