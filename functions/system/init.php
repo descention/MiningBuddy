@@ -131,11 +131,12 @@ if (!isset($_SESSION["initdone"]) || $_SESSION["initdone"] != true) {
 
 		// Update the tables.
 		print ("<br><center><body bgcolor=\"#2E2E2E\"><font color= white><body link=\"#00FF00\" vlink=\"##00FF00\" alink=\"#FF0000\">");
-		print ("<br><br><br><br><br><br><br><br><br><br><br><br>");
+		print ("<br><br>");
 		print ("<H1>Your SQL tables are not compatible.</H1><br>");
 
 		if (file_exists($filename)) {
-			die("Please update your sql tables <a href=\"$filename\">click here</a>.");
+			include($filename);
+			die();
 		} else {
 			die("Database update file may be missing.  Check files.");
 		}

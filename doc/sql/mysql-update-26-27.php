@@ -10,25 +10,23 @@ function Getbasesite($file)
 	return $result; 
 }
 
-	$sitename = $_SERVER["SERVER_NAME"];
-	$sitenamepath = $_SERVER["SCRIPT_NAME"];
-	$pathsite = $sitename.$sitenamepath;
-	
-	$upgrade=$_REQUEST['upgrade'];
+$sitename = $_SERVER["HTTP_HOST"];
+$sitenamepath = $_SERVER["SCRIPT_NAME"];
+$pathsite = $sitename.$sitenamepath;
 
-	include ("./etc/config.$sitename.php");
-	
+$upgrade=$_REQUEST['upgrade'];
+include ("./etc/config.$sitename.php");
+
+global $SQLVER;
+
+if ($upgrade=='1' ){
 	$file = $pathsite;
-	
-	$site = Getbasesite($file);
+
+	//$site = Getbasesite($file);
 
 	$db_conn = mysql_connect($mysql_hostname, $mysql_username, $mysql_password);
 	mysql_select_db($mysql_dbname);
 
-
-
-if ($upgrade=='1' ){
-	
 	echo "Add Items";
 	echo "<br>";
 	mysql_query("INSERT INTO `itemList` (`updateTime`, `itemName`, `itemID`, `value`) VALUES
@@ -139,26 +137,11 @@ echo "Updating the config version number!";
 	
 	echo "Upgrade Completed!";
 	echo "<br>";
-	echo "<a href=http://".$site.">Click here to Login</a>";
+	echo "<a href=\"index.php\">Click here to Login</a>";
 	
 }else{
-
-?>
-<br>
-<center>
-<body bgcolor="#2E2E2E">
-<font color= white>
-<body link="#00FF00" vlink="##00FF00" alink="#FF0000">
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br><br><br><br><br><br>
-<?php
-echo "This is the $VERSION SQL upgrade page.<br>";
-echo "When you are ready to upgrade your Database to the newest version click the link below<br>";
-echo "<a href=\"mysql-update-" . ($SQLVER - 1) . "-" . $SQLVER. ".php?upgrade=1\"><h1>Upgrade Now to Database Version $SQLVER</h1> (from version " . ($SQLVER - 1) . ")</a><br>";
+	echo "This is the $VERSION SQL upgrade page.<br>";
+	echo "When you are ready to upgrade your Database for $sitename to the newest version click the link below<br>";
+	echo "<a href=\"index.php?upgrade=1\"><h1>Upgrade Now to Database Version $SQLVER</h1> (from version " . ($SQLVER - 1) . ")</a><br>";
 }
 ?>
