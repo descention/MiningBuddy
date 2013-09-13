@@ -87,7 +87,7 @@ CREATE TABLE IF NOT EXISTS `config` (
 
 INSERT INTO `config` (`name`,`value`) values
 ('sitename','WHBuddy'),
-('version','27'),
+('version','28'),
 ('TTL', '120');
 -- --------------------------------------------------------
 
@@ -722,7 +722,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `canCloseRun` tinyint(1) NOT NULL DEFAULT '1',
   `canDeleteRun` tinyint(1) NOT NULL DEFAULT '0',
   `canAddHaul` tinyint(1) NOT NULL DEFAULT '1',
-  `canChangePwd` tinyint(1) NOT NULL DEFAULT '0',
+  `canChangePwd` tinyint(1) NOT NULL DEFAULT '1',
   `canChangeEmail` tinyint(1) NOT NULL DEFAULT '1',
   `canChangeOre` tinyint(1) NOT NULL DEFAULT '0',
   `canAddUser` tinyint(1) NOT NULL DEFAULT '0',
