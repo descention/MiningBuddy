@@ -113,9 +113,12 @@ function addRun() {
 	$oreValue = $oreValue[0];
 	*/
 	
-//Edit Starts Here	
-	$shipValue = $DB->getCol("SELECT max(id) FROM shipvalues");
-	$shipValue = $shipValue[0];
+	if(!isset($_POST['weCareAboutShip']) || $_POST['weCareAboutShip'] == "on"){
+		$shipValue = $DB->getCol("SELECT max(id) FROM shipvalues");
+		$shipValue = $shipValue[0];
+	}else{
+		$shipValue = -1;
+	}
 	
 	$optype = $_REQUEST['optype'];
 //Edit Ends Here
@@ -128,7 +131,7 @@ function addRun() {
 		$official,
 		"$TIMEMARK",
 //Edit Starts Here		
-		0,
+		"$shipValue",
 		"$optype",
 //Edit Ends Here		
 	));
