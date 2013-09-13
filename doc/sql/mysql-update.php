@@ -87,7 +87,7 @@ if ($upgrade=='1' ){
 	
 }else{
 	echo "This is the $VERSION SQL upgrade page.<br>";
-	echo "When you are ready to upgrade your Database for $sitename to the newest version click the link below<br>";
-	echo "<a href=\"index.php?upgrade=1\"><h1>Upgrade Now to Database Version $SQLVER</h1> (from version " . ($SQLVER - 1) . ")</a><br>";
+	echo "When you are ready to upgrade your Database for $sitename to the newest version ($SQLVER) click the link below<br>";
+	echo "<a href=\"index.php?upgrade=1\"><h1>Upgrade Now to Database Version $CURRENT[0]</h1> (from version " . ($CURRENT[0] + 1) . ")</a><br>";
 }
 ?>
