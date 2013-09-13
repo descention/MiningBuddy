@@ -129,7 +129,7 @@ function authVerify($username, $password, $trust = false) {
 	} else if($userDS->numRows() > 0 && $login){
 		// User authenticated and found in database
 		$user = $userDS->fetchRow();
-		echo "test";
+		
 		if($user['authID'] == null && $AUTH_TYPE == "testauth"){
 			$DB->query("update users set authID='$obj[id]' where id='$user[id]'");
 		}
