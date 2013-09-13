@@ -233,8 +233,7 @@ echo "Updating the config version number!";
 	
 }else{
 
-?>
-<center>
+?><center>
 This is the Mining Buddy SQL upgrade page.<br>
 When you are ready to upgrade you Mining Buddy Install to the newest version click the link below<br>
 <a href="mysql-update-20-23.php?upgrade=1">Upgrade Now</a>

@@ -64,5 +64,3 @@ function addCredit($userID, $banker, $credit, $runID) {
 	}
 }
 ?>
-
-
