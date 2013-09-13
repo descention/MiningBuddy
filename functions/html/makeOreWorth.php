@@ -157,7 +157,7 @@ function makeOreWorth() {
 		"colspan" => 8
 	));
 
-	$OPTYPE = isset($_REQUEST[optype])?$_REQUEST[optype]:"";
+	$OPTYPE = (isset($_REQUEST['optype']) && $_REQUEST['optype'] != "")?$_REQUEST['optype']:"";
 	
 	$table->addRow();
 	$table->addCol("Op Type:");
@@ -168,7 +168,7 @@ function makeOreWorth() {
 	$opSelect = "<select name='optype' onChange='window.location = \"?action=changeow&optype=\"+this.value'>\n";
 	$opSelect .= "<option value=''>Standard</option>\n";
 	foreach($ops as $op){
-		$default = $op[opName] == $OPTYPE?"selected":"";
+		$default = $op['opName'] == $OPTYPE?"selected":"";
 		$opSelect .= "<option $default value='".$op[opName]."'>".$op[opName]."</option>\n";
 	}
 	$opSelect .= "</select>";
@@ -225,7 +225,7 @@ function makeOreWorth() {
 					$thisPrice = getPriceCache($ORE);
 					$table->addCol("<input type=\"text\" style=\"text-align: right\" name=\"$DBORE[$ORE]\"" . "size=\"10\" value=\"" . $thisPrice . "\">");
 				} else {
-					$table->addCol("<input type=\"text\" style=\"text-align: right\" name=\"$DBORE[$ORE]\"" . "size=\"10\" value=\"" . $orevalues[$DBORE[$ORE]][Worth] . "\">");
+					$table->addCol("<input type=\"text\" style=\"text-align: right\" name=\"$DBORE[$ORE]\"" . "size=\"10\" value=\"" . $orevalues[$DBORE["$ORE"]]['Worth'] . "\">");
 				}
 			} else {
 				$table->addCol("");

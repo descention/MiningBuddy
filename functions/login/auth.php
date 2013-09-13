@@ -163,8 +163,8 @@ function auth() {
 				makeNotice("You are using a beta version of MiningBuddy. Be aware that some functions may not " .
 				"be ready for production servers, and that there may be bugs around. You have been warned.", "warning", "Beta Warning");
 			} else {
-				echo "redirect to: <a href='index.php?".$_SERVER['QUERY_STRING']."' >".$_SERVER['HTTP_HOST']."index.php?" . $_SERVER['QUERY_STRING']. "</a>";
 				header("Location: index.php?" . $_SERVER['QUERY_STRING']);
+				echo "redirect to: <a href='index.php?".$_SERVER['QUERY_STRING']."' >./index.php?" . $_SERVER['QUERY_STRING']. "</a>";
 				die();
 			}
 		}
