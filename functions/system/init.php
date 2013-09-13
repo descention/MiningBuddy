@@ -127,7 +127,7 @@ if (!isset($_SESSION["initdone"]) || $_SESSION["initdone"] != true) {
 	if ("$CURRENT[0]" < "$SQLVER") {
 
 		// Install upgrade.
-		$filename = "./doc/sql/mysql-update-" . $CURRENT[0] . "-" . ($CURRENT[0] + 1) . ".php";
+		$filename = "./doc/sql/mysql-update-" . $CURRENT[0] . "-" . ($CURRENT[0] + 1) . ".sql";
 
 		// Update the tables.
 		print ("<br><center><body bgcolor=\"#2E2E2E\"><font color= white><body link=\"#00FF00\" vlink=\"##00FF00\" alink=\"#FF0000\">");
@@ -135,7 +135,7 @@ if (!isset($_SESSION["initdone"]) || $_SESSION["initdone"] != true) {
 		print ("<H1>Your SQL tables are not compatible.</H1><br>");
 
 		if (file_exists($filename)) {
-			include($filename);
+			include("doc/sql/mysql-update.php");
 			die();
 		} else {
 			die("Database update file may be missing.  Check files.");

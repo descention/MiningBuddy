@@ -80,7 +80,6 @@ if ($upgrade=='1' ){
 	SplitSQL("./doc/sql/mysql-update-" . ($CURRENT[0]) ."-".($CURRENT[0] + 1).".sql");
 	
 	echo "If 'ERROR' is printed above, you might want to copy this page and send a message to <a href='mailto:scott.mundorff@gmail.com'>Descention</a><br/>";
-
 	
 	echo "Upgrade Completed!";
 	echo "<br>";
