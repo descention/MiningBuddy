@@ -40,26 +40,28 @@ function showOreValue() {
 	global $STATIC_DB;
 	
 	// load the values.
-	$latestDS = $DB->query("select item, Worth, time, modifier, t.volume from orevalues a, $STATIC_DB.invTypes t where a.item = replace(replace(t.typeName,'-',''),' ','') and time = (select max(time) from orevalues b where a.item = b.item) group by item ORDER BY time DESC");
-	
+	if(isset($STATIC_DB)){
+		$latestDS = $DB->query("select item, Worth, time, modifier, t.volume from orevalues a, $STATIC_DB.invTypes t where a.item = replace(replace(t.typeName,'-',''),' ','') and time = (select max(time) from orevalues b where a.item = b.item) group by item ORDER BY time DESC");
+	}else{
+		$latestDS = $DB->query("select item, Worth, time, modifier from orevalues where time = (select max(time) from orevalues) group by item order by time desc");
+	}
 	if (!isset ($_GET['id'])) {
 		// No ID requested, get latest
 		$orevaluesDS = $latestDS;
 		$isLatest = true;
-	} else
-		if (!is_numeric($_GET['id']) || $_GET['ID'] < 0) {
-			// ID Set, but invalid
-			makeNotice("Invalid ID given for ore values! Please go back, and try again!", "warning", "Invalid ID");
-		} else {
-			// VALID id
-			//$orevaluesDS = $DB->query("select distinct item, from orevalues WHERE time='" . sanitize($_GET[id]) . "' limit 1");
-			if(isset($STATIC_DB)){
-				$orevaluesDS = $DB->query("select item, Worth, time, modifier, t.volume from orevalues a, $STATIC_DB.invTypes t where a.item = t.typeName and time = (select max(time) from orevalues b where a.item = b.item and time <= '".sanitize($_GET['id'])."') group by item ORDER BY time DESC");
-			}else{
-				die();
-				$orevaluesDS = $DB->query("select item, Wotrh, time, modifier from orevalues a");
-			}
+	} else if (!is_numeric($_GET['id']) || $_GET['ID'] < 0) {
+		// ID Set, but invalid
+		makeNotice("Invalid ID given for ore values! Please go back, and try again!", "warning", "Invalid ID");
+	} else {
+		// VALID id
+		//$orevaluesDS = $DB->query("select distinct item, from orevalues WHERE time='" . sanitize($_GET[id]) . "' limit 1");
+		if(isset($STATIC_DB)){
+			$orevaluesDS = $DB->query("select item, Worth, time, modifier, t.volume from orevalues a, $STATIC_DB.invTypes t where a.item = t.typeName and time = (select max(time) from orevalues b where a.item = b.item and time <= '".sanitize($_GET['id'])."') group by item ORDER BY time DESC");
+		}else{
+			die();
+			$orevaluesDS = $DB->query("select item, Wotrh, time, modifier from orevalues a");
 		}
+	}
 
 	// Check for a winner.
 	if ($orevaluesDS->numRows() <= 0) {
