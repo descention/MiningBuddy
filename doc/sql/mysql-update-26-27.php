@@ -158,18 +158,7 @@ echo "Updating the config version number!";
 <br><br><br><br><br><br>
 <?php
 echo "This is the $VERSION SQL upgrade page.<br>";
-?>
-When you are ready to upgrade your Database to the newest version click the link below<br>
-<a href="mysql-update-" . ($SQLVER - 1) . "-" . $SQLVER. ".php?upgrade=1"><h1>Upgrade Now to Database Version
-<?php
-echo " " . $SQLVER;
-?>
-</h1> (from version 
-<?php
-echo " " . $SQLVER - 1;
-?>
-)</a>
-<br>
-<?
+echo "When you are ready to upgrade your Database to the newest version click the link below<br>";
+echo "<a href=\"mysql-update-" . ($SQLVER - 1) . "-" . $SQLVER. ".php?upgrade=1\"><h1>Upgrade Now to Database Version $SQLVER</h1> (from version " . ($SQLVER - 1) . ")</a><br>";
 }
 ?>
