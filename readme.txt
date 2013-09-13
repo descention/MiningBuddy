@@ -15,17 +15,6 @@ Supported Authentication methods:
 base user authentication
 SMF 2.0 Rest API (in development)
 
-== IMAGES ==
-/* Not actually used yet. Will implement this and remove the images from 
-the repo once most bugs are fixed.
-For images/thumbnails of items, download the image dump from CCP for the 
-current release.
-
-Release: Retribution
-Link: http://content.eveonline.com/data/Retribution_1.0_Types.zip
-Extract to: ./images/
-*/
-
 == Configuration ==
 You'll want to go to "Edit Items" after login and add prices to items. 
 A price must exist for an item to be enabled.

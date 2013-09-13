@@ -94,15 +94,17 @@ function calcPayoutPercent($run, $pilot) {
 	$totalPilots = $DB->getCol("SELECT COUNT(DISTINCT userid) FROM joinups AS count WHERE run='$run'");
 	$totalPilots = $totalPilots[0];
 	
-//Edit Starts Here	
+	$shipGlue = $DB->getCol("SELECT shipGlue FROM runs WHERE id='$run' LIMIT 1");
+	$shipglue = $shipGlue[0];
+	
+	if($shipglue>=0){
+		
 		// How many Ships Joined by Type
 		$totalShipType = $DB->getCol("SELECT COUNT(DISTINCT shiptype) FROM joinups AS count WHERE run='$run'");
 		$totalShipType = $totalShipType[0];
 		
 		$userShipTypeA = $DB->getCol("SELECT shiptype FROM joinups WHERE run='$run' AND userid='$pilot' AND (parted is null OR status < 2)");
-		$shipGlue = $DB->getCol("SELECT shipGlue FROM runs WHERE id='$run' LIMIT 1");
 		$userShipType = $userShipTypeA[0];
-		$shipglue = $shipGlue[0];
 		
 		switch($userShipType){
 			case "0":
@@ -198,11 +200,10 @@ function calcPayoutPercent($run, $pilot) {
 				$ShipTypeValue = "1";
 				break;
 		}
-		
-//Edit Ends Here
-	// OVERRIDE SHIP SHIT
-	$ShipTypeValue = 1;
-
+	}else{
+		// OVERRIDE SHIP SHIT
+		$ShipTypeValue = 1;
+	}
 	$myPart1 = ((100 / $totalPilots) * ($timePercent / 100)) * $ShipTypeValue;
 	$myPart = $myPart - $myPart1;
 

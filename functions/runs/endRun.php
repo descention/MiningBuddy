@@ -101,7 +101,7 @@ function endrun() {
 			$payout = ($ISK / 100) * $percent;
 			// You cannot loose isk from a mission.
 			if ($payout != 0 && !$charityArray[$name]) {
-				addCredit($name, $supervisor, $payout, $_GET[id]);
+				addCredit($name, $supervisor, $payout, $_GET['id']);
 				$finalPercent[$name]=$payout;
 			}
 		}

@@ -80,6 +80,7 @@ $SALT = "s98ss7fsc7fd2rf62ctcrlwztstnzve9toezexcsdhfgviuinusxcdtsvbrg";
  *            function, uncomment the section below.
  */
 
+/*
 require_once("./classes/class.phpmailer.php");
 
 $MAIL = new PHPMailer;
@@ -91,7 +92,7 @@ $MAIL->Username = "";      // SMTP Username
 $MAIL->Password = "";      // SMTP Password
 $MAIL->SMTPSecure = "ssl"; // enable encryption (tls,ssl)
 $MAIL->IsHTML(true);
-
+*/
 
 /*
  * Step 4: IGB Visual

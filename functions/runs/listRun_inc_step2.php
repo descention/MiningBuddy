@@ -143,9 +143,9 @@ if ($row['endtime'] == "") {
 		// Run-Owner: Lock/Unlock run (to dissallow people joining)
 		if (runSupervisor($row['id']) == $MySelf->getUsername()) {
 			if (runIsLocked($row['id'])) {
-				$lock .= " [<a href=\"index.php?action=lockrun&id=$row['id']&state=unlock\">Unlock Run</a>] ";
+				$lock .= " [<a href=\"index.php?action=lockrun&id=$row[id]&state=unlock\">Unlock Run</a>] ";
 			} else {
-				$lock .= " [<a href=\"index.php?action=lockrun&id=$row['id']&state=lock\">Lock Run</a>] ";
+				$lock .= " [<a href=\"index.php?action=lockrun&id=$row[id]&state=lock\">Lock Run</a>] ";
 			}
 		}
 
@@ -167,7 +167,7 @@ if ($row['endtime'] == "") {
 	}
 
 	// Refresh button.
-	$refresh_button = " [<a href=\"index.php?action=show&id=$row['id']\">Reload page</a>]";
+	$refresh_button = " [<a href=\"index.php?action=show&id=$row[id]\">Reload page</a>]";
 	$general_info->addCol($join . $addHaul . $add2 . $lock . $add . $charity . $refresh_button);
 
 } else {

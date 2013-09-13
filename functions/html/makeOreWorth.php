@@ -60,7 +60,6 @@ function getMarketPrice($id, $type = "buy", $criteria = "max") {
 	global $DB;
 	$cacheResult = $DB->query("select value from itemList where itemID = '$id' and updateTime > '".($TIMEMARK - (60 * 60 * 24 * 7))."';");
 	
-	
 	if($cacheResult->numRows() == 0){
 		$regionlimit = getConfig("useRegion");
 		$xmlUrl = "http://api.eve-central.com/api/marketstat?typeid=" . $id . "&regionlimit=" . $regionlimit; 
@@ -74,7 +73,7 @@ function getMarketPrice($id, $type = "buy", $criteria = "max") {
 				select '$TIMEMARK','$id','$value' from dual 
 				where (select count(*) from itemList where itemID = '$id') = 0");
 		$DB->query("update itemList set value = '$value', updateTime = '$TIMEMARK' where itemID = '$id'");
-		var_dump($value);
+		//var_dump($value);
 		return $value;
 	}else{
 		while($r2 = $cacheResult->fetchRow()){
@@ -112,14 +111,14 @@ function makeOreWorth() {
 	
 	$Market = getConfig("useMarket");
 	
-	IF($Market) {
+	if($Market) {
 		// Update prices from Eve-Central and store.
 		if($Market == "eve-central"){
 			$CURRENTTIME = date(U) - (getConfig("timeOffset") * 60 * 60);
 			$itemListDB = $DB->query("SELECT * FROM `itemList` ORDER BY `itemName` DESC");
 			$orderType = $OTYPENAME[getConfig("orderType")];
 			$priceCrit = $PRICECRITERIA[getConfig("priceCriteria")];
-					
+			
 			for($i = 0; $i <= $itemListDB->numRows(); $i++) {
 				$itemInfo = $itemListDB->fetchRow();
 				$quoteAge = $CURRENTTIME - $itemInfo['updateTime'];
@@ -135,7 +134,7 @@ function makeOreWorth() {
 			$regionID = getConfig("useRegion");
 			$url = "http://www.evemarketeer.com/api/info/$itemID/xml/$regionID/buy_highest5";
 			$xml = getXMLobj($url);
-			echo $xml[row][buy_highest5];
+			echo $xml['row']['buy_highest5'];
 		}
 	} else {
 		// load the values.

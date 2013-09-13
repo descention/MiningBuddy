@@ -80,60 +80,65 @@ function joinRun() {
 		makeNotice("You can not join this run as this run has been locked by " . runSupervisor($runid) . ".", "notice", "Mining operation locked", "index.php?action=show&id=$runid", "[Cancel]");
 	}
 	
-	// Join with shiptype.
-	if (!$_GET['confirmed-ship']) {
-		$table = new table(1, true);
-		$table->addHeader(">> Join an Operation");
+	// Get the correct time to join (in case event hasnt started yet)
+	$weGiveAShip = $DB->getCol("SELECT shipGlue FROM runs WHERE id='$runid' LIMIT 1");
+	if ($weGiveAShip[0] >= 0) {
+		// Join with shiptype.
+		if (!$_GET['confirmed-ship']) {
+			$table = new table(1, true);
+			$table->addHeader(">> Join an Operation");
 
-		// If we have been kicked, inform the user.
-		if ($kicked) {
-			$table->addRow("#880000");
-			$table->addCol("Warning: You have been recently kicked. Please check if you are allowed to rejoin to avoid a ban.");
+			// If we have been kicked, inform the user.
+			if ($kicked) {
+				$table->addRow("#880000");
+				$table->addCol("Warning: You have been recently kicked. Please check if you are allowed to rejoin to avoid a ban.");
+			}
+
+			// If we are banned by an official, inform the user.
+			if ($banned) {
+				$table->addRow("#880000");
+				$table->addCol($banned);
+			}
+			
+			$table->addRow();
+			$table->addCol($form . "Join the Operation in " . ucfirst(getLocationOfRun($runid)) . ".");
+			$table->addRow();
+			$table->addCol("You have requested to join mining operation #$runid. Please choose the shipclass " .
+			"you are going to join up with.");
+			$table->addRow();
+			$table->addCol("Shiptype: " . $hiddenstuff . joinAs(), array (
+				"align" => "center"
+			));
+			$table->addRow("#444455");
+			$table->addCol("<input type=\"submit\" name=\"submit\" value=\"Join mining operation\">" . $form_end, array (
+				"align" => "center"
+			));
+
+			$page = "<h2>Join an Operation.</h2>";
+			$page .= "<form action=\"index.php\" method=\"GET\">";
+			$page .= "<input type=\"hidden\" name=\"id\" value=\"$runid\">";
+			$page .= "<input type=\"hidden\" name=\"confirmed-ship\" value=\"true\">";
+			$page .= "<input type=\"hidden\" name=\"confirmed\" value=\"true\">";
+			$page .= "<input type=\"hidden\" name=\"multiple\" value=\"true\">";
+			$page .= "<input type=\"hidden\" name=\"action\" value=\"joinrun\">";
+
+			$page .= ($table->flush());
+			$page .= "</form>";
+			return ($page);
+
 		}
 
-		// If we are banned by an official, inform the user.
-		if ($banned) {
-			$table->addRow("#880000");
-			$table->addCol($banned);
+		// Sanitize the Shiptype.
+		global $SHIPTYPES;
+		$ShiptypesCount = count($SHIPTYPES);
+		if (!numericCheck($_GET['shiptype'], 0, $ShiptypesCount)) {
+			makeNotice("The shiptype you tried to join up with is invalid, please go back, and try again.", "warning", "Shiptype invalid!", "index.php?action=show&id=$_GET[id]");
+		} else {
+			$shiptype = $_GET['shiptype'];
 		}
-		
-		$table->addRow();
-		$table->addCol($form . "Join the Operation in " . ucfirst(getLocationOfRun($runid)) . ".");
-		$table->addRow();
-		$table->addCol("You have requested to join mining operation #$runid. Please choose the shipclass " .
-		"you are going to join up with.");
-		$table->addRow();
-		$table->addCol("Shiptype: " . $hiddenstuff . joinAs(), array (
-			"align" => "center"
-		));
-		$table->addRow("#444455");
-		$table->addCol("<input type=\"submit\" name=\"submit\" value=\"Join mining operation\">" . $form_end, array (
-			"align" => "center"
-		));
-
-		$page = "<h2>Join an Operation.</h2>";
-		$page .= "<form action=\"index.php\" method=\"GET\">";
-		$page .= "<input type=\"hidden\" name=\"id\" value=\"$runid\">";
-		$page .= "<input type=\"hidden\" name=\"confirmed-ship\" value=\"true\">";
-		$page .= "<input type=\"hidden\" name=\"confirmed\" value=\"true\">";
-		$page .= "<input type=\"hidden\" name=\"multiple\" value=\"true\">";
-		$page .= "<input type=\"hidden\" name=\"action\" value=\"joinrun\">";
-
-		$page .= ($table->flush());
-		$page .= "</form>";
-		return ($page);
-
+	}else{
+		$shiptype = -1;
 	}
-
-	// Sanitize the Shiptype.
-	global $SHIPTYPES;
-	$ShiptypesCount = count($SHIPTYPES);
-	if (!numericCheck($_GET[shiptype], 0, $ShiptypesCount)) {
-		makeNotice("The shiptype you tried to join up with is invalid, please go back, and try again.", "warning", "Shiptype invalid!", "index.php?action=show&id=$_GET[id]");
-	} else {
-		$shiptype = $_GET[shiptype];
-	}
-	
 	// Warn the user if he is already in another run.
 	$joinedothers = $DB->query("select run from joinups where userid='$userid' and parted IS NULL order by run");
 
@@ -150,7 +155,7 @@ function joinRun() {
 		$time = $TIMEMARK;
 	}
 
-	// Dont allow him to join the same mining run twice.
+	// Don't allow him to join the same mining run twice.
 	if (userInRun($MySelf->getID(), "$runid") == "none") {
 
 		// Mark user as joined.

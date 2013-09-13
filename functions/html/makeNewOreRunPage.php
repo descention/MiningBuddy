@@ -123,7 +123,7 @@ function makeNewOreRunPage() {
 
 	// Get the average amount.
 	if($MySelf->isOfficial()){
-	if (!getConfig("defaultTax")) {
+	if (!getConfig("defaultTax") && $OPTYPE != "Shopping") {
 		// No default tax has been defined in the config file, generate our own.		
 		$tax = $DB->getCol("SELECT AVG(corpKeeps) AS tax FROM runs;");
 		$tax = round($tax[0]);
@@ -177,7 +177,9 @@ function makeNewOreRunPage() {
 		"colspan" => "2"
 	));
 	
-	
+	$table->addRow();
+	$table->addCol("Do ship types matter?:");
+	$table->addCol("<input type=\"checkbox\" name=\"weCareAboutShip\" >Tick box if you want to apply ship payout percentages to this op.");
 	
 	
 	// Now we need the sum of all ores. 

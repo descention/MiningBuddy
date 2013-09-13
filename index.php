@@ -45,22 +45,12 @@ $TRACE = "index";
 require_once ("./functions/system/init.php");
 
 /*
- * Image Generation
- */
-//include('./functions/system/printImage.php');
-
-/*
- * Authenticiation
- * First of all things we want to know wether the webuser is logged in,
- * and that the logged in username is actually valid. If not, we will
+ * Authentication
+ * First of all things we want to know whether the user is logged in,
+ * and that the logged in user name is actually valid. If not, we will
  * send CONCORD after him.
  */
 $MySelf = auth();
-
-/*
- * Is this a call for an image only (non-cached)?
- */
-include_once ('./functions/system/printImage.php');
 
 /*
  * Load User preferences. 
@@ -74,7 +64,7 @@ $PREFS = new preferences($MySelf->getID());
  */
 
 if (isset ($_POST['check'])) {
-	// User has submited a form.
+	// User has submitted a form.
 	process_post();
 } else {
 	// User is viewing the page, or is requesting a specific page.
