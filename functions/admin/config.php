@@ -92,20 +92,26 @@ function setConfig($key, $val) {
 	$val = sanitize($val);
 
 	// Do we have a valid config entry?
-
+	$insert = false;
 	$setting = $DB->getCol("SELECT value FROM config WHERE name='$key' LIMIT 1");
 	if(isset($setting[0]) && $setting[0] != $val){
 
 		$setting = $DB->query("UPDATE config SET `value` = '" . $val . "' WHERE `name` = '". $key ."' LIMIT 1");
 		if($DB->affectedRows() < 1){
-			// Cache it.
-			$setting = $DB->query("INSERT INTO config (name, value) VALUES (?,?)",
+			// did the setting change?
+		}
+	}else{
+		$insert = true;
+	}
+	
+	if($insert){
+		$setting = $DB->query("INSERT INTO config (name, value) VALUES (?,?)",
 		                array("$key", "$val"));
-			if ($DB->affectedRows() != 1) {
-				makeNotice("Could not update the database registry (setConfig) $key = $val!", "error", "Internal error!");
-			}
+		if ($DB->affectedRows() != 1) {
+			makeNotice("Could not update the database registry (setConfig) $key = $val!", "error", "Internal error!");
 		}
 	}
+	
 	$_SESSION["config_".$key] = $val;
 }
 ?>
