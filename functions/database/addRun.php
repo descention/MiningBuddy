@@ -138,6 +138,7 @@ function addRun() {
 		makeNotice("DB Error: Could not add run to database!", "error", "DB Error");
 	}
 
+	/*
 	// Now update the "required" ore values.
 	foreach ($DBORE as $ORE) {
 		// But the ore needs to be set, valid (numeric) and must be activated.
@@ -145,7 +146,7 @@ function addRun() {
 			$DB->query("UPDATE runs SET " . $ORE . "Wanted='" . $_POST[$ORE] . "' WHERE $starttime='$starttime'");
 		}
 	}
-
+	*/
 	// And return the user to the run-list overview page.
 	makeNotice("The new Mining Operation has been created in the database.", "notice", "Mining Operation created", "index.php?action=list", "[OK]");
 }

@@ -61,7 +61,7 @@ function listRun() {
 
 	/*
 	 * STEP ONE:
-	 * Load the database row into $row. This requires us to look up the minigrun ID
+	 * Load the database row into $row. This requires us to look up the run ID
 	 * first.
 	 */
 	include ('./functions/runs/listRun_inc_step1.php');
