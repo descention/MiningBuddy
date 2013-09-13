@@ -113,11 +113,11 @@ function addRun() {
 	$oreValue = $oreValue[0];
 	*/
 	
-	if(!isset($_POST['weCareAboutShip']) || $_POST['weCareAboutShip'] == "on"){
+	if(isset($_POST['weCareAboutShip']) && $_POST['weCareAboutShip'] == "on"){
 		$shipValue = $DB->getCol("SELECT max(id) FROM shipvalues");
 		$shipValue = $shipValue[0];
 	}else{
-		$shipValue = -1;
+		$shipValue = "-1";
 	}
 	
 	$optype = $_REQUEST['optype'];
