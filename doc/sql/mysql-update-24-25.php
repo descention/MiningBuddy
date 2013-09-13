@@ -49,8 +49,7 @@ if ($upgrade=='1' ){
 	
 }else{
 
-?>
-<br>
+?><br>
 <center>
 <body bgcolor="#2E2E2E">
 <font color= white>
@@ -64,17 +63,14 @@ if ($upgrade=='1' ){
 <br><br><br><br><br><br>
 <?php
 echo "This is the $VERSION SQL upgrade page.<br>";
-?>
-When you are ready to upgrade your Mining Buddy Plus Database to the newest version click the link below<br>
+?>When you are ready to upgrade your Mining Buddy Plus Database to the newest version click the link below<br>
 <a href="mysql-update-24-25.php?upgrade=1"><h1>Upgrade Now to Database Version 
 <?php
 echo " " . $SQLVER;
-?>
-</h1> (from version 
+?></h1> (from version 
 <?php
 echo " " . $SQLVER - 1;
-?>
-)</a>
+?>)</a>
 <br>
 <?
 }
