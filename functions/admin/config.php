@@ -67,7 +67,7 @@ function getConfig($key, $forceFresh = false) {
 		// And return it.
 		return($setting[0]);
 	}else{
-		echo "<!-- $key missing -->";
+		//echo "<!-- $key missing -->";
 		return "";
 	}
 

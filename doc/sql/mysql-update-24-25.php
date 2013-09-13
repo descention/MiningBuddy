@@ -38,10 +38,10 @@ if ($upgrade=='1' ){
 	$configupgrade4 = mysql_query("ALTER TABLE `hauled` ADD `item` varchar( 256 ) NOT NULL DEFAULT '' AFTER `time` ;");
 	$configupgrade5 = mysql_query("ALTER TABLE `hauled` ADD `quantity` decimal( 16,2 ) NOT NULL DEFAULT '0.00' AFTER `item` ;");
 	$configupgrade6 = mysql_query("UPDATE `config` SET `value` = '0' WHERE `config`.`name` = 'Lotto' ;"); 
-	
-echo "Updating the config version number!";
+
+	echo "Updating the config version number!";
 	echo "<br>";
-	$configupgrade7 = mysql_query("UPDATE config SET value='24' WHERE name='version'");
+	$configupgrade7 = mysql_query("UPDATE config SET value='25' WHERE name='version'");
 	
 	echo "Upgrade Completed!";
 	echo "<br>";
