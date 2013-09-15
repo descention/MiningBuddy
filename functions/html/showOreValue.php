@@ -147,7 +147,7 @@ function showOreValue() {
 			$ri = strtolower($ri_words[$ri_max -1]);
 
 			if ($ORE != "") {
-				$table->addCol("<img width=\"32\" height=\"32\" src=\"http://image.eveonline.com/Type/" . $orevalues['typeID'] . "_32.png\">");
+				$table->addCol("<img width=\"32\" height=\"32\" src=\"http://image.eveonline.com/Type/" . $orevalues[$DBORE[$ORE]]['typeID'] . "_32.png\">");
 				if(!$isLatest && $orevalues[$DBORE[$ORE]]['time'] != $archiveTime){
 					$DATE = $orevalues[$DBORE[$ORE]]['time'] > $archiveTime?date("m.d.y H:i:s", $orevalues[$DBORE[$ORE]]['time']):"";
 					$color = $orevalues[$DBORE[$ORE]]['time'] > $archiveTime?"#00ff00":"#ff0000";
