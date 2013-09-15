@@ -689,16 +689,6 @@ function listRun() {
         "align" => "left",
         "bold" => true
     ));
-//wanted ore in m3
-    $ressources_info->addCol(number_format($total_ore_wanted_m3,2) . " m3 Wanted", array (
-        "align" => "left",
-        "bold" => true
-    ));
-//remaining ore in m3
-    $ressources_info->addCol(number_format($total_ore_remaining_m3,2) . " m3 Remaining", array (
-        "align" => "left",
-        "bold" => true
-    ));
     $ressources_info->addCol("Gross value:", array (
         "bold" => true,
         "align" => "right",
@@ -719,7 +709,7 @@ function listRun() {
     $ressources_info->addCol("Corp keeps:", array (
         "bold" => true,
         "align" => "right",
-        "colspan" => 6
+        "colspan" => 4
     ));
     $ressources_info->addCol(number_format($taxes, 2) . " ISK", array (
         "align" => "right",
@@ -730,7 +720,7 @@ function listRun() {
     $ressources_info->addCol("Net value:", array (
         "bold" => true,
         "align" => "right",
-        "colspan" => 6
+        "colspan" => 4
     ));
     $ressources_info->addCol(number_format($net, 2) . " ISK", array (
         "align" => "right",
