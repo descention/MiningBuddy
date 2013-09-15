@@ -31,7 +31,5 @@
  *  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-// This tries to load the corresponing EVE dataset for the system.
-$System = new solarSystem($row[location]);
-$System_table = $System->makeInfoTable() . "<br>";
+
 ?>

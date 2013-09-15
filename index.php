@@ -30,14 +30,6 @@ ini_set("display_errors","Off");
  *  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-function CustomErrorHandler($eNo, $eMsg, $eFile, $eLine, $eContext)
-{
-	global $TRACE;
-	echo "[$eNo] $eMsg<br/>\n$TRACE";
-}
-//set_error_handler("CustomErrorHandler");
-$TRACE = "index";
-
 /*
  * Initialization, configuration, checks and more.
  */
