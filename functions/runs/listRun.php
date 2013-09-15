@@ -592,7 +592,7 @@ function listRun() {
 	 * STEP FIVE
 	 * The Resources Information Table
 	 */
-    $ressources_info = new table(7, true);
+    $ressources_info = new table(5, true);
     $ressources_info->addHeader(">> Resources Information");
     $ressources_info->addRow("#080822");
     $ressources_info->addCol("Item", array (
@@ -602,12 +602,6 @@ function listRun() {
         "bold" => true
     ));
     $ressources_info->addCol("Quantity / m3", array (
-        "bold" => true
-    ));
-    $ressources_info->addCol("Wanted / m3", array (
-        "bold" => true
-    ));
-    $ressources_info->addCol("Remaining / m3", array (
         "bold" => true
     ));
     $ressources_info->addCol("Value", array (
@@ -673,8 +667,6 @@ function listRun() {
                 ));
 
                 $ressources_info->addCol($tmp_ore . " / " . $tmp_ore_m3);
-                $ressources_info->addCol($tmp_ore_wanted . " / " . $tmp_ore_wanted_m3);
-                $ressources_info->addCol($ore_remaining . " / " . $ore_remaining_m3);
                 $ressources_info->addCol(number_format($OREWORTH) . " ISK");
                 $ressources_info->addCol(number_format($worth, 2) . " ISK", array (
                     "bold" => true,
