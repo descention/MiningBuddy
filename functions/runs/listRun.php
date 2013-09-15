@@ -618,7 +618,7 @@ function listRun() {
         //$oval = $ovalues->fetchRow() AND
         $totalworth = $total_ore_m3 = 0;
         $oval = $ovalues;
-        $r = $DB->query("select item, sum(Quantity) as total, itemName as name, volume, itemID from hauled, itemList where item = replace(replace(itemName,' ',''),'-','') and miningrun = '$ID' group by item having sum(Quantity) <> 0");
+        $r = $DB->query("select item, sum(Quantity) as total, itemName as name, itemID from hauled, itemList where item = replace(replace(itemName,' ',''),'-','') and miningrun = '$ID' group by item having sum(Quantity) <> 0");
         while($r2 = $r->fetchRow()){
             $ORE = $r2['item'];
             // We need a Variable name with the word Wanted and M3 (for the wanted and m3 columns)
