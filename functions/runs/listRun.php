@@ -249,22 +249,22 @@ function listRun() {
 
             // Are we allowed to haul?
             if (($row['endtime'] == "") && ($MySelf->canAddHaul())) {
-                $addHaul .= " [<a href=\"index.php?action=addhaul&id=$ID\">Haul</a>] ";
+                $addHaul = " [<a href=\"index.php?action=addhaul&id=$ID\">Haul</a>] ";
             } else {
-                $addHaul .= false;
+                $addHaul = false;
             }
 
-            // Run-Owner: Lock/Unlock run (to dissallow people joining)
+            // Run-Owner: Lock/Unlock run (to disallow people joining)
             if (runSupervisor($row['id']) == $MySelf->getUsername()) {
                 if (runIsLocked($row['id'])) {
-                    $lock .= " [<a href=\"index.php?action=lockrun&id=$row[id]&state=unlock\">Unlock Run</a>] ";
+                    $lock = " [<a href=\"index.php?action=lockrun&id=$row[id]&state=unlock\">Unlock Run</a>] ";
                 } else {
-                    $lock .= " [<a href=\"index.php?action=lockrun&id=$row[id]&state=lock\">Lock Run</a>] ";
+                    $lock = " [<a href=\"index.php?action=lockrun&id=$row[id]&state=lock\">Lock Run</a>] ";
                 }
             }
 
             // IS in the run, give option to leave.
-            $add .= " [<a href=\"index.php?action=partrun&id=$ID\">Leave Op</a>] [<a href=\"index.php?action=cans\">Manage Cans</a>]";
+            $add = " [<a href=\"index.php?action=partrun&id=$ID\">Leave Op</a>] [<a href=\"index.php?action=cans\">Manage Cans</a>]";
             //$add .= " [Leave Op Disabled] [<a href=\"index.php?action=cans\">Manage Cans</a>]";
 
             // Make the charity button.
@@ -417,7 +417,7 @@ function listRun() {
         }
 
         // Loop through all users who joined up.
-        $gotActivePeople = false;
+        $activePeople = 0;
 
         while ($alog = $activelog->fetchRow()) {
 
@@ -462,8 +462,6 @@ function listRun() {
                     //Edit End
                 }
             }
-
-            $gotActivePeople = true;
         }
 
         // Tell the folks how many active pilots we have, switching none, one or many.
@@ -624,8 +622,9 @@ function listRun() {
     while ($mval = $mvalues->fetchrow()) {
         // Voila, le scary monster!
         //$oval = $ovalues->fetchRow() AND
+        $totalworth = $total_ore_m3 = 0;
         $oval = $ovalues;
-        $r = $DB->query("select item, sum(Quantity) as total, typeName as name, volume, typeID from hauled, ".$STATIC_DB.".invTypes where item = replace(replace(typeName,' ',''),'-','') and miningrun = '$ID' group by item having sum(Quantity) <> 0");
+        $r = $DB->query("select item, sum(Quantity) as total, itemName as name, volume, itemID from hauled, itemList where item = replace(replace(itemName,' ',''),'-','') and miningrun = '$ID' group by item having sum(Quantity) <> 0");
         while($r2 = $r->fetchRow()){
             $ORE = $r2['item'];
             // We need a Variable name with the word Wanted and M3 (for the wanted and m3 columns)
@@ -639,7 +638,7 @@ function listRun() {
              * that row to save precious in game browser space.
              */
 
-            if (($row[$ORE] != 0) || ($row[$OREWANTED] >= 1)) {
+            if (($row[$ORE] != 0)) {
 
                 /* This is actually the main table. It prints the associated array
                  * lists into a neat human readable output.
@@ -659,25 +658,6 @@ function listRun() {
                     $total_ore_m3 = $total_ore_m3 + ($OREM3 * abs($row[$ORE]));
                 }
 
-                if ($row[$OREWANTED] == 0) {
-                    $tmp_ore_wanted = "<i>none</i>";
-                    $tmp_ore_wanted_m3 = "<i>none</i>";
-                    $ore_remaining = "<i>none</i>";
-                    $ore_remaining_m3 = "<i>none</i>";
-                } else {
-                    $tmp_ore_wanted = number_format($row[$OREWANTED]);
-                    $tmp_ore_wanted_m3 = number_format($OREM3 * $row[$OREWANTED],2) . " m3";
-                    $total_ore_wanted_m3 = $total_ore_wanted_m3 + ($OREM3 * $row[$OREWANTED]);
-                    $tmp_ore_remaining = number_format($row[$OREWANTED] - $row[$ORE]);
-                    if ($tmp_ore_remaining <= 0) {
-                        $ore_remaining = "<i>none</i>";
-                        $ore_remaining_m3 = "<i>none</i>";
-                    } else {
-                        $ore_remaining = NoNeg(number_format($row[$OREWANTED] - $row[$ORE]));
-                        $ore_remaining_m3 = NoNeg(number_format($OREM3 * ($row[$OREWANTED] - $row[$ORE]),2)) . " m3";
-                        $total_ore_remaining_m3 = $total_ore_remaining_m3 + ($OREM3 * ($row[$OREWANTED] - $row[$ORE]));
-                    }
-                }
                 $ressources_info->addRow();
 
                 // Fetch the right image for the ore.
@@ -1048,7 +1028,7 @@ function listRun() {
 	}
 
 	if ($isOpen) {
-		if ($gotActivePeople) {
+		if ($activePeople > 0) {
 			$page .= "<br>" . $join_info->flush();
 		} else {
 			$page .= "<br><b><i>There are currently no active pilots.</i></b><br>";
