@@ -82,15 +82,15 @@ function addhaulpage() {
 			"align" => "left"
 		));
 	}
-	/*
+
 	// fetch the system the haul is taking place in..
 //	$location = $DB->getCol("select location from runs where endtime is NULL and id='$ID' order by id desc limit 1");
 //	$runLocation = $location[0];
 	$runLocation = getLocationOfRun($ID);
 	
 	// make the targeted system click-able.
-	$sytem = new solarSystem($runLocation);
-	
+	//$system = new solarSystem($runLocation);
+	/*
 	// Assemble a PDM with all the destinations for the current run.
 	$locations = $DB->query("SELECT location FROM hauled WHERE miningrun='$ID' ORDER BY location ASC");
 	if ($locations->numRows()) {
@@ -107,7 +107,7 @@ function addhaulpage() {
 	
 	// Get a list of neighbouring systems.
 	$neighbouringSystems = $sytem->getNeighbouringSystems();
-	
+
 	// Lets pick the right system.
 	if($lastHaulLocation) {
 		// Use the last system stuff was hauled to.
@@ -136,8 +136,11 @@ function addhaulpage() {
 			$pdm .= "<option value=\"".strtolower($s)."\">".ucfirst($s)."</option>";
 		}
 	}
+    */
+    // TK This line will need removed later
+    $pdm = "<option value=\"".strtolower($runLocation)."\">".$runLocation."</option>";
 	$pdm = "<select name=\"location\">" . $pdm . "</select>";
-	*/
+
 	$haulpage->addCol("System hauling to: ".$pdm." -or- <input type=\"text\" name=\"location2\" value=\"\">", array (
 		"align" => "right"
 	));
@@ -152,7 +155,7 @@ function parseDump(sender){
   var items = sender.value.split(\"\\n\");
   for(var x =0;x< items.length;x++){
     var item = items[x].split(\"\\t\");
-    document.getElementsByName(item[0].replace(' ',''))[0].value = item[1].replace(',','');
+    document.getElementsByName(item[0].replace(' ','').replace('-',''))[0].value = item[1].replace(',','');
   }
 }
 </script>";
@@ -313,7 +316,7 @@ function addItem(selection){
 	$haulpage->addHeaderCentered("<input type=\"submit\" name=\"haul\" value=\"Commit haul to database\">");
 
 	// Render the page...
-	$form_stuff .= "<input type=\"hidden\" value=\"check\" name=\"check\">";
+	$form_stuff = "<input type=\"hidden\" value=\"check\" name=\"check\">";
 	$form_stuff .= "<input type=\"hidden\" value=\"addhaul\" name=\"action\">";
 	$form_stuff .= "<input type=\"hidden\" value=\"" . $ID . "\" name=\"id\">";
 	$form_stuff .= "</form>";
@@ -323,10 +326,10 @@ function addItem(selection){
 	// print out all the disabled oretypes.
 	if (!empty ($disabledOresText)) {
 		$page .= "<br><i>" . $disabledOresText . "</i>";
-	}*/
-
+	}
+    */
 	// Return the page
-	return ( $script . $html . $page);
+	return ( $script . $html);
 
 }
 ?>
