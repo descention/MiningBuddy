@@ -959,24 +959,6 @@ function listRun() {
             $totalPercent = $totalPercent + $percent;
         }
 
-
-        $totalValue = getTotalWorth($ID);
-        $corpValue = $totalValue * ($row['corpkeeps'] / 100);
-
-        $payout_info->addRow("060622");
-        $payout_info->addCol("Total", array (
-            "bold" => true
-        ));
-        $payout_info->addCol(number_format("100", 2) . "%");
-        $payout_info->addCol(number_format($totalValue, 2) . " ISK");
-
-        $payout_info->addRow("060622");
-        $payout_info->addCol("Corp Share", array (
-            "bold" => true
-        ));
-        $payout_info->addCol(number_format($row['corpkeeps'], 2) . "%");
-        $payout_info->addCol(number_format($corpValue, 2) . " ISK");
-
         $payout_info->addRow("060622");
         $payout_info->addCol("Player Total", array (
             "bold" => true
