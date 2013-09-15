@@ -107,14 +107,9 @@ function listRun() {
         $row = $results->fetchRow();
     }
 
-// Now that we have the run loaded in RAM, we can load several other things.
+    // Now that we have the run loaded in RAM, we can load several other things.
     $joinlog = $DB->query("SELECT * FROM joinups WHERE run = '$ID' order by ID DESC");
     $activelog = $DB->query("SELECT * FROM joinups WHERE run = '$ID' and parted is NULL");
-    if (!isset($row['m3Glue']) || $row['m3Glue'] <= 0) {
-        $mvalues = $DB->query("SELECT * FROM m3values order by id desc limit 1");
-    } else {
-        $mvalues = $DB->query("SELECT * FROM m3values WHERE id='" . $row['m3Glue'] . "' limit 1");
-    }
     if (!isset($row['shipGlue']) || $row['shipGlue'] <= 0) {
         $values = $DB->query("SELECT * FROM shipvalues order by id desc limit 1");
     } else {
@@ -359,7 +354,7 @@ function listRun() {
 	 * Create a table with the System Information.
 	 */
     // This tries to load the corresponing EVE dataset for the system.
-    $System = new solarSystem($row[location]);
+    $System = new solarSystem($row['location']);
     $System_table = $System->makeInfoTable() . "<br>";
 
 	/*
@@ -425,15 +420,15 @@ function listRun() {
             $activePeople++;
 
             $join_info->addRow();
-            $join_info->addCol(makeProfileLink($alog[userid]));
+            $join_info->addCol(makeProfileLink($alog['userid']));
 
-            if ($TIMEMARK < $alog[joined]) {
+            if ($TIMEMARK < $alog['joined']) {
                 $join_info->addCol("request pending");
             } else {
-                $join_info->addCol(date("H:i:s", $alog[joined]));
+                $join_info->addCol(date("H:i:s", $alog['joined']));
             }
 
-            $time = numberToString($TIMEMARK - $alog[joined]);
+            $time = numberToString($TIMEMARK - $alog['joined']);
             if ($time) {
                 $join_info->addCol($time);
                 $join_info->addCol("<font color=\"#00ff00\">ACTIVE</font>");
@@ -441,13 +436,13 @@ function listRun() {
                 $join_info->addCol("request pending");
                 $join_info->addCol("<font color=\"#FFff00\">PENDING</font>");
             }
-            $join_info->addCol($SHIPTYPES[$alog[shiptype]]);
+            $join_info->addCol($SHIPTYPES[$alog['shiptype']]);
 
-            $join_info->addCol(yesno($alog[charity], 1, 0));
+            $join_info->addCol(yesno($alog['charity'], 1, 0));
 
             // Print the kick/ban/remove headers.
             if ($icankick) {
-                if ($alog[userid] == $MySelf->getID()) {
+                if ($alog['userid'] == $MySelf->getID()) {
                     // Cant kick yourself.
                     $join_info->addCol("---");
                     $join_info->addCol("---");
@@ -613,70 +608,70 @@ function listRun() {
     ));
 
 // Load current payout values.
-    while ($mval = $mvalues->fetchrow()) {
-        // Voila, le scary monster!
-        //$oval = $ovalues->fetchRow() AND
-        $totalworth = $total_ore_m3 = 0;
-        $oval = $ovalues;
-        $r = $DB->query("select item, sum(Quantity) as total, itemName as name, itemID from hauled, itemList where item = replace(replace(itemName,' ',''),'-','') and miningrun = '$ID' group by item having sum(Quantity) <> 0");
-        while($r2 = $r->fetchRow()){
-            $ORE = $r2['item'];
-            // We need a Variable name with the word Wanted and M3 (for the wanted and m3 columns)
-            $OREWANTED = $ORE . "Wanted";
-            //Pulls the m3 of each ore type.
-            //$OREWORTH = getMarketPrice($r2['typeID']);
-            $OREWORTH = ($oval[$ORE]["Worth"]);
-            $OREM3 = $r2['volume'];
 
-            /* If an ore is neither wanted nor has been harvested so far, we dont print
-             * that row to save precious in game browser space.
+    // Voila, le scary monster!
+    //$oval = $ovalues->fetchRow() AND
+    $totalworth = $total_ore_m3 = 0;
+    $oval = $ovalues;
+    $r = $DB->query("select item, sum(Quantity) as total, itemName as name, itemID from hauled, itemList where item = replace(replace(itemName,' ',''),'-','') and miningrun = '$ID' group by item having sum(Quantity) <> 0");
+    while($r2 = $r->fetchRow()){
+        $ORE = $r2['item'];
+        // We need a Variable name with the word Wanted and M3 (for the wanted and m3 columns)
+        $OREWANTED = $ORE . "Wanted";
+        //Pulls the m3 of each ore type.
+        //$OREWORTH = getMarketPrice($r2['typeID']);
+        $OREWORTH = ($oval[$ORE]["Worth"]);
+        $OREM3 = $r2['volume'];
+
+        /* If an ore is neither wanted nor has been harvested so far, we dont print
+         * that row to save precious in game browser space.
+         */
+
+        if (($row[$ORE] != 0)) {
+
+            /* This is actually the main table. It prints the associated array
+             * lists into a neat human readable output.
              */
 
-            if (($row[$ORE] != 0)) {
+            // Calculates the Worth of this ore.
+            $worth = ($OREWORTH * $row[$ORE]);
+            $totalworth = $totalworth + $worth;
 
-                /* This is actually the main table. It prints the associated array
-                 * lists into a neat human readable output.
-                 */
-
-                // Calculates the Worth of this ore.
-                $worth = ($OREWORTH * $row[$ORE]);
-                $totalworth = $totalworth + $worth;
-
-                //Do Not Make any changes, It's finally working!
-                if ($row[$ORE] == 0) {
-                    $tmp_ore = "<i>none</i>";
-                    $tmp_ore_m3 = "<i>none</i>";
-                } else {
-                    $tmp_ore = number_format($row[$ORE]);
-                    $tmp_ore_m3 = number_format($OREM3 * abs($row[$ORE]),2) . " m3";
-                    $total_ore_m3 = $total_ore_m3 + ($OREM3 * abs($row[$ORE]));
-                }
-
-                $ressources_info->addRow();
-
-                // Fetch the right image for the ore.
-                $ri_words = str_word_count($r2['name'], 1);
-                $ri_max = count($ri_words);
-                $ri = strtolower($ri_words[$ri_max -1]);
-
-                $ressources_info->addCol("<img width=\"32\" height=\"32\" src=\"./images/ores/" . $r2['name'] . ".png\">", array (
-                    "width" => "64"
-                ));
-                $ressources_info->addCol($r2['name'], array (
-                    "bold" => true
-                ));
-
-                $ressources_info->addCol($tmp_ore . " / " . $tmp_ore_m3);
-                $ressources_info->addCol(number_format($OREWORTH) . " ISK");
-                $ressources_info->addCol(number_format($worth, 2) . " ISK", array (
-                    "bold" => true,
-                    "align" => "right"
-                ));
-
-                $gotOre = true; // We set this so we know we have SOME ore.
+            //Do Not Make any changes, It's finally working!
+            if ($row[$ORE] == 0) {
+                $tmp_ore = "<i>none</i>";
+                $tmp_ore_m3 = "<i>none</i>";
+            } else {
+                $tmp_ore = number_format($row[$ORE]);
+                $tmp_ore_m3 = number_format($OREM3 * abs($row[$ORE]),2) . " m3";
+                $total_ore_m3 = $total_ore_m3 + ($OREM3 * abs($row[$ORE]));
             }
+
+            $ressources_info->addRow();
+
+            // Fetch the right image for the ore.
+            $ri_words = str_word_count($r2['name'], 1);
+            $ri_max = count($ri_words);
+            $ri = strtolower($ri_words[$ri_max -1]);
+
+            $ressources_info->addCol("<img width=\"32\" height=\"32\" src=\"./images/ores/" . $r2['name'] . ".png\">", array (
+                "width" => "64"
+            ));
+            $ressources_info->addCol($r2['name'], array (
+                "bold" => true
+            ));
+
+            $ressources_info->addCol($tmp_ore . " / " . $tmp_ore_m3);
+            $ressources_info->addCol(number_format($OREWORTH) . " ISK");
+            $ressources_info->addCol(number_format($worth, 2) . " ISK", array (
+                "bold" => true,
+                "align" => "right"
+            ));
+
+            $gotOre = true; // We set this so we know we have SOME ore.
         }
     }
+
 
     $ressources_info->addRow("#060622");
     $ressources_info->addCol("");
