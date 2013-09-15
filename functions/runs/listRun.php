@@ -654,7 +654,7 @@ function listRun() {
             $ri_max = count($ri_words);
             $ri = strtolower($ri_words[$ri_max -1]);
 
-            $ressources_info->addCol("<img width=\"32\" height=\"32\" src=\"./images/ores/" . $r2['name'] . ".png\">", array (
+            $ressources_info->addCol("<img width=\"32\" height=\"32\" src=\"http://image.eveonline.com/Type/" . $r2['itemID'] . "_32.png\">", array (
                 "width" => "64"
             ));
             $ressources_info->addCol($r2['name'], array (
