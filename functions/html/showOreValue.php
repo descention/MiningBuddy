@@ -43,7 +43,7 @@ function showOreValue() {
 	if(isset($STATIC_DB)){
 		$latestDS = $DB->query("select item, Worth, time, modifier, t.volume from orevalues a, $STATIC_DB.invTypes t where a.item = replace(replace(t.typeName,'-',''),' ','') and time = (select max(time) from orevalues b where a.item = b.item) group by item ORDER BY time DESC");
 	}else{
-		$latestDS = $DB->query("select item, Worth, time, modifier from orevalues a where time = (select max(time) from orevalues b where a.item = b.item) group by item order by time desc");
+		$latestDS = $DB->query("select item, Worth, time, modifier, itemID as typeID from orevalues a, itemList where item = replace(replace(itemName,' ',''),'-','') and time = (select max(time) from orevalues b where a.item = b.item) group by item order by time desc");
 	}
 	if (!isset ($_GET['id'])) {
 		// No ID requested, get latest
@@ -147,7 +147,7 @@ function showOreValue() {
 			$ri = strtolower($ri_words[$ri_max -1]);
 
 			if ($ORE != "") {
-				$table->addCol("<img width=\"32\" height=\"32\" src=\"./images/ores/" . $ORE . ".png\">");
+				$table->addCol("<img width=\"32\" height=\"32\" src=\"http://image.eveonline.com/Type/" . $orevalues['typeID'] . "_32.png\">");
 				if(!$isLatest && $orevalues[$DBORE[$ORE]]['time'] != $archiveTime){
 					$DATE = $orevalues[$DBORE[$ORE]]['time'] > $archiveTime?date("m.d.y H:i:s", $orevalues[$DBORE[$ORE]]['time']):"";
 					$color = $orevalues[$DBORE[$ORE]]['time'] > $archiveTime?"#00ff00":"#ff0000";
