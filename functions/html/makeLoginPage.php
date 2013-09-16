@@ -125,12 +125,10 @@ function makeLoginPage($user = false) {
 		if ($EVE_Charname) {
 			$login->addCol("<input type=\"text\" name=\"username\" value=\"$EVE_Charname\" maxlength=\"30\">");
 		} else {
-			$login->addCol("<input type=\"text\" name=\"username\" value=\"" . stripcslashes($user) . "\" maxlength=\"30\">");
+			$login->addCol("<input type=\"text\" name=\"username\" value=\"" . stripcslashes($user) . "\" maxlength=\"30\">", array (
+                "colspan" => "2"
+            ));
 		}
-
-		$login->addCol("<img src=\"./images/keys.png\">", array (
-			"rowspan" => "2"
-		));
 
 		$login->addRow();
 		$login->addCol("Password:");

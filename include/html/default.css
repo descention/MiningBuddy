@@ -38,6 +38,23 @@ body{
 .clear{
 	clear:both;
 }
+
+.oreValueRow{
+    width:50%;
+}
+
+.table{
+    width:100%;
+}
+.tableRow{
+    width:100%;
+    float:left;
+}
+.tableRow > div{
+    float:left;
+}
+
+
 /* ************************************ */
 /* Out of game browser */
 /* ************************************ */
@@ -48,6 +65,8 @@ body{
 
 #loginTable{
 	width:400px;
+    margin-left:auto;
+    margin-right:auto;
 }
 
 .OOG #content a{

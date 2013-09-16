@@ -68,7 +68,7 @@ class table {
 		$this->current_row = 0; // Counts the number of rows
 		$this->alternating = $alt; // True if we use alternating colors.
 		$this->columns = $cols; // Defines the max number of columns.
-		$this->html = "<table " . $align . $width . " cellpadding=\"2\" cellspacing=\"0\">"; // Open up the table.
+		$this->html = "<div class=\"table\" " . $align . $width . " >"; // Open up the table.
 	}
 
 	public function addRow($class = false, $valign = false) {
@@ -81,22 +81,25 @@ class table {
 			$class = $this->bgc[$this->bgi];
 			$this->bgi = 1 - $this->bgi;
 		}
-
 		//$class = str_replace('#','x',$class);
 		
 		if ($valign) {
 			$valign = "valign=\"" . $valign . "\"";
 		}
 
+        $style = "";
+
 		// Do we want alternating table colors?
 		if ($this->alternating) {
+
 			if(strpos($class,"#") === false){
-				$this->html .= "<tr class=\"" . $class . "\" $valign>";
+				$this->html .= "<div style=\"$style\" class=\"tableRow " . $class . "\" $valign>";
 			} else {
-				$this->html .= "<tr bgcolor=\"" . $class . "\" $valign>";
+                $style .= "background-color:".$class;
+				$this->html .= "<div style=\"$style\" $valign class=\"tableRow\" >";
 			}
 		} else {
-			$this->html .= "<tr>";
+			$this->html .= "<div style=\"$style\" class=\"tableRow ".$class."\">";
 		}
 
 		// Reset the column count (new row)
@@ -112,7 +115,7 @@ class table {
 				makeNotice("Current row not finished feeding yet!<br><br>" . $BT, "error", "Internal Error");
 			} else {
 				// Its opened and filled. Close the row, and mark it as closed, too.
-				$this->html .= "</tr>"; // Close row.
+				$this->html .= "</div>"; // Close row.
 				$this->rowIsOpen = false; // Mark row as closed.
 			}
 		}
@@ -157,15 +160,17 @@ class table {
 					$bold = "<b>";
 					$bold_end = "</b>";
 				}else{
-					$staticAttributes .= "$key=\"$value\" ";
+
 					if($key == "colspan"){
 						$colspan = $value;
-					}
+					}else{
+                        $staticAttributes .= "$key=\"$value\" ";
+                    }
 				}
 			}
 		} else {
 			// Default Values go here (if no array set)
-			$staticAttributes .= "colspan='1' rowspan='1' ";
+            $staticAttributes .= "";
 		}
 
 		// Are we over-doing it?
@@ -175,7 +180,7 @@ class table {
 		}
 
 		// Add the content.
-		$this->html .= "<td $staticAttributes>" . $bold . $cont . $bold_end . "</td>";
+		$this->html .= "<div style=\"float:left; width:".($colspan / $this->columns * 100)."%;\" $staticAttributes>" . $bold . $cont . $bold_end . "</div>";
 		$this->current_col = $this->current_col + $colspan;
 		$this->hasContent = true;
 	}
@@ -185,7 +190,7 @@ class table {
 		$this->closeRow();
 
 		// Finnish up.
-		$this->html .= "</table>";
+		$this->html .= "<div style=\"clear:both;\"></div></div>";
 		return ($this->html);
 	}
 

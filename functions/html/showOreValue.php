@@ -119,26 +119,28 @@ function showOreValue() {
 			"bold" => true
 		));
 	}
-	$table->addCol("Ore Name", array (
-		"colspan" => 2,
-		"bold" => true
-	));
-	$table->addCol("Value", array (
-		"bold" => true
-	));
 
-	if (!$isLatest) {
-		$table->addCol("Diff", array (
-			"bold" => true
-		));
-	}
+    $table->addCol("Ore Name", array (
+        "colspan" => 2,
+        "bold" => true
+    ));
+    $table->addCol("Value", array (
+        "bold" => true
+    ));
+    if (!$isLatest) {
+        $table->addCol("Diff", array (
+            "bold" => true
+        ));
+    }
 
 	// How many ores are there in total? Ie, how long has the table to be?
 	$tableLength = ceil(count($ORENAMES) / 2) - 1;
-
+    $odd = true;
     while($row = $orevaluesDS->fetchRow()){
-
-		$table->addRow();
+        if($odd){
+		    $table->addRow();
+            $odd = false;
+        }else{$odd = true;}
         $table->addCol("<img width=\"32\" height=\"32\" src=\"http://image.eveonline.com/Type/" . $row['typeID'] . "_32.png\">");
         /*
         if(!$isLatest && $row['time'] != $archiveTime){
