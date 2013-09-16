@@ -196,45 +196,31 @@ function makeOreWorth() {
 		"bold" => true
 	));
 
-	// How many ores are there in total? Ie, how long has the table to be?
-	$tableLength = ceil(count($ORENAMES) / 2)-1;
+	$orevaluesDS = $DB->query("select REPLACE(REPLACE(itemName,' ',''),'-','') as item, itemID as typeID, itemName as typeName from itemList order by typeID");
 
-	
-	
-	for ($i = 0; $i <= $tableLength; $i++) {
-		$right = 0;
-		$table->addRow();
-		
-		for($side = 0; $side <= 1; $side++){
-			$ORE = $ORENAMES[$i + (($tableLength + 1) * $side) ];
+    $flip = false;
+    while($row = $orevaluesDS->fetchRow()){
+        if(!$flip){
+		    $table->addRow();
+            $flip = true;
+        }else{
+            $flip = false;
+        }
 
-			// Fetch the right image for the ore.
-			$ri_words = str_word_count($ORE, 1);
-			$ri_max = count($ri_words);
-			$ri = strtolower($ri_words[$ri_max -1]);
-			if ($ORE != "") {
-				$table->addCol("<img width=\"32\" height=\"32\" src=\"./images/ores/" . $ORE . ".png\">");
-				$table->addCol($ORE);
-				if (getOreSettings($DBORE[$ORE],$OPTYPE)) {
-					$table->addCol("<input name=\"" . $DBORE[$ORE] . "Enabled\" value=\"true\" type=\"checkbox\" checked=\"checked\">");
-				} else {
-					$table->addCol("<input name=\"" . $DBORE[$ORE] . "Enabled\" value=\"true\" type=\"checkbox\">");
-				}
-				IF($Market == 1) {
-					$thisPrice = getPriceCache($ORE);
-					$table->addCol("<input type=\"text\" style=\"text-align: right\" name=\"$DBORE[$ORE]\"" . "size=\"10\" value=\"" . $thisPrice . "\">");
-				} else {
-					$table->addCol("<input type=\"text\" style=\"text-align: right\" name=\"$DBORE[$ORE]\"" . "size=\"10\" value=\"" . $orevalues[$DBORE["$ORE"]]['Worth'] . "\">");
-				}
-			} else {
-				$table->addCol("");
-				$table->addCol("");
-				$table->addCol("");
-				$table->addCol("");
-			}
-		}
+        $table->addCol("<img width=\"32\" height=\"32\" src=\"http://image.eveonline.com/Type/$row[typeID]_32.png\">");
+        $table->addCol($row['typeName']);
+        if (getOreSettings($row['item'],$OPTYPE)) {
+            $table->addCol("<input name=\"" . $row['item'] . "Enabled\" value=\"true\" type=\"checkbox\" checked=\"checked\">");
+        } else {
+            $table->addCol("<input name=\"" . $row['item'] . "Enabled\" value=\"true\" type=\"checkbox\">");
+        }
+        IF($Market == 1) {
+            $thisPrice = getPriceCache($row['typeName']);
+            $table->addCol("<input type=\"text\" style=\"text-align: right\" name=\"$row[item]\"" . "size=\"10\" value=\"" . $thisPrice . "\">");
+        } else {
+            $table->addCol("<input type=\"text\" style=\"text-align: right\" name=\"$row[item]\"" . "size=\"10\" value=\"" . $row['Worth'] . "\">");
+        }
 	}
-
 	
 	
 	$form .= "<input type=\"hidden\" name=\"action\" value=\"changeore\">";

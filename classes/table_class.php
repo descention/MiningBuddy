@@ -111,13 +111,13 @@ class table {
 	private function closeRow() {
 		if ($this->rowIsOpen) { // Do we have an open row?
 			if ($this->current_col != $this->columns) { // Is the row filled?
-				$BT = nl2br(print_r($this, true) . "<br>" . print_r(debug_backtrace(), true));
-				makeNotice("Current row not finished feeding yet!<br><br>" . $BT, "error", "Internal Error");
-			} else {
-				// Its opened and filled. Close the row, and mark it as closed, too.
-				$this->html .= "</div>"; // Close row.
-				$this->rowIsOpen = false; // Mark row as closed.
+                $left = $this->current_col - $this->columns;
+                for($i = 0;$i< $left; $i++)
+                    $this->addCol("");
 			}
+            // Its opened and filled. Close the row, and mark it as closed, too.
+            $this->html .= "</div>"; // Close row.
+            $this->rowIsOpen = false; // Mark row as closed.
 		}
 	}
 
