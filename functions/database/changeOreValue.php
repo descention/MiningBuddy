@@ -48,13 +48,14 @@ function changeOreValue() {
 	// Lets set the userID(!)
 	$userID = $MySelf->getID();
 
-	$OPTYPE = isset($_POST[optype])?$_POST[optype]:"";
-	$opdirect = isset($_POST[optype])?"&optype=$OPTYPE":"";
-	
+	$OPTYPE = isset($_POST['optype'])?$_POST['optype']:"";
+	$opdirect = isset($_POST['optype'])?"&optype=$OPTYPE":"";
+	$oreTypes = $DB->query("select REPLACE(REPLACE(itemName,' ',''),'-','') as item, (select Worth from orevalues a where REPLACE(REPLACE(itemName,' ',''),'-','') = a.item order by time desc limit 1) as Worth, itemID as typeID, itemName as typeName from itemList t order by typeID");
 	// Now loop through all possible oretypes.
-	foreach ($DBORE as $ORE) {
+	while($row = $oreTypes->fetchRow()){
+		$ORE = $row['item'];
 		// But check that the submited information is kosher.
-		if ((isset ($_POST[$ORE])) && (is_numeric($_POST[$ORE]))) {			
+		if ((isset ($_POST[$row['item']])) && (is_numeric($_POST[$row['item']]))) {
 			// Insert the new ore values into the database.
 			$DB->query("insert into orevalues (modifier, time, Item, Worth) 
 				select $userID,$TIMEMARK,'$ORE','$_POST[$ORE]' from dual 
@@ -70,7 +71,7 @@ function changeOreValue() {
 			*/
 			
 			// Enable or disable the oretype.
-			if ($_POST[$ORE.Enabled]) {
+			if (isset($_POST[$ORE . 'Enabled']) && $_POST[$ORE . 'Enabled']) {
 				$DB->query("insert into `config` (value,name) values ('1','" . $ORE . $OPTYPE . "Enabled')");
 				$DB->query("UPDATE config SET value = '1' where name='" . $ORE . $OPTYPE . "Enabled'");
 			} else {

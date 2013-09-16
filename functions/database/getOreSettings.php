@@ -42,7 +42,7 @@ function getOreSettings($ORE = "",$OPTYPE = "") {
 	global $DB;
 
 	// Cache the ressource.
-	if (!isset ($_SESSION['oretypes'])) {
+	if (true || !isset ($_SESSION['oretypes'])) {
 		$SETTINGS = $DB->getAssoc("SELECT * FROM config WHERE name LIKE '%Enabled'");
 	} else {
 		$SETTINGS = $_SESSION['oretypes'];

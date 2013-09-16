@@ -140,7 +140,7 @@ function makeOreWorth() {
 		// load the values.
 		$orevaluesDS = $DB->query("select a.item, a.Worth, a.time, a.modifier from orevalues a where time = (select max(time) from orevalues b where a.item = b.item) group by item ORDER BY time DESC");
 		while($row = $orevaluesDS->fetchRow())
-			$orevalues[$row[item]] = $row;
+			$orevalues[$row['item']] = $row;
 	};
 	
 	if($Market) {
@@ -168,7 +168,7 @@ function makeOreWorth() {
 	$opSelect .= "<option value=''>Standard</option>\n";
 	foreach($ops as $op){
 		$default = $op['opName'] == $OPTYPE?"selected":"";
-		$opSelect .= "<option $default value='".$op[opName]."'>".$op[opName]."</option>\n";
+		$opSelect .= "<option $default value='".$op['opName']."'>".$op['opName']."</option>\n";
 	}
 	$opSelect .= "</select>";
 	
@@ -223,7 +223,7 @@ function makeOreWorth() {
 	}
 	
 	
-	$form .= "<input type=\"hidden\" name=\"action\" value=\"changeore\">";
+	$form = "<input type=\"hidden\" name=\"action\" value=\"changeore\">";
 	$form .= "<input type=\"hidden\" name=\"check\" value=\"check\">";
 	$form .= "<input type=\"hidden\" name=\"optype\" value=\"$OPTYPE\">";
 	$form .= "<input type=\"submit\" name=\"change\" value=\"Modify ore settings\">";
