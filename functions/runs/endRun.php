@@ -68,12 +68,12 @@ function endrun() {
 	$ID = $_GET[id];
 	$OfficialRun = $DB->getCol("SELECT isOfficial FROM runs WHERE id='$ID'");
 
-	// calculate the total value of this op.
+	// calculate the net value of this op.
 	$ISK = getTotalWorth($ID, true);
 
 	
 
-	if ($OfficialRun[0] && (getTotalWorth($ID) != 0)) {
+	if ($OfficialRun[0] && ($ISK != 0)) {
 		// Select all people, except banned ones.		
 		$joinedPeople = $DB->query("SELECT DISTINCT userid FROM joinups WHERE run ='$ID' AND status < 2");
 

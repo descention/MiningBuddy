@@ -77,17 +77,20 @@ function getTotalWorth($id, $net = false) {
 	}
 
 	// Create variables according to ore names, fill them with price info.
+	$value = 0;
 	while ($row = $oreValueR->fetchRow()) {
 		$oreValue[$row['Item']] = $row['Worth'];
+		$value += $run[$row['Item']] * $row['Worth'];
 	}
-
+	/*
 	// Now multiply each ore amount with raw value, add it to total value.
 	foreach ($DBORE as $ORE) {
 		if(isset($oreValue[$ORE])){
 			$value = $value + ($run[$ORE] * $oreValue[$ORE]);
 		}
 	}
-	
+	*/
+
 	/*
 //Edit Starts Here	
 	// Load the appropiate ship values.

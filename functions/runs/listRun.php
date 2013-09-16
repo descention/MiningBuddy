@@ -878,16 +878,16 @@ function listRun() {
              */
             $temp = "";
             $oc = 1;
-            $singleHaulDB = $DB->query("select Item, Quantity from hauled where miningrun = '$ID' and time = $row[time] ORDER BY Item");
+            $singleHaulDB = $DB->query("select Item, Quantity, itemName as typeName from hauled h, itemList i where h.item = replace(replace(itemName,'-',''),' ','') and miningrun = '$ID' and time = $row[time] ORDER BY Item");
             while ($haul = $singleHaulDB->fetchRow()) {
-                $ORE = $haul[Item];
+                $ORE = $haul['Item'];
 
-                if ($haul[Quantity] > 0) {
-                    $temp .= number_format($haul[Quantity], 0) . " " . array_search($ORE, $DBORE) . "<br>";
+                if ($haul['Quantity'] > 0) {
+                    $temp .= number_format($haul['Quantity'], 0) . " " . $haul['typeName'] . "<br>";
                 }
-                elseif ($haul[Quantity]) {
+                elseif ($haul['Quantity']) {
                     // Negative amount (storno)
-                    $temp .= "<font color=\"#ff0000\">" . number_format($haul[Quantity], 0) . " " . array_search($ORE, $DBORE) . "</font><br>";
+                    $temp .= "<font color=\"#ff0000\">" . number_format($haul['Quantity'], 0) . " " . $haul['typeName'] . "</font><br>";
                 }
 
             }
