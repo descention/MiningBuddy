@@ -196,7 +196,7 @@ function makeOreWorth() {
 		"bold" => true
 	));
 
-	$orevaluesDS = $DB->query("select REPLACE(REPLACE(itemName,' ',''),'-','') as item, itemID as typeID, itemName as typeName from itemList order by typeID");
+	$orevaluesDS = $DB->query("select REPLACE(REPLACE(itemName,' ',''),'-','') as item, (select Worth from orevalues a where REPLACE(REPLACE(itemName,' ',''),'-','') = a.item order by time desc limit 1) as Worth, itemID as typeID, itemName as typeName from itemList t order by typeID");
 
     $flip = false;
     while($row = $orevaluesDS->fetchRow()){
