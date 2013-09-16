@@ -161,36 +161,7 @@ function parseDump(sender){
 </script>";
 	$haulpage->addCol("$haulDumpScript<textarea cols='50' rows='4' name='dumpHaul' onblur='parseDump(this)'></textarea>", array("colspan"=>"2"));
 
-	// Now we need the sum of all ores. 
-	$totalOres = count($ORENAMES);
 
-	/*
-	// And the sum of all ENABLED ores.
-	$totalEnabledOres = $DB->getCol("select count(name) as active from config where name LIKE '%Enabled' AND value='1'");
-	$totalEnabledOres = $totalEnabledOres[0];
-	*/
-
-	/*
-	 * This is evil. We have to create an array that we fill up sorted.
-	 * It aint cheap. First, we loop through all the ore values.
-	 */
-	for ($p = 0; $p < $totalOres; $p++) {
-		// Then we check each ore if it is enabled.
-		$ORE = $DBORE[$ORENAMES[$p]];
-		if (getOreSettings($ORE,$OPTYPE)) {
-			// If the ore is enabled, add it to the array.
-			$left[] = $ORE;
-		} else {
-			// add to disabled-array.
-			$disabledOres[] = $ORE;
-		}
-	}
-	$totalEnabledOres = count($left);
-	
-	// No ores enabled?
-	if ($totalEnabledOres == 0 && $OPTYPE != "Shopping") {
-		makeNotice("Your CEO has disabled *all* the Oretypes. Please ask your CEO to reactivate at leat one Oretype.", "error", "No valid Oretypes!");
-	}
 	$ajaxHaul = isset($_GET[ajaxHaul]);
 	if($ajaxHaul || $OPTYPE == "Shopping"){
 		$haulpage->addRow();
@@ -245,43 +216,27 @@ function addItem(selection){
 		
 		// Now, copy the lower second half into a new array.
 		$right = array_slice($left, $tableLength);
-
+        $orevaluesDS = $DB->query("select item, Worth, time, modifier, itemID as typeID, itemName as typeName from orevalues a, itemList where item = replace(replace(itemName,' ',''),'-','') and time = (select max(time) from orevalues b where a.item = b.item) group by item order by time desc");
+        if($orevaluesDS->numRows() == 0)
+            makeNotice("Your CEO has disabled *all* the Oretypes. Please ask your CEO to reactivate at leat one Oretype.", "error", "No valid Oretypes!");
 		/*
 		 * So now we have an array of all the enabled ores. All we
 		 * need to do now, is create a nice, handsome table of it.
 		 * Loop through this array.
 		 */
-		for ($i = 0; $i < $tableLength; $i++) {
-
-			// Fetch the right image for the ore.
-			$ri_words = str_word_count(array_search($left[$i], $DBORE), 1);
-			$ri_max = count($ri_words);
-			$ri = strtolower($ri_words[$ri_max -1]);
+        $flip = false;
+        while($row = $orevaluesDS->fetchRow()){
 
 			// Add a row.
-			$haulpage->addRow();
-
+            if(!$flip){
+			    $haulpage->addRow();
+                $flip = true;
+            }else{
+                $flip = false;
+            }
 			// left side.
-			$haulpage->addCol("<img width=\"20\" height=\"20\" src=\"./images/ores/" . array_search($left[$i], $DBORE) . ".png\">" .
-			"Add <input type=\"text\" size=\"5\" name=\"$left[$i]\" value=\"0\"> " . array_search($left[$i], $DBORE));
-
-			// We need an ore type (just in case of odd ore numbers)
-			if ($right[$i] != "") {
-				// right side.
-
-				// Fetch the right image for the ore.
-				$ri_words = str_word_count(array_search($right[$i], $DBORE), 1);
-				$ri_max = count($ri_words);
-				$ri = strtolower($ri_words[$ri_max -1]);
-
-				// Add the column.
-				$haulpage->addCol("<img width=\"20\" height=\"20\" src=\"./images/ores/" . array_search($right[$i], $DBORE) . ".png\">" .
-				"Add <input type=\"text\" size=\"5\" name=\"" . $right[$i] . "\" value=\"0\"> " . array_search($right[$i], $DBORE));
-			} else {
-				// We have an odd number of ores: add empty cell.
-				$haulpage->addCol("");
-			}
-
+			$haulpage->addCol("<img width=\"20\" height=\"20\" src=\"http://image.eveonline.com/Type/$row[typeID]_32.png\">" .
+			"Add <input type=\"text\" size=\"5\" name=\"$row[item]\" value=\"0\"> " . $row[typeName]);
 		}
 	}
 	/*

@@ -36,6 +36,11 @@
  * Here all the PHP files are included
  */
 
+// Composer
+require_once ('./vendor/autoload.php');
+
+use Pheal\Pheal;
+
 /* Mainly HTML spawning functions */
 require_once ('./functions/html/addEvent.php');
 require_once ('./functions/html/addHaulPage.php');
