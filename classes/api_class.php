@@ -175,65 +175,41 @@ class api {
 			return (false);
 		}
 
-		// URL
-		$url = "http://api.eveonline.com/account/Characters.xml.aspx";
+        $pheal = new Pheal($this->api_id, $this->api_key, "");
 
-		// Post Data
-		$auth = array (
-			'keyID' => $this->api_id,
-			'vCode' => $this->api_key
-		);
+        $result = $pheal->Characters();
 
-		// Set up CURL
+        /*
+         * Multiple character shizms
+         * We have to loop through all character names until
+         * we find the one that matches the username.
+         */
+        foreach($result->characters as $character){
+            $api_char = strtolower($character->name);
+            if($api_char == strtolower($MySelf->getUsername())){
+                $api_id = $character->characterID;
+                $found = true;
+            }
+        }
 
-		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, $url);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($ch, CURLOPT_HEADER, false);
-		curl_setopt($ch, CURLOPT_POST, 1);
-		//		curl_setopt($ch, CURLOPT_FILE, $fp);
-		curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($auth));
-		$result = curl_exec($ch);
-		curl_close($ch);
+        // Set the key as valid in the api-database.
+        if (($api_char != "") && ($found == true) && ($api_id > 0)) {
+            // Set the valid bit and the charID in the database.
+            global $TIMEMARK;
+            $this->DB->query("UPDATE api_keys SET api_valid ='1', charid ='" . $api_id . "', time = '" . $TIMEMARK . "' WHERE userid = '" . $MySelf->getID() . "' LIMIT 1");
 
-		// only parse XML when we got something
-		if (!empty($result)) {
+            // Check for success.
+            if ($this->DB->affectedRows() == 1) {
+                // Failure!
+                $this->valid = true;
+                $this->validatedOn = $TIMEMARK;
+                $this->characterID = $api_id;
+            } else {
+                makeNotice("Your API key could not been verified! Your character name " . ucfirst(stripslashes($api_char)) . " needs to be the same as your login account, which is " . $MySelf->getUsername() . ". Upper and lowercase does not matter.", "error", "API update failure");
+            }
 
-			//Initializes the XML Parser
-			$xml = new SimpleXMLElement($result);
+        }
 
-			/*
-			 * Multiple character shizms
-			 * We have to loop through all character names until
-			 * we find the one that matches the username.
-			 */
-			foreach ($xml->result->rowset->row as $row) {
-				if (strtolower($row['name']) == strtolower($MySelf->getUsername())) {
-					//fwrite($log, "Trying: $row['name'] for " . $MySelf->getUsername());
-					$api_char = strtolower(sanitize($row['name']));
-					$api_id = $row['characterID'];
-					$found = true;
-				}
-			}
-
-			// Set the key as valid in the api-database.
-			if (($api_char != "") && ($found == true) && ($api_id > 0)) {
-				// Set the valid bit and the charID in the database.
-				global $TIMEMARK;
-				$this->DB->query("UPDATE api_keys SET api_valid ='1', charid ='" . $api_id . "', time = '" . $TIMEMARK . "' WHERE userid = '" . $MySelf->getID() . "' LIMIT 1");
-
-				// Check for success.
-				if ($this->DB->affectedRows() == 1) {
-					// Failure!
-					$this->valid = true;
-					$this->validatedOn = $TIMEMARK;
-					$this->characterID = $api_id;
-				} else {
-					makeNotice("Your API key could not been verified! Your character name " . ucfirst(stripslashes($api_char)) . " needs to be the same as your login account, which is " . $MySelf->getUsername() . ". Upper and lowercase does not matter.", "error", "API update failure");
-				}
-
-			}
-		}
 	}
 }
 ?>

@@ -248,7 +248,7 @@ function makePreferences() {
 	if ($doApiLink && (!$IGB || ($IGB && $IGB_VISUAL))) {
 		$api_table->addRow();
 		$api_table->addCol("Get your API key here:");
-		$api_table->addCol("<a href=\"http://support.eveonline.com/api/default.asp\">http://support.eveonline.com/api/default.asp</a>");
+		$api_table->addCol("<a href=\"http://community.eveonline.com/support/api-key/\">http://community.eveonline.com/support/api-key/</a>");
 	}
 
 	if ($api_key) {
@@ -284,7 +284,7 @@ function makePreferences() {
 		$api_table->addCol("<input type=\"checkbox\" name=\"deleteKey\" value=\"true\"> Tick box to remove the API key from the Database.");
 	}
 	$api_table->addHeaderCentered("<input type=\"submit\" name=\"update_api\" value=\"Update API Key\">");
-	$api_form .= "<form action=\"index.php\" method=\"POST\">";
+	$api_form = "<form action=\"index.php\" method=\"POST\">";
 	$api_form .= $api_table->flush();
 	$api_form .= "<input type=\"hidden\" name=\"action\" value=\"update_api\">";
 	$api_form .= "<input type=\"hidden\" name=\"check\" value=\"check\"></form>";

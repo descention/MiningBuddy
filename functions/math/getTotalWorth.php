@@ -46,7 +46,7 @@ function getTotalWorth($id, $net = false) {
 
 	// Is $id truly an integer?
 	numericCheck($id);
-
+    $value = 0;
 	// we need some results.
 	$select = "";
 	$r = $DB->query("select item, sum(Quantity) as total from hauled where miningrun = '$id' group by item having sum(Quantity) <> 0");
@@ -115,10 +115,7 @@ function getTotalWorth($id, $net = false) {
 		$taxes = ($value * $CorpTax[0]) / 100;
 		$value = $value - $taxes;
 	}
-//Edit Continues Here
-	// Deduct Ship Values
-	
-//Edit Ends Here
-	return ($value);
+
+    return $value;
 }
 ?>
