@@ -1,0 +1,70 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
+    ],
+    "hash": "2e2398b8496da945edbac8e2b184edce",
+    "packages": [
+        {
+            "name": "3rdpartyeve/phealng",
+            "version": "0.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/3rdpartyeve/phealng.git",
+                "reference": "7ce955815de9b60a03d8b058199685578ce89423"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/3rdpartyeve/phealng/zipball/7ce955815de9b60a03d8b058199685578ce89423",
+                "reference": "7ce955815de9b60a03d8b058199685578ce89423",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Pheal": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Peter Petermann",
+                    "email": "ppetermann80@googlemail.com",
+                    "homepage": "http://devedge.eu"
+                },
+                {
+                    "name": "Wollari",
+                    "homepage": "http://evemaps.dotlan.net/"
+                }
+            ],
+            "description": "PHP Eve Api Library, a simple PHP lib to access the EVE Online API",
+            "homepage": "https://github.com/3rdpartyeve/phealng",
+            "keywords": [
+                "EVE API",
+                "EVE Online",
+                "Pheal",
+                "PhealNG"
+            ],
+            "time": "2013-08-25 17:51:47"
+        }
+    ],
+    "packages-dev": [
+
+    ],
+    "aliases": [
+
+    ],
+    "minimum-stability": "stable",
+    "stability-flags": [
+
+    ],
+    "platform": [
+
+    ],
+    "platform-dev": [
+
+    ]
+}
