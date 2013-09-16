@@ -104,7 +104,7 @@ foreach ($SHIPTYPES as $ship) {
 
 // Config Data
 
-$SQLVER = "28";
+$SQLVER = "29";
 $CONFIGVER = "10";
 $IS_BETA = false;
 ?>
