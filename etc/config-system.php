@@ -50,8 +50,8 @@ $OTYPENAME = array ( "buy", "sell");
 $PRICECRITERIA = array ( "min", "max", "median" );
 
 
-include ('./etc/item-gen.php');
-
+//include ('./etc/item-gen.php');
+/*
 foreach ($ORENAMES as $ore) {
 	$dbfriendly = str_replace(" ", "", ucwords($ore));
 	$dbfriendly = str_replace("-", "", ucwords($dbfriendly));
@@ -62,7 +62,7 @@ foreach ($ORENAMES as $ore) {
 	}
 	$DBORE[$ore] = $dbfriendly;
 }
-
+*/
 // Ship Array
 
 $SHIPTYPES = array (

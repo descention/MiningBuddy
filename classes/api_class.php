@@ -46,7 +46,7 @@ class api {
 
 	// Constructor: Load store API key and initialize.
 	public function __construct($userID, $dontvalidate = false) {
-
+        require_once 'vendor/autoload.php';
 		// sanitiy check
 		if ($userID < 0 || !is_numeric($userID)) {
 			makeNotice("$userID is not numeric (API class)", "error", "API Error! (internal)");
