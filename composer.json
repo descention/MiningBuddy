@@ -8,11 +8,12 @@
             "email": "scott.mundorff@gmail.com"
         },
         {
+            "name":"darth",
             "email":"miningbuddy@thedarth.com",
             "homepage":"https://code.google.com/p/mining-buddy-plus/"
         }
     ],
     "require": {
-        "3rdpartyeve/phealng": "0.2.7"
+        "3rdpartyeve/phealng": "0.3.0"
     }
 }

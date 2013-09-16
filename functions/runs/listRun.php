@@ -613,6 +613,7 @@ function listRun() {
     //$oval = $ovalues->fetchRow() AND
     $totalworth = $total_ore_m3 = 0;
     $oval = $ovalues;
+    $gotOre = false;
     $r = $DB->query("select item, sum(Quantity) as total, itemName as name, itemID from hauled, itemList where item = replace(replace(itemName,' ',''),'-','') and miningrun = '$ID' group by item having sum(Quantity) <> 0");
     while($r2 = $r->fetchRow()){
         $ORE = $r2['item'];
@@ -875,7 +876,7 @@ function listRun() {
              * and print a Oretype: Amount for each Oretype that has an amount
              * greater or lesser than zero, but not zero.
              */
-
+            $temp = "";
             $oc = 1;
             $singleHaulDB = $DB->query("select Item, Quantity from hauled where miningrun = '$ID' and time = $row[time] ORDER BY Item");
             while ($haul = $singleHaulDB->fetchRow()) {
