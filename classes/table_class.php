@@ -180,7 +180,7 @@ class table {
 		}
 
 		// Add the content.
-		$this->html .= "<div style=\"float:left; width:".($colspan / $this->columns * 100)."%;\" $staticAttributes>" . $bold . $cont . $bold_end . "</div>";
+		$this->html .= "<div style=\"width:".($colspan / $this->columns * 100)."%;\" $staticAttributes>" . $bold . $cont . $bold_end . "</div>";
 		$this->current_col = $this->current_col + $colspan;
 		$this->hasContent = true;
 	}

@@ -149,7 +149,7 @@ function showOreValue() {
             $ORE = "$ORE <div class='valueAge' color=\"$color\">$DATE</div>";
         }*/
         $table->addCol($row['typeName']);
-        $iskperhour = $row['Worth'] / $row['volume'];
+        $iskperhour = 0;//$row['Worth'] / $row['volume']; // unused for the time being
         $value = "<div class='value'><div class='isk'>" . number_format($row['Worth'], 2) . " ISK"."</div><div class='iph'>" . number_format($iskperhour , 2) . " ISK/m3</div></div>";
 
         $table->addCol($value);
