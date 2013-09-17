@@ -80,7 +80,8 @@ function getTotalWorth($id, $net = false) {
 	$value = 0;
 	while ($row = $oreValueR->fetchRow()) {
 		$oreValue[$row['Item']] = $row['Worth'];
-		$value += $run[$row['Item']] * $row['Worth'];
+		if(isset($run[$row['Item']]))
+			$value += $run[$row['Item']] * $row['Worth'];
 	}
 	/*
 	// Now multiply each ore amount with raw value, add it to total value.
