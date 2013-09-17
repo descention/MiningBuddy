@@ -61,7 +61,7 @@ function makeMenu($page = false) {
 	/*
 	 * Mining related Menues.
 	 */
-
+	$section = array();
 	// Create Run
 	if ($MySelf->canCreateRun()) {
 		// Yeah we are allowed to do this.
@@ -72,6 +72,7 @@ function makeMenu($page = false) {
 			// Using a real browser.
 			$mining_addOp = "<a class='menu' href=\"index.php?action=newrun\">&gt; Add Op</a>";
 		}
+		$section["Add Op"] = "index.php?action=newrun";
 	}
 
 	// Add Haul 
@@ -84,6 +85,7 @@ function makeMenu($page = false) {
 			// Using a real browser.
 			$mining_AddHaul = "<a class='menu' href=\"index.php?action=addhaul\">&gt; Add Haul</a>";
 		}
+		$section["Add Haul"] = "index.php?action=addhaul";
 	}
 
 	// See all ops link.
@@ -92,6 +94,7 @@ function makeMenu($page = false) {
 	} else {
 		$mining_AllOps = "<a class='menu' href=\"index.php?action=list\">&gt; List Ops</a>";
 	}
+	$section["List Ops"] = "index.php?action=list";
 
 	// Ore Quotes
 	if ($IGB && $IGB_VISUAL) {
@@ -115,21 +118,24 @@ function makeMenu($page = false) {
 	} else {
 		$mining_stats = "<a class='menu' href=\"index.php?action=globstats\">&gt; Statistics</a>";
 	}
-	
+	$section["Statistics"] = "index.php?action=globstats";
+
 	// Hierarchy
 	if ($IGB && $IGB_VISUAL) {
 		$mining_hier = "[<a href=\"index.php?action=hierarchy\">Hierarchy</a>]";
 	} else {
 		$mining_hier = "<a class='menu' href=\"index.php?action=hierarchy\">&gt; Hierarchy</a>";
 	}
+	$section["Hierarchy"] = "index.php?hierarchy";
 
-		// Ship Values
+	// Ship Values
 	if ($IGB && $IGB_VISUAL) {
 		$mining_shipValues = "[<a href=\"index.php?action=showshipvalue\">Ship Values</a>]";
 	} else {
 		$mining_shipValues = "<a class='menu' href=\"index.php?action=showshipvalue\">&gt; Ship Values</a>";
 	}
-	
+	$section["Ship Values"] = "index.php?action=showshipvalue";
+
 	// Assemble the mining Module link.
 	if ($IGB && $IGB_VISUAL) {
 		$miningModule = $mining_AllOps . " " . $mining_AddHaul . " " . $mining_canTimer . " " . $mining_oreQuotes . " " . $mining_ShipValues . " " . $mining_addOp . " " . $mining_stats . "";
@@ -553,7 +559,14 @@ function makeMenu($page = false) {
 		$menu->addHeader("Logged in as <font color=\"00aa00\">%%USERNAME%%</font>, Rank: <font color=\"00aa00\">%%RANK%%</font>, $DIV_MENU Credits: <font color=\"00aa00\">%%CREDITS%%</font>.");
 		$modules = $menu->flush();
 	} else {
-		$modules = $UPDATE . $miningModule . $operationsModule . $walletModule . $eventsModule . $lottoModule . $prefModule . $adminModule . $logoutModule . $clock;
+		$modules = "<nav class='navbar'>" . $UPDATE . $miningModule . $operationsModule . $walletModule . $eventsModule . $lottoModule . $prefModule . $adminModule . $logoutModule;
+		/*
+		$modules .= "<a class='dropdown-toggle'>Mining Test</a><ul class='dropdown-menu'>";
+		foreach($section as $key => $val){
+			$modules .= "<li><a href='$val'>$key</a>";
+		}
+		$modules .= "</ul>";*/
+		$modules .= "</nav>";
 	}
 
 	// And return it all.
