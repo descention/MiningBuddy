@@ -153,6 +153,7 @@ class table {
 		$bold_end = "";
 		$staticAttributes = "";
 		$colspan = 1;
+		$style = "";
 		// Do we have a valid modes array?
 		if (isset ($modes) && is_array($modes)) {
 			foreach($modes as $key=>$value){
@@ -179,8 +180,12 @@ class table {
 			makeNotice("Too many columns requested.", "error", "Internal Error");
 		}
 
+		if($this->current_row == 0 && $colspan == $this->columns){
+			$style .= "";
+		}
+
 		// Add the content.
-		$this->html .= "<div style=\"width:".($colspan / $this->columns * 100)."%;\" $staticAttributes>" . $bold . $cont . $bold_end . "</div>";
+		$this->html .= "<div style=\"$style\" $staticAttributes>" . $bold . $cont . $bold_end . "</div>";
 		$this->current_col = $this->current_col + $colspan;
 		$this->hasContent = true;
 	}

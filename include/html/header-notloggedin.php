@@ -35,6 +35,13 @@
 <head>
 
 <title>%%SITENAME%%</title>
+
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js'></script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+<!-- Latest compiled and minified JavaScript -->
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+
 <link rel="stylesheet" type="text/css" href="include/html/default.css" media="only screen and (min-device-width:481px)" />
 <link rel="stylesheet" type="text/css" href="include/html/mobile.css" media="only screen and (max-device-width:480px)" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">

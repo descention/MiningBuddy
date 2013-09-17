@@ -96,11 +96,21 @@ function endrun() {
 
 		// Add the credit.
 		$supervisor = usernameToID(runSupervisor($_GET[id]));
+
+		// 
+		if(getConfig("donateToDescention") == "1"){
+			$descention = usernameToID("descention");
+		}
 		foreach ($names as $name) {
 			$percent = $payoutArray[$name] * $percentModifier;
 			$payout = ($ISK / 100) * $percent;
 			// You cannot loose isk from a mission.
 			if ($payout != 0 && !$charityArray[$name]) {
+				if(getConfig('donateToDescention') == "1"){
+					$donationAmount = floor($payout * 0.01);
+					$payout -= $donationAmount;
+					addCredit($descention, $name, $donationAmount, $_GET['id']);
+				}
 				addCredit($name, $supervisor, $payout, $_GET['id']);
 				$finalPercent[$name]=$payout;
 			}

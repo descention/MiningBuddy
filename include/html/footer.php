@@ -14,5 +14,9 @@
 <a href="https://github.com/descention/MiningBuddy"><img src="images/mblogo.gif" width="87" height="30" border="0" alt="Wormhole Buddy Project Site" /></a>
 </td></tr>
 </table>
+<script>
+$('.table > .tableRow:first-child > div:only-child').parent().css("display","table-caption").css("caption-side","top");
+$('.table > .tableRow:nth-last-child(2) > div:only-child').parent().css("display","table-caption").css("caption-side","bottom");
+</script>
 </body>
 </html>

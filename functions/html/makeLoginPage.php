@@ -57,7 +57,7 @@ function makeLoginPage($user = false) {
 	$login->addHeader(">> Welcome to $VERSION.");
 	$login->addRow("#060622");
 	$login->addCol($SITENAME, array (
-		"colspan" => 3,
+		"class" => "col-xs-12",
 		"align" => "center",
 		"bold" => true
 	));
@@ -68,7 +68,7 @@ function makeLoginPage($user = false) {
 			$login->addCol("Only characters a-z, A-Z and 0-9 are allowed. " .
 			array (
 				"bold" => "true",
-				"colspan" => 3
+				"class" => "col-xs-12"
 			));
 		} else if (isset($_SESSION['testauth'])) {
 			$login->addRow();
@@ -78,7 +78,7 @@ function makeLoginPage($user = false) {
 			$login->addCol("Your supplied credentials are invalid, please check and try again. " .
 			"If you cannot remember your password use the Password Recovery link below.", array (
 				"bold" => "true",
-				"colspan" => 3
+				"class" => "col-xs-12"
 			));
 		}
 	}
@@ -107,7 +107,7 @@ function makeLoginPage($user = false) {
 	if ($IS_BETA) {
 		$login->addRow("#904000");
 		$login->addCol("-beta version-", array (
-			"colspan" => 3,
+			"class" => "col-xs-12",
 			"align" => "center",
 			"bold" => true
 		));
@@ -119,25 +119,25 @@ function makeLoginPage($user = false) {
 
 	if ($AUTH_TYPE != "testauth" || !isset($_SESSION["testauth"])){
 		$login->addRow();
-		$login->addCol("Username:");
+		$login->addCol("Username:", array("class"=>"col-xs-4"));
 		// Trust, INC.
 		global $EVE_Charname;
 		if ($EVE_Charname) {
 			$login->addCol("<input type=\"text\" name=\"username\" value=\"$EVE_Charname\" maxlength=\"30\">");
 		} else {
 			$login->addCol("<input type=\"text\" name=\"username\" value=\"" . stripcslashes($user) . "\" maxlength=\"30\">", array (
-                "colspan" => "2"
+                "class" => "col-xs-8"
             ));
 		}
 
 		$login->addRow();
-		$login->addCol("Password:");
+		$login->addCol("Password:", array("class"=>"col-xs-4"));
 		$login->addCol("<input type=\"password\" name=\"password\" maxlength=\"80\">", array (
-			"colspan" => "2"
+			"class" => "col-xs-8"
 		));
 		$login->addRow("#060622");
 		$login->addCol("Please login with your credentials. If you are in need of an account, request an account below and ask your CEO to activate it for you.", array (
-			"colspan" => "3",
+			"class" => "col-xs-12",
 			"align" => "center"
 		));
 	}else if($AUTH_TYPE == "testauth" && isset($_SESSION["testauth"])){ // User has logged in, but we need a character name.
@@ -190,15 +190,15 @@ function makeLoginPage($user = false) {
 	if ($IGB && $IGB_VISUAL) {
 		$login->addHeaderCentered("<input type=\"submit\" name=\"login\" value=\"login\">");
 	} else {
-		$login->addHeaderCentered("<input type=\"image\" name=\"login\" value=\"login\" src=\"./images/login.png\">");
+		$login->addHeaderCentered("<input type=\"image\" name=\"login\" value=\"login\" src=\"./images/login.png\">",array("class"=>"col-xs-12"));
 	}
 
 	$login->addRow("#060622");
-	$login->addCol("<a href=\"index.php?auth=lostpass\">lost password</a>");
+	$login->addCol("<a href=\"index.php?auth=lostpass\">lost password</a>", array("class"=>"col-xs-6"));
 	
 	$login->addCol("<a href=\"index.php?auth=requestaccount\">request account</a>", array (
 		"align" => "right",
-		"colspan" => "2"
+		"class" => "col-xs-6"
 	));
 	
 //	$login->addCol("",array("colspan"=>"2"));

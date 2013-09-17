@@ -45,13 +45,14 @@ body{
 
 .table{
     width:100%;
+    display: table;
 }
 .tableRow{
     width:100%;
-    float:left;
+    display: table-row;
 }
 .tableRow > div{
-    float:left;
+    display: table-cell;
 }
 
 
