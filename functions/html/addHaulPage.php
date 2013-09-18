@@ -155,8 +155,8 @@ function parseDump(sender){
   var items = sender.value.split(\"\\n\");
   for(var x =0;x< items.length;x++){
     var item = items[x].split(\"\\t\");
-    if(document.getElementsByName(item[0].replace(' ','').replace('-','')).length > 0){
-      document.getElementsByName(item[0].replace(' ','').replace('-',''))[0].value = item[1].replace(',','');
+    if(document.getElementsByName(item[0].replace(/\\s|-/gi,'')).length > 0){
+      document.getElementsByName(item[0].replace(/\\s|-/gi,''))[0].value = item[1].replace(',','');
     }
   }
 }
