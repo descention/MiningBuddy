@@ -348,7 +348,7 @@ function process_get() {
 			$ajaxHtml .= "url: '?". $_SERVER['QUERY_STRING'] ."&ajax',";
 		}
 		$ajaxHtml .= "success: function(data) {\$('#content').html(data);}";
-		$ajaxHtml .= "});},(" . ($ajax * 1000) . "));</script>";
+		$ajaxHtml .= "});},(" . ($ajax * 1000) . "));tableFix();</script>";
 		
 		$page .= $ajaxHtml;
 	}

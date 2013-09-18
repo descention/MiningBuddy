@@ -62,7 +62,7 @@ function leaveRun() {
 	$runStart = $DB->getCol("SELECT starttime FROM runs WHERE id='$runid' LIMIT 1");
 	;
 
-	if ($TIMEMARK < $runStart[0]) {
+	if ($TIMEMARK < $runStart[0] + 60) {
 		// Event not started yet. Delete.
 		$DB->query("DELETE FROM joinups WHERE run='$runid' AND userid='$userid'");
 	} else {

@@ -15,8 +15,11 @@
 </td></tr>
 </table>
 <script>
-$('.table > .tableRow:first-child > div:only-child').parent().css("display","table-caption").css("caption-side","top");
-$('.table > .tableRow:nth-last-child(2) > div:only-child').parent().css("display","table-caption").css("caption-side","bottom");
+function tableFix(){
+  $('.table > .tableRow:first-child > div:only-child').parent().css("display","table-caption").css("caption-side","top");
+  $('.table > .tableRow:nth-last-child(2) > div:only-child').parent().css("display","table-caption").css("caption-side","bottom");
+}
+tableFix();
 </script>
 </body>
 </html>

@@ -149,7 +149,7 @@ function joinRun() {
 
 	// Get the correct time to join (in case event hasnt started yet)
 	$startOfRun = $DB->getCol("SELECT starttime FROM runs WHERE id='$runid' LIMIT 1");
-	if ($startOfRun[0] > $TIMEMARK) {
+	if ($startOfRun[0] + 60 > $TIMEMARK) {
 		$time = $startOfRun[0];
 	} else {
 		$time = $TIMEMARK;
