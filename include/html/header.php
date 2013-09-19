@@ -40,7 +40,7 @@
 <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
 <!-- Latest compiled and minified JavaScript -->
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-
+<script src="include/html/default.js"></script>
 <link rel="stylesheet" type="text/css" href="include/html/default.css" media="screen" />
 <link rel="stylesheet" type="text/css" href="include/html/%%USERNAME%%.css" />
 <link rel="stylesheet" type="text/css" href="include/html/mobile.css" media="handheld" />
