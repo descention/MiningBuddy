@@ -462,20 +462,7 @@ function makeMenu($page = false) {
 	 * Show the time.
 	 */
 	 
-	$clockScript = "<script>
-	function updateTime(){
-		getTime('GMT', function(time){\$('#eveTime').innerText(time);});
-		setTimeout('updateTime()', eveTimeRefreshRate * 1000);
-	}
-	setTimeout('updateTime()', eveTimeRefreshRate * 1000);
-	
-	$('#menu img').click(function() {
-	  $(this).siblings().toggle('slow');
-	});
-	
-	
-	</script>";
-	$clock = "<b><hr><center id='eveTime'>" . date("H:i", $TIMEMARK) . " EvE</center><hr>$clockScript</b>";
+	$clock = "<b><hr><center id='eveTime'></center><hr></b>";
 	/*
 	 * Assemble the module-block.
 	 */
@@ -546,7 +533,7 @@ function makeMenu($page = false) {
 		$menu->addHeader("Logged in as <font color=\"00aa00\">%%USERNAME%%</font>, Rank: <font color=\"00aa00\">%%RANK%%</font>, $DIV_MENU Credits: <font color=\"00aa00\">%%CREDITS%%</font>.");
 		$modules = $menu->flush();
 	} else {
-		$modules = "<nav class='navbar'>" . $UPDATE . $miningModule . $operationsModule . $walletModule . $eventsModule . $lottoModule . $prefModule . $adminModule . $logoutModule;
+		$modules = "<nav class='navbar'>" . $UPDATE . $miningModule . $operationsModule . $walletModule . $eventsModule . $lottoModule . $prefModule . $adminModule . $logoutModule . $clock;
 		/*
 		$modules .= "<a class='dropdown-toggle'>Mining Test</a><ul class='dropdown-menu'>";
 		foreach($section as $key => $val){

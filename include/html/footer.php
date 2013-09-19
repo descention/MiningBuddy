@@ -15,6 +15,7 @@
 </td></tr>
 </table>
 <script>
+updateTime();
 tableFix();
 </script>
 </body>
