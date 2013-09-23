@@ -26,3 +26,51 @@ function updateTime(){
   });
   setTimeout('updateTime()', eveTimeRefreshRate * 1000);
 }
+
+function parseDump(sender){
+    var items = sender.value.split("\n");
+    for(var x =0;x< items.length;x++){
+        var item = items[x].split("\t");
+        if(document.getElementsByName(item[0].replace(/\s|-/gi,'')).length > 0){
+            document.getElementsByName(item[0].replace(/\s|-/gi,''))[0].value = item[1].replace(',','');
+        }
+    }
+}
+
+var selectedItems = "";
+var currentQuery;
+var ajaxQueryInterval;
+
+function lookForItem(txt){
+    currentQuery = txt;
+    clearInterval(ajaxQueryInterval);
+    if(txt.value.length>2){
+        var ajaxQueryInterval=self.setInterval('execQuery()',2000);
+    }
+}
+
+function execQuery(){
+    clearInterval(ajaxQueryInterval);
+    var txt = currentQuery;
+	$.ajax({
+        url: 'index.php?action=getItemList&ajax&q=' + txt.value,
+        success: function(data){$('#ajaxItemList').html(data);}
+    });
+
+}
+
+function addItem(selection){
+    //$(selection).animate({background-color:yellow;});
+    var item = selection.innerHTML;
+    var dbore = selection.name;
+    //$(selection).animate({background-color:none;});
+    if(selectedItems.split(',').indexOf(item) == -1 ){
+        var print = $('#selectedItemList').html() + '<div>Add <input type="text" size="5" name="' + dbore + '" value="0">' + item + '</div>';
+		$('#selectedItemList').html(print);
+        if(selectedItems.length == 0){
+            selectedItems = item;
+        } else {
+            selectedItems += ',' + item;
+        }
+    }
+}

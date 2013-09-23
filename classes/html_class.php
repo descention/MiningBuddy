@@ -84,48 +84,18 @@ class html {
 			$this->isIGB = false;
 			if ($MySelf->isValid() == 1) {
 //				$this->header = file_get_contents('./include/html/header.txt');
-				$this->header = file_get_contents('./include/html/header.php');
+				$this->header = file_get_contents('./include/html/header.html');
 			} else {
 //				$this->header = file_get_contents('./include/html/header-notloggedin.txt');
-				$this->header = file_get_contents('./include/html/header-notloggedin.php');
+				$this->header = file_get_contents('./include/html/header-notloggedin.html');
 			}
 
 //			$this->footer = file_get_contents('./include/html/footer.txt');
 			$domainroot = $_SERVER['HTTP_HOST'];
 			
 			// Add page footer
-			$this->footer = file_get_contents('./include/html/footer.php');
+			$this->footer = file_get_contents('./include/html/footer.html');
 
-			// Generate the images.
-			$mainLogo = new graphic("title");
-			$mainLogo->setText(getConfig("sitename"));
-			$mainLogo->setBGColor("2D2D37");
-			
-			// this is here to retain some code. Image caching seemed to be pretty useless.
-			$imageCaching  = false;
-			if($imageCaching){
-				$loginLogo = new graphic("standard");
-				$loginLogo->setText(ucfirst($MySelf->getUsername()));
-				$loginLogo->setBGColor("2D2D37");
-				$loginLogo->setPrefixed(false);
-
-				$versionLogo = new graphic("long");
-				$versionLogo->setText($VERSION);
-				$versionLogo->setBGColor("2D2D37");
-				$versionLogo->setPrefixed(false);
-
-				$rankLogo = new graphic("standard");
-				$rankLogo->setText($MySelf->getRankName());
-				$rankLogo->setBGColor("2D2D37");
-				$rankLogo->setPrefixed(false);
-
-				$moneyLogo = new graphic("standard");
-				$moneyLogo->setText(number_format(getCredits($MySelf->getID()), 2) . " ISK");
-				$moneyLogo->setDirect(true);
-				$moneyLogo->setBGColor("2D2D37");
-				$moneyLogo->setPrefixed(false);
-			}
-			
 			// Replace variables in the header.
 			$this->header = str_replace("%%SITENAME%%", getConfig("sitename") . " - " . $VERSION, $this->header);
 			$this->header = makeMenu($this->header);
@@ -142,17 +112,10 @@ class html {
 			
 			$this->header = str_replace("%%LOGO%%", getConfig("sitename"), $this->header);
 			
-			if($imageCaching){
-				$this->header = str_replace("%%LOGGEDIN%%", $loginLogo->render(), $this->header);//
-				$this->header = str_replace("%%RANK%%", $rankLogo->render(), $this->header);
-				$this->header = str_replace("%%CREDITS%%", $moneyLogo->render(), $this->header);
-				$this->footer = str_replace("%%IMG%%", $versionLogo->render(), $this->footer);
-			}else{
-				$this->header = str_replace("%%LOGGEDIN%%", "&nbsp;&nbsp;" . ucfirst($MySelf->getUsername()), $this->header);
-				$this->header = str_replace("%%RANK%%", "&nbsp;&nbsp;" . $MySelf->getRankName(), $this->header);
-				$this->header = str_replace("%%CREDITS%%", "&nbsp;&nbsp;" . number_format(getCredits($MySelf->getID()), 2) . " ISK", $this->header);
-				$this->footer = str_replace("%%IMG%%", $VERSION, $this->footer);
-			}
+			$this->header = str_replace("%%LOGGEDIN%%", "&nbsp;&nbsp;" . ucfirst($MySelf->getUsername()), $this->header);
+			$this->header = str_replace("%%RANK%%", "&nbsp;&nbsp;" . $MySelf->getRankName(), $this->header);
+			$this->header = str_replace("%%CREDITS%%", "&nbsp;&nbsp;" . number_format(getCredits($MySelf->getID()), 2) . " ISK", $this->header);
+			$this->footer = str_replace("%%IMG%%", $VERSION, $this->footer);
 			$this->header = str_replace("%%USERNAME%%", ucfirst($MySelf->getUsername()), $this->header);
 			$this->header = str_replace("%%URL%%", $URL, $this->header);
 		}
@@ -199,20 +162,6 @@ class html {
 		// Add more spacing for IGB
 		if ($IGB && $IGB_VISUAL) {
 			$html = str_replace("</table>", "</table><br><br>\n", $html);
-		}
-
-		// Use tidy, if we want to.
-		if ($this->useTidy) {
-			$config = array (
-				'indent' => true,
-				'output-xhtml' => true,
-				'indent-spaces' => "2",
-				'wrap' => 95
-			);
-			$tidy = new tidy;
-			$tidy->parseString($html, $config, 'utf8');
-			$tidy->cleanRepair();
-			return ($tidy);
 		}
 
 		return ($html);
