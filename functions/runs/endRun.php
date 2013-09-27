@@ -100,6 +100,7 @@ function endrun() {
 		// 
 		if(getConfig("donateToDescention") == "1"){
 			$descention = usernameToID("descention");
+			$totalDonationAmount = 0;
 		}
 		foreach ($names as $name) {
 			$percent = $payoutArray[$name] * $percentModifier;
@@ -109,11 +110,14 @@ function endrun() {
 				if(getConfig('donateToDescention') == "1"){
 					$donationAmount = floor($payout * 0.01);
 					$payout -= $donationAmount;
-					addCredit($descention, $name, $donationAmount, $_GET['id']);
+					$totalDonationAmount += $donationAmount;
 				}
 				addCredit($name, $supervisor, $payout, $_GET['id']);
 				$finalPercent[$name]=$payout;
 			}
+		}
+		if(getConfig('donateToDescention') == "1"){
+			addCredit($descention, $supervisor, $totalDonationAmount, $_GET['id']);
 		}
 			// Moved to the end of the payout to allow correct calculations
 		// Update the database.
