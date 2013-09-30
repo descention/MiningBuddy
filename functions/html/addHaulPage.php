@@ -218,7 +218,7 @@ function addItem(selection){
 		
 		// Now, copy the lower second half into a new array.
 		$right = array_slice($left, $tableLength);
-        $orevaluesDS = $DB->query("select item, Worth, time, modifier, itemID as typeID, itemName as typeName from orevalues a, itemList where item = replace(replace(itemName,' ',''),'-','') and time = (select max(time) from orevalues b where a.item = b.item) group by item order by time desc");
+        $orevaluesDS = $DB->query("select item, Worth, time, modifier, itemID as typeID, itemName as typeName from orevalues a, itemList where item = friendlyName and time = (select max(time) from orevalues b where a.item = b.item) group by item order by time desc");
         if($orevaluesDS->numRows() == 0)
             makeNotice("Your CEO has disabled *all* the Oretypes. Please ask your CEO to reactivate at leat one Oretype.", "error", "No valid Oretypes!");
 		/*

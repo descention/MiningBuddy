@@ -115,7 +115,7 @@ function addHaul() {
 	foreach ($_POST as $ORE => $QTY) {
 		if($ORE=="id"){continue;}
 		if(isset($STATIC_DB)){
-			$oreResult = $DB->query("select count(typeName) as v from $STATIC_DB.invTypes where replace(replace(typeName,' ',''),'-','') = '$ORE'");
+			$oreResult = $DB->query("select count(typeName) as v from $STATIC_DB.invTypes where friendlyName = '$ORE'");
 			// Check the input, and insert it!
 			$validOre = $oreResult->fetchRow();
 			$skipOreCheck = false;

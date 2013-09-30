@@ -50,7 +50,14 @@ function changeOreValue() {
 
 	$OPTYPE = isset($_POST['optype'])?$_POST['optype']:"";
 	$opdirect = isset($_POST['optype'])?"&optype=$OPTYPE":"";
-	$oreTypes = $DB->query("select REPLACE(REPLACE(itemName,' ',''),'-','') as item, (select Worth from orevalues a where REPLACE(REPLACE(itemName,' ',''),'-','') = a.item order by time desc limit 1) as Worth, itemID as typeID, itemName as typeName from itemList t order by typeID");
+
+	foreach($_POST["newItem"] as $item){
+		$DB->query("insert into itemList (itemName) values ('$item')");
+	}
+
+	$DB->query("update `itemList` set `friendlyName` = replace(replace(replace(`itemName`,' ',''),'-',''),'.','')");
+
+	$oreTypes = $DB->query("select friendlyName as item, (select Worth from orevalues a where friendlyName = a.item order by time desc limit 1) as Worth, itemID as typeID, itemName as typeName from itemList t order by typeID");
 	// Now loop through all possible oretypes.
 	while($row = $oreTypes->fetchRow()){
 		$ORE = $row['item'];
@@ -78,9 +85,22 @@ function changeOreValue() {
 				$DB->query("UPDATE config SET value = '0' where name='" . $ORE . $OPTYPE . "Enabled'");
 			}
 		}
+
+		if($row['typeID'] == 0){
+			$itemID = getItemIDFromName($row["typeName"]);
+			$DB->query("UPDATE itemList set itemID = $itemID where itemName = '$row[typeName]'");
+		}
 	}
-	
+
 	// Let the user know.         
 	makeNotice("The payout values for ore have been changed.", "notice", "New data accepted.", "index.php?action=changeow$opdirect", "[OK]");
 }
+
+function getItemIDFromName($itemName){
+        $url = "https://www.fuzzwork.co.uk/api/typeid.php?typename=";
+        $json = file_get_contents($url . urlencode($itemName));
+        $object = json_decode($json,true);
+        return $object["typeID"];
+}
+
 ?>

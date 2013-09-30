@@ -196,30 +196,30 @@ function makeOreWorth() {
 		"bold" => true
 	));
 
-	$orevaluesDS = $DB->query("select REPLACE(REPLACE(itemName,' ',''),'-','') as item, (select Worth from orevalues a where REPLACE(REPLACE(itemName,' ',''),'-','') = a.item order by time desc limit 1) as Worth, itemID as typeID, itemName as typeName from itemList t order by typeID");
+	$orevaluesDS = $DB->query("select friendlyName as item, (select Worth from orevalues a where friendlyName = a.item order by time desc limit 1) as Worth, itemID as typeID, itemName as typeName from itemList t order by typeID");
 
-    $flip = false;
-    while($row = $orevaluesDS->fetchRow()){
-        if(!$flip){
-		    $table->addRow();
-            $flip = true;
-        }else{
-            $flip = false;
-        }
-
-        $table->addCol("<img width=\"32\" height=\"32\" src=\"http://image.eveonline.com/Type/$row[typeID]_32.png\">");
-        $table->addCol($row['typeName']);
-        if (getOreSettings($row['item'],$OPTYPE)) {
-            $table->addCol("<input name=\"" . $row['item'] . "Enabled\" value=\"true\" type=\"checkbox\" checked=\"checked\">");
-        } else {
-            $table->addCol("<input name=\"" . $row['item'] . "Enabled\" value=\"true\" type=\"checkbox\">");
-        }
-        IF($Market == 1) {
-            $thisPrice = getPriceCache($row['typeName']);
-            $table->addCol("<input type=\"text\" style=\"text-align: right\" name=\"$row[item]\"" . "size=\"10\" value=\"" . $thisPrice . "\">");
-        } else {
-            $table->addCol("<input type=\"text\" style=\"text-align: right\" name=\"$row[item]\"" . "size=\"10\" value=\"" . $row['Worth'] . "\">");
-        }
+	$flip = false;
+	while($row = $orevaluesDS->fetchRow()){
+	    if(!$flip){
+		$table->addRow();
+	        $flip = true;
+	    }else{
+	        $flip = false;
+	    }
+	
+	    $table->addCol("<img width=\"32\" height=\"32\" src=\"http://image.eveonline.com/Type/$row[typeID]_32.png\">");
+	    $table->addCol($row['typeName']);
+	    if (getOreSettings($row['item'],$OPTYPE)) {
+	        $table->addCol("<input name=\"" . $row['item'] . "Enabled\" value=\"true\" type=\"checkbox\" checked=\"checked\">");
+	    } else {
+	        $table->addCol("<input name=\"" . $row['item'] . "Enabled\" value=\"true\" type=\"checkbox\">");
+	    }
+	    IF($Market == 1) {
+	        $thisPrice = getPriceCache($row['typeName']);
+	        $table->addCol("<input type=\"text\" style=\"text-align: right\" name=\"$row[item]\"" . "size=\"10\" value=\"" . $thisPrice . "\">");
+	    } else {
+        	$table->addCol("<input type=\"text\" style=\"text-align: right\" name=\"$row[item]\"" . "size=\"10\" value=\"" . $row['Worth'] . "\">");
+	    }
 	}
 	
 	
@@ -227,6 +227,7 @@ function makeOreWorth() {
 	$form .= "<input type=\"hidden\" name=\"check\" value=\"check\">";
 	$form .= "<input type=\"hidden\" name=\"optype\" value=\"$OPTYPE\">";
 	$form .= "<input type=\"submit\" name=\"change\" value=\"Modify ore settings\">";
+	$form .= "<input type=\"button\" value=\"Add new Item\" onclick=\"addItemConfigRow\">";
 	$table->addHeaderCentered($form, array (
 		"colspan" => 8,
 		"align" => "center"

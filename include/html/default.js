@@ -74,3 +74,14 @@ function addItem(selection){
         }
     }
 }
+
+function addItemConfigRow(){
+	$("#content .tableRow:last").before("<div class='tableRow'><div></div><div><input name='newItem[]' onchange='setNewLineNames(this)'></div><div><input type='checkbox'></div><div><input></div></div>")
+}
+
+function setNewLineNames(obj){
+	var row = $(obj).parent();
+	row.next().children().attr("name",obj.value + "Enabled");
+	row.next().next().children().attr("name",obj.value);
+
+}

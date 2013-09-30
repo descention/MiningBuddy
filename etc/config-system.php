@@ -49,22 +49,6 @@ $DSN = "$mysql_protocol://$mysql_username:$mysql_password@$mysql_hostname/$mysql
 $OTYPENAME = array ( "buy", "sell");
 $PRICECRITERIA = array ( "min", "max", "median" );
 
-
-//include ('./etc/item-gen.php');
-/*
-foreach ($ORENAMES as $ore) {
-	$dbfriendly = str_replace(" ", "", ucwords($ore));
-	$dbfriendly = str_replace("-", "", ucwords($dbfriendly));
-	if (!empty ($ORENAME_STR)) {
-		$ORENAME_STR .= ", " . $dbfriendly;
-	} else {
-		$ORENAME_STR = $dbfriendly;
-	}
-	$DBORE[$ore] = $dbfriendly;
-}
-*/
-// Ship Array
-
 $SHIPTYPES = array (
 	"Assault Ship",
 	"Battlecruiser",

@@ -43,7 +43,7 @@ function showOreValue() {
 	if(isset($STATIC_DB)){
 		$latestDS = $DB->query("select item, Worth, time, modifier, t.volume from orevalues a, $STATIC_DB.invTypes t where a.item = replace(replace(t.typeName,'-',''),' ','') and time = (select max(time) from orevalues b where a.item = b.item) group by item ORDER BY time DESC");
 	}else{
-		$latestDS = $DB->query("select item, Worth, time, modifier, itemID as typeID, itemName as typeName from orevalues a, itemList where item = replace(replace(itemName,' ',''),'-','') and time = (select max(time) from orevalues b where a.item = b.item) group by item order by time desc");
+		$latestDS = $DB->query("select item, Worth, time, modifier, itemID as typeID, itemName as typeName from orevalues a, itemList where item = friendlyName and time = (select max(time) from orevalues b where a.item = b.item) group by item order by time desc");
 	}
 	if (!isset ($_GET['id'])) {
 		// No ID requested, get latest
