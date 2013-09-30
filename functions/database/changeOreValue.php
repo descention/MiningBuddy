@@ -52,7 +52,8 @@ function changeOreValue() {
 	$opdirect = isset($_POST['optype'])?"&optype=$OPTYPE":"";
 
 	foreach($_POST["newItem"] as $item){
-		$DB->query("insert into itemList (itemName) values ('$item')");
+		
+		$DB->query("insert into itemList (itemName) values ('" . sanitize($item) . "')");
 	}
 
 	$DB->query("update `itemList` set `friendlyName` = replace(replace(replace(`itemName`,' ',''),'-',''),'.','')");
