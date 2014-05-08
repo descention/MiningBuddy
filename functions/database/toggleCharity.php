@@ -49,24 +49,24 @@ function toggleCharity() {
 	}
 	
 	// update the flags
-	$DB->query("UPDATE joinups SET charity=1 XOR charity WHERE userid='" . $MySelf->getID() . "' AND parted IS NULL AND run='" . $_GET[id] . "' LIMIT 1");
+	$DB->query("UPDATE joinups SET charity=1 XOR charity WHERE userid='" . $MySelf->getID() . "' AND parted IS NULL AND run='" . $ID . "' LIMIT 1");
 
 	// Check is we were successful.
 	if ($DB->affectedRows() == 1) {
 		// Load the new charity status.
-		$newMode = $DB->getCol("SELECT charity FROM joinups WHERE userid='" . $MySelf->getID() . "' AND parted IS NULL AND run='" . $_GET[id] . "' LIMIT 1");
+		$newMode = $DB->getCol("SELECT charity FROM joinups WHERE userid='" . $MySelf->getID() . "' AND parted IS NULL AND run='" . $ID . "' LIMIT 1");
 		if ($newMode[0]) {
 			// He is now a volunteer.
-			makeNotice("You have volunteered to waive your payout, and dontate it to your corporation. Thank you!", "notice", "Charity accepted", "index.php?action=show&id=" . $_GET[id]);
-			header("Location: index.php?action=show&id=" . $_GET[id]);
+			makeNotice("You have volunteered to waive your payout, and dontate it to your corporation. Thank you!", "notice", "Charity accepted", "index.php?action=show&id=" . $ID);
+			header("Location: index.php?action=show&id=" . $ID);
 		} else {
 			// He is no longer a volunteer.
-			makeNotice("You have revoked your waiver, you will recieve ISK for this run again.", "notice", "Charity revokation accepted", "index.php?action=show&id=" . $_GET[id]);
-			header("Location: index.php?action=show&id=" . $_GET[id]);
+			makeNotice("You have revoked your waiver, you will recieve ISK for this run again.", "notice", "Charity revokation accepted", "index.php?action=show&id=" . $ID);
+			header("Location: index.php?action=show&id=" . $ID);
 		}
 	} else {
 		// Something went wrong with the database!
-		makeNotice("Unable to set the charity flag!", "error", "Internal Error", "index.php?action=show&id=" . $_GET[id]);
+		makeNotice("Unable to set the charity flag!", "error", "Internal Error", "index.php?action=show&id=" . $ID);
 	}
 }
 ?>
