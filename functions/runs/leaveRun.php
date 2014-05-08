@@ -40,7 +40,7 @@ function leaveRun() {
 	global $DB;
 	global $TIMEMARK;
 	global $MySelf;
-	$runid = $_GET[id];
+	$runid = sanitize($_GET[id]);
 	$userid = $MySelf->getID();
 
 	// Are we actually still in this run?
