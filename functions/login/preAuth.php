@@ -108,8 +108,9 @@ if (isset($_GET['action']) && $_GET['action'] == "activate") {
 	if (empty ($_GET['code'])) {
 		makeNotice("You need to supply an activation code!", "error", "Not confirmed");
 	} else {
-		$DB->query("UPDATE users SET emailvalid = '1' where emailcode='$_GET[code]' LIMIT 1");
-		$DB->query("UPDATE users SET emailcode = '0' where emailcode='$_GET[code]' LIMIT 1");
+		$code = sanitize($_GET['code']);
+		$DB->query("UPDATE users SET emailvalid = '1' where emailcode='$code' LIMIT 1");
+		$DB->query("UPDATE users SET emailcode = '0' where emailcode='$code' LIMIT 1");
 		if ($DB->affectedRows() != 1) {
 			makeNotice("Error while verfifying your email address!<br>Please ask your CEO for assistance.", "error");
 		} else {
