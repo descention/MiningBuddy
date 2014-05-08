@@ -13,7 +13,6 @@ configure your respective file.
 
 Supported Authentication methods:
 base user authentication
-SMF 2.0 Rest API (in development)
 
 == Configuration ==
 You'll want to go to "Edit Items" after login and add prices to items. 
