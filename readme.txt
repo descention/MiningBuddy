@@ -21,6 +21,13 @@ A price must exist for an item to be enabled.
 Op types (defaults to "Standard") may be added, such as Mining, 
 Incursion, PI, etc... by adding a row to the 'opType' table.
 
+== Improvements on the original == 
+Allowed different ops to be added so this application isn't strictly for mining.
+Everyone who joins an op within the first minute has the same start time.
+Custom items can be added to the database as you please, including "Tears".
+Most tables have been replaced by DIV tags to allow greating styling.
+Removed dependency of the Eve static data dump.
+
 == Issues ==
 
 Web server buffer size was not big enough to save configuration changes (nginx):
