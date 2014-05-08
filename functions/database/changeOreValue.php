@@ -48,7 +48,7 @@ function changeOreValue() {
 	// Lets set the userID(!)
 	$userID = $MySelf->getID();
 
-	$OPTYPE = isset($_POST['optype'])?$_POST['optype']:"";
+	$OPTYPE = isset($_POST['optype'])?sanitize($_POST['optype']):"";
 	$opdirect = isset($_POST['optype'])?"&optype=$OPTYPE":"";
 
 	foreach($_POST["newItem"] as $item){
@@ -65,12 +65,13 @@ function changeOreValue() {
 		// But check that the submited information is kosher.
 		if ((isset ($_POST[$row['item']])) && (is_numeric($_POST[$row['item']]))) {
 			// Insert the new ore values into the database.
+			$postORE = sanitize($_POST[$ORE]);
 			$DB->query("insert into orevalues (modifier, time, Item, Worth) 
-				select $userID,$TIMEMARK,'$ORE','$_POST[$ORE]' from dual 
+				select $userID,$TIMEMARK,'$ORE','$postORE' from dual 
 				where (
 					select worth from orevalues where item = '$ORE' and time = (
 						select max(time) from orevalues where item = '$ORE')
-					) != '$_POST[$ORE]' or (select count(*) from orevalues where item = '$ORE') = 0"
+					) != '$postORE' or (select count(*) from orevalues where item = '$ORE') = 0"
 				);
 			
 			/*
@@ -97,6 +98,7 @@ function changeOreValue() {
 	makeNotice("The payout values for ore have been changed.", "notice", "New data accepted.", "index.php?action=changeow$opdirect", "[OK]");
 }
 
+// TODO: remove dependancy for external web services
 function getItemIDFromName($itemName){
         $url = "https://www.fuzzwork.co.uk/api/typeid.php?typename=";
         $json = file_get_contents($url . urlencode($itemName));
