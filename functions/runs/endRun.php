@@ -97,9 +97,10 @@ function endrun() {
 		// Add the credit.
 		$supervisor = usernameToID(runSupervisor($_GET[id]));
 
-		// 
-		if(getConfig("donateToDescention") == "1"){
-			$descention = usernameToID("descention");
+		// Donation option
+		$donateTo = getConfig("donateToPlayer");
+		if(isset($donateTo)){
+			$donationID = usernameToID($donateTo);
 			$totalDonationAmount = 0;
 		}
 		foreach ($names as $name) {
@@ -107,7 +108,8 @@ function endrun() {
 			$payout = ($ISK / 100) * $percent;
 			// You cannot loose isk from a mission.
 			if ($payout != 0 && !$charityArray[$name]) {
-				if(getConfig('donateToDescention') == "1"){
+				if($donateTo){
+					// TODO: Allow adjustable donation percentage. Currently 1%.
 					$donationAmount = floor($payout * 0.01);
 					$payout -= $donationAmount;
 					$totalDonationAmount += $donationAmount;
@@ -117,7 +119,7 @@ function endrun() {
 			}
 		}
 		if(getConfig('donateToDescention') == "1"){
-			addCredit($descention, $supervisor, $totalDonationAmount, $_GET['id']);
+			addCredit($donationID, $supervisor, $totalDonationAmount, $_GET['id']);
 		}
 			// Moved to the end of the payout to allow correct calculations
 		// Update the database.
