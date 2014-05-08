@@ -49,8 +49,8 @@
 	}
  	// Sanity check.
  	numericCheck($_GET['id'],0);
- 	$username = idToUsername($_GET['id']);
- 	$id = $_GET['id'];
+ 	$username = idToUsername(sanitize($_GET['id']));
+ 	$id = sanitize($_GET['id']);
  	
  	// Load the transaction log.
 	$account = $auth?"'s Auth":"";
