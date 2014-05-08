@@ -48,7 +48,7 @@
  	if ($_POST[check]) {
  		// We got the returning form, edit it.
  		numericCheck($_POST[id],0);
- 		$ID = $_POST[id];
+ 		$ID = sanitize($_POST[id]);
  		
  		// Fetch the current template, see that its there.
  		$test = $DB->query("SELECT identifier FROM templates WHERE id='$ID' LIMIT 1");
@@ -76,7 +76,7 @@
  		// No returning form, no identifier.
  		header("Location: index.php?action=configuration");
  	} else {
- 		$ID = $_GET[id];
+ 		$ID = sanitize($_GET[id]);
  	}
  	
  	// numericheck!
