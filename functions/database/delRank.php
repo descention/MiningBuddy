@@ -50,10 +50,10 @@
  	numericCheck($_GET[id], 0); 	
  	
  	// Confirm it.
- 	confirm("Do you really want to permanently delete rank #". str_pad($_GET[id], 3, "0", STR_LEFT_PAD) ."?");
+ 	confirm("Do you really want to permanently delete rank #". str_pad(sanitize($_GET[id]), 3, "0", STR_LEFT_PAD) ."?");
  	
  	// Insert Rank into Database
- 	$DB->query("DELETE FROM ranks WHERE rankid='".$_GET[id]."' LIMIT 1");
+ 	$DB->query("DELETE FROM ranks WHERE rankid='".sanitize($_GET[id])."' LIMIT 1");
  	
  	// Check for success
  	if ($DB->affectedRows() == 1) {
