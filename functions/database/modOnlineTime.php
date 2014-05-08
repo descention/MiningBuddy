@@ -49,7 +49,7 @@ function modOnlineTime() {
 	for ($i = 0; $i <= 23; $i++) {
 		numericCheck($_POST[$i], 0, 3);
 		$column = "h" . str_pad($i, 2, "0", STR_PAD_LEFT);
-		$DB->query("UPDATE onlinetime SET $column='" . $_POST[$i] . "' WHERE userid='$id' LIMIT 1");
+		$DB->query("UPDATE onlinetime SET $column='" . sanitize($_POST[$i]) . "' WHERE userid='$id' LIMIT 1");
 	}
 
 	header("Location: index.php?action=onlinetime");
