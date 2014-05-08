@@ -39,12 +39,12 @@ function toggleLock() {
 	if (!numericCheckBool($_GET[id], 0)) {
 		makeNotice("That run ID is invalid.", "error", "Invalid RUN");
 	} else {
-		$ID = $_GET[id];
+		$ID = sanitize($_GET[id]);
 	}
 
 	// Only the owner of the run can do this.
 	if (runSupervisor($ID) != $MySelf->getUsername()) {
-		makeNotice("Only the supervisor of a run can lock and unlock his/her run.", "warning", "Unable to comply", "index.php?action=show&id=$_GET[id]", "[Cancel]");
+		makeNotice("Only the supervisor of a run can lock and unlock his/her run.", "warning", "Unable to comply", "index.php?action=show&id=$ID", "[Cancel]");
 	}
 
 	// Determine what the user wants.
