@@ -73,7 +73,7 @@ function listRun() {
 // We have to SELECT the most fitting ID. This can be done in three ways.
     if (($_GET['id'] >= 0) && (is_numeric($_GET['id']))) {
         // Way Nr. 1: The user specified an ID.
-        $ID = $_GET['id'];
+        $ID = sanitize($_GET['id']);
     } else {
         // Way Nr. 2: The user is in a Mining run, but has not given us an ID. Use the joined MiningOP ID.
         $ID = userInRun($userID, "check");
