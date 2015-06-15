@@ -177,6 +177,7 @@ CREATE TABLE IF NOT EXISTS `images` (
 CREATE TABLE IF NOT EXISTS `itemList` (
   `updateTime` varchar(10) DEFAULT NULL,
   `itemName` varchar(31) DEFAULT NULL,
+  `friendlyName` varchar(50) DEFAULT NULL,
   `itemID` varchar(10) DEFAULT NULL,
   `value` decimal(16,2) DEFAULT '0.00'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
@@ -283,7 +284,21 @@ INSERT INTO `itemList` (`updateTime`, `itemName`, `itemID`, `value`) VALUES
 ('1315077942', 'Sleeper Data Library', '30745', 0.00),
 ('1315077942', 'Ancient Coordinates Database', '30746', 0.00),
 ('1315077942', 'Sleeper Drone AI Nexus', '30747', 0.00),
-(0, 'Intact Armor Nanobot', 0, '0.00'), (0, 'Intact Electromechanical Component', 0, '0.00'), (0, 'Intact Power Cores', 0, '0.00'), (0, 'Intact Thruster Sections', 0, '0.00'), (0, 'Intact Weapon Subroutines', 0, '0.00'), (0, 'Malfunctioning Armor Nanobot', 0, '0.00'), (0, 'Malfunctioning Electromechanical Component', 0, '0.00'), (0, 'Malfunctioning Power Cores', 0, '0.00'), (0, 'Malfunctioning Thruster Sections', 0, '0.00'), (0, 'Malfunctioning Weapon Subroutines', 0, '0.00'), (0, 'Wrecked Armor Nanobot', 0, '0.00'), (0, 'Wrecked Electromechanical Component', 0, '0.00'), (0, 'Wrecked Power Cores', 0, '0.00'), (0, 'Wrecked Thruster Sections', 0, '0.00'), (0, 'Wrecked Weapon Subroutines', 0, '0.00');
+(0, 'Intact Armor Nanobot', 0, '0.00'), 
+(0, 'Intact Electromechanical Component', 0, '0.00'), 
+(0, 'Intact Power Cores', 0, '0.00'), 
+(0, 'Intact Thruster Sections', 0, '0.00'), 
+(0, 'Intact Weapon Subroutines', 0, '0.00'), 
+(0, 'Malfunctioning Armor Nanobot', 0, '0.00'), 
+(0, 'Malfunctioning Electromechanical Component', 0, '0.00'), 
+(0, 'Malfunctioning Power Cores', 0, '0.00'), 
+(0, 'Malfunctioning Thruster Sections', 0, '0.00'), 
+(0, 'Malfunctioning Weapon Subroutines', 0, '0.00'), 
+(0, 'Wrecked Armor Nanobot', 0, '0.00'), 
+(0, 'Wrecked Electromechanical Component', 0, '0.00'), 
+(0, 'Wrecked Power Cores', 0, '0.00'), 
+(0, 'Wrecked Thruster Sections', 0, '0.00'), 
+(0, 'Wrecked Weapon Subroutines', 0, '0.00');
 -- --------------------------------------------------------
 
 --
