@@ -65,7 +65,7 @@ function makeLoginPage($user = false) {
 	if ($user) {
 		if ($user == "__invalidchar") {
 			$login->addRow("redish");
-			$login->addCol("Only characters a-z, A-Z and 0-9 are allowed. " .
+			$login->addCol("Only characters a-z, A-Z and 0-9 are allowed. ",
 			array (
 				"bold" => "true",
 				"class" => "col-xs-12"
